@@ -38,9 +38,232 @@
             {% endfor %}
         {% endfor %}
 
-        <!-- Start your project here-->
-        {% block body %}{% endblock %}
-        <!-- /Start your project here-->
+        <header>
+
+            <!-- Navbar -->
+            <nav class="navbar fixed-top navbar-expand-lg navbar-dark mdb-color darken-3">
+                <div class="container">
+
+                    <!-- Brand -->
+                    <a class="navbar-brand" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
+                        <strong>Совместные покупки в интернет-магазинах США</strong>
+                    </a>
+
+                    <!-- Collapse -->
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <!-- Links -->
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                        <!-- Left -->
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Home
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/" target="_blank">About MDB</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank">Free download</a>
+                            </li>
+                        </ul>
+
+                        <!-- Right -->
+                        <ul class="navbar-nav nav-flex-icons">
+                            <li class="nav-item">
+                                {% if is_granted('ROLE_USER') %}
+                                    <a class="nav-link" href="{{ path('app_logout') }}">
+                                        <i class='fa fa-user'></i> {{ app.user.name }}
+                                    </a>
+                                {% else %}
+                                    <a class="nav-link border border-light" href="{{ path('app_login') }}">
+                                        <i class='fa fa-sign-in-alt'></i> Войти
+                                    </a>
+                                {% endif %}
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+            </nav>
+            <!-- Navbar -->
+
+            <!-- Full Page Intro -->
+            <div class="view full-page-intro">
+
+                <!--Video source-->
+                {#<video class="video-intro" autoplay loop muted>
+                    <source src="https://mdbootstrap.com/img/video/animation-intro.mp4" type="video/mp4" />
+                </video>#}
+
+                <!-- Mask & flexbox options-->
+                <div class="mask rgba-blue-light d-flex justify-content-center align-items-center">
+
+                    <!-- Content -->
+                    <div class="container">
+
+                        <!--Grid row-->
+                        <div class="row d-flex h-100 justify-content-center align-items-center wow fadeIn">
+
+                            <!--Grid column-->
+                            <div class="col-md-6 mb-4 white-text text-center text-md-left">
+
+                                <h1 class="display-4 font-weight-bold">Learn Bootstrap 4 with MDB</h1>
+
+                                <hr class="hr-light">
+
+                                <p>
+                                    <strong>Best & free guide of responsive web design</strong>
+                                </p>
+
+                                <p class="mb-4 d-none d-md-block">
+                                    <strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and written versions
+                                        available. Create your own, stunning website.</strong>
+                                </p>
+
+                                <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white">Start free tutorial
+                                    <i class="fas fa-graduation-cap ml-2"></i>
+                                </a>
+                                <a target="_blank" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" class="btn btn-outline-white">Download MDB
+                                    <i class="fas fa-download ml-2"></i>
+                                </a>
+
+                            </div>
+                            <!--Grid column-->
+
+                            <!--Grid column-->
+                            <div class="col-md-6 col-xl-5 mb-4">
+
+                                <img src="https://mdbootstrap.com/img/Mockups/Transparent/Small/admin-new.png" alt="" class="img-fluid">
+
+                            </div>
+                            <!--Grid column-->
+
+                        </div>
+                        <!--Grid row-->
+
+                    </div>
+                    <!-- Content -->
+
+                </div>
+                <!-- Mask & flexbox options-->
+
+            </div>
+            <!-- Full Page Intro -->
+
+        </header>
+
+        <!-- Main layout -->
+        <main>
+            <div class="container">
+            {% block body %}{% endblock %}
+            </div>
+        </main>
+        <!-- /Main layout -->
+
+        <!-- Footer -->
+        <footer class="page-footer font-small unique-color-dark">
+
+            <div class="info-color-dark">
+                <div class="container">
+
+                    <div class="row py-4 d-flex align-items-center">
+
+                        <div class="col-md-4 text-center mb-4 mb-md-0">
+                            <h6 class="mb-0">Get connected with us on social networks!</h6>
+                        </div>
+
+                        <div class="col-md-4 text-center mb-4 mb-md-0">
+                            <a id="footer-link-newsletter" href="/docs/jquery/newsletter/" class="border rounded p-2 px-3 mr-4 d-none d-md-inline-block">
+                                Newsletter <i class="fas fa-envelope white-text ml-2"> </i>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 text-center">
+
+                            <a class="fb-ic">
+                                <i class="fab fa-facebook-f white-text mr-4"> </i>
+                            </a>
+                            <a><i class="fab fa-vk white-text mr-4"></i></a>
+                            <a class="tw-ic">
+                                <i class="fab fa-twitter white-text mr-4"> </i>
+                            </a>
+                            <a class="gplus-ic">
+                                <i class="fab fa-google-plus-g white-text mr-4"> </i>
+                            </a>
+                            <a class="li-ic">
+                                <i class="fab fa-linkedin-in white-text mr-4"> </i>
+                            </a>
+                            <a class="ins-ic">
+                                <i class="fab fa-instagram white-text"> </i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Footer Links -->
+            <div class="container text-center text-md-left mt-5">
+
+                <div class="row mt-3">
+
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <h6 class="text-uppercase font-weight-bold">Company name</h6>
+                        <hr class="info-color-dark accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                        <p>
+                            Here you can use rows and columns here to organize your footer content.
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        </p>
+                    </div>
+
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase font-weight-bold">Products</h6>
+                        <hr class="info-color-dark accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                        <p><a href="#!">MDBootstrap</a></p>
+                        <p><a href="#!">MDWordPress</a></p>
+                        <p><a href="#!">BrandFlow</a></p>
+                    </div>
+
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+                        <hr class="info-color-dark accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                        <p><a href="#!">Your Account</a></p>
+                        <p><a href="#!">Become an Affiliate</a></p>
+                        <p><a href="#!">Shipping Rates</a></p>
+                    </div>
+
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <h6 class="text-uppercase font-weight-bold">Contact</h6>
+                        <hr class="info-color-dark accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                        <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+                        <p><i class="fas fa-envelope mr-3"></i> info@example.com</p>
+                        <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+                        <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /Footer Links -->
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3">© 2019 Copyright:
+                <a href="/">promagic.ru</a>
+            </div>
+            <!-- /Copyright -->
+
+        </footer>
+        <!-- /Footer -->
 
         <!-- SCRIPTS -->
         <!-- JQuery -->
