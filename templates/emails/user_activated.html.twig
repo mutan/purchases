@@ -1,0 +1,24 @@
+{% extends 'emails/email_layout.html.twig' %}
+
+{% block subject %}Account activated – {{ '~site_name'|trans }}{% endblock %}
+
+{% block body_text %}{% endblock %}
+
+{% block body_html_content %}
+    <p>
+        Hi {{ user.name }}!
+    </p>
+    <p>
+        You succesfully registered and activated your account. Welcome!
+    </p>
+    <p>
+        You can log in here:
+        <a href="{{ absolute_url(path('app_login')) }}">
+            {{ absolute_url(path('app_login')) }}
+        </a>
+    </p>
+    <p>
+        Have a good day!<br>
+        The RPG-helper team
+    </p>
+{% endblock %}

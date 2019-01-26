@@ -1,0 +1,27 @@
+{% extends 'emails/email_layout.html.twig' %}
+
+{% block subject %}Activate account – {{ '~site_name'|trans }}{% endblock %}
+
+{% block body_text %}{% endblock %}
+
+{% block body_html_content %}
+    <p>
+        Hi {{ user.name }}!
+    </p>
+    <p>
+        You succesfully registered, but have not activated your account yet.
+    </p>
+    <p>
+        You can do it by clicking link below.<br>
+        This activation link is only valid for the next one hour.
+    </p>
+    <p>
+        <a href="{{ activationUrl }}">
+            {{ activationUrl }}
+        </a>
+    </p>
+    <p>
+        Have a good day!<br>
+        The RPG-helper team
+    </p>
+{% endblock %}

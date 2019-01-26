@@ -1,0 +1,53 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block title %}Log in – {{ '~site_name'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="card-wrapper auth">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ '~auth.login'|trans }}</h4>
+
+                    <form method="POST">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        {% if error %}
+                            <div class="text-danger mb-2">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <label for="email">{{ '~auth.email'|trans }}</label>
+                            <input id="email" type="email" class="form-control" name="email" value="{{ last_username }}" required autofocus>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">{{ '~auth.password'|trans }}</label>
+                            <a href="{{ path('app_forgot_password') }}" class="float-right" style="font-size: 0.8rem">
+                                {{ '~auth.forgot_password'|trans }}
+                            </a>
+                            <input id="password" type="password" class="form-control" name="password" required data-eye>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="custom-checkbox custom-control">
+                                <input type="checkbox" name="_remember_me" id="remember" class="custom-control-input">
+                                <label for="remember" class="custom-control-label">{{ '~auth.remember_me'|trans }}</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-0">
+                            <button type="submit" class="btn btn-primary btn-block" formnovalidate>
+                                {{ '~auth.login'|trans }}
+                            </button>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            {{ '~auth.dont_have_account'|trans }}
+                            <a href="{{ path('app_register') }}">{{ '~auth.create_one'|trans }}</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

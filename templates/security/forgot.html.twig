@@ -1,0 +1,46 @@
+{% extends 'layout/base.html.twig' %}
+
+{% form_theme form 'form/errors.html.twig' %}
+
+{% block title %}Forgot password – {{ '~site_name'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="card-wrapper auth">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ '~auth.forgot_password'|trans }}</h4>
+
+                    {{ form_start(form) }}
+                        {{ form_errors(form) }}
+
+                        <div class="form-group">
+                            {{ form_label(form.email, '~auth.email'|trans) }}
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'required': true, 'autofocus': true}}) }}
+                        </div>
+
+                        <div class="g-recaptcha" data-sitekey="{{ app_recaptcha_key }}"></div>
+
+                        <div class="form-group mt-2">
+                            <div class="form-text text-muted" style="font-size: 0.8rem">
+                                {{ '~auth.forgot_password_help_text'|trans }}
+                            </div>
+                        </div>
+
+                        <div class="form-group m-0">
+                            <button type="submit" class="btn btn-primary btn-block" formnovalidate>
+                                {{ '~auth.forgot_password_button_text'|trans }}
+                            </button>
+                        </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src={{ app_recaptcha_url }}></script>
+{% endblock %}

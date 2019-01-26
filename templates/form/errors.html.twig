@@ -1,0 +1,17 @@
+{# 1 – убран класс alert (красный фон) #}
+{#<span class="{% if form is not rootform %}invalid-feedback{% else %}alert alert-danger{% endif %} d-block">#}
+
+{# 2 – Убраны эти идиотские бейджи на красном фоне #}
+{# <span class="form-error-icon badge badge-danger text-uppercase">{{ 'Error'|trans({}, 'validators') }}</span> #}
+
+{% block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <span class="{% if form is not rootform %}invalid-feedback{% else %}text-danger mb-2{% endif %} d-block"> {# 1 #}
+            {%- for error in errors -%}
+                <span class="d-block">
+                    <span class="form-error-message">{{ error.message }}</span> {# 2 #}
+                </span>
+            {%- endfor -%}
+        </span>
+    {%- endif %}
+{%- endblock form_errors %}

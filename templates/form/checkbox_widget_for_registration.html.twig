@@ -1,0 +1,22 @@
+{# Этот блок здесь исключительно из-за невозможности вставить в label чекбокса ссылку #}
+
+{% block checkbox_widget -%}
+    <div class="form-group mt-3">
+        <div class="custom-checkbox custom-control">
+            <input type="checkbox"
+                   name="register[termsAccepted]"
+                   id="register_termsAccepted"
+                   class="custom-control-input {% if errors|length > 0 -%}is-invalid{%- endif -%}"
+                   {% if form.vars.checked -%}checked="checked"{% endif %}
+            >
+            <label for="register_termsAccepted" class="custom-control-label">
+                {{ '~auth.i_agree'|trans }} <a href="{{ path('app_homepage') }}">{{ '~auth.terms_and_conditions'|trans }}</a>
+            </label>
+        </div>
+        {%- if errors|length > 0 -%}
+            <div id="{{ id }}_errors" class="mb-2">
+                {{- form_errors(form) -}}
+            </div>
+        {%- endif -%}
+    </div>
+{%- endblock checkbox_widget %}
