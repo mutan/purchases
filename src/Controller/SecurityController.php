@@ -194,11 +194,6 @@ class SecurityController extends BaseController
             return $this->redirect($this->generateUrl('app_homepage'));
         }
 
-        $this->addFlash(
-            'info',
-            'Письмо со ссылкой для сброса пароля отправлено на ваш емейл.'
-        );
-
         $form = $this->createForm(ForgotPasswordType::class);
         $form->handleRequest($request);
 
