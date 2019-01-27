@@ -55,6 +55,11 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserProfile", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $userProfile;
+
+    /**
      * @ORM\Column(type="string", length=30, unique=true)
      * @Assert\NotBlank(message="Имя пользователя не может быть пустым")
      * @Assert\Regex(pattern="/^\w+$/", message="Имя пользователя может содержать только буквы, цифры и знак подчеркивания.")
@@ -284,6 +289,23 @@ class User implements UserInterface
     public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): self
     {
         $this->lastLoginAt = $lastLoginAt;
+
+        return $this;
+    }
+
+    public function getUserProfile(): ?UserProfile
+    {
+        return $this->userProfile;
+    }
+
+    public function setUserProfile(UserProfile $userProfile): self
+    {
+        $this->userProfile = $userProfile;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $userProfile->getUser()) {
+            $userProfile->setUser($this);
+        }
 
         return $this;
     }

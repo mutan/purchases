@@ -5,24 +5,39 @@ html, body, .view {
 .card-wrapper.auth {
     width: 343px;
 }
+
 .card-wrapper.auth .card {
     box-shadow: none;
     border: 1px solid rgba(0,0,0,.2);
     border-radius: unset;
 }
+
 footer hr {
     width: 70px;
 }
 
-@media (min-width: 576px) {
+/* BOOTSTRAP BREAKPOINTS */
+/* Media queries for targeting a single segment of screen size  */
+
+@media (max-width: 575.98px) {
+    .card-wrapper.auth .card {
+        border: none;
+    }
+    .card-wrapper.auth .card .card-body{
+        padding-top: unset;
+        padding-bottom: unset;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
 
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 991.98px) {
 
 }
 
-@media (min-width: 992px) {
+@media (min-width: 992px) and (max-width: 1199.98px) {
 
 }
 
