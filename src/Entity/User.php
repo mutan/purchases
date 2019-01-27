@@ -18,7 +18,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface
 {
-    use UserTokenTrait;
     use TimestampableEntityTrait;
 
     const ROLE_USER       = 'ROLE_USER';

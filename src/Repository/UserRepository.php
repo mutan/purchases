@@ -19,17 +19,25 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    // TODO add table user_profile, remove there: last_login_at, all reset/activation tokens
+    public function findOneWithProfileByActivationToken(?string $token): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.userProfile', 'up')
+            ->addSelect('up')
+            ->andWhere('up.activationToken = :token')
+            ->setParameter('token', $token)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     /**
      * @param null|string $term
      * @return User[]
      */
     public function findAllWithSearch(?string $term)
     {
-        // TODO add table user_profile, remove there: last_login_at, all reset/activation tokens
-        $qb = $this->createQueryBuilder('u')
-                    //->leftJoin('u.profile', 'up')
-                    //->addSelect('up')
-        ;
+        $qb = $this->createQueryBuilder('u');
 
         if ($term) {
             $qb->andWhere('

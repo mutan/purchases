@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserProfile;
 use App\Repository\UserRepository;
 use App\Form\RegisterType;
 use App\Form\ResetPasswordType;
@@ -79,6 +80,7 @@ class SecurityController extends BaseController
 
             /** @var User $user */
             $user = $form->getData();
+            $user->setUserProfile(new UserProfile());
 
             try {
                 if (!$captchaValidator->validateCaptcha($request->get('g-recaptcha-response'))) {
@@ -89,7 +91,7 @@ class SecurityController extends BaseController
                 $token = $tokenGenerator->generateToken();
 
                 $user->setPassword($passwordEncoder->encodePassword($user, $user->getPlainPassword()));
-                $user->setActivationToken($token);
+                $user->getUserProfile()->setActivationToken($token);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
@@ -104,7 +106,7 @@ class SecurityController extends BaseController
                     $this->mailer->sendUserRegisteredWithActivationEmailMessage($user);
                     $this->addFlash(
                         'info',
-                        'Вы успешно зарегистрировались. Теперь вам нужно активировать аккаунт. Емейл с активационной ссылкой только что был отправлен на ваш емейл.'
+                        'Вы успешно зарегистрировались. Теперь вам нужно активировать аккаунт. Письмо с активационной ссылкой только что был отправлен на ваш емейл.'
                     );
                     return $this->redirect($this->generateUrl('app_login'));
                 }
@@ -138,18 +140,18 @@ class SecurityController extends BaseController
         string $token
     )
     {
-        $user = $userRepository->findOneBy([
-            'activationToken' => $token
-        ]);
+        $user = $userRepository->findOneWithProfileByActivationToken($token);
 
-        if (!$user || !$user->isActivationTokenValid($token)) {
+        if (!$user || !$user->getUserProfile()->isActivationTokenValid($token)) {
             throw new NotFoundHttpException("Activation token doesn't exist or is not valid");
         }
 
         $user->setStatus(User::STATUS_ACTIVE)
-             ->setActivatedAt(new \DateTime())
-             ->clearActivationToken()
              ->clearInactiveReason();
+
+        $user->getUserProfile()
+             ->setActivatedAt(new \DateTime())
+             ->clearActivationToken();
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);

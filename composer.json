@@ -20,13 +20,13 @@
         "symfony/twig-bundle": "*",
         "symfony/validator": "*",
         "symfony/webpack-encore-pack": "^1.0",
-        "symfony/yaml": "*"
+        "symfony/yaml": "*",
+        "symfony/dotenv": "*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "sensiolabs/security-checker": "^5.0",
         "symfony/debug-pack": "*",
-        "symfony/dotenv": "*",
         "symfony/maker-bundle": "^1.7",
         "symfony/phpunit-bridge": "*",
         "symfony/profiler-pack": "^1.0",
