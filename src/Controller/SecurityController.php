@@ -312,8 +312,6 @@ class SecurityController extends BaseController
             $em->persist($user);
             $em->flush();
 
-            $this->mailer->sendPasswordResetedEmailMessage($user);
-
             $this->logger->info('Password reseted', [
                 'user_id' => $user->getUsername()
             ]);
