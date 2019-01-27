@@ -5,6 +5,9 @@ html, body, .view {
 .card-wrapper.auth {
     width: 343px;
 }
+footer hr {
+    width: 70px;
+}
 
 @media (min-width: 576px) {
 

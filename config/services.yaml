@@ -4,8 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    app_site_name: 'promagic.ru'
-    no_reply_email: 'no-reply@rpg-helper.com'
+    app_site_name: 'promagic'
+    no_reply_email: 'no-reply@promagic.ru'
     app_recaptcha_url: 'https://www.google.com/recaptcha/api.js'
     app_recaptcha_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     app_recaptcha_secret: '%env(GOOGLE_RECAPTCHA_SECRET)%'
