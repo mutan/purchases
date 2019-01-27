@@ -56,21 +56,21 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=30, unique=true)
-     * @Assert\NotBlank(message="~user.name.not_blank")
-     * @Assert\Regex(pattern="/^\w+$/", message="~user.name.regex")
+     * @Assert\NotBlank(message="Имя пользователя не может быть пустым")
+     * @Assert\Regex(pattern="/^\w+$/", message="Имя пользователя может содержать только буквы, цифры и знак подчеркивания.")
      * @Assert\Length(
      *     min=3,
      *     max=30,
-     *     minMessage="~user.name.min_length",
-     *     maxMessage="~user.name.max_length"
+     *     minMessage="Имя должно состоять минимум из {{ limit }} символов.",
+     *     maxMessage="Имя должно состоять максимум из {{ limit }} символов."
      * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
-     * @Assert\NotBlank(message="~user.email.not_blank", groups={"forgot_password"})
-     * @Assert\Email(message="~user.email.valid", groups={"forgot_password"})
+     * @Assert\NotBlank(message="Емейл не может быть пустым.", groups={"forgot_password"})
+     * @Assert\Email(message="Введите существующий емейл.", groups={"forgot_password"})
      */
     private $email;
 
@@ -80,13 +80,13 @@ class User implements UserInterface
     private $roles = [self::ROLE_USER];
 
     /**
-     * @Assert\NotBlank(message="~user.password.not_blank", groups={"reset_password"})
-     * @AppAssert\ComplexPassword(message="~user.password.complex", groups={"reset_password"})
+     * @Assert\NotBlank(message="Пароль не может быть пустым.", groups={"reset_password"})
+     * @AppAssert\ComplexPassword(message="Пароль должен содержать цифры и латинские буквы в нижнем и верхнем регистре.", groups={"reset_password"})
      * @Assert\Length(
      *     min=8,
      *     max=4096,
-     *     minMessage="~user.password.min_length",
-     *     maxMessage="~user.password.max_length",
+     *     minMessage="Пароль должен состоять минимум из {{ limit }} символов.",
+     *     maxMessage="Пароль должен состоять максимум из {{ limit }} символов.",
      *     groups={"reset_password"}
      * )
      */

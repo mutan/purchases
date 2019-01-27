@@ -29,7 +29,7 @@ class RegisterType extends AbstractType
             ])
             ->add('termsAccepted', CheckboxType::class, [
                 'mapped' => false,
-                'constraints' => new IsTrue(["message" => "~user.terms.is_true"]),
+                'constraints' => new IsTrue(["message" => "Вы должны принять наши правила."]),
             ])
         ;
     }

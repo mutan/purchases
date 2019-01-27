@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Helpers\MailService;
 use Psr\Log\LoggerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -16,12 +15,10 @@ abstract class BaseController extends AbstractController
 {
     protected $logger;
     protected $mailer;
-    protected $translator;
 
-    public function __construct(LoggerInterface $logger, MailService $mailer, TranslatorInterface $translator)
+    public function __construct(LoggerInterface $logger, MailService $mailer)
     {
         $this->logger = $logger;
         $this->mailer = $mailer;
-        $this->translator = $translator;
     }
 }
