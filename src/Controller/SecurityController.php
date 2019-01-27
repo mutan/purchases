@@ -82,7 +82,7 @@ class SecurityController extends BaseController
 
             try {
                 if (!$captchaValidator->validateCaptcha($request->get('g-recaptcha-response'))) {
-                    $form->addError(new FormError($this->translator->trans('~error.wrong_captcha')));
+                    $form->addError(new FormError('Подтвердите, что вы не робот.'));
                     throw new ValidatorException('Wrong captcha');
                 }
 
@@ -201,7 +201,7 @@ class SecurityController extends BaseController
 
             try {
                 if (!$captchaValidator->validateCaptcha($request->get('g-recaptcha-response'))) {
-                    $form->addError(new FormError($this->translator->trans('~error.wrong_captcha')));
+                    $form->addError(new FormError('Подтвердите, что вы не робот.'));
                     throw new ValidatorException('Wrong captcha');
                 }
 
@@ -211,7 +211,7 @@ class SecurityController extends BaseController
                 ]);
 
                 if (!$user) {
-                    $form->addError(new FormError($this->translator->trans('~error.user_not_found')));
+                    $form->addError(new FormError('Пользователь не найден.'));
                     return $this->render('security/forgot.html.twig', [
                         'form' => $form->createView()
                     ]);
@@ -287,7 +287,7 @@ class SecurityController extends BaseController
 
             // new and old passords must not match
             if ($passwordEncoder->isPasswordValid($user, $user->getPlainPassword())) {
-                $form->addError(new FormError($this->translator->trans('~error.password_is_the_same')));
+                $form->addError(new FormError('Новый пароль должен отличаться от предыдущего.'));
                 return $this->render('security/reset.html.twig', [
                     'form' => $form->createView()
                 ]);

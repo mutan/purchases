@@ -71,8 +71,6 @@
         </nav>
         <!-- /Navbar -->
 
-
-
         <main class="mt-5 pt-2">
             <!-- User switch -->
             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
@@ -98,7 +96,7 @@
             {% endfor %}
             <!-- /Flash messages -->
 
-            <div class="container">
+            <div class="container mt-5">
                 {% block body %}{% endblock %}
             </div>
         </main>
@@ -116,7 +114,7 @@
                         </div>
 
                         <div class="col-md-4 text-center mb-4 mb-md-0">
-                            <a id="footer-link-newsletter" href="#" class="border rounded p-2 px-3 d-none d-md-inline-block">
+                            <a id="footer-link-newsletter" href="#" class="border p-2 px-3 d-none d-md-inline-block">
                                 Newsletter <i class="fas fa-envelope white-text ml-2"> </i>
                             </a>
                         </div>

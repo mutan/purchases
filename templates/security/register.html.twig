@@ -5,7 +5,7 @@
 {% block title %}Регистрация – {{ app_site_name }}{% endblock %}
 
 {% block body %}
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-5">
         <div class="card-wrapper auth">
             <div class="card">
                 <div class="card-body">
@@ -14,31 +14,39 @@
                     {{ form_start(form) }}
                         {{ form_errors(form) }}
 
-                        {{ form_label(form.name, 'Имя') }}
-                        {{ form_widget(form.name) }}
+                        <div class="form-group">
+                            {{ form_label(form.name, 'Имя') }}
+                            {{ form_widget(form.name) }}
+                        </div>
 
-                        {{ form_label(form.email, 'Емейл') }}
-                        {{ form_widget(form.email) }}
+                        <div class="form-group">
+                            {{ form_label(form.email, 'Емейл') }}
+                            {{ form_widget(form.email) }}
+                        </div>
 
-                        {{ form_label(form.plainPassword.first, 'Пароль') }}
-                        {{ form_widget(form.plainPassword.first, {attr : {'data-eye': true}}) }}
+                        <div class="form-group">
+                            {{ form_label(form.plainPassword.first, 'Пароль') }}
+                            {{ form_widget(form.plainPassword.first, {attr : {'data-eye': true}}) }}
+                        </div>
 
-                        {{ form_label(form.plainPassword.second, 'Пароль еще раз') }}
-                        {{ form_widget(form.plainPassword.second, {attr : {'data-eye': true}}) }}
+                        <div class="form-group">
+                            {{ form_label(form.plainPassword.second, 'Пароль еще раз') }}
+                            {{ form_widget(form.plainPassword.second, {attr : {'data-eye': true}}) }}
+                        </div>
 
-                        {{ form_widget(form.termsAccepted ) }}
+                        <div class="form-group">
+                            {{ form_widget(form.termsAccepted ) }}
+                        </div>
 
                         <div class="g-recaptcha" data-sitekey="{{ app_recaptcha_key }}"></div><br>
 
                         <div class="form-group m-0">
-                            <button type="submit" class="btn btn-primary btn-block" formnovalidate>
-                                {{ 'Создать аккаунт' }}
-                            </button>
+                            <button type="submit" class="btn btn-primary btn-block" formnovalidate>Создать аккаунт</button>
                         </div>
 
                         <div class="text-center mt-3">
                             {{ 'Уже есть аккаунт?' }}
-                            <a href="{{ path('app_login') }}">{{ 'Войти' }}</a>
+                            <a href="{{ path('app_login') }}">Войти</a>
                         </div>
 
                     {{ form_end(form) }}

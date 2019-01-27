@@ -10,7 +10,7 @@
                    {% if form.vars.checked -%}checked="checked"{% endif %}
             >
             <label for="register_termsAccepted" class="custom-control-label">
-                {{ '~auth.i_agree'|trans }} <a href="{{ path('app_homepage') }}">{{ '~auth.terms_and_conditions'|trans }}</a>
+                Я согласен с <a href="{{ path('app_homepage') }}">условиями и положениями</a>
             </label>
         </div>
         {%- if errors|length > 0 -%}
