@@ -1,24 +1,24 @@
 {% extends 'emails/email_layout.html.twig' %}
 
-{% block subject %}Account activated – {{ '~site_name'|trans }}{% endblock %}
+{% block subject %}Аккаунт активирован – {{ app_site_name }}{% endblock %}
 
 {% block body_text %}{% endblock %}
 
 {% block body_html_content %}
     <p>
-        Hi {{ user.name }}!
+        Здравствуйте, {{ user.name }}!
     </p>
     <p>
-        You succesfully registered and activated your account. Welcome!
+        Вы успешно зарегистрировались и активировали ваш аккаунт. Добро пожаловать!
     </p>
     <p>
-        You can log in here:
+        Вы можете войти здесь:
         <a href="{{ absolute_url(path('app_login')) }}">
             {{ absolute_url(path('app_login')) }}
         </a>
     </p>
     <p>
-        Have a good day!<br>
-        The RPG-helper team
+        ––<br>
+        Команда {{ app_site_name }}
     </p>
 {% endblock %}

@@ -1,19 +1,19 @@
 {% extends 'emails/email_layout.html.twig' %}
 
-{% block subject %}Activate account – {{ '~site_name'|trans }}{% endblock %}
+{% block subject %}Активируйте аккаунт – {{ app_site_name }}{% endblock %}
 
 {% block body_text %}{% endblock %}
 
 {% block body_html_content %}
     <p>
-        Hi {{ user.name }}!
+        Здравствуйте, {{ user.name }}!
     </p>
     <p>
-        You succesfully registered, but have not activated your account yet.
+        Вы успешно зарегистрировались, но пока не активировали аккаунт.
     </p>
     <p>
-        You can do it by clicking link below.<br>
-        This activation link is only valid for the next one hour.
+        Вы можете сделать это, нажав на ссылку ниже.<br>
+        Ссылка для активации действительна в течение одного часа.
     </p>
     <p>
         <a href="{{ activationUrl }}">
@@ -21,7 +21,7 @@
         </a>
     </p>
     <p>
-        Have a good day!<br>
-        The RPG-helper team
+        ––<br>
+        Команда {{ app_site_name }}
     </p>
 {% endblock %}

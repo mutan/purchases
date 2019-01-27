@@ -1,13 +1,13 @@
 {% extends 'layout/base.html.twig' %}
 
-{% block title %}Log in – {{ '~site_name'|trans }}{% endblock %}
+{% block title %}Войти – {{ app_site_name }}{% endblock %}
 
 {% block body %}
     <div class="row justify-content-center">
         <div class="card-wrapper auth">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">{{ '~auth.login'|trans }}</h4>
+                    <h4 class="card-title">Войти</h4>
 
                     <form method="POST">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -16,14 +16,14 @@
                         {% endif %}
 
                         <div class="form-group">
-                            <label for="email">{{ '~auth.email'|trans }}</label>
+                            <label for="email">Емейл</label>
                             <input id="email" type="email" class="form-control" name="email" value="{{ last_username }}" required autofocus>
                         </div>
 
                         <div class="form-group">
-                            <label for="password">{{ '~auth.password'|trans }}</label>
+                            <label for="password">Пароль</label>
                             <a href="{{ path('app_forgot_password') }}" class="float-right" style="font-size: 0.8rem">
-                                {{ '~auth.forgot_password'|trans }}
+                                Забыли пароль?
                             </a>
                             <input id="password" type="password" class="form-control" name="password" required data-eye>
                         </div>
@@ -31,19 +31,19 @@
                         <div class="form-group">
                             <div class="custom-checkbox custom-control">
                                 <input type="checkbox" name="_remember_me" id="remember" class="custom-control-input">
-                                <label for="remember" class="custom-control-label">{{ '~auth.remember_me'|trans }}</label>
+                                <label for="remember" class="custom-control-label">Запомнить меня</label>
                             </div>
                         </div>
 
                         <div class="form-group m-0">
                             <button type="submit" class="btn btn-primary btn-block" formnovalidate>
-                                {{ '~auth.login'|trans }}
+                                Войти
                             </button>
                         </div>
 
                         <div class="text-center mt-3">
-                            {{ '~auth.dont_have_account'|trans }}
-                            <a href="{{ path('app_register') }}">{{ '~auth.create_one'|trans }}</a>
+                            Еще нет аккаунта?
+                            <a href="{{ path('app_register') }}">Создать</a>
                         </div>
                     </form>
                 </div>

@@ -102,7 +102,10 @@ class SecurityController extends BaseController
 
                 if (self::DOUBLE_OPT_IN) {
                     $this->mailer->sendUserRegisteredWithActivationEmailMessage($user);
-                    $this->addFlash('info', $this->translator->trans('~flash_message.user_registered_with_activation'));
+                    $this->addFlash(
+                        'info',
+                        'Вы успешно зарегистрировались. Теперь вам нужно активировать аккаунт. Емейл с активационной ссылкой только что был отправлен на ваш емейл.'
+                    );
                     return $this->redirect($this->generateUrl('app_login'));
                 }
 
@@ -158,7 +161,10 @@ class SecurityController extends BaseController
             'user_id' => $user->getUsername()
         ]);
 
-        $this->addFlash('info', $this->translator->trans('~flash_message.user_activated'));
+        $this->addFlash(
+            'info',
+            'Вы успешно зарегистрировались и активировали ваш аккаунт. Добро пожаловать!'
+        );
 
         // automatic login
         return $guardHandler->authenticateUserAndHandleSuccess(
@@ -219,13 +225,16 @@ class SecurityController extends BaseController
                 $em->persist($user);
                 $em->flush();
 
-                $this->mailer->sendPasswordResetLinkEmailMessage($user);
-
                 $this->logger->info('Reset password link requested', [
                     'user_id' => $user->getUsername()
                 ]);
 
-                $this->addFlash('info', $this->translator->trans('~flash_message.reset_password_requested'));
+                $this->mailer->sendPasswordResetLinkEmailMessage($user);
+
+                $this->addFlash(
+                    'info',
+                    'Письмо со ссылкой для сброса пароля отправлено на ваш емейл.'
+                );
 
                 return $this->redirect($this->generateUrl('app_forgot_password'));
             } catch (ValidatorException $e) {
@@ -309,7 +318,10 @@ class SecurityController extends BaseController
                 'user_id' => $user->getUsername()
             ]);
 
-            $this->addFlash('success', $this->translator->trans('~flash_message.password_changed'));
+            $this->addFlash(
+                'success',
+                'Ваш пароль успешно изменен.'
+            );
 
             // automatic login
             return $guardHandler->authenticateUserAndHandleSuccess(

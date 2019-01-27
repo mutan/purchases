@@ -2,28 +2,28 @@
 
 {% form_theme form 'form/errors.html.twig' 'form/checkbox_widget_for_registration.html.twig' %}
 
-{% block title %}Register – {{ '~site_name'|trans }}{% endblock %}
+{% block title %}Регистрация – {{ app_site_name }}{% endblock %}
 
 {% block body %}
     <div class="row justify-content-center">
         <div class="card-wrapper auth">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">{{ '~auth.register'|trans }}</h4>
+                    <h4 class="card-title">Регистрация</h4>
 
                     {{ form_start(form) }}
                         {{ form_errors(form) }}
 
-                        {{ form_label(form.name, '~auth.name'|trans) }}
+                        {{ form_label(form.name, 'Имя') }}
                         {{ form_widget(form.name) }}
 
-                        {{ form_label(form.email, '~auth.email'|trans) }}
+                        {{ form_label(form.email, 'Емейл') }}
                         {{ form_widget(form.email) }}
 
-                        {{ form_label(form.plainPassword.first, '~auth.password'|trans) }}
+                        {{ form_label(form.plainPassword.first, 'Пароль') }}
                         {{ form_widget(form.plainPassword.first, {attr : {'data-eye': true}}) }}
 
-                        {{ form_label(form.plainPassword.second, '~auth.repeat_password'|trans) }}
+                        {{ form_label(form.plainPassword.second, 'Пароль еще раз') }}
                         {{ form_widget(form.plainPassword.second, {attr : {'data-eye': true}}) }}
 
                         {{ form_widget(form.termsAccepted ) }}
@@ -32,13 +32,13 @@
 
                         <div class="form-group m-0">
                             <button type="submit" class="btn btn-primary btn-block" formnovalidate>
-                                {{ '~auth.register'|trans }}
+                                {{ 'Создать аккаунт' }}
                             </button>
                         </div>
 
                         <div class="text-center mt-3">
-                            {{ '~auth.already_have_account'|trans }}
-                            <a href="{{ path('app_login') }}">{{ '~auth.login'|trans }}</a>
+                            {{ 'Уже есть аккаунт?' }}
+                            <a href="{{ path('app_login') }}">{{ 'Войти' }}</a>
                         </div>
 
                     {{ form_end(form) }}
