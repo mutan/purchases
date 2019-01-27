@@ -103,26 +103,28 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         $result = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
 
-        /** @var User $user */
-        if ($user->isNotActivated()) {
-            $user->setActivationToken($this->tokenGenerator->generateToken());
-            $this->manager->persist($user);
-            $this->manager->flush();
-            $this->mailer->sendUserRegisteredWithActivationEmailMessage($user);
-        }
+        if ($result) {
+            /** @var User $user */
+            if ($user->isNotActivated()) {
+                $user->setActivationToken($this->tokenGenerator->generateToken());
+                $this->manager->persist($user);
+                $this->manager->flush();
+                $this->mailer->sendUserRegisteredWithActivationEmailMessage($user);
+            }
 
-        if (!$user->isActive()) {
-            $messages = [
-                User::INACTIVE_REASON_BANNED        => '~auth.user.banned',
-                User::INACTIVE_REASON_NOT_ACTIVATED => '~auth.user.not_activated',
-                'unknown_reason'                    => '~auth.user.unknown_reason'
-            ];
+            if (!$user->isActive()) {
+                $messages = [
+                    User::INACTIVE_REASON_BANNED        => 'Ваш аккаунт заблокирован администрацией.',
+                    User::INACTIVE_REASON_NOT_ACTIVATED => 'Ваш аккаунт не был активирован после регистрации. Новое письмо с активационной ссылкой отправлено на ваш емейл.',
+                    'unknown_reason'                    => 'Пользователь не активен по неизвестной причине. Обратитесь к администратору.'
+                ];
 
-            $message = isset($messages[$user->getInactiveReason()])
-                ? $messages[$user->getInactiveReason()]
-                : $messages['unknown_reason'];
+                $message = isset($messages[$user->getInactiveReason()])
+                    ? $messages[$user->getInactiveReason()]
+                    : $messages['unknown_reason'];
 
-            throw new CustomUserMessageAuthenticationException($this->translator->trans($message));
+                throw new CustomUserMessageAuthenticationException($message);
+            }
         }
 
         return $result;
