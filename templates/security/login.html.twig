@@ -12,7 +12,8 @@
                     <form method="POST">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         {% if error %}
-                            <div class="text-danger mb-2">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {# Перевод messageKey в файле translations/messages.ru.yml #}
+                            <div class="invalid-feedback d-block mb-2">{{ error.messageKey|trans }}</div>
                         {% endif %}
 
                         <div class="form-group">
