@@ -140,7 +140,7 @@ class SecurityController extends BaseController
         string $token
     )
     {
-        $user = $userRepository->findOneWithProfileByActivationToken($token);
+        $user = $userRepository->findOneByActivationToken($token);
 
         if (!$user || !$user->getUserProfile()->isActivationTokenValid($token)) {
             throw new NotFoundHttpException("Activation token doesn't exist or is not valid");
@@ -221,7 +221,7 @@ class SecurityController extends BaseController
 
                 $token = $tokenGenerator->generateToken();
 
-                $user->setResetToken($token);
+                $user->getUserProfile()->setResetToken($token);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
@@ -273,12 +273,9 @@ class SecurityController extends BaseController
         }
 
         /** @var User $user */
-        $user = $userRepository->findOneBy([
-            'resetToken' => $token,
-            'status' => User::STATUS_ACTIVE
-        ]);
+        $user = $userRepository->findOneByResetToken($token);
 
-        if (!$user || !$user->isResetTokenValid($token)) {
+        if (!$user || !$user->getUserProfile()->isResetTokenValid($token)) {
             throw new NotFoundHttpException("Reset password token doesn't exist or is not valid");
         }
 
@@ -287,7 +284,7 @@ class SecurityController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // new and old passords must not match
+            // new and old passwords must not match
             if ($passwordEncoder->isPasswordValid($user, $user->getPlainPassword())) {
                 $form->addError(new FormError('Новый пароль должен отличаться от предыдущего.'));
                 return $this->render('security/reset.html.twig', [
@@ -296,14 +293,16 @@ class SecurityController extends BaseController
             }
 
             $user->setPassword($passwordEncoder->encodePassword($user, $user->getPlainPassword()));
-            $user->clearResetToken();
+            $user->getUserProfile()->clearResetToken();
 
             // Активируем пользователя, если он еще не активирован
             if ($user->isNotActivated()) {
                 $user->setStatus(User::STATUS_ACTIVE)
-                    ->setActivatedAt(new \DateTime())
-                    ->clearActivationToken()
-                    ->clearInactiveReason();
+                     ->clearInactiveReason();
+
+                $user->getUserProfile()
+                     ->setActivatedAt(new \DateTime())
+                     ->clearActivationToken();
 
                 $this->logger->info('User activated by reset password link', [
                     'user_id' => $user->getUsername()

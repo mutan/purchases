@@ -20,12 +20,23 @@ class UserRepository extends ServiceEntityRepository
     }
 
     // TODO add table user_profile, remove there: last_login_at, all reset/activation tokens
-    public function findOneWithProfileByActivationToken(?string $token): ?User
+    public function findOneByActivationToken(?string $token): ?User
     {
         return $this->createQueryBuilder('u')
             ->leftJoin('u.userProfile', 'up')
             ->addSelect('up')
             ->andWhere('up.activationToken = :token')
+            ->setParameter('token', $token)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneByResetToken(?string $token): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.userProfile', 'up')
+            ->addSelect('up')
+            ->andWhere('up.resetToken = :token')
             ->setParameter('token', $token)
             ->getQuery()
             ->getOneOrNullResult();
