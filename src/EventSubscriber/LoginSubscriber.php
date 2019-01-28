@@ -33,7 +33,12 @@ class LoginSubscriber implements EventSubscriberInterface
     {
         /** @var User $user */
         $user = $event->getAuthenticationToken()->getUser();
-        $user->setLastLoginAt(new \DateTime());
+        // TODO загружать пользователя с профилем
+        // https://symfony.com/doc/current/security/user_provider.html
+        // https://www.thinktocode.com/2018/10/25/custom-repository-user-provider-in-symfony/
+
+        //dump($user->getUserProfile()); die('ok');
+        $user->getUserProfile()->setLastLoginAt(new \DateTime());
 
         $this->manager->persist($user);
         $this->manager->flush();

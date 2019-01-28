@@ -112,11 +112,6 @@ class User implements UserInterface
     private $inactive_reason = self::INACTIVE_REASON_NOT_ACTIVATED;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $lastLoginAt;
-
-    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -276,18 +271,6 @@ class User implements UserInterface
     public function clearInactiveReason(): self
     {
         $this->inactive_reason = null;
-
-        return $this;
-    }
-
-    public function getLastLoginAt(): ?\DateTimeInterface
-    {
-        return $this->lastLoginAt;
-    }
-
-    public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): self
-    {
-        $this->lastLoginAt = $lastLoginAt;
 
         return $this;
     }
