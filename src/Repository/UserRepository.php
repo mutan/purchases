@@ -19,7 +19,6 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    // TODO add table user_profile, remove there: last_login_at, all reset/activation tokens
     public function findOneByActivationToken(?string $token): ?User
     {
         return $this->createQueryBuilder('u')
@@ -51,10 +50,7 @@ class UserRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('u');
 
         if ($term) {
-            $qb->andWhere('
-                    u.name LIKE :term OR
-                    u.email LIKE :term
-                ')
+            $qb->andWhere('u.name LIKE :term OR u.email LIKE :term')
                 ->setParameter('term', '%' . $term . '%')
             ;
         }
