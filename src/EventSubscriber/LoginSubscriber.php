@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Psr\Log\LoggerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,11 +17,13 @@ class LoginSubscriber implements EventSubscriberInterface
 {
     private $logger;
     private $manager;
+    private $userRepository;
 
-    public function __construct (LoggerInterface $logger, ObjectManager $manager)
+    public function __construct (LoggerInterface $logger, ObjectManager $manager, UserRepository $userRepository)
     {
         $this->logger = $logger;
         $this->manager = $manager;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -34,9 +37,10 @@ class LoginSubscriber implements EventSubscriberInterface
         /** @var User $user */
         $user = $event->getAuthenticationToken()->getUser();
 
-        //TODO присоединить к $user'у userProfile!!!
-        //dump($user); die('ok');
-        //$user->getUserProfile()->setLastLoginAt(new \DateTime());
+        //TODO а если !($user instanceof User) ???
+
+        $user = $this->userRepository->find($user->getId());
+        $user->getUserProfile()->setLastLoginAt(new \DateTime());
 
         $this->manager->persist($user);
         $this->manager->flush();
