@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\UserProfile;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -25,8 +26,6 @@ class UserFixtures extends BaseFixture
             $user->setEmail('akim_now@mail.ru');
             $user->setName('Akim');
             $user->setRoles([User::ROLE_ADMIN, User::ROLE_MODERATOR]);
-            // TODO
-            //$user->getUserProfile()->setLastLoginAt(new \DateTime('-1 day'));
             $user->setCreatedAt(new \DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
@@ -34,6 +33,7 @@ class UserFixtures extends BaseFixture
                 $user,
                 'secret1S'
             ));
+            $user->setUserProfile(new UserProfile());
 
             return $user;
         });
@@ -42,8 +42,6 @@ class UserFixtures extends BaseFixture
             $user = new User();
             $user->setEmail(sprintf('user%d@example.com', $i));
             $user->setName($this->faker->unique()->firstName);
-            // TODO
-            //$user->setLastLoginAt(new \DateTime('-1 day'));
             $user->setCreatedAt(new \DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
@@ -51,6 +49,7 @@ class UserFixtures extends BaseFixture
                 $user,
                 'secret1S'
             ));
+            $user->setUserProfile(new UserProfile());
 
             return $user;
         });
