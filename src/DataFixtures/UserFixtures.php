@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\UserAddress;
+use App\Entity\UserPassport;
 use App\Entity\UserProfile;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -51,9 +53,51 @@ class UserFixtures extends BaseFixture
             ));
             $user->setUserProfile(new UserProfile());
 
+            $userAddress = $this->createAddress();
+            $this->manager->persist($userAddress);
+            $user->addUserAddress($userAddress);
+
+            $userPassport = $this->createPassport();
+            $this->manager->persist($userPassport);
+            $user->addUserPassport($userPassport);
+
             return $user;
         });
 
         $manager->flush();
+    }
+
+    protected function createAddress(): UserAddress
+    {
+        $userAddress = new UserAddress();
+        $userAddress->setLastName($this->faker->lastName)
+                    ->setFirstName($this->faker->firstName)
+                    ->setMiddleName($this->faker->colorName)
+                    ->setCountry($this->faker->country)
+                    ->setPostCode($this->faker->postcode)
+                    ->setRegion($this->faker->state)
+                    ->setCity($this->faker->city)
+                    ->setStreet($this->faker->streetName)
+                    ->setHouse($this->faker->numberBetween(1, 100))
+                    ->setFlat($this->faker->numberBetween(1, 100))
+                    ->setPhone($this->faker->phoneNumber)
+                    ->setEmail($this->faker->email);
+
+        if ($this->faker->boolean(20)) $userAddress->setBuilding($this->faker->numberBetween(1, 3));
+
+        return $userAddress;
+    }
+
+    protected function createPassport(): UserPassport
+    {
+        $userPassport = new UserPassport();
+        $userPassport->setSeries($this->faker->numberBetween(1000, 9999))
+                     ->setNumber($this->faker->numberBetween(100000, 999999))
+                     ->setGiveBy($this->faker->sentence)
+                     ->setGiveDate($this->faker->dateTime())
+                     ->setBirthDate($this->faker->dateTime())
+                     ->setInn($this->faker->creditCardNumber);
+
+        return $userPassport;
     }
 }

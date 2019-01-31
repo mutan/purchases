@@ -112,6 +112,22 @@ class User implements UserInterface
     private $inactive_reason = self::INACTIVE_REASON_NOT_ACTIVATED;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserAddress", mappedBy="user")
+     */
+    private $userAddresses;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserPassport", mappedBy="user")
+     */
+    private $userPassports;
+
+    public function __construct()
+    {
+        $this->userAddresses = new ArrayCollection();
+        $this->userPassports = new ArrayCollection();
+    }
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -287,6 +303,68 @@ class User implements UserInterface
         // set the owning side of the relation if necessary
         if ($this !== $userProfile->getUser()) {
             $userProfile->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserAddress[]
+     */
+    public function getUserAddresses(): Collection
+    {
+        return $this->userAddresses;
+    }
+
+    public function addUserAddress(UserAddress $userAddress): self
+    {
+        if (!$this->userAddresses->contains($userAddress)) {
+            $this->userAddresses[] = $userAddress;
+            $userAddress->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserAddress(UserAddress $userAddress): self
+    {
+        if ($this->userAddresses->contains($userAddress)) {
+            $this->userAddresses->removeElement($userAddress);
+            // set the owning side to null (unless already changed)
+            if ($userAddress->getUser() === $this) {
+                $userAddress->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserPassport[]
+     */
+    public function getUserPassports(): Collection
+    {
+        return $this->userPassports;
+    }
+
+    public function addUserPassport(UserPassport $userPassport): self
+    {
+        if (!$this->userPassports->contains($userPassport)) {
+            $this->userPassports[] = $userPassport;
+            $userPassport->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserPassport(UserPassport $userPassport): self
+    {
+        if ($this->userPassports->contains($userPassport)) {
+            $this->userPassports->removeElement($userPassport);
+            // set the owning side to null (unless already changed)
+            if ($userPassport->getUser() === $this) {
+                $userPassport->setUser(null);
+            }
         }
 
         return $this;

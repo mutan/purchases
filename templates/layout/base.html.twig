@@ -9,18 +9,173 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
         <!-- Bootstrap core CSS -->
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
         <!-- Material Design Bootstrap -->
-        <link href="/css/mdb.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/css/mdb.min.css">
         <!-- Your custom styles (optional) -->
-        <link href="/css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="/css/style.css">
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
+    <body class="fixed-sn white-skin">
+
+    <!--Main Navigation-->
+    <header>
+
+        <!-- Sidebar navigation -->
+        <div id="slide-out" class="side-nav sn-bg-4 fixed">
+            <ul class="custom-scrollbar">
+                <!-- Logo -->
+                <li class="logo-sn waves-effect">
+                    <div class="text-center">
+                        <a href="#" class="pl-0"><img src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png" class=""></a>
+                    </div>
+                </li>
+                <!--/. Logo -->
+
+                <!--Search Form-->
+                <li>
+                    <form class="search-form" role="search">
+                        <div class="form-group md-form mt-0 pt-1 waves-light">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                    </form>
+                </li>
+                <!--/.Search Form-->
+                <!-- Side navigation links -->
+                <li>
+                    <ul class="collapsible collapsible-accordion">
+                        <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-tachometer-alt"></i>
+                                Dashboards<i class="fas fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="../dashboards/v-1.html" class="waves-effect">Version 1</a>
+                                    </li>
+                                    <li><a href="../dashboards/v-2.html" class="waves-effect">Version 2</a>
+                                    </li>
+                                    <li><a href="../dashboards/v-3.html" class="waves-effect">Version 3</a>
+                                    </li>
+                                    <li><a href="../dashboards/v-4.html" class="waves-effect">Version 4</a>
+                                    </li>
+                                    <li><a href="../dashboards/v-5.html" class="waves-effect">Version 5</a>
+                                    </li>
+                                    <li><a href="../dashboards/v-6.html" class="waves-effect">Version 6</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-image"></i> Pages<i class="fas fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="../pages/login.html" class="waves-effect">Login</a>
+                                    </li>
+                                    <li><a href="../pages/register.html" class="waves-effect">Register</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-user"></i> Profile<i class="fas fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="../profile/basic-1.html" class="waves-effect">Basic 1</a>
+                                    </li>
+                                    <li><a href="../profile/basic-2.html" class="waves-effect">Basic 2</a>
+                                    </li>
+                                    <li><a href="../profile/extended.html" class="waves-effect">Extended</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a class="collapsible-header waves-effect arrow-r"><i class="fab fa-css3"></i> CSS<i class="fas fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="../css/grid.html" class="waves-effect">Grid system</a>
+                                    </li>
+                                    <li><a href="../css/media.html" class="waves-effect">Media object</a>
+                                    </li>
+                                    <li><a href="../css/utilities.html" class="waves-effect">Utilities / helpers</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-th"></i> Components<i class="fas fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="../components/buttons.html" class="waves-effect">Buttons</a>
+                                    </li>
+                                    <li><a href="../components/cards.html" class="waves-effect">Cards</a>
+                                    </li>
+                                    <li><a href="../components/collapse.html" class="waves-effect">Collapse</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a class="collapsible-header waves-effect arrow-r"><i class="far fa-check-square"></i> Forms<i
+                                        class="fas fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="../forms/basic.html" class="waves-effect">Basic</a>
+                                    </li>
+                                    <li><a href="../forms/extended.html" class="waves-effect">Extended</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-table"></i> Tables<i class="fas fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="../tables/basic.html" class="waves-effect">Basic</a>
+                                    </li>
+                                    <li><a href="../tables/extended.html" class="waves-effect">Extended</a>
+                                    </li>
+                                    <li><a href="../tables/datatables.html" class="waves-effect">DataTables.net</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-map"></i> Maps<i class="fas fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="../maps/google.html" class="waves-effect">Google Maps</a>
+                                    </li>
+                                    <li><a href="../maps/full.html" class="waves-effect">Full screen map</a>
+                                    </li>
+                                    <li><a href="../maps/vector.html" class="waves-effect">Vector world map</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- Simple link -->
+                        <li><a href="../alerts/alerts.html" class="collapsible-header waves-effect"><i class=" far fa-bell"></i>
+                                Alerts</a></li>
+
+                        <li><a href="../modals/modals.html" class="collapsible-header waves-effect"><i class=" fas fa-bolt"></i>
+                                Modals</a></li>
+
+                        <li><a href="../charts/charts.html" class="collapsible-header waves-effect"><i class=" fas fa-chart-pie"></i>
+                                Charts</a></li>
+
+                        <li><a href="../calendar/calendar.html" class="collapsible-header waves-effect"><i class=" far fa-calendar-check"></i>
+                                Calendar</a></li>
+
+                        <li><a href="../sections/sections.html" class="collapsible-header waves-effect"><i class=" fas fa-th-large"></i>
+                                Sections</a></li>
+
+                    </ul>
+                </li>
+                <!--/. Side navigation links -->
+            </ul>
+            <div class="sidenav-bg mask-strong"></div>
+        </div>
+        <!--/. Sidebar navigation -->
 
         <!-- Navbar -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark mdb-color darken-3">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark mdb-color darken-3 scrolling-navbar">
             <div class="container">
+
+                <!-- SideNav slide-out button -->
+                <div class="float-left">
+                    <a href="" data-activates="slide-out" class="button-collapse black-text"><i class="fas fa-bars"></i></a>
+                </div>
 
                 <a class="navbar-brand" href="#" target="_blank">
                     <strong>Совместные покупки<span class="d-none d-md-inline"> в интернет-магазинах США</span></strong>
@@ -63,13 +218,13 @@
                             {% endif %}
                         </li>
 
-                    </ul>
-
-                </div>
-
-            </div>
+            </ul>
+            <!--/Navbar links-->
         </nav>
-        <!-- /Navbar -->
+        <!-- /.Navbar -->
+
+    </header>
+    <!--Main Navigation-->
 
         <main class="mt-5 pt-2">
             <!-- User switch -->
@@ -211,6 +366,15 @@
         <script type="text/javascript">
             // Animations initialization
             new WOW().init();
+            // SideNav Initialization
+            $(".button-collapse").sideNav();
+
+            var container = document.querySelector('.custom-scrollbar');
+            Ps.initialize(container, {
+                wheelSpeed: 2,
+                wheelPropagation: true,
+                minScrollbarLength: 20
+            });
         </script>
         {% block javascripts %}{% endblock %}
     </body>

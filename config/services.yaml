@@ -9,6 +9,7 @@ parameters:
     app_recaptcha_url: 'https://www.google.com/recaptcha/api.js'
     app_recaptcha_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     app_recaptcha_secret: '%env(GOOGLE_RECAPTCHA_SECRET)%'
+    locale: 'en'
 
 services:
     # default configuration for services in *this* file
