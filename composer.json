@@ -9,6 +9,7 @@
         "google/recaptcha": "^1.2",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/console": "*",
+        "symfony/dotenv": "*",
         "symfony/filesystem": "4.2.*",
         "symfony/flex": "^1.1",
         "symfony/form": "*",
@@ -21,7 +22,7 @@
         "symfony/validator": "*",
         "symfony/webpack-encore-pack": "^1.0",
         "symfony/yaml": "*",
-        "symfony/dotenv": "*"
+        "zendframework/zend-http": "^2.9"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
