@@ -11,13 +11,10 @@ class WelcomeController extends AbstractController
 {
     /**
      * @Route("/", name="app_homepage")
-     * @param ApiService $api
      * @return Response
      */
-    public function index(ApiService $api) : Response
+    public function index() : Response
     {
-        $api->call();
-
         return $this->render('welcome/index.html.twig', [
 
         ]);

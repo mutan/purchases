@@ -7,66 +7,75 @@
         <link rel="icon" href="/favicon.ico">
         <title>{% block title %}{% endblock %}</title>
         <!-- STYLES -->
+        {#<link rel="stylesheet" href="/css/font-awesome-5.6.3.all.css">#}
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/mdb.min.css">
         <link rel="stylesheet" href="/css/style.css">
         {% block stylesheets %}{% endblock %}
     </head>
-    <body class="fixed-sn light-blue-skin">
+    <body>
 
-    <!--Main Navigation-->
-    <header>
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark mdb-color darken-3">
+        <div class="container">
 
-        <!-- Navbar -->
-        <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg navbar-dark mdb-color darken-3 scrolling-navbar">
-
-            <a class="navbar-brand" href="/" target="_blank">
-                <span class="clearfix d-none d-sm-inline-block"><strong>Совместные покупки</strong></span>
+            <!-- Brand -->
+            <a class="navbar-brand" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
+                <strong>Совместные покупки</strong>
             </a>
 
-
-
-            {#<!-- Collapse -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <!-- Collapse -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!-- Links -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                111
-            </div>#}
 
+                <!-- Left -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">About MDB</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Free download</a></li>
+                </ul>
 
-
-
-            <ul class="nav navbar-nav nav-flex-icons ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link"><i class="fas fa-envelope"></i> <span class="clearfix d-none d-sm-inline-block">Contact</span></a>
-                </li>
-                {% if is_granted('ROLE_USER') %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
-                            <i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">{{ app.user.name }}</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="{{ path('app_logout') }}"><i class='fa fa-sign-out-alt'></i> Выйти</a>
-                        </div>
-                    </li>
-                {% else %}
+                <!-- Right -->
+                <ul class="navbar-nav nav-flex-icons">
+                    <li class="nav-item"><a href="/" class="nav-link"><i class="fab fa-facebook-f"></i></a></li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_login') }}"><i class='fa fa-sign-in-alt'></i> Войти</a>
+                        <a href="/" class="nav-link"><i class="fab fa-twitter"></i>
+                        </a>
                     </li>
-                {% endif %}
-            </ul>
+                    <li class="nav-item">
+                        <a href="/" class="nav-link"><i class="fab fa-github mr-2"></i></a>
+                    </li>
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                                <i class="fas fa-user"></i> <span class="clearfix d-none d-sm-inline-block">{{ app.user.name }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}"><i class='fa fa-sign-out-alt'></i> Выйти</a>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link border border-light rounded" href="{{ path('app_login') }}"><i class='fa fa-sign-in-alt'></i> Войти</a>
+                        </li>
+                    {% endif %}
+                </ul>
 
-        </nav>
-        <!-- /.Navbar -->
+            </div>
 
-    </header>
-    <!--Main Navigation-->
+        </div>
+    </nav>
+    <!-- Navbar -->
 
-        <main class="mt-5 pt-2">
+        <main class="mt-5 pt-4">
             <!-- User switch -->
             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                 <div class="alert alert-danger text-center mb-0"
@@ -91,7 +100,7 @@
             {% endfor %}
             <!-- /Flash messages -->
 
-            <div class="container mt-5">
+            <div class="container">
                 {% block body %}{% endblock %}
             </div>
         </main>
@@ -165,7 +174,6 @@
                         <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
                         <p><i class="fas fa-envelope mr-3"></i> info@example.com</p>
                         <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
-                        <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
                     </div>
 
                 </div>
@@ -184,19 +192,11 @@
         <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="/js/popper.min.js"></script>
         <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/js/mdb.js"></script>
+        <script type="text/javascript" src="/js/mdb.min.js"></script>
+        <!-- Initializations -->
         <script type="text/javascript">
             // Animations initialization
             new WOW().init();
-            // SideNav Initialization
-            $(".button-collapse").sideNav();
-
-            var container = document.querySelector('.custom-scrollbar');
-            Ps.initialize(container, {
-                wheelSpeed: 2,
-                wheelPropagation: true,
-                minScrollbarLength: 20
-            });
         </script>
         {% block javascripts %}{% endblock %}
     </body>
