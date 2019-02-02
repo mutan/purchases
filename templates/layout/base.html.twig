@@ -7,10 +7,10 @@
         <link rel="icon" href="/favicon.ico">
         <title>{% block title %} – promagic.ru{% endblock %}</title>
         <!-- STYLES -->
-        <link rel="stylesheet" href="/css/fontawesome-all.min.css"> {# 5.7.1 #}
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/mdb.min.css">
-        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="{{ asset('css/fontawesome-all.min.css') }}"> {# 5.7.1 #}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/mdb.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -182,10 +182,11 @@
         <!-- /Footer -->
 
         <!-- SCRIPTS -->
-        <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="/js/popper.min.js"></script>
-        <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/js/mdb.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
         <!-- Initializations -->
         <script type="text/javascript">
             // Animations initialization
