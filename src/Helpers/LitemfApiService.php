@@ -8,18 +8,15 @@ use Zend\Http\Request;
 
 class LitemfApiService
 {
-    const LITEMF_HOST    = 'https://api.litemf.com/v2/rpc';
-    const LITEMF_API_KEY = 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'; # LiteMF userId = 89276
-
     protected function call($method, $params)
     {
         $request = new Request();
         $request->getHeaders()->addHeaders([
             'Content-Type' => 'application/json',
-            'X-Auth-Api-Key' => self::LITEMF_API_KEY
+            'X-Auth-Api-Key' => getenv("LITEMF_API_KEY")
         ]);
         $request->setMethod(Request::METHOD_POST)
-                ->setUri(self::LITEMF_HOST)
+                ->setUri(getenv("LITEMF_API_HOST"))
                 ->setContent(json_encode([
                     'id' => uniqid(),
                     'method' => $method,
