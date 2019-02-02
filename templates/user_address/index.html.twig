@@ -1,0 +1,56 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block title %}Адреса{{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <h1>Адреса</h1>
+    <hr>
+
+    <section class="mt-3 pb-3">
+        <div class="row">
+            {% for user_address in user_addresses %}
+            <div class="col-lg-4 col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <table class="table table-borderless table-sm">
+                            <tr>
+                                <th><i class="fas fa-address-card"></i></th>
+                                <th>{{ user_address.fullName }}</th>
+                            </tr>
+                            <tr>
+                                <th><i class="fas fa-home"></i></th>
+                                <th>
+                                    {{ user_address.postCode }} {{ user_address.country }}<br>
+                                    {{ user_address.region }} {{ user_address.city }}<br>
+                                    {{ user_address.street }}
+                                    {%- if user_address.house is defined -%}, дом {{ user_address.house }}{%- endif -%}
+                                    {%- if (user_address.building) -%}, корп./стр. {{ user_address.building }}{%- endif -%}
+                                    {%- if user_address.flat is defined -%}, кв. {{ user_address.flat }}{%- endif -%}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th><i class="fas fa-phone"></i></th>
+                                <th>{{ user_address.phone }}</th>
+                            </tr>
+                            <tr>
+                                <th><i class="fas fa-envelope"></i></th>
+                                <th>{{ user_address.email }}</th>
+                            </tr>
+                        </table>
+                        <div class="text-muted d-flex">
+                            <div class="align-self-center font-small">ID #{{ user_address.id }}</div>
+                            <a class="ml-auto" href="{{ path('user_address_edit', {'id': user_address.id}) }}"><i class="fas fa-edit"></i></a>
+                            <a class="text-danger ml-3" href="#"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <p>Записей не найдено.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <a href="{{ path('user_address_new') }}">Создать</a>
+{% endblock %}

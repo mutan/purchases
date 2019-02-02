@@ -102,6 +102,10 @@ class UserAddress
      */
     private $status = self::STATUS_ACTIVE;
 
+    public function getFullName() {
+        return $this->getLastName() . ' ' . $this->getFirstName() . ' ' . $this->getMiddleName();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -1,0 +1,86 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block title %}Адрес{{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>UserAddress</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user_address.id }}</td>
+            </tr>
+            <tr>
+                <th>LastName</th>
+                <td>{{ user_address.lastName }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ user_address.firstName }}</td>
+            </tr>
+            <tr>
+                <th>MiddleName</th>
+                <td>{{ user_address.middleName }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ user_address.country }}</td>
+            </tr>
+            <tr>
+                <th>PostCode</th>
+                <td>{{ user_address.postCode }}</td>
+            </tr>
+            <tr>
+                <th>Region</th>
+                <td>{{ user_address.region }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ user_address.city }}</td>
+            </tr>
+            <tr>
+                <th>Street</th>
+                <td>{{ user_address.street }}</td>
+            </tr>
+            <tr>
+                <th>House</th>
+                <td>{{ user_address.house }}</td>
+            </tr>
+            <tr>
+                <th>Building</th>
+                <td>{{ user_address.building }}</td>
+            </tr>
+            <tr>
+                <th>Flat</th>
+                <td>{{ user_address.flat }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ user_address.phone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user_address.email }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ user_address.status }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ user_address.createdAt ? user_address.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ user_address.updatedAt ? user_address.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_address_index') }}">back to list</a>
+
+    <a href="{{ path('user_address_edit', {'id': user_address.id}) }}">edit</a>
+
+    {{ include('user_address/_delete_form.html.twig') }}
+{% endblock %}

@@ -16,6 +16,16 @@ footer hr {
     padding: .25rem 1.5rem;
 }
 
+.alert-fixed {
+    position:fixed;
+    margin-top: 55px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index:9999;
+    border-radius:0px
+}
+
 /* BOOTSTRAP BREAKPOINTS */
 /* Media queries for targeting a single segment of screen size  */
 

@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <link rel="icon" href="/favicon.ico">
-        <title>{% block title %}{% endblock %}</title>
-        <!-- STYLES -->view
+        <title>{% block title %} – promagic.ru{% endblock %}</title>
+        <!-- STYLES -->
         <link rel="stylesheet" href="/css/fontawesome-all.min.css"> {# 5.7.1 #}
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/mdb.min.css">
@@ -14,15 +14,21 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+    <!-- User switch -->
+    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+        <div class="alert alert-danger alert-fixed text-center mb-0" style="border-radius: 0; font-size: 0.9rem; padding: .3rem 1.25rem;">
+            You are currently switched to user <strong>{{ app.user.name }} ({{ app.user.email }})</strong>.
+            <a class="alert-link" href="{{ path('app_homepage', {'_switch_user' : '_exit'}) }}"> <i class="fas fa-sign-out-alt ml-2"></i> Exit</a>
+        </div>
+    {% endif %}
+    <!-- /User switch -->
 
     <!-- Navbar -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark mdb-color darken-3">
         <div class="container">
 
             <!-- Brand -->
-            <a class="navbar-brand" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
-                <strong>Совместные покупки</strong>
-            </a>
+            <a class="navbar-brand" href="/"><strong>Совместные покупки</strong></a>
 
             <!-- Collapse -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent">
@@ -34,9 +40,15 @@
 
                 <!-- Left -->
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" href="#">Заказы</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/">Адреса</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/">Паспорта</a></li>
+                    <li class="nav-item {% if app.request.get('_route') == 'app_homepage' %}active{% endif %}">
+                        <a class="nav-link" href="/">Заказы</a>
+                    </li>
+                    <li class="nav-item {% if app.request.get('_route') == 'user_address_index' %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('user_address_index') }}">Адреса</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Паспорта</a>
+                    </li>
                 </ul>
 
                 <!-- Right -->
@@ -67,18 +79,7 @@
     </nav>
     <!-- Navbar -->
 
-        <main class="mt-5 pt-4">
-            <!-- User switch -->
-            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                <div class="alert alert-danger text-center mb-0"
-                     style="border-radius: 0; font-size: 0.9rem; padding: .3rem 1.25rem;"
-                >
-                    You are currently switched to user <strong>{{ app.user.name }} ({{ app.user.email }})</strong>.
-                    <a class="alert-link" href="{{ path('app_homepage', {'_switch_user' : '_exit'}) }}"> <i class="fas fa-sign-out-alt ml-2"></i> Exit</a>
-                </div>
-            {% endif %}
-            <!-- /User switch -->
-
+        <main style="padding-top: {%- if is_granted('ROLE_PREVIOUS_ADMIN') -%}78px{%- else -%}57px{%- endif -%}">
             <!-- Flash messages -->
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
@@ -92,7 +93,7 @@
             {% endfor %}
             <!-- /Flash messages -->
 
-            <div class="container">
+            <div class="container mt-4">
                 {% block body %}{% endblock %}
             </div>
         </main>
