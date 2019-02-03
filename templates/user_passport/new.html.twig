@@ -2,17 +2,17 @@
 
 {% form_theme form 'form/errors.html.twig' %}
 
-{% block title %}Добавить адрес{{ parent() }}{% endblock %}
+{% block title %}Добавить пасспорт{{ parent() }}{% endblock %}
 
 {% block body %}
     {{ form_start(form) }}
 
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-6">
-            <h1 class="align-self-center">Добавить адрес</h1>
+            <h1 class="align-self-center">Добавить паспорт</h1>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6 text-right">
-            <a class="btn btn-mdb-color" href="{{ path('user_address_index') }}">
+            <a class="btn btn-mdb-color" href="{{ path('user_passport_index') }}">
                 <i class="fa fa-arrow-left pr-1"></i> Вернуться к списку
             </a>
             <button class="btn btn-dark-green" type="submit" formnovalidate>
@@ -22,5 +22,5 @@
     </div>
     <hr>
 
-    {{ include('user_address/_form.html.twig') }}
+    {{ include('user_passport/_form.html.twig') }}
 {% endblock %}

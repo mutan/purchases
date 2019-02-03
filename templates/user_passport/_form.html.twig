@@ -1,0 +1,39 @@
+    {{ form_errors(form) }}
+
+    <div class="form-row">
+        <div class="form-group col-sm-12 col-md-6 col-lg-3">
+            {{ form_label(form.series, 'Серия') }}
+            {{ form_widget(form.series, {'attr': {'class': 'form-control-sm'}}) }}
+            {{ form_help(form.series) }}
+        </div>
+        <div class="form-group col-sm-12 col-md-6 col-lg-3">
+            {{ form_label(form.number, 'Номер') }}
+            {{ form_widget(form.number, {'attr': {'class': 'form-control-sm'}}) }}
+            {{ form_help(form.number) }}
+        </div>
+        <div class="form-group col-sm-12 col-md-6 col-lg-3">
+            {{ form_label(form.inn, 'ИНН') }}
+            {{ form_widget(form.inn, {'attr': {'class': 'form-control-sm'}}) }}
+            {{ form_help(form.inn) }}
+        </div>
+        <div class="form-group col-sm-12 col-md-6 col-lg-3">
+            {{ form_label(form.birthDate, 'Дата рождения') }}
+            {{ form_widget(form.birthDate, {'attr': {'class': 'form-control-sm js-datepicker'}}) }}
+            {{ form_help(form.birthDate) }}
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-sm-12 col-md-6 col-lg-9">
+            {{ form_label(form.giveBy, 'Кем выдан') }}
+            {{ form_widget(form.giveBy, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+        <div class="form-group col-sm-12 col-md-6 col-lg-3">
+            {{ form_label(form.giveDate, 'Дата выдачи') }}
+            {{ form_widget(form.giveDate, {'attr': {'class': 'form-control-sm js-datepicker'}}) }}
+            {{ form_help(form.giveDate) }}
+        </div>
+    </div>
+
+    {{ form_widget(form) }}
+{{ form_end(form) }}

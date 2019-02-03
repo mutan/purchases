@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserPassportRepository")
@@ -34,31 +35,42 @@ class UserPassport
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Regex(pattern="/^\d{4}$/", message="~regexp.only-digits")
      */
     private $series;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Regex(pattern="/^\d{6}$/", message="~regexp.only-digits")
      */
     private $number;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $giveBy;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Date
      */
     private $giveDate;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Date
      */
     private $birthDate;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Regex(pattern="/^\d{12}$/", message="~regexp.only-digits")
      */
     private $inn;
 
@@ -66,6 +78,11 @@ class UserPassport
      * @ORM\Column(type="string", length=255)
      */
     private $status = self::STATUS_ACTIVE;
+
+    public function isActive()
+    {
+        return $this->getStatus() == self::STATUS_ACTIVE;
+    }
 
     public function getId(): ?int
     {
@@ -113,7 +130,7 @@ class UserPassport
         return $this->giveDate;
     }
 
-    public function setGiveDate(\DateTimeInterface $giveDate): self
+    public function setGiveDate(?\DateTimeInterface $giveDate): self
     {
         $this->giveDate = $giveDate;
 
@@ -125,7 +142,7 @@ class UserPassport
         return $this->birthDate;
     }
 
-    public function setBirthDate(\DateTimeInterface $birthDate): self
+    public function setBirthDate(?\DateTimeInterface $birthDate): self
     {
         $this->birthDate = $birthDate;
 

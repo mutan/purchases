@@ -1,0 +1,54 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block title %}Паспорта{{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-sm-12 col-md-9">
+            <h1 class="align-self-center">Паспорта</h1>
+        </div>
+        <div class="col-sm-12 col-md-3 text-right">
+            <a class="btn btn-block btn-dark-green" href="{{ path('user_passport_new') }}" style="min-width: 145px">
+                <i class="fa fa-plus-square pr-1"></i> Создать
+            </a>
+        </div>
+    </div>
+    <hr>
+
+    <section class="mt-3 pb-3">
+        <div class="row">
+            {% for user_passport in user_passports %}
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="card border-mdb mb-4">
+                        <div class="card-body">
+                            <table class="table table-borderless table-sm mb-0">
+                                <tr>
+                                    <th><i class="fas fa-address-card"></i></th>
+                                    <th>
+                                        <strong>Серия:</strong> {{ user_passport.series }}<br>
+                                        <strong>Номер:</strong> {{ user_passport.number }}<br>
+                                        <strong>Дата выдачи:</strong> {{ user_passport.giveDate ? user_passport.giveDate|date('d-m-Y') : '' }}<br>
+                                        <strong>Кем выдан:</strong> {{ user_passport.giveBy }}<br>
+                                        <strong>Дата рождения:</strong> {{ user_passport.birthDate ? user_passport.birthDate|date('d-m-Y') : '' }}<br>
+                                        <strong>ИНН:</strong> {{ user_passport.inn }}
+                                    </th>
+                                </tr>
+                            </table>
+                            <div class="text-muted d-flex">
+                                <div class="align-self-center font-small">Паспорт ID {{ user_passport.id }}</div>
+                                <a class="btn btn-sm btn-narrow btn-mdb-color darken-3 ml-auto" href="{{ path('user_passport_edit', {'id': user_passport.id}) }}"><i class="fas fa-edit"></i></a>
+                                {{ include('user_passport/_delete_form.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+            <div class="col-12">
+                <p>Записей не найдено.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}

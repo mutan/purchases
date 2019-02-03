@@ -24,13 +24,13 @@ class UserAddressController extends AbstractController
     {
         $user = $this->getUser();
 
-        $userAddress = $userAddressRepository->findBy([
+        $userAddresses = $userAddressRepository->findBy([
             'user'   => $user,
             'status' => UserAddress::STATUS_ACTIVE
         ]);
 
         return $this->render('user_address/index.html.twig', [
-            'user_addresses' => $userAddress,
+            'user_addresses' => $userAddresses,
         ]);
     }
 

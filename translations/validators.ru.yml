@@ -1,2 +1,4 @@
 # constraints
 ~not_blank: Это поле не должно быть пустым.
+~regexp:
+  only-digits: В этом поле должны быть только цифры.
