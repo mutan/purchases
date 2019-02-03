@@ -4,25 +4,28 @@
 
 {% block body %}
 
-
-
-
-    <div class="d-flex">
-        <h1 class="align-self-center mb-0">Адреса</h1>
-        <a class="btn btn-primary align-self-center ml-auto" href="{{ path('user_address_new') }}"><i class="fa fa-plus-square"></i> Создать</a>
+    <div class="row">
+        <div class="col-sm-12 col-md-9">
+            <h1 class="align-self-center">Адреса</h1>
+        </div>
+        <div class="col-sm-12 col-md-3 text-right">
+            <a class="btn btn-block btn-dark-green" href="{{ path('user_address_new') }}" style="min-width: 145px">
+                <i class="fa fa-plus-square pr-1"></i> Создать
+            </a>
+        </div>
     </div>
     <hr>
 
     <section class="mt-3 pb-3">
         <div class="row">
             {% for user_address in user_addresses %}
-            <div class="col-lg-4 col-md-12">
-                <div class="card mb-4">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card border-mdb mb-4">
                     <div class="card-body">
                         <table class="table table-borderless table-sm">
                             <tr>
                                 <th><i class="fas fa-address-card"></i></th>
-                                <th>{{ user_address.fullName }}</th>
+                                <th>{{ user_address.lastName|upper }} {{ user_address.firstName }} {{ user_address.middleName }}</th>
                             </tr>
                             <tr>
                                 <th><i class="fas fa-home"></i></th>
@@ -46,8 +49,8 @@
                         </table>
                         <div class="text-muted d-flex">
                             <div class="align-self-center font-small">ID #{{ user_address.id }}</div>
-                            <a class="ml-auto" href="{{ path('user_address_edit', {'id': user_address.id}) }}"><i class="fas fa-edit"></i></a>
-                            <a class="text-danger ml-3" href="#"><i class="fas fa-trash"></i></a>
+                            <a class="btn btn-sm btn-narrow btn-mdb-color darken-3 ml-auto" href="{{ path('user_address_edit', {'id': user_address.id}) }}"><i class="fas fa-edit"></i></a>
+                            {{ include('user_address/_delete_form.html.twig') }}
                         </div>
                     </div>
                 </div>

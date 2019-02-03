@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Psr\Log\LoggerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -37,7 +38,9 @@ class LoginSubscriber implements EventSubscriberInterface
         /** @var User $user */
         $user = $event->getAuthenticationToken()->getUser();
 
-        //TODO а если !($user instanceof User) ???
+        if (!$user instanceof UserInterface) {
+            return;
+        }
 
         $user = $this->userRepository->find($user->getId());
         $user->getUserProfile()->setLastLoginAt(new \DateTime());

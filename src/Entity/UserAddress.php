@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserAddressRepository")
@@ -34,46 +35,56 @@ class UserAddress
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
+     *
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $middleName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $postCode;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $region;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $street;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $house;
 
@@ -83,17 +94,20 @@ class UserAddress
     private $building;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $flat;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Email(message="Введите существующий емейл.")
      */
     private $email;
 
@@ -102,8 +116,9 @@ class UserAddress
      */
     private $status = self::STATUS_ACTIVE;
 
-    public function getFullName() {
-        return $this->getLastName() . ' ' . $this->getFirstName() . ' ' . $this->getMiddleName();
+    public function isActive()
+    {
+        return $this->getStatus() == self::STATUS_ACTIVE;
     }
 
     public function getId(): ?int
@@ -116,7 +131,7 @@ class UserAddress
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): self
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
 
@@ -128,7 +143,7 @@ class UserAddress
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
 
@@ -140,7 +155,7 @@ class UserAddress
         return $this->middleName;
     }
 
-    public function setMiddleName(string $middleName): self
+    public function setMiddleName(?string $middleName): self
     {
         $this->middleName = $middleName;
 
@@ -152,7 +167,7 @@ class UserAddress
         return $this->country;
     }
 
-    public function setCountry(string $country): self
+    public function setCountry(?string $country): self
     {
         $this->country = $country;
 
@@ -164,7 +179,7 @@ class UserAddress
         return $this->postCode;
     }
 
-    public function setPostCode(string $postCode): self
+    public function setPostCode(?string $postCode): self
     {
         $this->postCode = $postCode;
 
@@ -176,7 +191,7 @@ class UserAddress
         return $this->region;
     }
 
-    public function setRegion(string $region): self
+    public function setRegion(?string $region): self
     {
         $this->region = $region;
 
@@ -188,7 +203,7 @@ class UserAddress
         return $this->city;
     }
 
-    public function setCity(string $city): self
+    public function setCity(?string $city): self
     {
         $this->city = $city;
 
@@ -200,7 +215,7 @@ class UserAddress
         return $this->street;
     }
 
-    public function setStreet(string $street): self
+    public function setStreet(?string $street): self
     {
         $this->street = $street;
 
@@ -212,7 +227,7 @@ class UserAddress
         return $this->house;
     }
 
-    public function setHouse(string $house): self
+    public function setHouse(?string $house): self
     {
         $this->house = $house;
 
@@ -224,7 +239,7 @@ class UserAddress
         return $this->building;
     }
 
-    public function setBuilding(string $building): self
+    public function setBuilding(?string $building): self
     {
         $this->building = $building;
 
@@ -236,7 +251,7 @@ class UserAddress
         return $this->flat;
     }
 
-    public function setFlat(string $flat): self
+    public function setFlat(?string $flat): self
     {
         $this->flat = $flat;
 
@@ -248,7 +263,7 @@ class UserAddress
         return $this->phone;
     }
 
-    public function setPhone(string $phone): self
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 
@@ -260,7 +275,7 @@ class UserAddress
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 

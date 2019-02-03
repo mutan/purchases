@@ -26,6 +26,10 @@ footer hr {
     border-radius:0px
 }
 
+.btn.btn-sm.btn-narrow {
+    padding: .5rem 1rem;
+}
+
 /* BOOTSTRAP BREAKPOINTS */
 /* Media queries for targeting a single segment of screen size  */
 
@@ -36,6 +40,10 @@ footer hr {
     .card-wrapper.auth .card .card-body{
         padding-top: unset;
         padding-bottom: unset;
+    }
+
+    .btn {
+        padding: .84rem 1.14rem;
     }
 }
 
