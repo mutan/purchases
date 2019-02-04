@@ -1,9 +1,19 @@
-<!DOCTYPE html>
+{% extends 'layout/base.html.twig' %}
 
-<title>Basket</title>
+{% block title %}Заказ{{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Basket</h1>
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <h1 class="align-self-center">Редактировать заказ</h1>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 text-right">
+            <a class="btn btn-mdb-color" href="{{ path('basket_index') }}">
+                <i class="fa fa-arrow-left pr-1"></i> Вернуться к списку
+            </a>
+        </div>
+    </div>
+    <hr>
 
     <table class="table">
         <tbody>

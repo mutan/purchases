@@ -1,9 +1,19 @@
-<!DOCTYPE html>
+{% extends 'layout/base.html.twig' %}
 
-<title>Basket index</title>
+{% block title %}Заказы{{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Basket index</h1>
+    <div class="row">
+        <div class="col-sm-12 col-md-9">
+            <h1 class="align-self-center">Заказы</h1>
+        </div>
+        <div class="col-sm-12 col-md-3 text-right">
+            <a class="btn btn-block btn-dark-green" href="{{ path('basket_new') }}" style="min-width: 145px">
+                <i class="fa fa-plus-square pr-1"></i> Создать
+            </a>
+        </div>
+    </div>
+    <hr>
 
     <table class="table">
         <thead>
@@ -29,11 +39,9 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Записей не найдено.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('basket_new') }}">Create new</a>
 {% endblock %}

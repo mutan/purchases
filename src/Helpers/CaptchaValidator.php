@@ -4,6 +4,8 @@ namespace App\Helpers;
 
 use ReCaptcha\ReCaptcha;
 
+// TODO настроить рекапчу https://www.google.com/recaptcha/admin
+
 class CaptchaValidator
 {
     private $key;

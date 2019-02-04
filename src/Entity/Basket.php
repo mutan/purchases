@@ -54,6 +54,11 @@ class Basket
         return $this->id;
     }
 
+    public function getIdWithPrefix()
+    {
+        return 'O' . $this->id;
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -131,5 +136,10 @@ class Basket
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getIdWithPrefix();
     }
 }

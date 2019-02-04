@@ -2,14 +2,14 @@
 
 {% form_theme form 'form/errors.html.twig' %}
 
-{% block title %}Добавить адрес{{ parent() }}{% endblock %}
+{% block title %}Добавить заказ{{ parent() }}{% endblock %}
 
 {% block body %}
     {{ form_start(form) }}
 
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-6">
-            <h1 class="align-self-center">Добавить адрес</h1>
+            <h1 class="align-self-center">Добавить заказ</h1>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6 text-right">
             <a class="btn btn-mdb-color" href="{{ path('user_address_index') }}">

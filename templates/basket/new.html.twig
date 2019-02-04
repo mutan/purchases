@@ -1,11 +1,26 @@
-<!DOCTYPE html>
+{% extends 'layout/base.html.twig' %}
 
-<title>New Basket</title>
+{% form_theme form 'form/errors.html.twig' %}
+
+{% block title %}Добавить заказ{{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Create new Basket</h1>
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <h1 class="align-self-center">Добавить заказ</h1>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 text-right">
+            <a class="btn btn-mdb-color" href="{{ path('basket_index') }}">
+                <i class="fa fa-arrow-left pr-1"></i> Вернуться к списку
+            </a>
+            <button class="btn btn-dark-green" type="submit" formnovalidate>
+                <i class="fa fa-plus-square pr-1"></i> {{ button_label|default('Сохранить') }}
+            </button>
+        </div>
+    </div>
+    <hr>
 
     {{ include('basket/_form.html.twig') }}
-
-    <a href="{{ path('basket_index') }}">back to list</a>
 {% endblock %}

@@ -38,27 +38,27 @@ class LitemfApiService
         $this->call('getCountry', $params);
     }
 
-    public function createAddress(UserAddress $userAddrss, UserPassport $userPassport)
+    public function createAddress(UserAddress $userAddress, UserPassport $userPassport)
     {
         $params = [];
 
         $data['format'] = 'separated';
         $data['name'] = [
-            'last_name'   => $userAddrss->getLastName(),
-            'first_name'  => $userAddrss->getFirstName(),
-            'middle_name' => $userAddrss->getMiddleName(),
+            'last_name'   => $userAddress->getLastName(),
+            'first_name'  => $userAddress->getFirstName(),
+            'middle_name' => $userAddress->getMiddleName(),
         ];
         $data['delivery_country'] = 3159;
         $data['first_line'] = [
-            'street' => $userAddrss->getStreet(),
-            'house'  => $userAddrss->getHouse()
+            'street' => $userAddress->getStreet(),
+            'house'  => $userAddress->getHouse()
         ];
-        $data['flat']     = $userAddrss->getFlat();
-        $data['city']     = $userAddrss->getCity();
-        $data['region']   = $userAddrss->getRegion();
-        $data['zip_code'] = $userAddrss->getPostCode();
-        $data['phone']    = $userAddrss->getPhone();
-        $data['email']    = $userAddrss->getEmail();
+        $data['flat']     = $userAddress->getFlat();
+        $data['city']     = $userAddress->getCity();
+        $data['region']   = $userAddress->getRegion();
+        $data['zip_code'] = $userAddress->getPostCode();
+        $data['phone']    = $userAddress->getPhone();
+        $data['email']    = $userAddress->getEmail();
 
         $data['passport'] = [
             'series'     => $userPassport->getSeries(),
