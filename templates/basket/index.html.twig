@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<title>Basket index</title>
+
+{% block body %}
+    <h1>Basket index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Active_reason</th>
+                <th>Inactive_reason</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for basket in baskets %}
+            <tr>
+                <td>{{ basket.id }}</td>
+                <td>{{ basket.status }}</td>
+                <td>{{ basket.activeReason }}</td>
+                <td>{{ basket.inactiveReason }}</td>
+                <td>
+                    <a href="{{ path('basket_show', {'id': basket.id}) }}">show</a>
+                    <a href="{{ path('basket_edit', {'id': basket.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('basket_new') }}">Create new</a>
+{% endblock %}
