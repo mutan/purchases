@@ -448,4 +448,9 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return "{$this->getName()} ({$this->getEmail()})";
+    }
 }
