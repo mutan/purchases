@@ -65,7 +65,9 @@ class LitemfApiService
             'number'     => $userPassport->getNumber(),
             'issue_date' => $userPassport->getGiveDate()->format('Y-m-d'),
             'issued_by'  => $userPassport->getGiveBy(),
+            'birth_date' => $userPassport->getBirthDate()->format('Y-m-d'),
             'inn'        => $userPassport->getInn(),
+            'status'     => 'confirmed',
         ];
 
         $params['data'] = $data;
