@@ -122,11 +122,6 @@ class User implements UserInterface
     private $userPassports;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user", orphanRemoval=true)
-     */
-    private $orders;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="user", orphanRemoval=true)
      */
     private $products;
@@ -140,7 +135,6 @@ class User implements UserInterface
     {
         $this->userAddresses = new ArrayCollection();
         $this->userPassports = new ArrayCollection();
-        $this->orders = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->baskets = new ArrayCollection();
     }
@@ -387,37 +381,6 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userPassport->getUser() === $this) {
                 $userPassport->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Order[]
-     */
-    public function getOrders(): Collection
-    {
-        return $this->orders;
-    }
-
-    public function addOrder(Order $order): self
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Order $order): self
-    {
-        if ($this->orders->contains($order)) {
-            $this->orders->removeElement($order);
-            // set the owning side to null (unless already changed)
-            if ($order->getUser() === $this) {
-                $order->setUser(null);
             }
         }
 
