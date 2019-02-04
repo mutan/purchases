@@ -21,7 +21,7 @@ class WelcomeController extends AbstractController
         $userAddres   = $userAddressRepository->find(2);
         $userPassport = $userPassportRepository->find(12);
 
-        $litemfApiService->createAddress($userAddres, $userPassport);
+        //$litemfApiService->createAddress($userAddres, $userPassport);
 
         return $this->render('welcome/index.html.twig', [
 

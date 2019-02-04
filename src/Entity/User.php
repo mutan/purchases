@@ -131,12 +131,18 @@ class User implements UserInterface
      */
     private $products;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Basket", mappedBy="user", orphanRemoval=true)
+     */
+    private $baskets;
+
     public function __construct()
     {
         $this->userAddresses = new ArrayCollection();
         $this->userPassports = new ArrayCollection();
         $this->orders = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->baskets = new ArrayCollection();
     }
 
     /**
@@ -443,6 +449,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($product->getUser() === $this) {
                 $product->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Basket[]
+     */
+    public function getBaskets(): Collection
+    {
+        return $this->baskets;
+    }
+
+    public function addBasket(Basket $basket): self
+    {
+        if (!$this->baskets->contains($basket)) {
+            $this->baskets[] = $basket;
+            $basket->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBasket(Basket $basket): self
+    {
+        if ($this->baskets->contains($basket)) {
+            $this->baskets->removeElement($basket);
+            // set the owning side to null (unless already changed)
+            if ($basket->getUser() === $this) {
+                $basket->setUser(null);
             }
         }
 

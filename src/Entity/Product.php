@@ -29,6 +29,18 @@ class Product
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Basket", inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $basket;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -57,12 +69,6 @@ class Product
      * @ORM\Column(type="text", nullable=true)
      */
     private $comment;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -171,6 +177,18 @@ class Product
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getBasket(): ?Basket
+    {
+        return $this->basket;
+    }
+
+    public function setBasket(?Basket $basket): self
+    {
+        $this->basket = $basket;
 
         return $this;
     }
