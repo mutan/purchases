@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UserTokenTrait;
 use Doctrine\ORM\Mapping as ORM;
+
+// TODO переделать в ManyToOne
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserProfileRepository")
@@ -28,7 +31,7 @@ class UserProfile
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $lastLoginAt;
+    private $lastLoginDate;
 
     public function getId(): ?int
     {
@@ -47,14 +50,14 @@ class UserProfile
         return $this;
     }
 
-    public function getLastLoginAt(): ?\DateTimeInterface
+    public function getLastLoginDate(): ?\DateTimeInterface
     {
-        return $this->lastLoginAt;
+        return $this->lastLoginDate;
     }
 
-    public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): self
+    public function setLastLoginDate(?\DateTimeInterface $lastLoginDate): self
     {
-        $this->lastLoginAt = $lastLoginAt;
+        $this->lastLoginDate = $lastLoginDate;
 
         return $this;
     }

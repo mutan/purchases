@@ -2,15 +2,33 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BasketRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Basket
 {
+    use TimestampableTrait;
+
+    const STATUS_NEW       = 'new';
+    const STATUS_REDEEMED  = 'redeemed';
+    const STATUS_BOUGHT    = 'bought';
+    const STATUS_CANCELLED = 'cancelled';
+    const STATUS_DELETED   = 'deleted';
+
+    const ALLOWED_STATUSES = [
+        self::STATUS_NEW,
+        self::STATUS_REDEEMED,
+        self::STATUS_BOUGHT,
+        self::STATUS_CANCELLED,
+        self::STATUS_DELETED,
+    ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -30,19 +48,14 @@ class Basket
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $active_reason;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $inactive_reason;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="basket", orphanRemoval=true)
      */
     private $products;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $boughtDate;
 
     public function __construct()
     {
@@ -141,5 +154,29 @@ class Basket
     public function __toString()
     {
         return $this->getIdWithPrefix();
+    }
+
+    public function getCreateDate(): ?\DateTimeInterface
+    {
+        return $this->createDate;
+    }
+
+    public function setCreateDate(?\DateTimeInterface $createDate): self
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    public function getBoughtDate(): ?\DateTimeInterface
+    {
+        return $this->boughtDate;
+    }
+
+    public function setBoughtDate(?\DateTimeInterface $boughtDate): self
+    {
+        $this->boughtDate = $boughtDate;
+
+        return $this;
     }
 }

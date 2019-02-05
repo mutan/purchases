@@ -31,7 +31,7 @@ class UserAddressVoter extends Voter
             case 'USER_ADDRESS_MANAGE':
                 // logic to determine if the user can EDIT
                 // return true or false
-                if ($subject->getUser() == $user && $subject->isActive()) {
+                if ($subject->getUser() == $user && $subject->isNew()) {
                     return true;
                 }
                 break;

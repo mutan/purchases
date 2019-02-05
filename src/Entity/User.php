@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,7 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface
 {
-    use TimestampableEntityTrait;
+    use TimestampableTrait;
 
     const ROLE_USER       = 'ROLE_USER';
     const ROLE_MODERATOR  = 'ROLE_MODERATOR';

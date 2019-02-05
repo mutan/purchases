@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,14 +11,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class UserAddress
 {
-    use TimestampableEntityTrait;
+    use TimestampableTrait;
 
-    const STATUS_ACTIVE   = 'active';
-    const STATUS_INACTIVE = 'inactive';
+    const STATUS_NEW      = 'new';
+    const STATUS_APPROVED = 'approved';
+    const STATUS_DELETED  = 'deleted';
 
     const ALLOWED_STATUSES = [
-        self::STATUS_ACTIVE,
-        self::STATUS_INACTIVE,
+        self::STATUS_NEW,
+        self::STATUS_APPROVED,
+        self::STATUS_DELETED,
     ];
 
     /**
@@ -114,11 +117,21 @@ class UserAddress
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $status = self::STATUS_ACTIVE;
+    private $status = self::STATUS_NEW;
 
-    public function isActive()
+    public function isNew()
     {
-        return $this->getStatus() == self::STATUS_ACTIVE;
+        return $this->getStatus() == self::STATUS_NEW;
+    }
+
+    public function isApproved()
+    {
+        return $this->getStatus() == self::STATUS_APPROVED;
+    }
+
+    public function isDeleted()
+    {
+        return $this->getStatus() == self::STATUS_DELETED;
     }
 
     public function getId(): ?int

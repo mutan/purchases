@@ -25,7 +25,7 @@ class UserPassportVoter extends Voter
         /** @var UserPassport $subject */
         switch ($attribute) {
             case 'USER_PASSPORT_MANAGE':
-                if ($subject->getUser() == $user && $subject->isActive()) return true;
+                if ($subject->getUser() == $user && $subject->isNew()) return true;
                 break;
         }
 

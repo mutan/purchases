@@ -10,16 +10,15 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class RebuildDatabase extends Command
 {
-    protected static $defaultName = 'app:rebuild-database';
-
     protected function configure()
     {
-        $this->setDescription('Rebuilds database. Only in development.');
+        $this
+            ->setName('app:rebuild-database') # php bin/console app:rebuild-database
+            ->setDescription('Rebuilds database. Works only on development.')
+            ->setHelp('This command allows you to consequentially drop, create and then re-fill the database with fake data. Works only on development.');
     }
 
     /**
-     * Запускать: php bin/console app:rebuild-database
-     *
      * Выполняет последовательно следующие команды:
      * php bin/console doctrine:database:drop --force
      * php bin/console doctrine:database:create

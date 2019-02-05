@@ -43,7 +43,7 @@ class LoginSubscriber implements EventSubscriberInterface
         }
 
         $user = $this->userRepository->find($user->getId());
-        $user->getUserProfile()->setLastLoginAt(new \DateTime());
+        $user->getUserProfile()->setLastLoginDate(new \DateTime());
 
         $this->manager->persist($user);
         $this->manager->flush();

@@ -2,14 +2,16 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Product
 {
-    use TimestampableEntityTrait;
+    use TimestampableTrait;
 
     const STATUS_ACTIVE   = 'active'; // готов к покупке
     const STATUS_DELETED  = 'deleted'; // удален по инициативе пользователя
@@ -58,6 +60,11 @@ class Product
     /**
      * @ORM\Column(type="float")
      */
+    private $userPrice;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
     private $price;
 
     /**
@@ -105,6 +112,18 @@ class Product
     public function setUrl(string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getUserPrice(): ?float
+    {
+        return $this->userPrice;
+    }
+
+    public function setUserPrice(float $userPrice): self
+    {
+        $this->userPrice = $userPrice;
 
         return $this;
     }
