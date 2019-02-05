@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <link rel="icon" href="/favicon.ico">
-        <title>{% block title %} – promagic.ru{% endblock %}</title>
-        <!-- STYLES -->
-        <link rel="stylesheet" href="{{ asset('css/fontawesome-all.min.css') }}"> {# 5.7.1 #}
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/mdb.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" href="/favicon.ico">
+    <title>{% block title %} – promagic.ru{% endblock %}</title>
+    <!-- STYLES -->
+    <link rel="stylesheet" href="{{ asset('css/fontawesome-all.min.css') }}"> {# 5.7.1 #}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mdb.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
     <!-- User switch -->
     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
         <div class="alert alert-danger alert-fixed text-center mb-0" style="border-radius: 0; font-size: 0.9rem; padding: .3rem 1.25rem;">
@@ -83,120 +83,120 @@
     </nav>
     <!-- Navbar -->
 
-        <main style="padding-top: {%- if is_granted('ROLE_PREVIOUS_ADMIN') -%}78px{%- else -%}57px{%- endif -%}">
-            <!-- Flash messages -->
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="close" data-dismiss="alert">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                {% endfor %}
+    <main style="padding-top: {%- if is_granted('ROLE_PREVIOUS_ADMIN') -%}78px{%- else -%}57px{%- endif -%}">
+        <!-- Flash messages -->
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             {% endfor %}
-            <!-- /Flash messages -->
+        {% endfor %}
+        <!-- /Flash messages -->
 
-            <div class="container mt-4 mb-4">
-                {% block body %}{% endblock %}
-            </div>
-        </main>
+        <div class="container mt-4 mb-4">
+            {% block body %}{% endblock %}
+        </div>
+    </main>
 
-        <!-- Footer -->
-        <footer class="page-footer font-small unique-color-dark">
+    <!-- Footer -->
+    <footer class="page-footer font-small unique-color-dark">
 
-            <div class="info-color-dark">
-                <div class="container">
+        <div class="info-color-dark">
+            <div class="container">
 
-                    <div class="row py-3 d-flex align-items-center">
+                <div class="row py-3 d-flex align-items-center">
 
-                        <div class="col-md-4 text-center mb-4 mb-md-0">
-                            <h6 class="mb-0">Get connected with us on social networks!</h6>
-                        </div>
-
-                        <div class="col-md-4 text-center mb-4 mb-md-0">
-                            <a id="footer-link-newsletter" href="#" class="border p-2 px-3 d-none d-md-inline-block">
-                                Newsletter <i class="fas fa-envelope white-text ml-2"> </i>
-                            </a>
-                        </div>
-
-                        <div class="col-md-4 text-center">
-                            <a class="fb-ic">
-                                <i class="fab fa-facebook-f white-text mr-4"> </i>
-                            </a>
-                            <a><i class="fab fa-vk white-text mr-4"></i></a>
-                            <a class="tw-ic">
-                                <i class="fab fa-twitter white-text mr-4"> </i>
-                            </a>
-                        </div>
-
+                    <div class="col-md-4 text-center mb-4 mb-md-0">
+                        <h6 class="mb-0">Get connected with us on social networks!</h6>
                     </div>
 
-                </div>
-            </div>
-
-            <!-- Footer Links -->
-            <div class="container text-center text-md-left pt-4">
-
-                <div class="row mt-3">
-
-                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                        <h6 class="text-uppercase font-weight-bold">Company name</h6>
-                        <hr class="info-color-dark mb-4 mt-0 d-inline-block mx-auto">
-                        <p>
-                            Here you can use rows and columns here to organize your footer content.
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        </p>
+                    <div class="col-md-4 text-center mb-4 mb-md-0">
+                        <a id="footer-link-newsletter" href="#" class="border p-2 px-3 d-none d-md-inline-block">
+                            Newsletter <i class="fas fa-envelope white-text ml-2"> </i>
+                        </a>
                     </div>
 
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                        <h6 class="text-uppercase font-weight-bold">Products</h6>
-                        <hr class="info-color-dark mb-4 mt-0 d-inline-block">
-                        <p><a href="#!">Заказы</a></p>
-                        <p><a href="#!">Адреса</a></p>
-                        <p><a href="#!">Паспорта</a></p>
-                    </div>
-
-                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                        <h6 class="text-uppercase font-weight-bold">Useful links</h6>
-                        <hr class="info-color-dark mb-4 mt-0 d-inline-block">
-                        <p><a href="#!">Your Account</a></p>
-                        <p><a href="#!">Become an Affiliate</a></p>
-                        <p><a href="#!">Shipping Rates</a></p>
-                    </div>
-
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                        <h6 class="text-uppercase font-weight-bold">Contact</h6>
-                        <hr class="info-color-dark mb-4 mt-0 d-inline-block mx-auto">
-                        <p><i class="fas fa-home mr-3"></i>Воронеж</p>
-                        <p><i class="fas fa-envelope mr-3"></i>akim_now@mail.ru</p>
-                        <p><i class="fas fa-phone mr-3"></i>+7-903-856-18-39</p>
+                    <div class="col-md-4 text-center">
+                        <a class="fb-ic">
+                            <i class="fab fa-facebook-f white-text mr-4"> </i>
+                        </a>
+                        <a><i class="fab fa-vk white-text mr-4"></i></a>
+                        <a class="tw-ic">
+                            <i class="fab fa-twitter white-text mr-4"> </i>
+                        </a>
                     </div>
 
                 </div>
 
             </div>
-            <!-- /Footer Links -->
+        </div>
 
-            <div class="footer-copyright text-center py-3">© 2019 Copyright:
-                <a href="/">promagic.ru</a>
+        <!-- Footer Links -->
+        <div class="container text-center text-md-left pt-4">
+
+            <div class="row mt-3">
+
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <h6 class="text-uppercase font-weight-bold">Company name</h6>
+                    <hr class="info-color-dark mb-4 mt-0 d-inline-block mx-auto">
+                    <p>
+                        Here you can use rows and columns here to organize your footer content.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    </p>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <h6 class="text-uppercase font-weight-bold">Products</h6>
+                    <hr class="info-color-dark mb-4 mt-0 d-inline-block">
+                    <p><a href="#!">Заказы</a></p>
+                    <p><a href="#!">Адреса</a></p>
+                    <p><a href="#!">Паспорта</a></p>
+                </div>
+
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+                    <hr class="info-color-dark mb-4 mt-0 d-inline-block">
+                    <p><a href="#!">Your Account</a></p>
+                    <p><a href="#!">Become an Affiliate</a></p>
+                    <p><a href="#!">Shipping Rates</a></p>
+                </div>
+
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <h6 class="text-uppercase font-weight-bold">Contact</h6>
+                    <hr class="info-color-dark mb-4 mt-0 d-inline-block mx-auto">
+                    <p><i class="fas fa-home mr-3"></i>Воронеж</p>
+                    <p><i class="fas fa-envelope mr-3"></i>akim_now@mail.ru</p>
+                    <p><i class="fas fa-phone mr-3"></i>+7-903-856-18-39</p>
+                </div>
+
             </div>
 
-        </footer>
-        <!-- /Footer -->
+        </div>
+        <!-- /Footer Links -->
 
-        <!-- SCRIPTS -->
-        <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
-        <!-- Initializations -->
-        <script type="text/javascript">
-            // Animations initialization
-            new WOW().init();
-        </script>
-        {% block javascripts %}{% endblock %}
-    </body>
+        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+            <a href="/">promagic.ru</a>
+        </div>
+
+    </footer>
+    <!-- /Footer -->
+
+    <!-- SCRIPTS -->
+    <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
+    <!-- Initializations -->
+    <script type="text/javascript">
+        // Animations initialization
+        new WOW().init();
+    </script>
+    {% block javascripts %}{% endblock %}
+</body>
 
 </html>
