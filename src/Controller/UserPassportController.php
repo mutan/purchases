@@ -66,12 +66,13 @@ class UserPassportController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_passport_index', [
-                'id' => $userPassport->getId(),
-            ]);
+            return $this->redirectToRoute('user_passport_index');
         }
 
-        return $this->render('user_passport/edit.html.twig');
+        return $this->render('user_passport/edit.html.twig', [
+            'user_address' => $userPassport,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

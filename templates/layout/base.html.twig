@@ -44,13 +44,13 @@
 
                 <!-- Left -->
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item {% if app.request.get('_route') == 'app_homepage' %}active{% endif %}">
+                    <li class="nav-item {% if 'basket' in app.request.get('_route') %}active{% endif %}">
                         <a class="nav-link" href="{{ path('basket_index') }}">Заказы</a>
                     </li>
-                    <li class="nav-item {% if app.request.get('_route') == 'user_address_index' %}active{% endif %}">
+                    <li class="nav-item {% if 'user_address' in app.request.get('_route') %}active{% endif %}">
                         <a class="nav-link" href="{{ path('user_address_index') }}">Адреса</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {% if 'user_passport' in app.request.get('_route') %}active{% endif %}">
                         <a class="nav-link" href="{{ path('user_passport_index') }}">Паспорта</a>
                     </li>
                 </ul>
