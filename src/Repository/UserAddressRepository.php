@@ -19,32 +19,15 @@ class UserAddressRepository extends ServiceEntityRepository
         parent::__construct($registry, UserAddress::class);
     }
 
-    // /**
-    //  * @return UserAddress[] Returns an array of UserAddress objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $user
+     * @return UserAddress[]
+     */
+    public function findAllByUser($user)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('ua')
+                    ->andWhere('ua.user = :user')->setParameter('user', $user)
+                    ->andWhere('ua.status != :deleted')->setParameter('deleted', UserAddress::STATUS_DELETED)
+                    ->getQuery()->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?UserAddress
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

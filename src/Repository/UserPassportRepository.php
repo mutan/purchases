@@ -19,32 +19,15 @@ class UserPassportRepository extends ServiceEntityRepository
         parent::__construct($registry, UserPassport::class);
     }
 
-    // /**
-    //  * @return UserPassport[] Returns an array of UserPassport objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $user
+     * @return UserPassport[]
+     */
+    public function findAllByUser($user)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('ua')
+                    ->andWhere('ua.user = :user')->setParameter('user', $user)
+                    ->andWhere('ua.status != :deleted')->setParameter('deleted', UserPassport::STATUS_DELETED)
+                    ->getQuery()->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?UserPassport
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

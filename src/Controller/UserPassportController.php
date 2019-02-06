@@ -24,13 +24,8 @@ class UserPassportController extends AbstractController
     {
         $user = $this->getUser();
 
-        $userPassports = $userPassportRepository->findBy([
-            'user'   => $user,
-            'status' => UserPassport::STATUS_ACTIVE
-        ]);
-
         return $this->render('user_passport/index.html.twig', [
-            'user_passports' => $userPassports,
+            'user_passports' => $userPassportRepository->findAllByUser($user),
         ]);
     }
 
@@ -76,10 +71,7 @@ class UserPassportController extends AbstractController
             ]);
         }
 
-        return $this->render('user_passport/edit.html.twig', [
-            'user_passport' => $userPassport,
-            'form' => $form->createView(),
-        ]);
+        return $this->render('user_passport/edit.html.twig');
     }
 
     /**
@@ -91,7 +83,8 @@ class UserPassportController extends AbstractController
 
         if ($this->isCsrfTokenValid('delete'.$userPassport->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($userPassport);
+            $userPassport->setStatus($userPassport::STATUS_DELETED);
+            $entityManager->persist($userPassport);
             $entityManager->flush();
         }
 

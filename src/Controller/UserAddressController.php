@@ -24,13 +24,8 @@ class UserAddressController extends AbstractController
     {
         $user = $this->getUser();
 
-        $userAddresses = $userAddressRepository->findBy([
-            'user'   => $user,
-            'status' => UserAddress::STATUS_ACTIVE
-        ]);
-
         return $this->render('user_address/index.html.twig', [
-            'user_addresses' => $userAddresses,
+            'user_addresses' => $userAddressRepository->findAllByUser($user),
         ]);
     }
 
@@ -71,9 +66,7 @@ class UserAddressController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_address_index', [
-                'id' => $userAddress->getId(),
-            ]);
+            return $this->redirectToRoute('user_address_index');
         }
 
         return $this->render('user_address/edit.html.twig', [
@@ -91,7 +84,8 @@ class UserAddressController extends AbstractController
 
         if ($this->isCsrfTokenValid('delete'.$userAddress->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($userAddress);
+            $userAddress->setStatus($userAddress::STATUS_DELETED);
+            $entityManager->persist($userAddress);
             $entityManager->flush();
         }
 
