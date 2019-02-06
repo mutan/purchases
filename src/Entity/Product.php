@@ -195,6 +195,10 @@ class Product
 
     public function setStatus(string $status): self
     {
+        if (!in_array($status, self::ALLOWED_STATUSES)) {
+            throw new \InvalidArgumentException("Invalid product status");
+        }
+
         $this->status = $status;
 
         return $this;

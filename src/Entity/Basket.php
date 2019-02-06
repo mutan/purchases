@@ -91,6 +91,10 @@ class Basket
 
     public function setStatus(string $status): self
     {
+        if (!in_array($status, self::ALLOWED_STATUSES)) {
+            throw new \InvalidArgumentException("Invalid basket status");
+        }
+
         $this->status = $status;
 
         return $this;
