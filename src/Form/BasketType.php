@@ -13,8 +13,12 @@ class BasketType extends AbstractType
     {
         $builder
             ->add('status')
-            ->add('active_reason')
-            ->add('inactive_reason')
+            ->add('weight')
+            ->add('deliveryShopStore')
+            ->add('deliveryRus')
+            ->add('boughtDate')
+            ->add('createDate')
+            ->add('updateDate')
             ->add('user')
         ;
     }

@@ -53,6 +53,21 @@ class Basket
     private $products;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $weight;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $deliveryShopStore;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $deliveryRus;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $boughtDate;
@@ -180,6 +195,42 @@ class Basket
     public function setBoughtDate(?\DateTimeInterface $boughtDate): self
     {
         $this->boughtDate = $boughtDate;
+
+        return $this;
+    }
+
+    public function getDeliveryShopStore(): ?float
+    {
+        return $this->deliveryShopStore;
+    }
+
+    public function setDeliveryShopStore(?float $deliveryShopStore): self
+    {
+        $this->deliveryShopStore = $deliveryShopStore;
+
+        return $this;
+    }
+
+    public function getDeliveryRus(): ?float
+    {
+        return $this->deliveryRus;
+    }
+
+    public function setDeliveryRus(?float $deliveryRus): self
+    {
+        $this->deliveryRus = $deliveryRus;
+
+        return $this;
+    }
+
+    public function getWeight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(?int $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }
