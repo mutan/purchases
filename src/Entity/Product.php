@@ -87,11 +87,6 @@ class Product
         return $this->id;
     }
 
-    public function getIdWithPrefix()
-    {
-        return 'P' . $this->id;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -216,8 +211,15 @@ class Product
         return $this;
     }
 
+    /* ADDITIONAL METHODS */
+
     public function __toString()
     {
         return $this->getIdWithPrefix();
+    }
+
+    public function getIdWithPrefix()
+    {
+        return 'P' . $this->id;
     }
 }

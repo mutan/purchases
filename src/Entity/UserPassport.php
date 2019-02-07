@@ -82,21 +82,6 @@ class UserPassport
      */
     private $status = self::STATUS_NEW;
 
-    public function isNew()
-    {
-        return $this->getStatus() == self::STATUS_NEW;
-    }
-
-    public function isApproved()
-    {
-        return $this->getStatus() == self::STATUS_APPROVED;
-    }
-
-    public function isDeleted()
-    {
-        return $this->getStatus() == self::STATUS_DELETED;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -200,5 +185,32 @@ class UserPassport
         $this->user = $user;
 
         return $this;
+    }
+
+    /* ADDITIONAL METHODS */
+
+    public function __toString()
+    {
+        return $this->getIdWithPrefix();
+    }
+
+    public function getIdWithPrefix(): string
+    {
+        return 'UP' . $this->id;
+    }
+
+    public function isNew()
+    {
+        return $this->getStatus() == self::STATUS_NEW;
+    }
+
+    public function isApproved()
+    {
+        return $this->getStatus() == self::STATUS_APPROVED;
+    }
+
+    public function isDeleted()
+    {
+        return $this->getStatus() == self::STATUS_DELETED;
     }
 }

@@ -61,4 +61,7 @@ class UserProfile
 
         return $this;
     }
+
+    /* ADDITIONAL METHODS */
+
 }

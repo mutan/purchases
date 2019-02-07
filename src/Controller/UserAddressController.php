@@ -82,9 +82,15 @@ class UserAddressController extends AbstractController
     {
         $this->denyAccessUnlessGranted('USER_ADDRESS_MANAGE', $userAddress);
 
+        if (!$userAddress->isNew()) {
+            $this->addFlash('danger', "Статус адреса {$userAddress->getIdWithPrefix()} – {$userAddress->getStatus()}. Удаление невозможно.");
+            return $this->redirectToRoute('user_address_index');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$userAddress->getId(), $request->request->get('_token'))) {
+            $userAddress->setStatus(UserAddress::STATUS_DELETED);
+
             $entityManager = $this->getDoctrine()->getManager();
-            $userAddress->setStatus($userAddress::STATUS_DELETED);
             $entityManager->persist($userAddress);
             $entityManager->flush();
         }

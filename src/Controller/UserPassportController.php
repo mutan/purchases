@@ -82,9 +82,15 @@ class UserPassportController extends AbstractController
     {
         $this->denyAccessUnlessGranted('USER_PASSPORT_MANAGE', $userPassport);
 
+        if (!$userPassport->isNew()) {
+            $this->addFlash('danger', "Статус заказа {$userPassport->getIdWithPrefix()} – {$userPassport->getStatus()}. Удаление невозможно.");
+            return $this->redirectToRoute('user_passport_index');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$userPassport->getId(), $request->request->get('_token'))) {
+            $userPassport->setStatus(UserPassport::STATUS_DELETED);
+
             $entityManager = $this->getDoctrine()->getManager();
-            $userPassport->setStatus($userPassport::STATUS_DELETED);
             $entityManager->persist($userPassport);
             $entityManager->flush();
         }

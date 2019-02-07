@@ -5,7 +5,7 @@
 {% block body %}
     <div class="row">
         <div class="col-sm-12 col-md-9">
-            <h1 class="align-self-center">Заказы</h1>
+            <h1 class="align-self-center">Заказ </h1>
         </div>
         <div class="col-sm-12 col-md-3 text-right">
             <button type="button" class="btn btn-block btn-dark-green" data-toggle="modal" data-target="#modalBasketNew" style="min-width: 145px">
@@ -17,34 +17,28 @@
 
     <section class="mt-3 pb-3">
         <div class="row">
-            {% for basket in baskets %}
-                <div class="col-12">
-                    <div class="card border-mdb mb-4">
-                        <div class="card-body">
+            <div class="col-12">
+                <div class="card border-mdb mb-4">
+                    <div class="card-body">
 
-                            <div class="row d-flex">
-                                <div class="col-sm-12 col-md-9 d-flex">
-                                    <h4 class="align-self-center mb-0">Заказ {{ basket.idWithPrefix }} {{ basket.shop }}</h4>
-                                    <div class="align-self-center ml-3">
+                        <div class="row d-flex">
+                            <div class="col-sm-12 col-md-9 d-flex">
+                                <h4 class="align-self-center mb-0">Заказ {{ basket.idWithPrefix }} {{ basket.shop }}</h4>
+                                <div class="align-self-center ml-3">
 
-                                        Статус: {{ basket.status }}
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-3 text-right d-flex">
-                                    <a class="btn btn-sm btn-narrow btn-mdb-color darken-3 ml-auto" href="{{ path('basket_edit', {'id': basket.id}) }}"><i class="fas fa-edit"></i></a>
-                                    {{ include('basket/_delete_form.html.twig') }}
+                                    Статус: {{ basket.status }}
                                 </div>
                             </div>
-                            <hr>
-
+                            <div class="col-sm-12 col-md-3 text-right d-flex">
+                                {#<a class="btn btn-sm btn-narrow btn-mdb-color darken-3 ml-auto" href="{{ path('basket_edit', {'id': basket.id}) }}"><i class="fas fa-edit"></i></a>#}
+                                {{ include('basket/_delete_form.html.twig') }}
+                            </div>
                         </div>
+                        <hr>
+
                     </div>
                 </div>
-            {% else %}
-                <div class="col-12">
-                    <p>Записей не найдено.</p>
-                </div>
-            {% endfor %}
+            </div>
         </div>
     </section>
 

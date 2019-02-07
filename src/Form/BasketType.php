@@ -12,14 +12,10 @@ class BasketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('status')
+            ->add('shop')
             ->add('weight')
             ->add('deliveryShopStore')
             ->add('deliveryRus')
-            ->add('boughtDate')
-            ->add('createDate')
-            ->add('updateDate')
-            ->add('user')
         ;
     }
 

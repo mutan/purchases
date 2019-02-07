@@ -43,14 +43,14 @@ class Basket
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $status;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="basket", orphanRemoval=true)
      */
     private $products;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $shop;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -68,6 +68,16 @@ class Basket
     private $deliveryRus;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
+    /**
+     * @ORM\Column(type="string", length=255, options={"default" = Basket::STATUS_NEW})
+     */
+    private $status = self::STATUS_NEW;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $boughtDate;
@@ -80,11 +90,6 @@ class Basket
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdWithPrefix()
-    {
-        return 'O' . $this->id;
     }
 
     public function getUser(): ?User
@@ -111,30 +116,6 @@ class Basket
         }
 
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getActiveReason(): ?string
-    {
-        return $this->active_reason;
-    }
-
-    public function setActiveReason(string $active_reason): self
-    {
-        $this->active_reason = $active_reason;
-
-        return $this;
-    }
-
-    public function getInactiveReason(): ?string
-    {
-        return $this->inactive_reason;
-    }
-
-    public function setInactiveReason(?string $inactive_reason): self
-    {
-        $this->inactive_reason = $inactive_reason;
 
         return $this;
     }
@@ -170,24 +151,7 @@ class Basket
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->getIdWithPrefix();
-    }
-
-    public function getCreateDate(): ?\DateTimeInterface
-    {
-        return $this->createDate;
-    }
-
-    public function setCreateDate(?\DateTimeInterface $createDate): self
-    {
-        $this->createDate = $createDate;
-
-        return $this;
-    }
-
-    public function getBoughtDate(): ?\DateTimeInterface
+      public function getBoughtDate(): ?\DateTimeInterface
     {
         return $this->boughtDate;
     }
@@ -233,5 +197,66 @@ class Basket
         $this->weight = $weight;
 
         return $this;
+    }
+
+    public function getShop(): ?string
+    {
+        return $this->shop;
+    }
+
+    public function setShop(string $shop): self
+    {
+        $this->shop = $shop;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /* ADDITIONAL METHODS */
+
+    public function __toString()
+    {
+        return $this->getIdWithPrefix();
+    }
+
+    public function getIdWithPrefix()
+    {
+        return 'O' . $this->id;
+    }
+
+    public function isNew()
+    {
+        return $this->getStatus() == self::STATUS_NEW;
+    }
+
+    public function isRedeemed()
+    {
+        return $this->getStatus() == self::STATUS_REDEEMED;
+    }
+
+    public function isBought()
+    {
+        return $this->getStatus() == self::STATUS_BOUGHT;
+    }
+
+    public function isCancelled()
+    {
+        return $this->getStatus() == self::STATUS_CANCELLED;
+    }
+
+    public function isDeleted()
+    {
+        return $this->getStatus() == self::STATUS_DELETED;
     }
 }

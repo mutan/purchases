@@ -167,31 +167,9 @@ class User implements UserInterface
         $this->plainPassword = null;
     }
 
-    public function isActive()
-    {
-        return $this->getStatus() == self::STATUS_ACTIVE;
-    }
-
-    public function isBanned()
-    {
-        return $this->getStatus()         == self::STATUS_INACTIVE
-            && $this->getInactiveReason() == self::INACTIVE_REASON_BANNED;
-    }
-
-    public function isNotActivated()
-    {
-        return $this->getStatus()         == self::STATUS_INACTIVE
-            && $this->getInactiveReason() == self::INACTIVE_REASON_NOT_ACTIVATED;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdWithPrefix()
-    {
-        return 'U' . $this->id;
     }
 
     public function getName(): ?string
@@ -450,8 +428,32 @@ class User implements UserInterface
         return $this;
     }
 
+    /* ADDITIONAL METHODS */
+
     public function __toString()
     {
         return "{$this->getName()} ({$this->getEmail()})";
+    }
+
+    public function getIdWithPrefix()
+    {
+        return 'U' . $this->id;
+    }
+
+    public function isActive()
+    {
+        return $this->getStatus() == self::STATUS_ACTIVE;
+    }
+
+    public function isBanned()
+    {
+        return $this->getStatus()         == self::STATUS_INACTIVE
+            && $this->getInactiveReason() == self::INACTIVE_REASON_BANNED;
+    }
+
+    public function isNotActivated()
+    {
+        return $this->getStatus()         == self::STATUS_INACTIVE
+            && $this->getInactiveReason() == self::INACTIVE_REASON_NOT_ACTIVATED;
     }
 }
