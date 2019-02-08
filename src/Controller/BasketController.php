@@ -6,7 +6,6 @@ use App\Entity\Basket;
 use App\Form\BasketType;
 use App\Repository\BasketRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,8 +14,18 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/basket")
  * @IsGranted("ROLE_USER")
  */
-class BasketController extends AbstractController
+class BasketController extends BaseController
 {
+    const SHOP_LIST_FOR_AUTOCOMPLETE = [
+        'amazon.com',
+        'coolstuffinc.com',
+        'ebay.com',
+        'magiccardmarket.com',
+        'originalmagicart.store',
+        'starcitygames.com',
+        'trollandtoad.com',
+    ];
+
     /**
      * @Route("/", name="basket_index", methods={"GET","POST"})
      */
@@ -40,6 +49,25 @@ class BasketController extends AbstractController
             'basket' => $basket,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
+     */
+    public function autocomplete(Request $request, $debugLogPath, $debugLogFile): Response
+    {
+        if (null == $request->query->get('term')) {
+            throw $this->createNotFoundException('Неверный запрос.');
+        }
+
+        $term = $request->query->get('term');
+
+
+        $shops = array_filter(self::SHOP_LIST_FOR_AUTOCOMPLETE, function ($shop) use ($term) {
+            return (stripos($shop, $term) !== false);
+        });
+
+        return $this->json($shops);
     }
 
     /**

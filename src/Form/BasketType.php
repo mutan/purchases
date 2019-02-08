@@ -13,9 +13,6 @@ class BasketType extends AbstractType
     {
         $builder
             ->add('shop')
-            ->add('weight')
-            ->add('deliveryShopStore')
-            ->add('deliveryRus')
         ;
     }
 

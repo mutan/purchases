@@ -10,6 +10,8 @@ parameters:
     app_recaptcha_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     app_recaptcha_secret: '%env(GOOGLE_RECAPTCHA_SECRET)%'
     locale: 'en'
+    debug_log_directory: '%kernel.logs_dir%'
+    debug_log_file: 'debug.log'
 
 services:
     # default configuration for services in *this* file
@@ -21,6 +23,8 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:               # defines the scalar arguments once and apply them to any service defined/created in this file
             $noReplyEmail: '%no_reply_email%'
+            $debugLogPath: '%debug_log_directory%'
+            $debugLogFile: '%debug_log_file%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

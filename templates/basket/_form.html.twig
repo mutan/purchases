@@ -1,2 +1,9 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_start(form, {'attr': {'id': 'basket-shop-form'}}) }}
+    {{ form_errors(form) }}
+
+    <div class="form-row">
+        <div class="form-group col-12">
+            {{ form_label(form.shop, 'Магазин (URL)') }}
+            {{ form_widget(form.shop, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+    </div>

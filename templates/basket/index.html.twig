@@ -48,7 +48,7 @@
         </div>
     </section>
 
-    <!-- Modal: modalCart -->
+    <!-- Modal: modalBasketNew -->
     <div class="modal fade" id="modalBasketNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -61,7 +61,7 @@
                     </button>
                 </div>
                 <!--Body-->
-                <div class="modal-body">
+                <div class="modal-body ui-front">{# без класса ui-front список autocomplite'a будет показан не рядом с полем поиска #}
                     {{ include('basket/_form.html.twig') }}
                 </div>
                 <!--Footer-->
@@ -74,6 +74,6 @@
             </div>
         </div>
     </div>
-    <!-- Modal: modalCart -->
+    <!-- Modal: modalBasketNew -->
 
 {% endblock %}
