@@ -18,6 +18,7 @@ class BasketController extends BaseController
 {
     const SHOP_LIST_FOR_AUTOCOMPLETE = [
         'amazon.com',
+        'channelfireball.com',
         'coolstuffinc.com',
         'ebay.com',
         'magiccardmarket.com',
@@ -54,7 +55,7 @@ class BasketController extends BaseController
     /**
      * @Route("/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
      */
-    public function autocomplete(Request $request, $debugLogPath, $debugLogFile): Response
+    public function autocomplete(Request $request): Response
     {
         if (null == $request->query->get('term')) {
             throw $this->createNotFoundException('Неверный запрос.');

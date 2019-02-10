@@ -6,6 +6,7 @@ use App\Entity\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BasketRepository")
@@ -49,6 +50,7 @@ class Basket
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
      */
     private $shop;
 
@@ -60,12 +62,17 @@ class Basket
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $deliveryShopStore;
+    private $deliveryToStock;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $deliveryRus;
+    private $deliveryToRussia;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $deliveryToClient;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -163,26 +170,38 @@ class Basket
         return $this;
     }
 
-    public function getDeliveryShopStore(): ?float
+    public function getDeliveryToStock(): ?float
     {
-        return $this->deliveryShopStore;
+        return $this->deliveryToStock;
     }
 
-    public function setDeliveryShopStore(?float $deliveryShopStore): self
+    public function setDeliveryToStock(?float $deliveryToStock): self
     {
-        $this->deliveryShopStore = $deliveryShopStore;
+        $this->deliveryToStock = $deliveryToStock;
 
         return $this;
     }
 
-    public function getDeliveryRus(): ?float
+    public function getDeliveryToRussia(): ?float
     {
-        return $this->deliveryRus;
+        return $this->deliveryToRussia;
     }
 
-    public function setDeliveryRus(?float $deliveryRus): self
+    public function setDeliveryToRussia(?float $deliveryToRussia): self
     {
-        $this->deliveryRus = $deliveryRus;
+        $this->deliveryToRussia = $deliveryToRussia;
+
+        return $this;
+    }
+
+    public function getDeliveryToClient(): ?float
+    {
+        return $this->deliveryToClient;
+    }
+
+    public function setDeliveryToClient(?float $deliveryToClient): self
+    {
+        $this->deliveryToClient = $deliveryToClient;
 
         return $this;
     }

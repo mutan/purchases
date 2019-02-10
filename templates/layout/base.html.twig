@@ -30,7 +30,7 @@
 
             <!-- Brand -->
             <a class="navbar-brand" href="/">
-                <strong><span class="d-none d-sm-inline">Совместные покупки</span><span class="d-sm-none">СП</span></strong>
+                <strong><span class="d-none d-sm-inline">Совместные покупки • βeta</span><span class="d-sm-none">СП • βeta</span></strong>
             </a>
 
             <!-- Collapse -->
@@ -39,10 +39,11 @@
             </button>
 
             <!-- Links -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse ml-3" id="navbarSupportedContent">
 
                 <!-- Left -->
                 <ul class="navbar-nav mr-auto">
+                    {% if is_granted('ROLE_USER') %}
                     <li class="nav-item {% if 'basket' in app.request.get('_route') %}active{% endif %}">
                         <a class="nav-link" href="{{ path('basket_index') }}">Заказы</a>
                     </li>
@@ -52,6 +53,7 @@
                     <li class="nav-item {% if 'user_passport' in app.request.get('_route') %}active{% endif %}">
                         <a class="nav-link" href="{{ path('user_passport_index') }}">Паспорта</a>
                     </li>
+                    {% endif %}
                 </ul>
 
                 <!-- Right -->
