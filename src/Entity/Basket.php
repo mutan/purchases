@@ -290,7 +290,7 @@ class Basket
 
     public function getIdWithPrefix()
     {
-        return 'O' . $this->id;
+        return 'BS' . $this->id;
     }
 
     public function isNew()
