@@ -11,3 +11,8 @@ $("#basket_shop").autocomplete({
         //$('#basket-shop-form').submit();
     }
 });
+
+// Tooltips Initialization
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+});

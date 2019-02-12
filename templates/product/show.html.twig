@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<title>Product</title>
+
+{% block body %}
+    <h1>Product</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ product.url }}</td>
+            </tr>
+            <tr>
+                <th>Article</th>
+                <td>{{ product.article }}</td>
+            </tr>
+            <tr>
+                <th>UserPrice</th>
+                <td>{{ product.userPrice }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ product.price }}</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>{{ product.amount }}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ product.comment }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ product.status }}</td>
+            </tr>
+            <tr>
+                <th>ExpectedWeight</th>
+                <td>{{ product.expectedWeight }}</td>
+            </tr>
+            <tr>
+                <th>Weight</th>
+                <td>{{ product.weight }}</td>
+            </tr>
+            <tr>
+                <th>PurchasePrice</th>
+                <td>{{ product.purchasePrice }}</td>
+            </tr>
+            <tr>
+                <th>PurchaseShop</th>
+                <td>{{ product.purchaseShop }}</td>
+            </tr>
+            <tr>
+                <th>CreateDate</th>
+                <td>{{ product.createDate ? product.createDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdateDate</th>
+                <td>{{ product.updateDate ? product.updateDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('product_index') }}">back to list</a>
+
+    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+
+    {{ include('product/_delete_form.html.twig') }}
+{% endblock %}
