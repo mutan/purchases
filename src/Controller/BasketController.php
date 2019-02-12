@@ -16,15 +16,36 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BasketController extends BaseController
 {
+
+    const SHOP_AMAZON = 'amazon.com';
+    const SHOP_CHANNEL_FIREBALL = 'channelfireball.com';
+    const SHOP_COOL_STUFF_INC = 'coolstuffinc.com';
+    const SHOP_EBAY = 'ebay.com';
+    const SHOP_MAGIC_CARD_MARKET = 'magiccardmarket.com';
+    const SHOP_ORIGINAL_MAGIC_ART = 'originalmagicart.store';
+    const SHOP_STAR_CITY_GAMES = 'starcitygames.com';
+    const SHOP_TROLL_AND_TOAD = 'trollandtoad.com';
+
     const SHOP_LIST_FOR_AUTOCOMPLETE = [
-        'amazon.com',
-        'channelfireball.com',
-        'coolstuffinc.com',
-        'ebay.com',
-        'magiccardmarket.com',
-        'originalmagicart.store',
-        'starcitygames.com',
-        'trollandtoad.com',
+        self::SHOP_AMAZON,
+        self::SHOP_CHANNEL_FIREBALL,
+        self::SHOP_COOL_STUFF_INC,
+        self::SHOP_EBAY,
+        self::SHOP_MAGIC_CARD_MARKET,
+        self::SHOP_ORIGINAL_MAGIC_ART,
+        self::SHOP_STAR_CITY_GAMES,
+        self::SHOP_TROLL_AND_TOAD,
+    ];
+
+    const SHOP_LIST_LOGOS = [
+        self::SHOP_AMAZON => '',
+        self::SHOP_CHANNEL_FIREBALL => '',
+        self::SHOP_COOL_STUFF_INC => '',
+        self::SHOP_EBAY => '',
+        self::SHOP_MAGIC_CARD_MARKET => '',
+        self::SHOP_ORIGINAL_MAGIC_ART => '',
+        self::SHOP_STAR_CITY_GAMES => '',
+        self::SHOP_TROLL_AND_TOAD => '',
     ];
 
     /**
@@ -72,31 +93,7 @@ class BasketController extends BaseController
     }
 
     /**
-     * @Route("/new", name="basket_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $basket = new Basket();
-        $form = $this->createForm(BasketType::class, $basket);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $basket->setUser($this->getUser());
-            $entityManager->persist($basket);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('basket_index');
-        }
-
-        return $this->render('basket/new.html.twig', [
-            'basket' => $basket,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="basket_show", methods={"GET"})
+     * @Route("/{id}", name="basket_show", methods={"GET","POST"})
      */
     public function show(Basket $basket, BasketRepository $basketRepository, Request $request): Response
     {
@@ -106,39 +103,12 @@ class BasketController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $basket->setUser($this->getUser());
-            $entityManager->persist($basket);
-            $entityManager->flush();
+            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('basket_index');
+            return $this->redirectToRoute('basket_show', ['id' => $basket->getId()]);
         }
 
         return $this->render('basket/show.html.twig', [
-            'basket' => $basket,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="basket_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Basket $basket): Response
-    {
-        $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
-
-        $form = $this->createForm(BasketType::class, $basket);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('basket_index', [
-                'id' => $basket->getId(),
-            ]);
-        }
-
-        return $this->render('basket/edit.html.twig', [
             'basket' => $basket,
             'form' => $form->createView(),
         ]);

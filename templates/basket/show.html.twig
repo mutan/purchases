@@ -5,10 +5,10 @@
 {% block body %}
     <div class="row">
         <div class="col-sm-12 col-md-9">
-            <h1 class="align-self-center">Заказ </h1>
+            <h1 class="align-self-center">{{ basket.idWithPrefix }} {{ basket.shop }}</h1>
         </div>
         <div class="col-sm-12 col-md-3 text-right">
-            <button type="button" class="btn btn-block btn-dark-green" data-toggle="modal" data-target="#modalBasketNew" style="min-width: 145px">
+            <button type="button" class="btn btn-block btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit" style="min-width: 145px">
                 <i class="fa fa-plus-square pr-1"></i> Новый заказ
             </button>
         </div>
@@ -42,8 +42,8 @@
         </div>
     </section>
 
-    <!-- Modal: modalBasketNew -->
-    <div class="modal fade" id="modalBasketNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- Modal: modalBasketEdit -->
+    <div class="modal fade" id="modalBasketEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -68,6 +68,6 @@
             </div>
         </div>
     </div>
-    <!-- Modal: modalBasketNew -->
+    <!-- Modal: modalBasketEdit -->
 
 {% endblock %}

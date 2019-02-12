@@ -6,4 +6,9 @@
             {{ form_label(form.shop, 'Магазин') }}
             {{ form_widget(form.shop, {'attr': {'class': 'form-control-sm', 'placeholder': 'Начните вводить адрес сайта'}}) }}
         </div>
+
+        <div class="form-group col-12">
+            {{ form_label(form.userComment, 'Комментарий') }}
+            {{ form_widget(form.userComment, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
     </div>

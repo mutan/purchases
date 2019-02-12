@@ -21,13 +21,13 @@ class User implements UserInterface
 {
     use TimestampableTrait;
 
-    const ROLE_USER       = 'ROLE_USER';
-    const ROLE_MODERATOR  = 'ROLE_MODERATOR';
-    const ROLE_ADMIN      = 'ROLE_ADMIN';
+    const ROLE_USER     = 'ROLE_USER';
+    const ROLE_OPERATOR = 'ROLE_OPERATOR';
+    const ROLE_ADMIN    = 'ROLE_ADMIN';
 
     const ALLOWED_ROLES = [
         self::ROLE_USER,
-        self::ROLE_MODERATOR,
+        self::ROLE_OPERATOR,
         self::ROLE_ADMIN,
     ];
 

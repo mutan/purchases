@@ -82,6 +82,26 @@ class Product
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $expectedWeight;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $weight;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $purchasePrice;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $purchaseShop;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -207,6 +227,54 @@ class Product
     public function setBasket(?Basket $basket): self
     {
         $this->basket = $basket;
+
+        return $this;
+    }
+
+    public function getExpectedWeight(): ?float
+    {
+        return $this->expectedWeight;
+    }
+
+    public function setExpectedWeight(?float $expectedWeight): self
+    {
+        $this->expectedWeight = $expectedWeight;
+
+        return $this;
+    }
+
+    public function getWeight(): ?float
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(?float $weight): self
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    public function getPurchasePrice(): ?float
+    {
+        return $this->purchasePrice;
+    }
+
+    public function setPurchasePrice(?float $purchasePrice): self
+    {
+        $this->purchasePrice = $purchasePrice;
+
+        return $this;
+    }
+
+    public function getPurchaseShop(): ?string
+    {
+        return $this->purchaseShop;
+    }
+
+    public function setPurchaseShop(?string $purchaseShop): self
+    {
+        $this->purchaseShop = $purchaseShop;
 
         return $this;
     }

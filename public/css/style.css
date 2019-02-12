@@ -35,6 +35,15 @@ footer hr {
     padding: .5rem 1rem;
 }
 
+table.table a {
+    color: #09c;
+    text-decoration: underline dashed #09c;
+}
+
+table.table a.btn {
+    margin: .375rem;
+}
+
 /* BOOTSTRAP BREAKPOINTS */
 /* Media queries for targeting a single segment of screen size  */
 

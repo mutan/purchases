@@ -19,6 +19,8 @@ class Basket
     const STATUS_NEW       = 'new';
     const STATUS_REDEEMED  = 'redeemed';
     const STATUS_BOUGHT    = 'bought';
+    const STATUS_SENT      = 'sent';
+    const STATUS_RECEIVED  = 'received';
     const STATUS_CANCELLED = 'cancelled';
     const STATUS_DELETED   = 'deleted';
 
@@ -26,6 +28,8 @@ class Basket
         self::STATUS_NEW,
         self::STATUS_REDEEMED,
         self::STATUS_BOUGHT,
+        self::STATUS_SENT,
+        self::STATUS_RECEIVED,
         self::STATUS_CANCELLED,
         self::STATUS_DELETED,
     ];
@@ -55,6 +59,12 @@ class Basket
     private $shop;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $userComment;
+
+    // TODO не нужна?
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $weight;
@@ -75,9 +85,14 @@ class Basket
     private $deliveryToClient;
 
     /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $additionalCost;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $comment;
+    private $additionalCostComment;
 
     /**
      * @ORM\Column(type="string", length=255, options={"default" = Basket::STATUS_NEW})
@@ -230,14 +245,38 @@ class Basket
         return $this;
     }
 
-    public function getComment(): ?string
+    public function getUserComment(): ?string
     {
-        return $this->comment;
+        return $this->userComment;
     }
 
-    public function setComment(?string $comment): self
+    public function setUserComment(?string $userComment): self
     {
-        $this->comment = $comment;
+        $this->userComment = $userComment;
+
+        return $this;
+    }
+
+    public function getAdditionalCost(): ?float
+    {
+        return $this->additionalCost;
+    }
+
+    public function setAdditionalCost(?float $additionalCost): self
+    {
+        $this->additionalCost = $additionalCost;
+
+        return $this;
+    }
+
+    public function getAdditionalCostComment(): ?string
+    {
+        return $this->additionalCostComment;
+    }
+
+    public function setAdditionalCostComment(?string $additionalCostComment): self
+    {
+        $this->additionalCostComment = $additionalCostComment;
 
         return $this;
     }
