@@ -21,7 +21,7 @@ class BasketController extends BaseController
     const SHOP_CHANNEL_FIREBALL = 'channelfireball.com';
     const SHOP_COOL_STUFF_INC = 'coolstuffinc.com';
     const SHOP_EBAY = 'ebay.com';
-    const SHOP_MAGIC_CARD_MARKET = 'magiccardmarket.com';
+    const SHOP_MINIATURE_MARKET = 'miniaturemarket.com';
     const SHOP_ORIGINAL_MAGIC_ART = 'originalmagicart.store';
     const SHOP_STAR_CITY_GAMES = 'starcitygames.com';
     const SHOP_TROLL_AND_TOAD = 'trollandtoad.com';
@@ -31,7 +31,7 @@ class BasketController extends BaseController
         self::SHOP_CHANNEL_FIREBALL,
         self::SHOP_COOL_STUFF_INC,
         self::SHOP_EBAY,
-        self::SHOP_MAGIC_CARD_MARKET,
+        self::SHOP_MINIATURE_MARKET,
         self::SHOP_ORIGINAL_MAGIC_ART,
         self::SHOP_STAR_CITY_GAMES,
         self::SHOP_TROLL_AND_TOAD,
@@ -42,7 +42,7 @@ class BasketController extends BaseController
         self::SHOP_CHANNEL_FIREBALL => '',
         self::SHOP_COOL_STUFF_INC => '',
         self::SHOP_EBAY => '',
-        self::SHOP_MAGIC_CARD_MARKET => '',
+        self::SHOP_MINIATURE_MARKET => '',
         self::SHOP_ORIGINAL_MAGIC_ART => '',
         self::SHOP_STAR_CITY_GAMES => '',
         self::SHOP_TROLL_AND_TOAD => '',
@@ -66,10 +66,16 @@ class BasketController extends BaseController
             return $this->redirectToRoute('basket_index');
         }
 
+        $modalBasketNewShow = false;
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $modalBasketNewShow = true;
+        }
+
         return $this->render('basket/index.html.twig', [
             'baskets' => $basketRepository->findAllByUser($this->getUser()),
             'basket' => $basket,
             'form' => $form->createView(),
+            'modalBasketNewShow' => $modalBasketNewShow,
         ]);
     }
 

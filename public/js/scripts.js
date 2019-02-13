@@ -1,7 +1,11 @@
+/* Bootstrap Tooltips Initialization */
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+});
+
 /* JQuery автодополнение */
 /* http://api.jqueryui.com/autocomplete/ */
-
-/* Автодополнение поля поиска карты для колоды */
 
 $("#basket_shop").autocomplete({
     minLength: 2,
@@ -10,9 +14,4 @@ $("#basket_shop").autocomplete({
         $('#basket_shop').val(ui.item.value);
         //$('#basket-shop-form').submit();
     }
-});
-
-// Tooltips Initialization
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
 });

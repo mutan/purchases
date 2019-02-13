@@ -1,4 +1,5 @@
 {{ form_start(form, {'attr': {'id': 'basket-shop-form'}}) }}
+    {{ form_widget(form._token) }}
     {{ form_errors(form) }}
 
     <div class="form-row">
@@ -9,6 +10,9 @@
 
         <div class="form-group col-12">
             {{ form_label(form.userComment, 'Комментарий') }}
-            {{ form_widget(form.userComment, {'attr': {'class': 'form-control-sm'}}) }}
+            {{ form_widget(form.userComment, {'attr': {'class': 'form-control-sm', 'placeholder': 'Можно написать позже'}}) }}
         </div>
     </div>
+
+{# csrf_token генерируется отдельным полем, в form_end можно запретить рендер остальных полей #}
+{# {{ form_end(form, {'render_rest': false}) }} #}
