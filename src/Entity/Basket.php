@@ -59,7 +59,8 @@ class Basket
     private $shop;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=2, max=250, minMessage="~min", maxMessage="~max")
      */
     private $userComment;
 
