@@ -2,13 +2,25 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PackageRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Package
 {
+    use TimestampableTrait;
+
+    const STATUS_NEW              = 'new';
+    const STATUS_WAITING_ARRIVAL  = 'waiting_arrival'; // ожидается менеджером СП
+    const STATUS_RECEIVED         = 'recieved'; // получена менеджером СП
+
+    const ALLOWED_STATUSES = [
+        self::STATUS_NEW, self::STATUS_WAITING_ARRIVAL, self::STATUS_RECEIVED,
+    ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -40,6 +52,11 @@ class Package
      * @ORM\Column(type="string", length=255)
      */
     private $tracking;
+
+    /**
+     * @ORM\Column(type="string", length=255, options={"default" = Package::STATUS_NEW})
+     */
+    private $status = self::STATUS_NEW;
 
     public function getId(): ?int
     {
@@ -104,5 +121,33 @@ class Package
         $this->tracking = $tracking;
 
         return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        if (!in_array($status, self::ALLOWED_STATUSES)) {
+            throw new \InvalidArgumentException("Invalid package status");
+        }
+
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /* ADDITIONAL METHODS */
+
+    public function __toString()
+    {
+        return $this->getIdWithPrefix();
+    }
+
+    public function getIdWithPrefix()
+    {
+        return 'PA' . $this->id;
     }
 }

@@ -27,7 +27,7 @@ class UserFixtures extends BaseFixture
             $user = new User();
             $user->setEmail('akim_now@mail.ru');
             $user->setName('Akim');
-            $user->setRoles([User::ROLE_ADMIN, User::ROLE_OPERATOR]);
+            $user->setRoles([User::ROLE_ADMIN, User::ROLE_MANAGER]);
             $user->setCreateDate(new \DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();

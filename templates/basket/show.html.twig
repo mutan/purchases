@@ -4,52 +4,55 @@
 
 {% block body %}
 
+    {# @var $basket Basket #}
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-6">
-            <h1 class="align-self-center">Заказ {{ basket.idWithPrefix }} {{ basket.shop }}</h1>
+            <h1 class="align-self-center mb-0">Заказ {{ basket.idWithPrefix }}</h1>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6 text-right">
-            <a class="btn btn-sm btn-mdb-color" href="{{ path('user_address_index') }}">
+            <a class="btn btn-sm btn-mdb-color" href="{{ path('basket_index') }}">
                 <i class="fa fa-arrow-left pr-1"></i> Вернуться к списку
             </a>
             <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
                 <i class="fa fa-edit pr-1"></i> Редактировать
             </button>
-            <button class="btn btn-sm btn-dark-green" type="submit" formnovalidate>
-                <i class="fa fa-plus-square pr-1"></i> Добавить товар
-            </button>
+            {{ include('basket/_delete_form.html.twig') }}
         </div>
     </div>
     <hr>
 
-    <h2>Товары</h2>
-
-    <section class="mt-3 pb-3">
-        <div class="row">
-            <div class="col-12">
-                <div class="card border-mdb mb-4">
-                    <div class="card-body">
-
-                        <div class="row d-flex">
-                            <div class="col-sm-12 col-md-9 d-flex">
-                                <h4 class="align-self-center mb-0">Заказ {{ basket.idWithPrefix }} {{ basket.shop }}</h4>
-                                <div class="align-self-center ml-3">
-
-                                    Статус: {{ basket.status }}
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-3 text-right d-flex">
-                                {#<a class="btn btn-sm btn-narrow btn-mdb-color darken-3 ml-auto" href="{{ path('basket_edit', {'id': basket.id}) }}"><i class="fas fa-edit"></i></a>#}
-                                {{ include('basket/_delete_form.html.twig') }}
-                            </div>
-                        </div>
-                        <hr>
-
-                    </div>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+            <strong>Статус:</strong> {{ basket.status }}<br>
+            <strong>Магазин:</strong> <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-external-link-alt"></i></a><br>
+            <strong>Комментарий:</strong> {{ basket.userComment }}<br>
         </div>
-    </section>
+        <div class="col-md-4">
+            <strong>Доставка по США:</strong> {% if basket.deliveryToStock %}{{ basket.deliveryToStock }}{% else %}–{% endif %}<br>
+            <strong>Доставка в Россию:</strong> {% if basket.deliveryToRussia %}{{ basket.deliveryToRussia }}{% else %}–{% endif %}<br>
+            <strong>Доставка по России:</strong> {% if basket.deliveryToClient %}{{ basket.deliveryToClient }}{% else %}–{% endif %}<br>
+        </div>
+        <div class="col-md-4">
+            <strong>Дополнительные затраты:</strong> {{ basket.additionalCost }}
+            {% if basket.additionalCost %}
+                <i class="far fa-comment" data-toggle="tooltip" title="{{ basket.additionalCostComment }}"></i>
+            {% else %}
+                –
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <h2 class="align-self-center">Товары</h2>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 text-right">
+            <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
+                <i class="fa fa-plus"></i> Добавить товар
+            </button>
+        </div>
+    </div>
 
     <table class="table table-sm table-responsive-sm">
         <thead>
@@ -80,37 +83,8 @@
         </tbody>
     </table>
 
-    <!-- Modal: modalProductNew -->
-    <div class="modal fade" id="modalProductNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <!--Header-->
-                <div class="modal-header">
-                    <h4 class="modal-title" id="modalProductNew">Добавить товар</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <!--Body-->
-                <div class="modal-body">
-                    {{ include('basket/_form.html.twig') }}
-                </div>
-                <!--Footer-->
-                <div class="modal-footer justify-content-center">
-                    <button class="btn btn-dark-green" type="submit" formnovalidate>
-                        <i class="fa fa-plus-square pr-1"></i> {{ button_label|default('Сохранить') }}
-                    </button>
-                </div>
-                {{ form_end(form) }}
-            </div>
-        </div>
-    </div>
-    <!-- Modal: modalProductNew -->
-
     <!-- Modal: modalBasketEdit -->
-    <div class="modal fade" id="modalBasketEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="modalBasketEdit" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <!--Header-->
@@ -127,10 +101,10 @@
                 <!--Footer-->
                 <div class="modal-footer justify-content-center">
                     <button class="btn btn-dark-green" type="submit" formnovalidate>
-                        <i class="fa fa-plus-square pr-1"></i> {{ button_label|default('Сохранить') }}
+                        {{ button_label|default('Обновить') }}
                     </button>
                 </div>
-                {{ form_end(form) }}
+                {{ form_end(form, {'render_rest': false}) }}
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
-<form method="post" action="{{ path('basket_delete', {'id': basket.id}) }}" onsubmit="return confirm('Действительно удалить?');">
+<form class="d-inline" method="post" action="{{ path('basket_delete', {'id': basket.id}) }}" onsubmit="return confirm('Действительно удалить?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ basket.id) }}">
-    <button class="btn btn-sm btn-narrow btn-danger ml-1"><i class="fas fa-trash"></i></button>
+    <button class="btn btn-sm btn-narrow btn-danger ml-1"><i class="fas fa-trash"></i> {{ button_label|default('') }}</button>
 </form>

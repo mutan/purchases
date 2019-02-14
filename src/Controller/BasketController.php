@@ -49,37 +49,6 @@ class BasketController extends BaseController
     ];
 
     /**
-     * @Route("/", name="basket_index", methods={"GET","POST"})
-     */
-    public function index(BasketRepository $basketRepository, Request $request): Response
-    {
-        $basket = new Basket();
-        $form = $this->createForm(BasketType::class, $basket);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $basket->setUser($this->getUser());
-            $entityManager->persist($basket);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('basket_index');
-        }
-
-        $modalBasketNewShow = false;
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $modalBasketNewShow = true;
-        }
-
-        return $this->render('basket/index.html.twig', [
-            'baskets' => $basketRepository->findAllByUser($this->getUser()),
-            'basket' => $basket,
-            'form' => $form->createView(),
-            'modalBasketNewShow' => $modalBasketNewShow,
-        ]);
-    }
-
-    /**
      * @Route("/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
      */
     public function autocomplete(Request $request): Response
@@ -99,9 +68,41 @@ class BasketController extends BaseController
     }
 
     /**
+     * @Route("/", name="basket_index", methods={"GET","POST"})
+     */
+    public function index(BasketRepository $basketRepository, Request $request): Response
+    {
+        $modalBasketNewShow = false;
+
+        $basket = new Basket();
+        $form = $this->createForm(BasketType::class, $basket);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $basket->setUser($this->getUser());
+                $entityManager->persist($basket);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('basket_index');
+            } else {
+                $modalBasketNewShow = true;
+            }
+        }
+
+        return $this->render('basket/index.html.twig', [
+            'baskets' => $basketRepository->findAllByUser($this->getUser()),
+            'basket' => $basket,
+            'form' => $form->createView(),
+            'modalBasketNewShow' => $modalBasketNewShow,
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="basket_show", methods={"GET","POST"})
      */
-    public function show(Basket $basket, BasketRepository $basketRepository, Request $request): Response
+    public function show(Basket $basket, Request $request): Response
     {
         $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
 

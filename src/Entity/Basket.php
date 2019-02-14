@@ -17,21 +17,16 @@ class Basket
     use TimestampableTrait;
 
     const STATUS_NEW       = 'new';
-    const STATUS_REDEEMED  = 'redeemed';
-    const STATUS_BOUGHT    = 'bought';
-    const STATUS_SENT      = 'sent';
-    const STATUS_RECEIVED  = 'received';
-    const STATUS_CANCELLED = 'cancelled';
-    const STATUS_DELETED   = 'deleted';
+    const STATUS_REDEEMED  = 'redeemed'; // в процессе выкупа
+    const STATUS_BOUGHT    = 'bought'; // выкуплен
+    const STATUS_SENT      = 'sent'; // отправлен пользователю
+    const STATUS_RECEIVED  = 'received'; // получен пользователем
+    const STATUS_CANCELLED = 'cancelled'; // отменен пользователем, виден пользователю
+    const STATUS_DELETED   = 'deleted'; // удален по инициативе пользователя, не виден пользователю
 
     const ALLOWED_STATUSES = [
-        self::STATUS_NEW,
-        self::STATUS_REDEEMED,
-        self::STATUS_BOUGHT,
-        self::STATUS_SENT,
-        self::STATUS_RECEIVED,
-        self::STATUS_CANCELLED,
-        self::STATUS_DELETED,
+        self::STATUS_NEW, self::STATUS_REDEEMED, self:: STATUS_BOUGHT,
+        self::STATUS_SENT, self::STATUS_RECEIVED, self::STATUS_CANCELLED, self::STATUS_DELETED,
     ];
 
     /**
@@ -63,12 +58,6 @@ class Basket
      * @Assert\Length(min=2, max=250, minMessage="~min", maxMessage="~max")
      */
     private $userComment;
-
-    // TODO не нужна?
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $weight;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -291,7 +280,7 @@ class Basket
 
     public function getIdWithPrefix()
     {
-        return 'BS' . $this->id;
+        return 'OR' . $this->id;
     }
 
     public function isNew()

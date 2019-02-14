@@ -18,9 +18,7 @@ class Product
     const STATUS_CANCELED = 'canceled'; // не удалось купить
 
     const ALLOWED_STATUSES = [
-        self::STATUS_ACTIVE,
-        self::STATUS_DELETED,
-        self::STATUS_CANCELED,
+        self::STATUS_ACTIVE, self::STATUS_DELETED, self::STATUS_CANCELED,
     ];
 
     /**
@@ -78,11 +76,6 @@ class Product
     private $comment;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $status;
-
-    /**
      * @ORM\Column(type="float", nullable=true)
      */
     private $expectedWeight;
@@ -101,6 +94,11 @@ class Product
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $purchaseShop;
+
+    /**
+     * @ORM\Column(type="string", length=255, options={"default" = Product::STATUS_ACTIVE})
+     */
+    private $status = self::STATUS_ACTIVE;
 
     public function getId(): ?int
     {
@@ -288,6 +286,6 @@ class Product
 
     public function getIdWithPrefix()
     {
-        return 'P' . $this->id;
+        return 'PR' . $this->id;
     }
 }
