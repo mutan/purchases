@@ -1,6 +1,6 @@
 {% extends 'layout/base.html.twig' %}
 
-{% form_theme form 'form/errors.html.twig' %}
+{% form_theme basketForm 'form/errors.html.twig' %}
 
 {% block title %}Адреса{{ parent() }}{% endblock %}
 
@@ -60,7 +60,7 @@
                 <!--Header-->
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Новый заказ</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -69,12 +69,12 @@
                     {{ include('basket/_form.html.twig') }}
                 </div>
                 <!--Footer-->
-                <div class="modal-footer justify-content-center">
-                    <button class="btn btn-sm btn-dark-green" type="submit" formnovalidate>
+                <div class="modal-footer">
+                    <button class="btn btn-dark-green" type="submit" formnovalidate>
                         <i class="fa fa-plus-square pr-1"></i> {{ button_label|default('Сохранить') }}
                     </button>
                 </div>
-                {{ form_end(form, {'render_rest': false}) }}
+                {{ form_end(basketForm, {'render_rest': false}) }}
             </div>
         </div>
     </div>

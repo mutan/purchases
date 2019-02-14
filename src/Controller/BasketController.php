@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Basket;
+use App\Entity\Product;
 use App\Form\BasketType;
+use App\Form\ProductType;
 use App\Repository\BasketRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,14 +19,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class BasketController extends BaseController
 {
 
-    const SHOP_AMAZON = 'amazon.com';
-    const SHOP_CHANNEL_FIREBALL = 'channelfireball.com';
-    const SHOP_COOL_STUFF_INC = 'coolstuffinc.com';
-    const SHOP_EBAY = 'ebay.com';
-    const SHOP_MINIATURE_MARKET = 'miniaturemarket.com';
-    const SHOP_ORIGINAL_MAGIC_ART = 'originalmagicart.store';
-    const SHOP_STAR_CITY_GAMES = 'starcitygames.com';
-    const SHOP_TROLL_AND_TOAD = 'trollandtoad.com';
+    const SHOP_AMAZON = 'https://www.amazon.com';
+    const SHOP_CHANNEL_FIREBALL = 'https://www.channelfireball.com';
+    const SHOP_COOL_STUFF_INC = 'https://www.coolstuffinc.com';
+    const SHOP_EBAY = 'https://www.ebay.com';
+    const SHOP_MINIATURE_MARKET = 'https://www.miniaturemarket.com';
+    const SHOP_ORIGINAL_MAGIC_ART = 'https://www.originalmagicart.store';
+    const SHOP_STAR_CITY_GAMES = 'http://www.starcitygames.com';
+    const SHOP_TROLL_AND_TOAD = 'https://www.trollandtoad.com';
 
     const SHOP_LIST_FOR_AUTOCOMPLETE = [
         self::SHOP_AMAZON,
@@ -75,11 +77,11 @@ class BasketController extends BaseController
         $modalBasketNewShow = false;
 
         $basket = new Basket();
-        $form = $this->createForm(BasketType::class, $basket);
-        $form->handleRequest($request);
+        $basketForm = $this->createForm(BasketType::class, $basket);
+        $basketForm->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
+        if ($basketForm->isSubmitted()) {
+            if ($basketForm->isValid()) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $basket->setUser($this->getUser());
                 $entityManager->persist($basket);
@@ -94,7 +96,7 @@ class BasketController extends BaseController
         return $this->render('basket/index.html.twig', [
             'baskets' => $basketRepository->findAllByUser($this->getUser()),
             'basket' => $basket,
-            'form' => $form->createView(),
+            'basketForm' => $basketForm->createView(),
             'modalBasketNewShow' => $modalBasketNewShow,
         ]);
     }
@@ -106,18 +108,49 @@ class BasketController extends BaseController
     {
         $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
 
-        $form = $this->createForm(BasketType::class, $basket);
-        $form->handleRequest($request);
+        $modalBasketEditShow = false;
+        $modalProductNewShow = false;
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        /* BASKET EDIT */
+        $basketForm = $this->createForm(BasketType::class, $basket);
+        $basketForm->handleRequest($request);
 
-            return $this->redirectToRoute('basket_show', ['id' => $basket->getId()]);
+        if ($basketForm->isSubmitted()) {
+            if ($basketForm->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('basket_show', ['id' => $basket->getId()]);
+            } else {
+                $modalBasketEditShow = true;
+            }
+        }
+
+        /* PRODUCT NEW */
+        $product = new Product();
+        $productForm = $this->createForm(ProductType::class, $product);
+        $productForm->handleRequest($request);
+
+        if ($productForm->isSubmitted()) {
+            if ($productForm->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+
+                $product->setUser($this->getUser());
+                $product->setBasket($basket);
+                $entityManager->persist($product);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('basket_show', ['id' => $basket->getId()]);
+            } else {
+                $modalProductNewShow = true;
+            }
         }
 
         return $this->render('basket/show.html.twig', [
             'basket' => $basket,
-            'form' => $form->createView(),
+            'basketForm' => $basketForm->createView(),
+            'product' => $product,
+            'productForm' => $productForm->createView(),
+            'modalBasketEditShow' => $modalBasketEditShow,
+            'modalProductNewShow' => $modalProductNewShow,
         ]);
     }
 

@@ -22,11 +22,19 @@ footer hr {
     padding: .5rem 1rem;
 }
 
+/* Links */
+a {
+    color: #007bff;
+}
+
+a.dashed {
+    text-decoration: underline dashed #007bff;
+}
+
 /* Tables */
 
-table.table a.dashed {
-    color: #09c;
-    text-decoration: underline dashed #09c;
+table.table a {
+    color: #007bff;
 }
 
 table.table a.btn {

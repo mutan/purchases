@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -42,56 +43,72 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Length(min=1, max=250, minMessage="~min", maxMessage="~max")
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=2000)
+     * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Length(min=1, max=2000, minMessage="~min", maxMessage="~max")
+     * @Assert\Url()
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=1, max=250, minMessage="~min", maxMessage="~max")
+     *
      */
     private $article;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(type="float")
      */
     private $userPrice;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="float")
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Type(type="integer")
      */
     private $amount;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(min=1, max=2000, minMessage="~min", maxMessage="~max")
      */
     private $comment;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="integer")
      */
     private $expectedWeight;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="integer")
      */
     private $weight;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="float")
      */
     private $purchasePrice;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=1, max=250, minMessage="~min", maxMessage="~max")
      */
     private $purchaseShop;
 
@@ -287,5 +304,20 @@ class Product
     public function getIdWithPrefix()
     {
         return 'PR' . $this->id;
+    }
+
+    public function isActive()
+    {
+        return $this->getStatus() == self::STATUS_ACTIVE;
+    }
+
+    public function isCancelled()
+    {
+        return $this->getStatus() == self::STATUS_CANCELED;
+    }
+
+    public function isDeleted()
+    {
+        return $this->getStatus() == self::STATUS_DELETED;
     }
 }

@@ -1,4 +1,44 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+{{ form_start(productForm) }}
+    {{ form_widget(productForm._token) }}
+    {{ form_errors(productForm) }}
+
+    <div class="form-row">
+        <div class="form-group col-md-12 col-lg-6">
+            {{ form_label(productForm.name, 'Название') }}
+            {{ form_widget(productForm.name, {'attr': {'class': 'form-control-sm'}}) }}
+            {{ form_help(productForm.name) }}
+        </div>
+
+        <div class="form-group col-md-12 col-lg-6">
+            {{ form_label(productForm.url, 'Ссылка') }}
+            {{ form_widget(productForm.url, {'attr': {'class': 'form-control-sm'}}) }}
+            {{ form_help(productForm.url) }}
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-12 col-sm-4">
+            {{ form_label(productForm.article, 'Артикль') }}
+            {{ form_widget(productForm.article, {'attr': {'class': 'form-control-sm'}}) }}
+            {{ form_help(productForm.article) }}
+        </div>
+        <div class="form-group col-6 col-sm-4">
+            {{ form_label(productForm.amount, 'Количество') }}
+            {{ form_widget(productForm.amount, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+        <div class="form-group col-6 col-sm-4">
+            {{ form_label(productForm.userPrice, 'Цена') }}
+            {{ form_widget(productForm.userPrice, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-12">
+            {{ form_label(productForm.comment, 'Комментарий') }}
+            {{ form_widget(productForm.comment, {'attr': {'class': 'form-control-sm'}}) }}
+            {{ form_help(productForm.comment) }}
+        </div>
+    </div>
+
+    {# csrf_token генерируется отдельным полем, в form_end можно запретить рендер остальных полей #}
+    {# {{ form_end(productForm, {'render_rest': false}) }} #}

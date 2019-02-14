@@ -16,17 +16,17 @@ class Basket
 {
     use TimestampableTrait;
 
-    const STATUS_NEW       = 'new';
-    const STATUS_REDEEMED  = 'redeemed'; // в процессе выкупа
-    const STATUS_BOUGHT    = 'bought'; // выкуплен
-    const STATUS_SENT      = 'sent'; // отправлен пользователю
-    const STATUS_RECEIVED  = 'received'; // получен пользователем
-    const STATUS_CANCELLED = 'cancelled'; // отменен пользователем, виден пользователю
-    const STATUS_DELETED   = 'deleted'; // удален по инициативе пользователя, не виден пользователю
+    const STATUS_NEW      = 'new';
+    const STATUS_REDEEMED = 'redeemed'; // в процессе выкупа
+    const STATUS_BOUGHT   = 'bought'; // выкуплен
+    const STATUS_SENT     = 'sent'; // отправлен пользователю
+    const STATUS_RECEIVED = 'received'; // получен пользователем
+    const STATUS_CANCELED = 'canceled'; // отменен пользователем, виден пользователю
+    const STATUS_DELETED  = 'deleted'; // удален по инициативе пользователя, не виден пользователю
 
     const ALLOWED_STATUSES = [
         self::STATUS_NEW, self::STATUS_REDEEMED, self:: STATUS_BOUGHT,
-        self::STATUS_SENT, self::STATUS_RECEIVED, self::STATUS_CANCELLED, self::STATUS_DELETED,
+        self::STATUS_SENT, self::STATUS_RECEIVED, self::STATUS_CANCELED, self::STATUS_DELETED,
     ];
 
     /**
@@ -50,6 +50,7 @@ class Basket
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Url()
      */
     private $shop;
 
@@ -211,24 +212,12 @@ class Basket
         return $this;
     }
 
-    public function getWeight(): ?int
-    {
-        return $this->weight;
-    }
-
-    public function setWeight(?int $weight): self
-    {
-        $this->weight = $weight;
-
-        return $this;
-    }
-
     public function getShop(): ?string
     {
         return $this->shop;
     }
 
-    public function setShop(string $shop): self
+    public function setShop(?string $shop): self
     {
         $this->shop = $shop;
 
@@ -298,9 +287,9 @@ class Basket
         return $this->getStatus() == self::STATUS_BOUGHT;
     }
 
-    public function isCancelled()
+    public function isCanceled()
     {
-        return $this->getStatus() == self::STATUS_CANCELLED;
+        return $this->getStatus() == self::STATUS_CANCELED;
     }
 
     public function isDeleted()
