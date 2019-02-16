@@ -83,8 +83,8 @@ class Product
     private $amount;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\Length(min=1, max=2000, minMessage="~min", maxMessage="~max")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=2, max=250, minMessage="~min", maxMessage="~max")
      */
     private $comment;
 

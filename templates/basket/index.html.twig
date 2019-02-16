@@ -11,7 +11,7 @@
         </div>
         <div class="col-sm-12 col-md-3 text-right">
             <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketNew">
-                <nobr><i class="fa fa-plus-square"></i> Новый заказ</nobr>
+                <nobr><i class="fa fa-plus pr-1"></i> Новый заказ</nobr>
             </button>
         </div>
     </div>
@@ -23,13 +23,13 @@
             <td rowspan="2">Номер</td>
             <td rowspan="2">Магазин</td>
             <td rowspan="2">Сумма</td>
-            <td colspan="3">Доставка</td>
+            <td colspan="3" class="text-center">Доставка</td>
             <td rowspan="2">Итого</td>
         </tr>
         <tr>
-            <td>по США</td>
-            <td>в Россию</td>
-            <td>по России</td>
+            <td class="border-0">по США</td>
+            <td class="border-0">в Россию</td>
+            <td class="border-0">по России</td>
         </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@
                 <td>
                     <a class="dashed" href="{{ path('basket_show', {'id': basket.id} ) }}">{{ basket.idWithPrefix }}</a>
                     {% if basket.userComment %}
-                        <i class="far fa-comment" data-toggle="tooltip" title="{{ basket.userComment }}"></i>
+                        <i class="far fa-comment pl-1" data-toggle="tooltip" title="{{ basket.userComment }}"></i>
                     {% endif %}
                 </td>
                 <td>
