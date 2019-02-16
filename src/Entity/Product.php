@@ -71,7 +71,7 @@ class Product
     private $userPrice;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
      * @Assert\Type(type="float")
      */
     private $price;
@@ -90,19 +90,19 @@ class Product
     private $comment;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="integer")
      */
     private $expectedWeight;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="integer")
      */
     private $weight;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
      * @Assert\Type(type="float")
      */
     private $purchasePrice;
@@ -247,24 +247,24 @@ class Product
         return $this;
     }
 
-    public function getExpectedWeight(): ?float
+    public function getExpectedWeight(): ?int
     {
         return $this->expectedWeight;
     }
 
-    public function setExpectedWeight(?float $expectedWeight): self
+    public function setExpectedWeight(?int $expectedWeight): self
     {
         $this->expectedWeight = $expectedWeight;
 
         return $this;
     }
 
-    public function getWeight(): ?float
+    public function getWeight(): ?int
     {
         return $this->weight;
     }
 
-    public function setWeight(?float $weight): self
+    public function setWeight(?int $weight): self
     {
         $this->weight = $weight;
 
