@@ -14,16 +14,13 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class, [
-                'help' => 'Как в магазине.',
-                'attr' => ['autofocus' => true],
-            ])
-            ->add('url', TextType::class, ['help' => 'Именно на этот товар в магазине. Должен начинаться с http.'])
-            ->add('article', TextType::class, ['help' => 'Уникальный номер товара, ebayId и т.п., если есть.'])
-            ->add('userPrice', TextType::class, ['help' => 'Цена как магазине. Разделитель целой и десятичной части – точка.'])
+            ->add('name',TextType::class, ['attr' => ['autofocus' => true]])
+            ->add('url', TextType::class)
+            ->add('article', TextType::class)
+            ->add('userPrice', TextType::class)
             ->add('price', TextType::class)
-            ->add('amount', TextType::class, ['help' => 'Количество, шт.'])
-            ->add('comment', TextareaType::class, ['help' => 'Например, характеристики товара, которые не определяются по ссылке и их надо выбирать отдельно на странице товара в магазине.'])
+            ->add('amount', TextType::class)
+            ->add('comment', TextareaType::class)
             ->add('expectedWeight', TextType::class)
             ->add('purchasePrice', TextType::class)
             ->add('purchaseShop', TextType::class)
