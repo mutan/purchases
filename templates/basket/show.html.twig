@@ -25,9 +25,11 @@
     <hr>
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-md-6">
             <span class="badge badge-dark mr-1">{{ basket.status }}</span>
-            <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-external-link-alt"></i></a><br>
+            <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-external-link-alt"></i></a>
+        </div>
+        <div class="col-12 col-md-6">
             {% if basket.userComment %}<i class="far fa-comment pr-1"></i> {{ basket.userComment }}{% endif %}
         </div>
     </div>
