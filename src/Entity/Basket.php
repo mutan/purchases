@@ -86,6 +86,12 @@ class Basket
     private $additionalCostComment;
 
     /**
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
+     * @Assert\Type(type="float")
+     */
+    private $rate;
+
+    /**
      * @ORM\Column(type="string", length=255, options={"default" = Basket::STATUS_NEW})
      */
     private $status = self::STATUS_NEW;
@@ -256,6 +262,18 @@ class Basket
     public function setAdditionalCostComment(?string $additionalCostComment): self
     {
         $this->additionalCostComment = $additionalCostComment;
+
+        return $this;
+    }
+
+    public function getRate(): ?float
+    {
+        return $this->rate;
+    }
+
+    public function setRate(float $rate): self
+    {
+        $this->rate = $rate;
 
         return $this;
     }

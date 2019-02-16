@@ -13,9 +13,6 @@
             <h1 class="align-self-center mb-0">Заказ {{ basket.idWithPrefix }}</h1>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6 text-right">
-            <a class="btn btn-sm btn-mdb-color" href="{{ path('basket_index') }}">
-                <i class="fa fa-arrow-left pr-1"></i> Вернуться к списку
-            </a>
             <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
                 <i class="fa fa-edit pr-1"></i> Редактировать
             </button>
@@ -53,7 +50,8 @@
             <td style="width: 20%">Название</td>
             <td style="width: 1%"><nobr>Кол-во</nobr></td>
             <td style="width: 1%">Цена</td>
-            <td style="width: 20%">Комментарий</td>
+            <td style="width: 1%">Сумма $</td>
+            <td style="width: 1%">Сумма руб.</td>
             <td style="width: 1%">Действия</td>
         </tr>
         </thead>
@@ -64,6 +62,7 @@
                 <td>
                     <a href="{{ product.url }}" target="_blank">{{ product.name }} <i class="fa fa-external-link-alt"></i></a>
                     {% if product.article %}{{ product.article }}{% endif %}
+                    {% if product.comment %}<br>{{ product.comment }}{% endif %}
                 </td>
                 <td>{{ product.amount }}</td>
                 <td>{{ product.userPrice }}</td>
@@ -71,8 +70,10 @@
                 <td>
                     <nobr>
                     <a class="btn btn-sm btn-narrow btn-mdb-color darken-3" href="{{ path('product_edit', {'id': product.id}) }}"><i class="fas fa-edit"></i></a>
+                        <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3" data-toggle="modal" data-target="#modalProductNew">
+                            <i class="fa fa-edit"></i>
+                        </button>
                     {{ include('product/_delete_form.html.twig') }}
-
                 </td>
             </tr>
         {% else %}
@@ -123,7 +124,7 @@
             <div class="modal-content">
                 <!--Header-->
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modalBasketEdit">Редактировать заказ {{ basket.idWithPrefix }}</h4>
+                    <h4 class="modal-title">Редактировать заказ {{ basket.idWithPrefix }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -150,13 +151,13 @@
             <div class="modal-content">
                 <!--Header-->
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Новый товар</h4>
+                    <h4 class="modal-title">Новый товар</h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>×</span>
                     </button>
                 </div>
                 <!--Body-->
-                <div class="modal-body ui-front">{# без класса ui-front список autocomplite'a будет показан не рядом с полем поиска #}
+                <div class="modal-body">
                     {{ include('product/_form.html.twig') }}
                 </div>
                 <!--Footer-->

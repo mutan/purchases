@@ -91,6 +91,6 @@ class ProductController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('product_index');
+        return $this->redirectToRoute('basket_show', ['id' => $product->getBasket()->getId()]);
     }
 }
