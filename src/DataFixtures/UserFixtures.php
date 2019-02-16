@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Basket;
+use App\Entity\Product;
 use App\Entity\User;
 use App\Entity\UserAddress;
 use App\Entity\UserPassport;
@@ -37,6 +39,22 @@ class UserFixtures extends BaseFixture
             ));
             $user->setUserProfile(new UserProfile());
 
+            $userAddress = $this->createAddress();
+            $this->manager->persist($userAddress);
+            $user->addUserAddress($userAddress);
+
+            $userPassport = $this->createPassport();
+            $this->manager->persist($userPassport);
+            $user->addUserPassport($userPassport);
+
+            $basket = $this->createBasket();
+            $product = $this->createProduct();
+            $this->manager->persist($product);
+            $user->addProduct($product);
+            $basket->addProduct($product);
+            $this->manager->persist($basket);
+            $user->addBasket($basket);
+
             return $user;
         });
 
@@ -60,6 +78,14 @@ class UserFixtures extends BaseFixture
             $userPassport = $this->createPassport();
             $this->manager->persist($userPassport);
             $user->addUserPassport($userPassport);
+
+            $basket = $this->createBasket();
+            $product = $this->createProduct();
+            $this->manager->persist($product);
+            $user->addProduct($product);
+            $basket->addProduct($product);
+            $this->manager->persist($basket);
+            $user->addBasket($basket);
 
             return $user;
         });
@@ -99,5 +125,25 @@ class UserFixtures extends BaseFixture
                      ->setInn($this->faker->creditCardNumber);
 
         return $userPassport;
+    }
+
+    protected function createBasket(): Basket
+    {
+        $basket = new Basket();
+        $basket->setShop('https://www.coolstuffinc.com')
+               ->setUserComment($this->faker->text);
+
+        return $basket;
+    }
+
+    protected function createProduct(): Product
+    {
+        $product = new Product();
+        $product->setName('Faithless Looting 128/254')
+                ->setUrl('https://beta.trollandtoad.com/magic-the-gathering/ultimate-masters-singles/faithless-looting')
+                ->setAmount(1)
+                ->setUserPrice(0.49);
+
+        return $product;
     }
 }

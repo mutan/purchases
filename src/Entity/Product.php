@@ -64,7 +64,8 @@ class Product
     private $article;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal", precision=7, scale=2)
+     * @Assert\NotNull()
      * @Assert\Type(type="float")
      */
     private $userPrice;

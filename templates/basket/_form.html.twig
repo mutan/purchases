@@ -11,7 +11,7 @@
 
         <div class="form-group col-12">
             {{ form_label(basketForm.userComment, 'Комментарий') }}
-            {{ form_widget(basketForm.userComment, {'attr': {'class': 'form-control-sm', 'placeholder': comment_placeholder|default('') }}) }}
+            {{ form_widget(basketForm.userComment, {'attr': {'class': 'form-control-sm', 'rows': 5, 'placeholder': comment_placeholder|default('') }}) }}
             <small id="product_userComment_help" class="form-text text-muted">Максимум 250 символов</small>
         </div>
     </div>

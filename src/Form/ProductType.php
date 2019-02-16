@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ProductType extends AbstractType
@@ -17,7 +18,7 @@ class ProductType extends AbstractType
             ->add('name',TextType::class, ['attr' => ['autofocus' => true]])
             ->add('url', TextType::class)
             ->add('article', TextType::class)
-            ->add('userPrice', TextType::class)
+            ->add('userPrice', NumberType::class)
             ->add('price', TextType::class)
             ->add('amount', TextType::class)
             ->add('comment', TextareaType::class)
