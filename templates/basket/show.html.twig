@@ -22,101 +22,117 @@
     <hr>
 
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <span class="badge badge-dark mr-1">{{ basket.status }}</span>
             <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-external-link-alt"></i></a>
         </div>
-        <div class="col-12 col-md-6">
-            {% if basket.userComment %}<i class="far fa-comment pr-1"></i> {{ basket.userComment }}{% endif %}
+        <div class="col-12 col-md-4">
+            <span class="badge badge-secondary mr-1">Курс $</span>
+            {% if  basket.rate %}{{ basket.rate }} рублей{% else %}–{% endif %}
+        </div>
+        <div class="col-12 col-md-4">
+            <i class="far fa-comment pr-1"></i>{% if basket.userComment %}{{ basket.userComment }}{% else %}–{% endif %}
         </div>
     </div>
     <hr>
 
     <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="col-6">
             <h2 class="align-self-center">Товары</h2>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 text-right">
+        <div class="col-6 text-right">
             <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalProductNew">
-                <i class="fa fa-plus pr-1"></i> Добавить товар
+                <i class="fa fa-plus pr-1"></i> <span class="d-none d-sm-inline">Добавить товар</span>
             </button>
         </div>
     </div>
 
-    <table class="table table-sm table-bordered table-responsive-sm">
-        <thead>
-        <tr>
-            <td style="width: 1%">#</td>
-            <td style="width: 20%">Название</td>
-            <td style="width: 1%"><nobr>Кол-во</nobr></td>
-            <td style="width: 1%">Цена</td>
-            <td style="width: 1%">Сумма $</td>
-            <td style="width: 1%">Сумма руб.</td>
-            <td style="width: 1%">Действия</td>
-        </tr>
-        </thead>
-        <tbody>
-        {% for product in basket.products %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>
-                    <a href="{{ product.url }}" target="_blank">{{ product.name }} <i class="fa fa-external-link-alt"></i></a>
-                    {% if product.article %}{{ product.article }}{% endif %}
-                    {% if product.comment %}<br>{{ product.comment }}{% endif %}
-                </td>
-                <td>{{ product.amount }}</td>
-                <td>{{ product.userPrice }}</td>
-                <td>{{ product.comment }}</td>
-                <td>
-                    <nobr>
-                    <a class="btn btn-sm btn-narrow btn-mdb-color darken-3" href="{{ path('product_edit', {'id': product.id}) }}"><i class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3" data-toggle="modal" data-target="#modalProductNew">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    {{ include('product/_delete_form.html.twig') }}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">Записей не найдено.</td>
-            </tr>
-        {% endfor %}
-        {% if basket.deliveryToStock %}
-            <tr>
-                <td></td>
-                <td colspan="2">Доставка по США</td>
-                <td>{{ basket.deliveryToStock }}</td>
-                <td colspan="3"></td>
-            </tr>
-        {% endif %}
-        {% if basket.deliveryToRussia %}
-            <tr>
-                <td></td>
-                <td colspan="2">Доставка в Россию</td>
-                <td>{{ basket.deliveryToRussia }}</td>
-                <td colspan="3"></td>
-            </tr>
-        {% endif %}
-        {% if basket.deliveryToClient %}
-            <tr>
-                <td></td>
-                <td colspan="2">Доставка по России</td>
-                <td>{{ basket.deliveryToClient }}</td>
-                <td colspan="3"></td>
-            </tr>
-        {% endif %}
-        {% if basket.additionalCost %}
-            <tr>
-                <td></td>
-                <td colspan="2">
-                    Дополнительные затраты <i class="far fa-comment" data-toggle="tooltip" title="{{ basket.additionalCostComment }}"></i>
-                </td>
-                <td>{{ basket.additionalCost }}</td>
-                <td colspan="3"></td>
-            </tr>
-        {% endif %}
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-sm table-bordered table-responsive-sm">
+                <thead>
+                <tr>
+                    <td style="width: 1%">#</td>
+                    <td style="width: 20%">Название</td>
+                    <td style="width: 1%"><nobr>Кол-во</nobr></td>
+                    <td style="width: 1%"><nobr>Цена $</nobr></td>
+                    <td style="width: 1%"><nobr>Сумма $</nobr></td>
+                    <td style="width: 1%"><nobr>Сумма р.</nobr></td>
+                    <td style="width: 1%">Действия</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in basket.products %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>
+                            <a href="{{ product.url }}" target="_blank">{{ product.name }} <i class="fa fa-external-link-alt"></i></a>
+                            {% if product.article %}{{ product.article }}{% endif %}
+                            {% if product.comment %}<br>{{ product.comment }}{% endif %}
+                        </td>
+                        <td>{{ product.amount }}</td>
+                        <td>{{ product.userPrice }}</td>
+                        <td>{{ product.amount * product.userPrice }}</td>
+                        <td>
+                            {% if basket.rate %}
+                                {{ (product.amount * product.userPrice * basket.rate)|round(0, 'ceil') }}
+                            {% else %}
+                                <i class="far fa-question-circle "></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <nobr>
+                            {#<a class="btn btn-sm btn-narrow btn-mdb-color darken-3" href="{{ path('product_edit', {'id': product.id}) }}"><i class="fas fa-edit"></i></a>#}
+                                <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3" data-toggle="modal" data-target="#modalProductNew">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            {{ include('product/_delete_form.html.twig') }}
+                            </nobr>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">Записей не найдено.</td>
+                    </tr>
+                {% endfor %}
+                {% if basket.deliveryToStock %}
+                    <tr>
+                        <td></td>
+                        <td colspan="2">Доставка по США</td>
+                        <td>{{ basket.deliveryToStock }}</td>
+                        <td colspan="3"></td>
+                    </tr>
+                {% endif %}
+                {% if basket.deliveryToRussia %}
+                    <tr>
+                        <td></td>
+                        <td colspan="2">Доставка в Россию</td>
+                        <td>{{ basket.deliveryToRussia }}</td>
+                        <td colspan="3"></td>
+                    </tr>
+                {% endif %}
+                {% if basket.deliveryToClient %}
+                    <tr>
+                        <td></td>
+                        <td colspan="2">Доставка по России</td>
+                        <td>{{ basket.deliveryToClient }}</td>
+                        <td colspan="3"></td>
+                    </tr>
+                {% endif %}
+                {% if basket.additionalCost %}
+                    <tr>
+                        <td></td>
+                        <td colspan="2">
+                            Дополнительные затраты <i class="far fa-comment" data-toggle="tooltip" title="{{ basket.additionalCostComment }}"></i>
+                        </td>
+                        <td>{{ basket.additionalCost }}</td>
+                        <td colspan="3"></td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <!-- Modal: modalBasketEdit -->
     <div class="modal fade" id="modalBasketEdit" tabindex="-1" role="dialog">
@@ -171,6 +187,33 @@
         </div>
     </div>
     <!-- Modal: modalProductNew -->
+
+    <!-- Modal: modalProductEdit -->
+    <div class="modal fade" id="modalProductEdit" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title">Редактировать товар {{ product.idWithPrefix }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    {{ include('product/_form.html.twig') }}
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button class="btn btn-dark-green" type="submit" formnovalidate>
+                        {{ button_label|default('Обновить') }}
+                    </button>
+                </div>
+                {{ form_end(productForm, {'render_rest': false}) }}
+            </div>
+        </div>
+    </div>
+    <!-- Modal: modalProductEdit -->
 
 {% endblock %}
 
