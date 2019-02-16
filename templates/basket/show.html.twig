@@ -25,23 +25,10 @@
     <hr>
 
     <div class="row">
-        <div class="col-md-4">
-            <strong>Статус:</strong> {{ basket.status }}<br>
-            <strong>Магазин:</strong> <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-external-link-alt"></i></a><br>
-            <strong>Комментарий:</strong> {{ basket.userComment }}<br>
-        </div>
-        <div class="col-md-4">
-            <strong>Доставка по США:</strong> {% if basket.deliveryToStock %}{{ basket.deliveryToStock }}{% else %}–{% endif %}<br>
-            <strong>Доставка в Россию:</strong> {% if basket.deliveryToRussia %}{{ basket.deliveryToRussia }}{% else %}–{% endif %}<br>
-            <strong>Доставка по России:</strong> {% if basket.deliveryToClient %}{{ basket.deliveryToClient }}{% else %}–{% endif %}<br>
-        </div>
-        <div class="col-md-4">
-            <strong>Дополнительные затраты:</strong> {{ basket.additionalCost }}
-            {% if basket.additionalCost %}
-                <i class="far fa-comment" data-toggle="tooltip" title="{{ basket.additionalCostComment }}"></i>
-            {% else %}
-                –
-            {% endif %}
+        <div class="col-12">
+            <span class="badge badge-dark mr-1">{{ basket.status }}</span>
+            <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-external-link-alt"></i></a><br>
+            {% if basket.userComment %}<i class="far fa-comment pr-1"></i> {{ basket.userComment }}{% endif %}
         </div>
     </div>
     <hr>
@@ -52,35 +39,38 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6 text-right">
             <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalProductNew">
-                <i class="fa fa-plus"></i> Добавить товар
+                <i class="fa fa-plus pr-1"></i> Добавить товар
             </button>
         </div>
     </div>
 
-    <table class="table table-sm table-responsive-sm">
+    <table class="table table-sm table-bordered table-responsive-sm">
         <thead>
         <tr>
-            <td>#</td>
-            <td>Название</td>
-            <td>Артикль</td>
-            <td>Кол-во</td>
-            <td>Цена</td>
-            <td>Комментарий</td>
-            <td>Действия</td>
+            <td style="width: 1%">#</td>
+            <td style="width: 20%">Название</td>
+            <td style="width: 1%"><nobr>Кол-во</nobr></td>
+            <td style="width: 1%">Цена</td>
+            <td style="width: 20%">Комментарий</td>
+            <td style="width: 1%">Действия</td>
         </tr>
         </thead>
         <tbody>
         {% for product in basket.products %}
             <tr>
                 <td>{{ loop.index }}</td>
-                <td><a href="{{ product.url }}" target="_blank">{{ product.name }} <i class="fa fa-external-link-alt"></i></a></td>
-                <td>{% if product.article %}{{ product.article }}{% else %}–{% endif %}</td>
+                <td>
+                    <a href="{{ product.url }}" target="_blank">{{ product.name }} <i class="fa fa-external-link-alt"></i></a>
+                    {% if product.article %}{{ product.article }}{% endif %}
+                </td>
                 <td>{{ product.amount }}</td>
                 <td>{{ product.userPrice }}</td>
                 <td>{{ product.comment }}</td>
                 <td>
+                    <nobr>
                     <a class="btn btn-sm btn-narrow btn-mdb-color darken-3" href="{{ path('product_edit', {'id': product.id}) }}"><i class="fas fa-edit"></i></a>
                     {{ include('product/_delete_form.html.twig') }}
+
                 </td>
             </tr>
         {% else %}
@@ -88,6 +78,40 @@
                 <td colspan="7">Записей не найдено.</td>
             </tr>
         {% endfor %}
+        {% if basket.deliveryToStock %}
+            <tr>
+                <td></td>
+                <td colspan="2">Доставка по США</td>
+                <td>{{ basket.deliveryToStock }}</td>
+                <td colspan="3"></td>
+            </tr>
+        {% endif %}
+        {% if basket.deliveryToRussia %}
+            <tr>
+                <td></td>
+                <td colspan="2">Доставка в Россию</td>
+                <td>{{ basket.deliveryToRussia }}</td>
+                <td colspan="3"></td>
+            </tr>
+        {% endif %}
+        {% if basket.deliveryToClient %}
+            <tr>
+                <td></td>
+                <td colspan="2">Доставка по России</td>
+                <td>{{ basket.deliveryToClient }}</td>
+                <td colspan="3"></td>
+            </tr>
+        {% endif %}
+        {% if basket.additionalCost %}
+            <tr>
+                <td></td>
+                <td colspan="2">
+                    Дополнительные затраты <i class="far fa-comment" data-toggle="tooltip" title="{{ basket.additionalCostComment }}"></i>
+                </td>
+                <td>{{ basket.additionalCost }}</td>
+                <td colspan="3"></td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
 

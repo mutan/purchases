@@ -19,30 +19,46 @@
     <table class="table table-sm table-responsive-sm">
         <thead>
         <tr>
-            <td>Дата создания</td>
-            <td>Номер</td>
-            <td>Магазин</td>
-            <td>Сумма</td>
-            <td>Доставка</td>
-            <td>Действия</td>
+            <td rowspan="2">Дата создания</td>
+            <td rowspan="2">Номер</td>
+            <td rowspan="2">Магазин</td>
+            <td rowspan="2">Сумма</td>
+            <td colspan="3">Доставка</td>
+            <td rowspan="2">Итого</td>
+        </tr>
+        <tr>
+            <td>по США</td>
+            <td>в Россию</td>
+            <td>по России</td>
         </tr>
         </thead>
         <tbody>
         {% for basket in baskets %}
             <tr>
                 <td>{{ basket.createDate.format('Y-m-d') }}</td>
-                <td><a class="dashed" href="{{ path('basket_show', {'id': basket.id} ) }}">{{ basket.idWithPrefix }}</a></td>
                 <td>
-                    {{ basket.shop }}
+                    <a class="dashed" href="{{ path('basket_show', {'id': basket.id} ) }}">{{ basket.idWithPrefix }}</a>
                     {% if basket.userComment %}
                         <i class="far fa-comment" data-toggle="tooltip" title="{{ basket.userComment }}"></i>
                     {% endif %}
                 </td>
-                <td>–</td>
-                <td>–</td>
-                <td class="justify-content-center d-flex">
-                    {#<a class="btn btn-sm btn-narrow btn-mdb-color darken-3" href="{{ path('basket_edit', {'id': basket.id}) }}"><i class="fas fa-edit"></i></a>
-                    {{ include('basket/_delete_form.html.twig') }}#}
+                <td>
+                    {{ basket.shop }}
+                </td>
+                <td>
+                    122.86$<br><span>8355 руб.</span>
+                </td>
+                <td>
+                    –<br><span>–</span>
+                </td>
+                <td>
+                    4.2$<br><span>286 руб.</span>
+                </td>
+                <td>
+                    4.2$<br><span>286 руб.</span>
+                </td>
+                <td>
+                    127.06$<br><span>8525 руб.</span>
                 </td>
             </tr>
         {% else %}
@@ -66,7 +82,7 @@
                 </div>
                 <!--Body-->
                 <div class="modal-body ui-front">{# без класса ui-front список autocomplite'a будет показан не рядом с полем поиска #}
-                    {{ include('basket/_form.html.twig') }}
+                    {{ include('basket/_form.html.twig', {'comment_placeholder': 'Можно написать позже'}) }}
                 </div>
                 <!--Footer-->
                 <div class="modal-footer">

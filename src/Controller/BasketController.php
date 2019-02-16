@@ -6,6 +6,7 @@ use App\Entity\Basket;
 use App\Entity\Product;
 use App\Form\BasketType;
 use App\Form\ProductType;
+use App\Helpers\ShopHelper;
 use App\Repository\BasketRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,38 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BasketController extends BaseController
 {
-
-    const SHOP_AMAZON = 'https://www.amazon.com';
-    const SHOP_CHANNEL_FIREBALL = 'https://www.channelfireball.com';
-    const SHOP_COOL_STUFF_INC = 'https://www.coolstuffinc.com';
-    const SHOP_EBAY = 'https://www.ebay.com';
-    const SHOP_MINIATURE_MARKET = 'https://www.miniaturemarket.com';
-    const SHOP_ORIGINAL_MAGIC_ART = 'https://www.originalmagicart.store';
-    const SHOP_STAR_CITY_GAMES = 'http://www.starcitygames.com';
-    const SHOP_TROLL_AND_TOAD = 'https://www.trollandtoad.com';
-
-    const SHOP_LIST_FOR_AUTOCOMPLETE = [
-        self::SHOP_AMAZON,
-        self::SHOP_CHANNEL_FIREBALL,
-        self::SHOP_COOL_STUFF_INC,
-        self::SHOP_EBAY,
-        self::SHOP_MINIATURE_MARKET,
-        self::SHOP_ORIGINAL_MAGIC_ART,
-        self::SHOP_STAR_CITY_GAMES,
-        self::SHOP_TROLL_AND_TOAD,
-    ];
-
-    const SHOP_LIST_LOGOS = [
-        self::SHOP_AMAZON => '',
-        self::SHOP_CHANNEL_FIREBALL => '',
-        self::SHOP_COOL_STUFF_INC => '',
-        self::SHOP_EBAY => '',
-        self::SHOP_MINIATURE_MARKET => '',
-        self::SHOP_ORIGINAL_MAGIC_ART => '',
-        self::SHOP_STAR_CITY_GAMES => '',
-        self::SHOP_TROLL_AND_TOAD => '',
-    ];
-
     /**
      * @Route("/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
      */
@@ -62,7 +31,7 @@ class BasketController extends BaseController
         $term = $request->query->get('term');
 
 
-        $shops = array_filter(self::SHOP_LIST_FOR_AUTOCOMPLETE, function ($shop) use ($term) {
+        $shops = array_filter(ShopHelper::SHOP_LIST_FOR_AUTOCOMPLETE, function ($shop) use ($term) {
             return (stripos($shop, $term) !== false);
         });
 
