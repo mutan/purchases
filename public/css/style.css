@@ -22,6 +22,14 @@ footer hr {
     padding: .5rem 1rem;
 }
 
+.btn-group-xs > .btn, .btn-xs {
+    margin: 0 !important;
+    padding: .25rem .4rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
 /* Links */
 a {
     color: #007bff;
@@ -37,8 +45,13 @@ table.table a {
     color: #007bff;
 }
 
-table.table a.btn {
-    margin: .375rem;
+table.table .btn {
+    margin: 0;
+}
+
+table.table-sm td, table.table-sm th {
+    padding-top: .3rem;
+    padding-bottom: .3rem;
 }
 
 /* Font awesome */
