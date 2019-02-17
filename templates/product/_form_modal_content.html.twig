@@ -1,0 +1,22 @@
+{{ form_start(productForm) }}
+<!--Header-->
+<div class="modal-header">
+    <h4 class="modal-title">Редактировать товар {{ product.idWithPrefix }}</h4>
+    <button type="button" class="close" data-dismiss="modal">
+        <span>×</span>
+    </button>
+</div>
+<!--Body-->
+<div class="modal-body">
+    {{ include('product/_form.html.twig') }}
+</div>
+<!--Footer-->
+<div class="modal-footer">
+    <button class="btn btn-dark-green form_save" type="button">
+        <i class="fa fa-plus-square pr-1"></i> {{ button_label|default('Сохранить') }}
+    </button>
+    <button class="btn btn-dark-green" type="submit" formnovalidate>
+        <i class="fa fa-plus-square pr-1"></i> {{ button_label|default('Сохранить') }}
+    </button>
+</div>
+{{ form_end(productForm, {'render_rest': false}) }}

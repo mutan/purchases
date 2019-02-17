@@ -82,8 +82,7 @@
                         </td>
                         <td>
                             <nobr>
-                            {#<a class="btn btn-sm btn-narrow btn-mdb-color darken-3" href="{{ path('product_edit', {'id': product.id}) }}"><i class="fas fa-edit"></i></a>#}
-                                <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3" data-toggle="modal" data-target="#modalProductNew">
+                                <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 product-edit" data-id="{{ product.id }}">
                                     <i class="fa fa-edit"></i>
                                 </button>
                             {{ include('product/_delete_form.html.twig') }}
@@ -165,6 +164,7 @@
     <div class="modal fade" id="modalProductNew" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
+                {{ form_start(productForm) }}
                 <!--Header-->
                 <div class="modal-header">
                     <h4 class="modal-title">Новый товар</h4>
@@ -190,26 +190,9 @@
 
     <!-- Modal: modalProductEdit -->
     <div class="modal fade" id="modalProductEdit" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <!--Header-->
-                <div class="modal-header">
-                    <h4 class="modal-title">Редактировать товар {{ product.idWithPrefix }}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <!--Body-->
-                <div class="modal-body">
-                    {{ include('product/_form.html.twig') }}
-                </div>
-                <!--Footer-->
-                <div class="modal-footer">
-                    <button class="btn btn-dark-green" type="submit" formnovalidate>
-                        {{ button_label|default('Обновить') }}
-                    </button>
-                </div>
-                {{ form_end(productForm, {'render_rest': false}) }}
+
             </div>
         </div>
     </div>

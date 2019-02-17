@@ -67,7 +67,6 @@ class Product
      * @ORM\Column(type="decimal", precision=7, scale=2)
      * @Assert\NotBlank(message="~not_blank")
      * @Assert\GreaterThan(value=0)
-     * @Assert\Type(type="float")
      */
     private $userPrice;
 

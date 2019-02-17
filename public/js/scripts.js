@@ -15,3 +15,29 @@ $("#basket_shop").autocomplete({
         //$('#basket-shop-form').submit();
     }
 });
+
+$('.product-edit').on('click', (event) => {
+    event.preventDefault();
+    let id = $(event.currentTarget).attr('data-id');
+    $.get(`/product/${id}/editform`).then(function (responce) {
+        $('#modalProductEdit').find('.modal-content').html(responce.output);
+        $('#modalProductEdit').modal('show');
+
+        $('button.form_save').on('click', (event) => {
+            event.preventDefault();
+
+            let formData = $(event.currentTarget).closest('form').serialize();
+
+            alert(formData);
+
+            /*$.post(`/product/${id}/editform`, formData).then(function (responce) {
+                $('#modalProductEdit').find('.modal-content').html(responce.output);
+                $('#modalProductEdit').modal('show');
+            });*/
+
+            //console.dir(responce.output);
+        });
+    });
+});
+
+
