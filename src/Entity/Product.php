@@ -152,7 +152,7 @@ class Product
         return $this->userPrice;
     }
 
-    public function setUserPrice(float $userPrice): self
+    public function setUserPrice(?float $userPrice): self
     {
         $this->userPrice = $userPrice;
 

@@ -87,7 +87,6 @@ class Basket
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
-     * @Assert\Type(type="float")
      */
     private $rate;
 

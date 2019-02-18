@@ -33,7 +33,6 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            dump(777); die('ok');
             /*return $this->redirectToRoute('basket_show', [
                 'id' => $product->getBasket()->getId()
             ]);*/

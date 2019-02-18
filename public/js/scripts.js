@@ -19,24 +19,48 @@ $("#basket_shop").autocomplete({
 $('.product-edit').on('click', (event) => {
     event.preventDefault();
     let id = $(event.currentTarget).attr('data-id');
-    $.get(`/product/${id}/editform`).then(function (responce) {
+
+    $.ajax({
+        url: `/product/${id}/editform`,
+        type: 'POST',
+        beforeSend: (xhr)=> {
+            $(event.currentTarget).find('i').toggleClass('fa-edit fa-spinner fa-spin');
+        },
+        complete: ()=> {
+            $(event.currentTarget).find('i').toggleClass('fa-edit fa-spinner fa-spin');
+        }
+    }).then(function (responce) {
         $('#modalProductEdit').find('.modal-content').html(responce.output);
         $('#modalProductEdit').modal('show');
 
-        $('button.form_save').on('click', (event) => {
+        console.dir($('#modalProductEdit').find('form'));
+
+        $('#modalProductEdit').find('form').on('submit', (event)=> {
             event.preventDefault();
 
-            let formData = $(event.currentTarget).closest('form').serialize();
 
-            alert(formData);
 
-            /*$.post(`/product/${id}/editform`, formData).then(function (responce) {
+            let formData = $(event.currentTarget).serialize();
+
+            $.ajax({
+                url: `/product/${id}/editform`,
+                type: 'POST',
+                data: formData,
+                beforeSend: (xhr)=> {
+                    $(event.currentTarget).find('button[type=submit]').find('i').toggleClass('fa-edit fa-spinner fa-spin');
+                    $(event.currentTarget).find('button[type=submit]').prop('disabled', true);
+                },
+                complete: ()=> {
+                    $(event.currentTarget).find('button[type=submit]').find('i').toggleClass('fa-edit fa-spinner fa-spin');
+                }
+            }).then(function (responce) {
+                //location.reload();
                 $('#modalProductEdit').find('.modal-content').html(responce.output);
                 $('#modalProductEdit').modal('show');
-            });*/
+            });
 
-            //console.dir(responce.output);
         });
+
     });
 });
 
