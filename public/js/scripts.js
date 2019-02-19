@@ -33,15 +33,9 @@ $('.product-edit').on('click', (event) => {
         $('#modalProductEdit').find('.modal-content').html(responce.output);
         $('#modalProductEdit').modal('show');
 
-        console.dir($('#modalProductEdit').find('form'));
-
         $('#modalProductEdit').find('form').on('submit', (event)=> {
             event.preventDefault();
-
-
-
             let formData = $(event.currentTarget).serialize();
-
             $.ajax({
                 url: `/product/${id}/editform`,
                 type: 'POST',
@@ -54,11 +48,12 @@ $('.product-edit').on('click', (event) => {
                     $(event.currentTarget).find('button[type=submit]').find('i').toggleClass('fa-edit fa-spinner fa-spin');
                 }
             }).then(function (responce) {
-                //location.reload();
                 $('#modalProductEdit').find('.modal-content').html(responce.output);
                 $('#modalProductEdit').modal('show');
+                $('#modalProductEdit').on('hidden.bs.modal', function () {
+                    location.reload();
+                })
             });
-
         });
 
     });
