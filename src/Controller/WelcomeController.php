@@ -23,7 +23,7 @@ class WelcomeController extends AbstractController
 
         //$litemfApiService->createAddress($userAddres, $userPassport);
 
-        return $this->render('welcome/index.html.twig', [
+        return $this->render('test.html.twig', [
 
         ]);
     }

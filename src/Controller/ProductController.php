@@ -32,6 +32,7 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $reload = true;
 
             /*return $this->redirectToRoute('basket_show', [
                 'id' => $product->getBasket()->getId()
@@ -41,6 +42,7 @@ class ProductController extends AbstractController
         $response = new JsonResponse(
             [
                 'message' => 'Success',
+                'reload' => $reload ?? false,
                 'output' => $this->renderView('product/_form_modal_content.html.twig', [
                     'product' => $product,
                     'productForm' => $form->createView(),
@@ -111,7 +113,7 @@ class ProductController extends AbstractController
 
         return $this->render('product/edit.html.twig', [
             'product' => $product,
-            'form' => $form->createView(),
+            'productForm' => $form->createView(),
         ]);
     }
 

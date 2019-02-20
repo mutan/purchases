@@ -128,7 +128,7 @@ class Product
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -140,7 +140,7 @@ class Product
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    public function setUrl(?string $url): self
     {
         $this->url = $url;
 
@@ -176,7 +176,7 @@ class Product
         return $this->amount;
     }
 
-    public function setAmount(int $amount): self
+    public function setAmount(?int $amount): self
     {
         $this->amount = $amount;
 
