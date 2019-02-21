@@ -29,8 +29,6 @@ class BasketController extends BaseController
         }
 
         $term = $request->query->get('term');
-
-
         $shops = array_filter(ShopHelper::SHOP_LIST_FOR_AUTOCOMPLETE, function ($shop) use ($term) {
             return (stripos($shop, $term) !== false);
         });
@@ -75,8 +73,6 @@ class BasketController extends BaseController
      */
     public function show(Basket $basket, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
-
         $modalBasketEditShow = false;
         $modalProductNewShow = false;
 
@@ -130,13 +126,13 @@ class BasketController extends BaseController
     {
         $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
 
-        if (!$basket->isNew()) {
-            $this->addFlash('danger', "Статус заказа {$basket->getIdWithPrefix()} – {$basket->getStatus()}. Удаление невозможно.");
-            return $this->redirectToRoute('basket_index');
+        if (!$basket->getProducts()->isEmpty()) {
+            $this->addFlash('danger','Заказ можно удалить, только если он не содержит товаров.');
+            return $this->redirect($request->headers->get('referer'));
         }
 
         if ($this->isCsrfTokenValid('delete'.$basket->getId(), $request->request->get('_token'))) {
-            $basket->setStatus(BASKET::STATUS_DELETED);
+            $basket->setStatus(Basket::STATUS_DELETED);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($basket);

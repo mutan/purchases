@@ -13,10 +13,12 @@
             <h1 class="align-self-center mb-0">Заказ {{ basket.idWithPrefix }}</h1>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6 text-right">
-            <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
-                <i class="fa fa-edit pr-1"></i> Редактировать
-            </button>
-            {{ include('basket/_delete_form.html.twig') }}
+            {% if is_granted('BASKET_MANAGE', basket) %}
+                <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
+                    <i class="fa fa-edit pr-1"></i> Редактировать
+                </button>
+                {{ include('basket/_delete_form.html.twig') }}
+            {% endif %}
         </div>
     </div>
     <hr>
@@ -28,7 +30,7 @@
         </div>
         <div class="col-12 col-md-4">
             <span class="badge badge-secondary mr-1">Курс $</span>
-            {% if  basket.rate %}{{ basket.rate }} рублей{% else %}–{% endif %}
+            {% if basket.rate %}{{ basket.rate }} рублей{% else %}–{% endif %}
         </div>
         <div class="col-12 col-md-4">
             <i class="far fa-comment pr-1"></i>{% if basket.userComment %}{{ basket.userComment }}{% else %}–{% endif %}
@@ -41,9 +43,11 @@
             <h2 class="align-self-center">Товары</h2>
         </div>
         <div class="col-6 text-right">
-            <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalProductNew">
-                <i class="fa fa-plus pr-1"></i> <span class="d-none d-sm-inline">Добавить товар</span>
-            </button>
+            {% if is_granted('BASKET_MANAGE', basket) %}
+                <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalProductNew">
+                    <i class="fa fa-plus pr-1"></i> <span class="d-none d-sm-inline">Добавить товар</span>
+                </button>
+            {% endif %}
         </div>
     </div>
 
@@ -58,7 +62,9 @@
                     <td style="width: 1%"><nobr>Цена $</nobr></td>
                     <td style="width: 1%"><nobr>Сумма $</nobr></td>
                     <td style="width: 1%"><nobr>Сумма р.</nobr></td>
-                    <td style="width: 1%">Действия</td>
+                    {% if is_granted('BASKET_MANAGE', basket) %}
+                        <td style="width: 1%">Действия</td>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -80,14 +86,16 @@
                                 <i class="far fa-question-circle "></i>
                             {% endif %}
                         </td>
-                        <td>
-                            <nobr>
-                                <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 product-edit" data-id="{{ product.id }}">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            {{ include('product/_delete_form.html.twig') }}
-                            </nobr>
-                        </td>
+                        {% if is_granted('BASKET_MANAGE', basket) %}
+                            <td>
+                                <nobr>
+                                    <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 product-edit" data-id="{{ product.id }}">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                {{ include('product/_delete_form.html.twig') }}
+                                </nobr>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% else %}
                     <tr>
@@ -150,9 +158,7 @@
                 </div>
                 <!--Footer-->
                 <div class="modal-footer">
-                    <button class="btn btn-dark-green" type="submit" formnovalidate>
-                        {{ button_label|default('Обновить') }}
-                    </button>
+                    <button class="btn btn-sm btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Обновить') }}</button>
                 </div>
                 {{ form_end(basketForm, {'render_rest': false}) }}
             </div>
@@ -178,9 +184,7 @@
                 </div>
                 <!--Footer-->
                 <div class="modal-footer">
-                    <button class="btn btn-dark-green" type="submit" formnovalidate>
-                        <i class="fa fa-plus-square pr-1"></i> {{ button_label|default('Сохранить') }}
-                    </button>
+                    <button class="btn btn-sm btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Сохранить') }}</button>
                 </div>
                 {{ form_end(productForm, {'render_rest': false}) }}
             </div>

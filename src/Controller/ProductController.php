@@ -118,6 +118,8 @@ class ProductController extends AbstractController
      */
     public function delete(Request $request, Product $product): Response
     {
+        $this->denyAccessUnlessGranted('PRODUCT_MANAGE', $product);
+
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($product);
