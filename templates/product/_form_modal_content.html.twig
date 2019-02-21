@@ -14,8 +14,6 @@
 </div>
 <!--Footer-->
 <div class="modal-footer">
-    <button class="btn btn-dark-green" type="submit" formnovalidate>
-        <i class="fa fa-plus-square pr-1"></i> {{ button_label|default('Сохранить') }}
-    </button>
+    <button class="btn btn-sm btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Сохранить') }}</button>
 </div>
 {{ form_end(productForm, {'render_rest': false}) }}

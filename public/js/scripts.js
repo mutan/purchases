@@ -16,9 +16,7 @@ $("#basket_shop").autocomplete({
     }
 });
 
-function toggleEditSpinnerIcon(e) {
-    $(e.currentTarget).find('i').toggleClass('fa-edit fa-spinner fa-spin');
-}
+/* Product edit */
 
 $('.product-edit').on('click', (e) => {
     e.preventDefault();
@@ -30,49 +28,41 @@ $('.product-edit').on('click', (e) => {
         beforeSend: ()=> {toggleEditSpinnerIcon(e);},
         complete: ()=> {toggleEditSpinnerIcon(e);}
     }).then(function (responce) {
-        $('#modalProductEdit').find('.modal-content').html(responce.output);
-        $('#modalProductEdit').modal('show');
-
-        $('#modalProductEdit').find('form').on('submit', (e)=> {
-            reload(id, e);
-        });
+        reload(id, $('#modalProductEdit'), responce);
     });
 });
 
-function reload(id, e) {
-    e.preventDefault();
-    let formData = $(e.currentTarget).serialize();
-    const $submitButton = $(e.currentTarget).find('button[type=submit]');
-    $.ajax({
-        url: `/product/${id}/editform`,
-        type: 'POST',
-        data: formData,
-        beforeSend: ()=> {
-            $submitButton.find('i').toggleClass('fa-edit fa-spinner fa-spin');
-            $submitButton.prop('disabled', true).toggleClass('btn-dark-green btn-danger').html('Идет сохранение...');
-        },
-        complete: ()=> {
-            // на самом деле не успеет сработать, т.к. then сработает раньше
-            $submitButton.find('i').toggleClass('fa-edit fa-spinner fa-spin');
-            $submitButton.prop('disabled', true).toggleClass('btn-primary btn-danger');
-        }
-    }).then(function (responce) {
-        sleep(3000);
-        if (responce.reload) {
-            location.reload();
-        }
-        $('#modalProductEdit').find('.modal-content').html(responce.output);
-        //$('#modalProductEdit').modal('show');
+function reload(id, $modal, responce) {
+    $modal.find('.modal-content').html(responce.output);
+    $modal.modal('show');
 
-        $('#modalProductEdit').find('form').on('submit', (e)=> {
-            reload(id, e);
+    $modal.find('form').on('submit', (e)=> {
+        e.preventDefault();
+        let formData = $(e.currentTarget).serialize();
+        const $submitButton = $(e.currentTarget).find('button[type=submit]');
+        $.ajax({
+            url: `/product/${id}/editform`,
+            type: 'POST',
+            data: formData,
+            beforeSend: ()=> {
+                $submitButton.prop('disabled', true).toggleClass('btn-dark-green btn-outline-dark-green').html("<i class='fa fa-spinner fa-spin pr-1'></i> Идет сохранение");
+            },
+            complete: ()=> {
+                // на самом деле не успеет сработать, т.к. then сработает раньше
+                $submitButton.find('i').toggleClass('fa-edit fa-spinner fa-spin');
+                $submitButton.prop('disabled', true).toggleClass('btn-primary btn-danger');
+            }
+        }).then(function (responce) {
+            if (responce.reload) {location.reload();}
+            reload(id, $modal, responce);
         });
     });
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function toggleEditSpinnerIcon(e) {
+    $(e.currentTarget).find('i').toggleClass('fa-edit fa-spinner fa-spin');
 }
+
 
 /*$('#modalProductEdit').on('hidden.bs.modal', function () {
     location.reload();
