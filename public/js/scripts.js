@@ -34,14 +34,13 @@ $('.product-edit').on('click', (e) => {
         $('#modalProductEdit').modal('show');
 
         $('#modalProductEdit').find('form').on('submit', (e)=> {
-            e.preventDefault();
             reload(id, e);
         });
-
     });
 });
 
 function reload(id, e) {
+    e.preventDefault();
     let formData = $(e.currentTarget).serialize();
     const $submitButton = $(e.currentTarget).find('button[type=submit]');
     $.ajax({
@@ -58,7 +57,6 @@ function reload(id, e) {
             $submitButton.prop('disabled', true).toggleClass('btn-primary btn-danger');
         }
     }).then(function (responce) {
-        alert(1);
         sleep(3000);
         if (responce.reload) {
             location.reload();
@@ -67,7 +65,6 @@ function reload(id, e) {
         //$('#modalProductEdit').modal('show');
 
         $('#modalProductEdit').find('form').on('submit', (e)=> {
-            e.preventDefault();
             reload(id, e);
         });
     });
