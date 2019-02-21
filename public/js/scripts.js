@@ -16,39 +16,39 @@ $("#basket_shop").autocomplete({
     }
 });
 
-$('.product-edit').on('click', (event) => {
-    event.preventDefault();
-    let id = $(event.currentTarget).attr('data-id');
+function toggleEditSpinner(e) {
+    $(e.currentTarget).find('i').toggleClass('fa-edit fa-spinner fa-spin');
+}
+
+$('.product-edit').on('click', (e) => {
+    e.preventDefault();
+    let id = $(e.currentTarget).attr('data-id');
 
     $.ajax({
         url: `/product/${id}/editform`,
         type: 'POST',
-        beforeSend: (xhr)=> {
-            $(event.currentTarget).find('i').toggleClass('fa-edit fa-spinner fa-spin');
-        },
-        complete: ()=> {
-            $(event.currentTarget).find('i').toggleClass('fa-edit fa-spinner fa-spin');
-        }
+        beforeSend: ()=> {toggleEditSpinner(e);},
+        complete: ()=> {toggleEditSpinner(e);}
     }).then(function (responce) {
         $('#modalProductEdit').find('.modal-content').html(responce.output);
         $('#modalProductEdit').modal('show');
 
-        $('#modalProductEdit').find('form').on('submit', (event)=> {
-            event.preventDefault();
-            let formData = $(event.currentTarget).serialize();
-            const $submitButton = $(event.currentTarget).find('button[type=submit]');
-            reload(id, formData, $submitButton);
+        $('#modalProductEdit').find('form').on('submit', (e)=> {
+            e.preventDefault();
+            reload(id, e);
         });
 
     });
 });
 
-function reload(id, formData, $submitButton) {
+function reload(id, e) {
+    let formData = $(e.currentTarget).serialize();
+    const $submitButton = $(e.currentTarget).find('button[type=submit]');
     $.ajax({
         url: `/product/${id}/editform`,
         type: 'POST',
         data: formData,
-        beforeSend: (xhr)=> {
+        beforeSend: ()=> {
             $submitButton.find('i').toggleClass('fa-edit fa-spinner fa-spin');
             $submitButton.prop('disabled', true).toggleClass('btn-dark-green btn-danger').html('Идет сохранение...');
         },
@@ -66,11 +66,9 @@ function reload(id, formData, $submitButton) {
         $('#modalProductEdit').find('.modal-content').html(responce.output);
         //$('#modalProductEdit').modal('show');
 
-        $('#modalProductEdit').find('form').on('submit', (event)=> {
-            event.preventDefault();
-            let formData = $(event.currentTarget).serialize();
-            const $submitButton = $(event.currentTarget).find('button[type=submit]');
-            reload(id, formData, $submitButton);
+        $('#modalProductEdit').find('form').on('submit', (e)=> {
+            e.preventDefault();
+            reload(id, e);
         });
     });
 }
@@ -79,6 +77,6 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-$('#modalProductEdit').on('hidden.bs.modal', function () {
+/*$('#modalProductEdit').on('hidden.bs.modal', function () {
     location.reload();
-})
+})*/
