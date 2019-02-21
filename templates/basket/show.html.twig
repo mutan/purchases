@@ -30,7 +30,7 @@
         </div>
         <div class="col-12 col-md-4">
             <span class="badge badge-secondary mr-1">Курс $</span>
-            {% if basket.rate %}{{ basket.rate }} рублей{% else %}–{% endif %}
+            {% if basket.rate %}{{ basket.rate }} рублей{% else %}–{%- endif -%}
         </div>
         <div class="col-12 col-md-4">
             <i class="far fa-comment pr-1"></i>{% if basket.userComment %}{{ basket.userComment }}{% else %}–{% endif %}
@@ -83,7 +83,7 @@
                             {% if basket.rate %}
                                 {{ (product.amount * product.userPrice * basket.rate)|round(0, 'ceil') }}
                             {% else %}
-                                <i class="far fa-question-circle "></i>
+                                <i class="far fa-question-circle" data-toggle="tooltip" title="Заказу еще не проставлен курс $"></i>
                             {% endif %}
                         </td>
                         {% if is_granted('BASKET_MANAGE', basket) %}
