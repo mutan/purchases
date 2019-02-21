@@ -16,7 +16,7 @@ $("#basket_shop").autocomplete({
     }
 });
 
-function toggleEditSpinner(e) {
+function toggleEditSpinnerIcon(e) {
     $(e.currentTarget).find('i').toggleClass('fa-edit fa-spinner fa-spin');
 }
 
@@ -27,8 +27,8 @@ $('.product-edit').on('click', (e) => {
     $.ajax({
         url: `/product/${id}/editform`,
         type: 'POST',
-        beforeSend: ()=> {toggleEditSpinner(e);},
-        complete: ()=> {toggleEditSpinner(e);}
+        beforeSend: ()=> {toggleEditSpinnerIcon(e);},
+        complete: ()=> {toggleEditSpinnerIcon(e);}
     }).then(function (responce) {
         $('#modalProductEdit').find('.modal-content').html(responce.output);
         $('#modalProductEdit').modal('show');
