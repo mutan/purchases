@@ -33,10 +33,6 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $reload = true;
-
-            /*return $this->redirectToRoute('basket_show', [
-                'id' => $product->getBasket()->getId()
-            ]);*/
         }
 
         $response = new JsonResponse(

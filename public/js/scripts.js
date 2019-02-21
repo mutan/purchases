@@ -45,16 +45,11 @@ function reload(id, $modal, responce) {
             type: 'POST',
             data: formData,
             beforeSend: ()=> {
-                $submitButton.prop('disabled', true).toggleClass('btn-dark-green btn-outline-dark-green').html("<i class='fa fa-spinner fa-spin pr-1'></i> Идет сохранение");
-            },
-            complete: ()=> {
-                // на самом деле не успеет сработать, т.к. then сработает раньше
-                $submitButton.find('i').toggleClass('fa-edit fa-spinner fa-spin');
-                $submitButton.prop('disabled', true).toggleClass('btn-primary btn-danger');
+                $submitButton.prop('disabled', true).toggleClass('btn-dark-green btn-danger').html("<i class='fa fa-spinner fa-spin pr-1'></i> Идет сохранение");
             }
         }).then(function (responce) {
-            if (responce.reload) {location.reload();}
-            reload(id, $modal, responce);
+            $submitButton.toggleClass('btn-dark-green btn-danger').html("Сохранено");
+            (responce.reload) ? location.reload() : reload(id, $modal, responce);
         });
     });
 }
@@ -62,8 +57,3 @@ function reload(id, $modal, responce) {
 function toggleEditSpinnerIcon(e) {
     $(e.currentTarget).find('i').toggleClass('fa-edit fa-spinner fa-spin');
 }
-
-
-/*$('#modalProductEdit').on('hidden.bs.modal', function () {
-    location.reload();
-})*/
