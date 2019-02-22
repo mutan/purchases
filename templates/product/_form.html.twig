@@ -16,11 +16,6 @@
 </div>
 
 <div class="form-row">
-    <div class="form-group col-12 col-sm-4">
-        {{ form_label(productForm.article, 'Артикул/EbayID') }}
-        {{ form_widget(productForm.article, {'attr': {'class': 'form-control-sm'}}) }}
-        <small id="product_article_help" class="form-text text-muted">Если есть</small>
-    </div>
     <div class="form-group col-6 col-sm-4">
         {{ form_label(productForm.amount, 'Количество') }}
         {{ form_widget(productForm.amount, {'attr': {'class': 'form-control-sm'}}) }}
@@ -29,6 +24,11 @@
         {{ form_label(productForm.userPrice, 'Цена') }}
         {{ form_widget(productForm.userPrice, {'attr': {'class': 'form-control-sm'}}) }}
         <small id="product_userPrice_help" class="form-text text-muted">Цена как в магазине. Разделитель целой и десятичной части – точка</small>
+    </div>
+    <div class="form-group col-12 col-sm-4">
+        {{ form_label(productForm.article, 'Артикул/EbayID') }}
+        {{ form_widget(productForm.article, {'attr': {'class': 'form-control-sm'}}) }}
+        <small id="product_article_help" class="form-text text-muted">Если есть</small>
     </div>
 </div>
 

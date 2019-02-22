@@ -14,10 +14,10 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6 text-right">
             {% if is_granted('BASKET_MANAGE', basket) %}
+                {{ include('basket/_delete_form.html.twig', { button_label: '' }) }}
                 <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
                     <i class="fa fa-edit pr-1"></i> Редактировать
                 </button>
-                {{ include('basket/_delete_form.html.twig') }}
             {% endif %}
         </div>
     </div>
@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <span class="badge badge-dark mr-1">{{ basket.status }}</span>
-            <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-external-link-alt"></i></a>
+            <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
         </div>
         <div class="col-12 col-md-4">
             <span class="badge badge-secondary mr-1">Курс $</span>
@@ -72,7 +72,7 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>
-                            <a href="{{ product.url }}" target="_blank">{{ product.name }} <i class="fa fa-external-link-alt"></i></a>
+                            <a href="{{ product.url }}" target="_blank">{{ product.name }} <i class="fa fa-xs fa-external-link-alt"></i></a>
                             {% if product.article %}{{ product.article }}{% endif %}
                             {% if product.comment %}<br>{{ product.comment }}{% endif %}
                         </td>
@@ -83,7 +83,7 @@
                             {% if basket.rate %}
                                 {{ (product.amount * product.userPrice * basket.rate)|round(0, 'ceil') }}
                             {% else %}
-                                <i class="far fa-question-circle" data-toggle="tooltip" title="Заказу еще не проставлен курс $"></i>
+                                – <i class="far fa-question-circle" data-toggle="tooltip" title="Заказу еще не проставлен курс $"></i>
                             {% endif %}
                         </td>
                         {% if is_granted('BASKET_MANAGE', basket) %}
