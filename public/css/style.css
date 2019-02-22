@@ -56,7 +56,7 @@ table.table-sm td, table.table-sm th {
 
 /* Font awesome */
 
-i.fa-comment {
+.pointer {
     cursor: pointer;
 }
 

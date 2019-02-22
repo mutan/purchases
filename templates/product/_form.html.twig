@@ -11,7 +11,7 @@
     <div class="form-group col-md-12 col-lg-6">
         {{ form_label(productForm.url, 'Ссылка') }}
         {{ form_widget(productForm.url, {'attr': {'class': 'form-control-sm'}}) }}
-        <small id="product_url_help" class="form-text text-muted">Именно на этот товар в магазине. Должен начинаться с http</small>
+        <small id="product_url_help" class="form-text text-muted">Именно на этот товар. Должен начинаться с http</small>
     </div>
 </div>
 
@@ -23,7 +23,7 @@
     <div class="form-group col-6 col-sm-4">
         {{ form_label(productForm.userPrice, 'Цена') }}
         {{ form_widget(productForm.userPrice, {'attr': {'class': 'form-control-sm'}}) }}
-        <small id="product_userPrice_help" class="form-text text-muted">Цена как в магазине. Разделитель целой и десятичной части – точка</small>
+        <small id="product_userPrice_help" class="form-text text-muted">Как в магазине. Разделитель целой и десятичной части – точка</small>
     </div>
     <div class="form-group col-12 col-sm-4">
         {{ form_label(productForm.article, 'Артикул/EbayID') }}
