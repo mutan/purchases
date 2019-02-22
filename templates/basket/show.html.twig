@@ -9,31 +9,31 @@
 
     {# @var $basket Basket #}
     <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="col-12">
             <h1 class="align-self-center mb-0">Заказ {{ basket.idWithPrefix }}</h1>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 text-right">
-            {% if is_granted('BASKET_MANAGE', basket) %}
-                {{ include('basket/_delete_form.html.twig') }}
-                <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
-                    <i class="fa fa-edit pr-1"></i> Редактировать
-                </button>
-            {% endif %}
         </div>
     </div>
     <hr>
 
     <div class="row">
         <div class="col-12 col-md-4">
-            <span class="badge badge-dark mr-1">{{ basket.status }}</span>
-            <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
+            <strong>Магазин:</strong> <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
+            <br>
+            <strong>Комментарий:</strong> {% if basket.userComment %}{{ basket.userComment }}{% else %}–{% endif %}
+
         </div>
         <div class="col-12 col-md-4">
-            <span class="badge badge-secondary mr-1">Курс $</span>
-            {% if basket.rate %}{{ basket.rate }} рублей{% else %}–{%- endif -%}
+            <strong>Статус:</strong> <span class="badge badge-dark">{{ basket.status }}</span>
+            <br>
+            <strong>Курс $:</strong> {% if basket.rate %}<span class="badge badge-secondary mr-1">{{ basket.rate }}</span>рублей{% else %}– <i class="fa fa-exclamation-circle pointer text-danger" data-toggle="tooltip" title="Заказу еще не проставлен курс $"></i>{%- endif -%}
         </div>
-        <div class="col-12 col-md-4">
-            <i class="far fa-comment pr-1"></i>{% if basket.userComment %}{{ basket.userComment }}{% else %}–{% endif %}
+        <div class="col-12 col-md-4 text-right">
+            {% if is_granted('BASKET_MANAGE', basket) %}
+                <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
+                    <i class="fa fa-edit pr-1"></i> Редактировать
+                </button>
+                {{ include('basket/_delete_form.html.twig') }}
+            {% endif %}
         </div>
     </div>
     <hr>
@@ -43,7 +43,7 @@
             <h2 class="align-self-center">Товары
                 {% if is_granted('BASKET_MANAGE', basket) %}
                     <button type="button" class="btn btn-sm btn-narrow btn-dark-green" data-toggle="modal" data-target="#modalProductNew">
-                        <i class="fa fa-plus pr-1"></i> <span class="d-none d-sm-inline">Добавить</span>
+                        <i class="fa fa-plus"></i> <span class="d-none d-sm-inline pl-1">Добавить</span>
                     </button>
                 {% endif %}
             </h2>
@@ -95,7 +95,7 @@
                         {% if is_granted('BASKET_MANAGE', basket) %}
                             <td>
                                 <nobr>
-                                    <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 product-edit" data-id="{{ product.id }}">
+                                    <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-edit" data-id="{{ product.id }}">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                 {{ include('product/_delete_form.html.twig') }}

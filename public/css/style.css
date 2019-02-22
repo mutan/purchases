@@ -4,6 +4,10 @@ html, body {
     min-height: 100vh;
 }
 
+body {
+    font-size: 0.9rem;
+}
+
 /* Navbar */
 
 .navbar .dropdown-menu a {
