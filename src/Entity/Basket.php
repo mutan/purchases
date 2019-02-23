@@ -96,6 +96,11 @@ class Basket
     private $isRateFinal = false;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tracking;
+
+    /**
      * @ORM\Column(type="string", length=255, options={"default" = Basket::STATUS_NEW})
      */
     private $status = self::STATUS_NEW;
@@ -290,6 +295,18 @@ class Basket
     public function setIsRateFinal(bool $isRateFinal): self
     {
         $this->isRateFinal = $isRateFinal;
+
+        return $this;
+    }
+
+    public function getTracking(): ?string
+    {
+        return $this->tracking;
+    }
+
+    public function setTracking(?string $tracking): self
+    {
+        $this->tracking = $tracking;
 
         return $this;
     }
