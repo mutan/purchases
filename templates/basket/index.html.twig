@@ -1,6 +1,6 @@
 {% extends 'layout/base.html.twig' %}
 
-{% form_theme basketForm 'form/errors.html.twig' %}
+{% form_theme basketForm 'layout/form/errors.html.twig' %}
 
 {% block title %}Адреса{{ parent() }}{% endblock %}
 
@@ -44,8 +44,8 @@
                     {% endif %}
                 </td>
                 <td>
-                    {{ include('bit/_basket_status.html.twig') }}
-                    {{ include('bit/_basket_rate_icon.html.twig') }}
+                    {{ include('layout/bit/_basket_status.html.twig') }}
+                    {{ include('layout/bit/_basket_rate_icon.html.twig') }}
                 </td>
                 <td>{{ basket.shop }}</td>
                 <td>
