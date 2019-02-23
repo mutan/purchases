@@ -91,6 +91,11 @@ class Basket
     private $rate;
 
     /**
+     * @ORM\Column(type="boolean", options={"default"=false})
+     */
+    private $isRateFinal = false;
+
+    /**
      * @ORM\Column(type="string", length=255, options={"default" = Basket::STATUS_NEW})
      */
     private $status = self::STATUS_NEW;
@@ -273,6 +278,18 @@ class Basket
     public function setRate(float $rate): self
     {
         $this->rate = $rate;
+
+        return $this;
+    }
+
+    public function getIsRateFinal(): ?bool
+    {
+        return $this->isRateFinal;
+    }
+
+    public function setIsRateFinal(bool $isRateFinal): self
+    {
+        $this->isRateFinal = $isRateFinal;
 
         return $this;
     }

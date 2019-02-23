@@ -11,6 +11,7 @@ use App\Repository\BasketRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,6 +22,8 @@ class BasketController extends BaseController
 {
     /**
      * @Route("/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function autocomplete(Request $request): Response
     {
@@ -38,6 +41,9 @@ class BasketController extends BaseController
 
     /**
      * @Route("/", name="basket_index", methods={"GET","POST"})
+     * @param BasketRepository $basketRepository
+     * @param Request $request
+     * @return Response
      */
     public function index(BasketRepository $basketRepository, Request $request): Response
     {
@@ -70,6 +76,9 @@ class BasketController extends BaseController
 
     /**
      * @Route("/{id}", name="basket_show", methods={"GET","POST"})
+     * @param Basket $basket
+     * @param Request $request
+     * @return Response
      */
     public function show(Basket $basket, Request $request): Response
     {
@@ -120,7 +129,47 @@ class BasketController extends BaseController
     }
 
     /**
+     * @Route("/product/{id}/edit", name="basket_product_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Product $product
+     * @param $debugLogPath
+     * @param $debugLogFile
+     * @return Response
+     */
+    public function editProduct(Request $request, Product $product, $debugLogPath, $debugLogFile): Response
+    {
+        //$product = $productRepository->find($request->attributes query->get('product'));
+        //file_put_contents($debugLogPath . DIRECTORY_SEPARATOR . $debugLogFile, print_r($product->getName(), true));
+        //return $this->json([$request->request->get('product')]);
+
+        $form = $this->createForm(ProductType::class, $product, [
+            'action' => $this->generateUrl('basket_product_edit', ['id' => $product->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            $reload = true;
+        }
+
+        $response = new JsonResponse(
+            [
+                'message' => 'Success',
+                'reload' => $reload ?? false,
+                'output' => $this->renderView('product/_form_modal_content.html.twig', [
+                    'product' => $product,
+                    'productForm' => $form->createView(),
+                ])
+            ], 200);
+
+        return $response;
+    }
+
+    /**
      * @Route("/{id}", name="basket_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Basket $basket
+     * @return Response
      */
     public function delete(Request $request, Basket $basket): Response
     {
@@ -137,8 +186,31 @@ class BasketController extends BaseController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($basket);
             $entityManager->flush();
+
+            $this->addFlash('info','Заказ удален.');
         }
 
         return $this->redirectToRoute('basket_index');
+    }
+
+    /**
+     * @Route("/product/{id}", name="basket_product_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Product $product
+     * @return Response
+     */
+    public function deleteProduct(Request $request, Product $product): Response
+    {
+        $this->denyAccessUnlessGranted('PRODUCT_MANAGE', $product);
+
+        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($product);
+            $entityManager->flush();
+
+            $this->addFlash('info','Товар удален.');
+        }
+
+        return $this->redirectToRoute('basket_show', ['id' => $product->getBasket()->getId()]);
     }
 }

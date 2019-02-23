@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Helpers\ApiService;
 use App\Helpers\LitemfApiService;
 use App\Repository\UserAddressRepository;
 use App\Repository\UserPassportRepository;
@@ -14,6 +13,9 @@ class WelcomeController extends AbstractController
 {
     /**
      * @Route("/", name="app_homepage")
+     * @param LitemfApiService $litemfApiService
+     * @param UserAddressRepository $userAddressRepository
+     * @param UserPassportRepository $userPassportRepository
      * @return Response
      */
     public function index(LitemfApiService $litemfApiService, UserAddressRepository $userAddressRepository, UserPassportRepository $userPassportRepository) : Response
@@ -23,7 +25,7 @@ class WelcomeController extends AbstractController
 
         //$litemfApiService->createAddress($userAddres, $userPassport);
 
-        return $this->render('test.html.twig', [
+        return $this->render('welcome/index.html.twig', [
 
         ]);
     }

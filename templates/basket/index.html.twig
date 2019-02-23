@@ -10,7 +10,7 @@
             <h1 class="align-self-center">Заказы</h1>
         </div>
         <div class="col-sm-12 col-md-3 text-right">
-            <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketNew">
+            <button type="button" class="btn btn-sm btn-narrow btn-dark-green" data-toggle="modal" data-target="#modalBasketNew">
                 <nobr><i class="fa fa-plus pr-1"></i> Новый заказ</nobr>
             </button>
         </div>
@@ -86,7 +86,7 @@
                 </div>
                 <!--Footer-->
                 <div class="modal-footer">
-                    <button class="btn btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Сохранить') }}</button>
+                    <button class="btn btn-sm btn-narrow btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Сохранить') }}</button>
                 </div>
                 {{ form_end(basketForm, {'render_rest': false}) }}
             </div>

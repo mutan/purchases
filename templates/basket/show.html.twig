@@ -25,11 +25,19 @@
         <div class="col-12 col-md-4">
             <strong>Статус:</strong> <span class="badge badge-dark">{{ basket.status }}</span>
             <br>
-            <strong>Курс $:</strong> {% if basket.rate %}<span class="badge badge-secondary mr-1">{{ basket.rate }}</span>рублей{% else %}– <i class="fa fa-exclamation-circle pointer text-danger" data-toggle="tooltip" title="Заказу еще не проставлен курс $"></i>{%- endif -%}
+            <strong>Курс $:</strong>
+            {% if basket.rate %}
+                <span class="badge badge-secondary mr-1">{{ basket.rate }}</span>рублей
+                {% if basket.isRateFinal %}
+                    {{ include('bit/_basket_rate_not_final.html.twig') }}
+                {%- endif -%}
+            {% else %}
+                – {{ include('bit/_basket_rate_not.html.twig') }}
+            {%- endif -%}
         </div>
         <div class="col-12 col-md-4 text-right">
             {% if is_granted('BASKET_MANAGE', basket) %}
-                <button type="button" class="btn btn-sm btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
+                <button type="button" class="btn btn-sm btn-narrow btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
                     <i class="fa fa-edit pr-1"></i> Редактировать
                 </button>
                 {{ include('basket/_delete_form.html.twig') }}
@@ -63,8 +71,12 @@
                     <th style="width: 1%">
                         <nobr>
                             Сумма р.
-                            {% if not basket.rate %}
-                                <i class="fa fa-exclamation-circle pointer text-danger" data-toggle="tooltip" title="Заказу еще не проставлен курс $"></i>
+                            {% if basket.rate %}
+                                {% if basket.isRateFinal %}
+                                    {{ include('bit/_basket_rate_not_final.html.twig') }}
+                                {%- endif -%}
+                            {% else %}
+                                {{ include('bit/_basket_rate_not.html.twig') }}
                             {% endif %}
                         </nobr>
                     </th>

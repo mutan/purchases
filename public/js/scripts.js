@@ -23,7 +23,7 @@ $('.product-edit').on('click', (e) => {
     let id = $(e.currentTarget).attr('data-id');
 
     $.ajax({
-        url: `/product/${id}/editform`,
+        url: `/basket/product/${id}/edit`,
         type: 'POST',
         beforeSend: ()=> {toggleEditSpinnerIcon(e);},
         complete: ()=> {toggleEditSpinnerIcon(e);}
@@ -41,7 +41,7 @@ function reload(id, $modal, responce) {
         let formData = $(e.currentTarget).serialize();
         const $submitButton = $(e.currentTarget).find('button[type=submit]');
         $.ajax({
-            url: `/product/${id}/editform`,
+            url: `/basket/product/${id}/edit`,
             type: 'POST',
             data: formData,
             beforeSend: ()=> {
