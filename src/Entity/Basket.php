@@ -331,7 +331,8 @@ class Basket
         return $this->getStatus() == self::STATUS_DELETED;
     }
 
-    public function getProductsAmount() {
+    public function getProductsAmount()
+    {
         $amount = 0;
         foreach ($this->getProducts() as $product) {
             $amount += $product->getAmount();
@@ -340,7 +341,8 @@ class Basket
         return $amount;
     }
 
-    public function getProductsSum() {
+    public function getProductsSum()
+    {
         $sum = 0;
         foreach ($this->getProducts() as $product) {
             $sum += $product->getSum();
@@ -349,12 +351,28 @@ class Basket
         return $sum;
     }
 
-    public function getProductsSumRub() {
+    public function getProductsSumRub()
+    {
         $sum = 0;
         foreach ($this->getProducts() as $product) {
             $sum += $product->getSumRub();
         }
 
         return $sum;
+    }
+
+    public function getDeliveryToStockRub()
+    {
+        return ceil($this->getDeliveryToStock() * $this->getRate());
+    }
+
+    public function getDeliveryToRussiaRub()
+    {
+        return ceil($this->getDeliveryToRussia() * $this->getRate());
+    }
+
+    public function getTotalRub()
+    {
+        return $this->getProductsSumRub() + $this->getDeliveryToStockRub() + $this->getDeliveryToRussiaRub() + $this->getDeliveryToClient();
     }
 }

@@ -19,18 +19,18 @@
     <table class="table table-sm table-responsive-sm">
         <thead>
         <tr>
-            <td rowspan="2">Дата создания</td>
-            <td rowspan="2">Номер</td>
-            <td rowspan="2">Статус</td>
-            <td rowspan="2">Магазин</td>
-            <td rowspan="2">Сумма</td>
-            <td colspan="3" class="text-center">Доставка</td>
-            <td rowspan="2">Итого</td>
+            <th rowspan="2">Дата создания</th>
+            <th rowspan="2">Номер</th>
+            <th rowspan="2">Статус</th>
+            <th rowspan="2">Магазин</th>
+            <th rowspan="2">Сумма</th>
+            <th colspan="3" class="text-center">Доставка</th>
+            <th rowspan="2">Итого</th>
         </tr>
         <tr>
-            <td class="border-0">по США</td>
-            <td class="border-0">в Россию</td>
-            <td class="border-0">по России</td>
+            <th>по США</th>
+            <th>в Россию</th>
+            <th>по России</th>
         </tr>
         </thead>
         <tbody>
@@ -45,24 +45,26 @@
                 </td>
                 <td>
                     {{ include('bit/_basket_status.html.twig') }}
+                    {{ include('bit/_basket_rate_icon.html.twig') }}
+                </td>
+                <td>{{ basket.shop }}</td>
+                <td>
+                    {{ (basket.productsSum) ? basket.productsSum ~ '$' : '–' }}
+                    <br>{{ (basket.rate and basket.productsSumRub) ? basket.productsSumRub ~ ' руб.' : '–' }}
                 </td>
                 <td>
-                    {{ basket.shop }}
+                    {{ basket.deliveryToStock ? basket.deliveryToStock ~ '$': '–' }}
+                    <br>{{ (basket.rate and basket.deliveryToStockRub) ? basket.deliveryToStockRub ~ ' руб.' : '–' }}
                 </td>
                 <td>
-                    {{ basket.productsSum }}$<br><span>8355 руб.</span>
+                    {{ basket.deliveryToRussia ? basket.deliveryToRussia ~ '$': '–' }}
+                    <br>{{ (basket.rate and basket.deliveryToRussiaRub) ? basket.deliveryToRussiaRub ~ ' руб.' : '–' }}
                 </td>
                 <td>
-                    –<br><span>–</span>
+                    <br>{{ basket.deliveryToClient ? basket.deliveryToClient ~ ' руб.' : '–'}}
                 </td>
                 <td>
-                    4.2$<br><span>286 руб.</span>
-                </td>
-                <td>
-                    4.2$<br><span>286 руб.</span>
-                </td>
-                <td>
-                    127.06$<br><span>8525 руб.</span>
+                    <br>{{ basket.rate and basket.totalRub ? basket.totalRub ~ ' руб.' : '–'}}
                 </td>
             </tr>
         {% else %}

@@ -24,16 +24,7 @@
         </div>
         <div class="col-12 col-md-4">
             <strong>Статус:</strong> {{ include('bit/_basket_status.html.twig') }}
-            <br>
-            <strong>Курс $:</strong>
-            {% if basket.rate %}
-                <span class="badge badge-secondary mr-1">{{ basket.rate }}</span>рублей
-                {% if basket.isRateFinal %}
-                    {{ include('bit/_basket_rate_not_final.html.twig') }}
-                {%- endif -%}
-            {% else %}
-                – {{ include('bit/_basket_rate_not.html.twig') }}
-            {%- endif -%}
+            <br><strong>Курс $:</strong>{{ include('bit/_basket_rate_icon.html.twig', {badge:true}) }}
         </div>
         <div class="col-12 col-md-4 text-right">
             {% if is_granted('BASKET_MANAGE', basket) %}
@@ -70,14 +61,7 @@
                     <th style="width: 1%"><nobr>Сумма $</nobr></th>
                     <th style="width: 1%">
                         <nobr>
-                            Сумма р.
-                            {% if basket.rate %}
-                                {% if basket.isRateFinal %}
-                                    {{ include('bit/_basket_rate_not_final.html.twig') }}
-                                {%- endif -%}
-                            {% else %}
-                                {{ include('bit/_basket_rate_not.html.twig') }}
-                            {% endif %}
+                            Сумма р. {{ include('bit/_basket_rate_icon.html.twig') }}
                         </nobr>
                     </th>
                     {% if is_granted('BASKET_MANAGE', basket) %}
@@ -97,13 +81,7 @@
                         <td>{{ product.amount }}</td>
                         <td>{{ product.userPrice }}</td>
                         <td>{{ product.sum }}</td>
-                        <td>
-                            {% if basket.rate %}
-                                {{ product.sumRub }}
-                            {%- else -%}
-                                –
-                            {%- endif -%}
-                        </td>
+                        <td>{% if basket.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
                         {% if is_granted('BASKET_MANAGE', basket) %}
                             <td>
                                 <nobr>
@@ -122,34 +100,37 @@
                 {% endfor %}
                 <tr>
                     <th></th>
-                    <th>Итого</th>
+                    <th>Итого товары</th>
                     <th>{{ basket.productsAmount }}</th>
                     <th></th>
                     <th>{{ basket.productsSum }}</th>
-                    <th>{{ basket.productsSumRub }}</th>
+                    <th>{% if basket.rate %}{{ basket.productsSumRub }}{%- else -%}–{%- endif -%}</th>
+                    <th></th>
                 </tr>
                 {% if basket.deliveryToStock %}
                     <tr>
                         <td></td>
-                        <td colspan="2">Доставка по США</td>
+                        <td colspan="3">Доставка по США</td>
                         <td>{{ basket.deliveryToStock }}</td>
-                        <td colspan="3"></td>
+                        <td>{{ (basket.rate and basket.deliveryToStockRub) ? basket.deliveryToStockRub : '–' }}</td>
+                        <td></td>
                     </tr>
                 {% endif %}
                 {% if basket.deliveryToRussia %}
                     <tr>
                         <td></td>
-                        <td colspan="2">Доставка в Россию</td>
+                        <td colspan="3">Доставка в Россию</td>
                         <td>{{ basket.deliveryToRussia }}</td>
-                        <td colspan="3"></td>
+                        <td>{{ (basket.rate and basket.deliveryToRussiaRub) ? basket.deliveryToRussiaRub : '–' }}</td>
+                        <td></td>
                     </tr>
                 {% endif %}
                 {% if basket.deliveryToClient %}
                     <tr>
                         <td></td>
-                        <td colspan="2">Доставка по России</td>
+                        <td colspan="4">Доставка по России</td>
                         <td>{{ basket.deliveryToClient }}</td>
-                        <td colspan="3"></td>
+                        <td></td>
                     </tr>
                 {% endif %}
                 {% if basket.additionalCost %}
@@ -162,6 +143,12 @@
                         <td colspan="3"></td>
                     </tr>
                 {% endif %}
+                <tr>
+                    <th></th>
+                    <th colspan="4">Итого товары + доставка</th>
+                    <th>{{ basket.rate and basket.totalRub ? basket.totalRub : '–'}}</th>
+                    <th></th>
+                </tr>
                 </tbody>
             </table>
         </div>

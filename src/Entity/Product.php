@@ -333,6 +333,6 @@ class Product
     {
         $price = $this->getPrice() ?: $this->getUserPrice();
 
-        return round($this->getAmount() * $price * $this->getBasket()->getRate(), 0, PHP_ROUND_HALF_UP);
+        return ceil($this->getAmount() * $price * $this->getBasket()->getRate());
     }
 }
