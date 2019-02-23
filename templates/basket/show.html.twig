@@ -106,7 +106,7 @@
                         <th></th>
                         <th>{{ basket.productsSum }}</th>
                         <th>{% if basket.rate %}{{ basket.productsSumRub }}{%- else -%}–{%- endif -%}</th>
-                        <th></th>
+                        {% if is_granted('BASKET_MANAGE', basket) %}<th></th>{% endif %}
                     </tr>
                     {% if basket.deliveryToStock %}
                         <tr>
@@ -114,7 +114,7 @@
                             <td colspan="3">Доставка по США</td>
                             <td>{{ basket.deliveryToStock }}</td>
                             <td>{{ (basket.rate and basket.deliveryToStockRub) ? basket.deliveryToStockRub : '–' }}</td>
-                            <td></td>
+                            {% if is_granted('BASKET_MANAGE', basket) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
                     {% if basket.deliveryToRussia %}
@@ -123,7 +123,7 @@
                             <td colspan="3">Доставка в Россию</td>
                             <td>{{ basket.deliveryToRussia }}</td>
                             <td>{{ (basket.rate and basket.deliveryToRussiaRub) ? basket.deliveryToRussiaRub : '–' }}</td>
-                            <td></td>
+                            {% if is_granted('BASKET_MANAGE', basket) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
                     {% if basket.deliveryToClient %}
@@ -131,7 +131,7 @@
                             <td></td>
                             <td colspan="4">Доставка по России</td>
                             <td>{{ basket.deliveryToClient }}</td>
-                            <td></td>
+                            {% if is_granted('BASKET_MANAGE', basket) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
                     {% if basket.additionalCost %}
@@ -141,14 +141,15 @@
                                 Дополнительные затраты <i class="far fa-comment" data-toggle="tooltip" title="{{ basket.additionalCostComment }}"></i>
                             </td>
                             <td>{{ basket.additionalCost }}</td>
-                            <td colspan="3"></td>
+                            <td colspan="2"></td>
+                            {% if is_granted('BASKET_MANAGE', basket) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
                     <tr>
                         <th></th>
                         <th colspan="4">Итого товары + доставка</th>
                         <th>{{ basket.rate and basket.totalRub ? basket.totalRub : '–'}}</th>
-                        <th></th>
+                        {% if is_granted('BASKET_MANAGE', basket) %}<th></th>{% endif %}
                     </tr>
                 {% endif %}
                 </tbody>
