@@ -330,4 +330,31 @@ class Basket
     {
         return $this->getStatus() == self::STATUS_DELETED;
     }
+
+    public function getProductsAmount() {
+        $amount = 0;
+        foreach ($this->getProducts() as $product) {
+            $amount += $product->getAmount();
+        }
+
+        return $amount;
+    }
+
+    public function getProductsSum() {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+            $sum += $product->getSum();
+        }
+
+        return $sum;
+    }
+
+    public function getProductsSumRub() {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+            $sum += $product->getSumRub();
+        }
+
+        return $sum;
+    }
 }

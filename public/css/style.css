@@ -8,6 +8,10 @@ body {
     font-size: 0.9rem;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 /* Navbar */
 
 .navbar .dropdown-menu a {
@@ -58,10 +62,8 @@ table.table-sm td, table.table-sm th {
     padding-bottom: .3rem;
 }
 
-/* Font awesome */
-
-.pointer {
-    cursor: pointer;
+table th {
+    font-weight: 500;
 }
 
 /* Login / register */

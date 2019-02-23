@@ -21,6 +21,7 @@
         <tr>
             <td rowspan="2">Дата создания</td>
             <td rowspan="2">Номер</td>
+            <td rowspan="2">Статус</td>
             <td rowspan="2">Магазин</td>
             <td rowspan="2">Сумма</td>
             <td colspan="3" class="text-center">Доставка</td>
@@ -43,10 +44,13 @@
                     {% endif %}
                 </td>
                 <td>
+                    {{ include('bit/_basket_status.html.twig') }}
+                </td>
+                <td>
                     {{ basket.shop }}
                 </td>
                 <td>
-                    122.86$<br><span>8355 руб.</span>
+                    {{ basket.productsSum }}$<br><span>8355 руб.</span>
                 </td>
                 <td>
                     –<br><span>–</span>

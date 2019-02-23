@@ -23,7 +23,7 @@
 
         </div>
         <div class="col-12 col-md-4">
-            <strong>Статус:</strong> <span class="badge badge-dark">{{ basket.status }}</span>
+            <strong>Статус:</strong> {{ include('bit/_basket_status.html.twig') }}
             <br>
             <strong>Курс $:</strong>
             {% if basket.rate %}
@@ -96,10 +96,10 @@
                         </td>
                         <td>{{ product.amount }}</td>
                         <td>{{ product.userPrice }}</td>
-                        <td>{{ product.amount * product.userPrice }}</td>
+                        <td>{{ product.sum }}</td>
                         <td>
                             {% if basket.rate %}
-                                {{ (product.amount * product.userPrice * basket.rate)|round(0, 'ceil') }}
+                                {{ product.sumRub }}
                             {%- else -%}
                                 –
                             {%- endif -%}
@@ -120,6 +120,14 @@
                         <td colspan="7">Записей не найдено.</td>
                     </tr>
                 {% endfor %}
+                <tr>
+                    <th></th>
+                    <th>Итого</th>
+                    <th>{{ basket.productsAmount }}</th>
+                    <th></th>
+                    <th>{{ basket.productsSum }}</th>
+                    <th>{{ basket.productsSumRub }}</th>
+                </tr>
                 {% if basket.deliveryToStock %}
                     <tr>
                         <td></td>

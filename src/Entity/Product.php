@@ -321,4 +321,18 @@ class Product
     {
         return $this->getStatus() == self::STATUS_DELETED;
     }
+
+    public function getSum()
+    {
+        $price = $this->getPrice() ?: $this->getUserPrice();
+
+        return $this->getAmount() * $price;
+    }
+
+    public function getSumRub()
+    {
+        $price = $this->getPrice() ?: $this->getUserPrice();
+
+        return round($this->getAmount() * $price * $this->getBasket()->getRate(), 0, PHP_ROUND_HALF_UP);
+    }
 }
