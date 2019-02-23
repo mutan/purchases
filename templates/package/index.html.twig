@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<title>Package index</title>
+
+{% block body %}
+    <h1>Package index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Comment</th>
+                <th>Weight</th>
+                <th>DeliveryCost</th>
+                <th>Tracking</th>
+                <th>Status</th>
+                <th>CreateDate</th>
+                <th>UpdateDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for package in packages %}
+            <tr>
+                <td>{{ package.id }}</td>
+                <td>{{ package.name }}</td>
+                <td>{{ package.comment }}</td>
+                <td>{{ package.weight }}</td>
+                <td>{{ package.deliveryCost }}</td>
+                <td>{{ package.tracking }}</td>
+                <td>{{ package.status }}</td>
+                <td>{{ package.createDate ? package.createDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ package.updateDate ? package.updateDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('package_show', {'id': package.id}) }}">show</a>
+                    <a href="{{ path('package_edit', {'id': package.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('package_new') }}">Create new</a>
+{% endblock %}
