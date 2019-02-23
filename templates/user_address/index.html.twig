@@ -24,27 +24,27 @@
                     <div class="card-body">
                         <table class="table table-borderless table-sm">
                             <tr>
-                                <th><i class="fas fa-address-card"></i></th>
-                                <th>{{ user_address.lastName|upper }} {{ user_address.firstName }} {{ user_address.middleName }}</th>
+                                <td><i class="fas fa-address-card"></i></td>
+                                <td>{{ user_address.lastName|upper }} {{ user_address.firstName }} {{ user_address.middleName }}</td>
                             </tr>
                             <tr>
-                                <th><i class="fas fa-home"></i></th>
-                                <th>
+                                <td><i class="fas fa-home"></i></td>
+                                <td>
                                     {{ user_address.postCode }} {{ user_address.country }}<br>
                                     {{ user_address.region }} {{ user_address.city }}<br>
                                     {{ user_address.street }}
                                     {%- if user_address.house is defined -%}, дом {{ user_address.house }}{%- endif -%}
                                     {%- if (user_address.building) -%}, корп./стр. {{ user_address.building }}{%- endif -%}
                                     {%- if user_address.flat is defined -%}, кв. {{ user_address.flat }}{%- endif -%}
-                                </th>
+                                </td>
                             </tr>
                             <tr>
-                                <th><i class="fas fa-phone"></i></th>
-                                <th>{{ user_address.phone }}</th>
+                                <td><i class="fas fa-phone"></i></td>
+                                <td>{{ user_address.phone }}</td>
                             </tr>
                             <tr>
-                                <th><i class="fas fa-envelope"></i></th>
-                                <th>{{ user_address.email }}</th>
+                                <td><i class="fas fa-envelope"></i></td>
+                                <td>{{ user_address.email }}</td>
                             </tr>
                         </table>
                         <div class="text-muted d-flex">

@@ -24,15 +24,15 @@
                         <div class="card-body">
                             <table class="table table-borderless table-sm mb-0">
                                 <tr>
-                                    <th><i class="fas fa-address-card"></i></th>
-                                    <th>
+                                    <td><i class="fas fa-address-card"></i></td>
+                                    <td>
                                         <strong>Серия:</strong> {{ user_passport.series }}<br>
                                         <strong>Номер:</strong> {{ user_passport.number }}<br>
                                         <strong>Дата выдачи:</strong> {{ user_passport.giveDate ? user_passport.giveDate|date('d-m-Y') : '' }}<br>
                                         <strong>Кем выдан:</strong> {{ user_passport.giveBy }}<br>
                                         <strong>Дата рождения:</strong> {{ user_passport.birthDate ? user_passport.birthDate|date('d-m-Y') : '' }}<br>
                                         <strong>ИНН:</strong> {{ user_passport.inn }}
-                                    </th>
+                                    </td>
                                 </tr>
                             </table>
                             <div class="text-muted d-flex">
