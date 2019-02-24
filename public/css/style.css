@@ -1,7 +1,5 @@
-/* TODO может и не нужно ??? */
-html, body {
-    position: relative;
-    min-height: 100vh;
+html {
+    font-size: 16px;;
 }
 
 body {
