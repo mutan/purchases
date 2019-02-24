@@ -9,15 +9,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user/privacy_policy")
+ * @Route("/info")
  */
-class UserController extends AbstractController
+class InfoController extends AbstractController
 {
     /**
-     * @Route("/", name="user_privacy_policy", methods={"GET"})
+     * @Route("/privacy_policy", name="info_privacy_policy", methods={"GET"})
      */
     public function index(): Response
     {
-        return $this->render('user/privacy_policy.html.twig');
+        return $this->render('info/privacy_policy.html.twig');
     }
 }
