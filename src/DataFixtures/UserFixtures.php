@@ -13,8 +13,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends BaseFixture
 {
-    public const ROLE_USER_REFERENCE  = 'role_user';
-    public const ROLE_ADMIN_REFERENCE = 'role_admin';
+    public const ROLE_USER_REFERENCE    = 'role_user';
+    public const ROLE_MANAGER_REFERENCE = 'role_manager';
+    public const ROLE_ADMIN_REFERENCE   = 'role_admin';
 
     private $passwordEncoder;
 
@@ -47,7 +48,40 @@ class UserFixtures extends BaseFixture
             $this->manager->persist($userPassport);
             $user->addUserPassport($userPassport);
 
-            $basket = $this->createBasket();
+            $basket = $this->createBasket($user);
+            $product = $this->createProduct();
+            $this->manager->persist($product);
+            $user->addProduct($product);
+            $basket->addProduct($product);
+            $this->manager->persist($basket);
+            $user->addBasket($basket);
+
+            return $user;
+        });
+
+        $this->createMany(1, self::ROLE_MANAGER_REFERENCE, function($i) {
+            $user = new User();
+            $user->setEmail('gamerxxx@mail.ru');
+            $user->setName('Яша');
+            $user->setRoles([User::ROLE_MANAGER]);
+            $user->setCreateDate(new \DateTime('-10 day'));
+            $user->setStatus(User::STATUS_ACTIVE);
+            $user->clearInactiveReason();
+            $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                'secret1S'
+            ));
+            $user->setUserProfile(new UserProfile());
+
+            $userAddress = $this->createAddress();
+            $this->manager->persist($userAddress);
+            $user->addUserAddress($userAddress);
+
+            $userPassport = $this->createPassport();
+            $this->manager->persist($userPassport);
+            $user->addUserPassport($userPassport);
+
+            $basket = $this->createBasket($user);
             $product = $this->createProduct();
             $this->manager->persist($product);
             $user->addProduct($product);
@@ -79,7 +113,7 @@ class UserFixtures extends BaseFixture
             $this->manager->persist($userPassport);
             $user->addUserPassport($userPassport);
 
-            $basket = $this->createBasket();
+            $basket = $this->createBasket($user);
             $product = $this->createProduct();
             $this->manager->persist($product);
             $user->addProduct($product);
@@ -127,10 +161,11 @@ class UserFixtures extends BaseFixture
         return $userPassport;
     }
 
-    protected function createBasket(): Basket
+    protected function createBasket($user): Basket
     {
         $basket = new Basket();
         $basket->setShop('https://www.coolstuffinc.com')
+               ->setManager($user)
                ->setUserComment($this->faker->text);
 
         return $basket;

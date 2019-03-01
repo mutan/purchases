@@ -43,6 +43,12 @@ class Basket
     private $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="baskets")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $manager;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="basket", orphanRemoval=true)
      */
     private $products;
@@ -128,6 +134,18 @@ class Basket
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getManager(): ?User
+    {
+        return $this->manager;
+    }
+
+    public function setManager(?User $manager): self
+    {
+        $this->manager = $manager;
 
         return $this;
     }
