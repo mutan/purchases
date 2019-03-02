@@ -34,10 +34,7 @@ class UserFixtures extends BaseFixture
             $user->setCreateDate(new \DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
-            $user->setPassword($this->passwordEncoder->encodePassword(
-                $user,
-                'secret1S'
-            ));
+            $user->setPassword($this->passwordEncoder->encodePassword($user, 'secret1S'));
             $user->setUserProfile(new UserProfile());
 
             $userAddress = $this->createAddress();
@@ -47,14 +44,6 @@ class UserFixtures extends BaseFixture
             $userPassport = $this->createPassport();
             $this->manager->persist($userPassport);
             $user->addUserPassport($userPassport);
-
-            $basket = $this->createBasket($user);
-            $product = $this->createProduct();
-            $this->manager->persist($product);
-            $user->addProduct($product);
-            $basket->addProduct($product);
-            $this->manager->persist($basket);
-            $user->addBasket($basket);
 
             return $user;
         });
@@ -67,10 +56,7 @@ class UserFixtures extends BaseFixture
             $user->setCreateDate(new \DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
-            $user->setPassword($this->passwordEncoder->encodePassword(
-                $user,
-                'secret1S'
-            ));
+            $user->setPassword($this->passwordEncoder->encodePassword($user, 'secret1S'));
             $user->setUserProfile(new UserProfile());
 
             $userAddress = $this->createAddress();
@@ -81,28 +67,17 @@ class UserFixtures extends BaseFixture
             $this->manager->persist($userPassport);
             $user->addUserPassport($userPassport);
 
-            $basket = $this->createBasket($user);
-            $product = $this->createProduct();
-            $this->manager->persist($product);
-            $user->addProduct($product);
-            $basket->addProduct($product);
-            $this->manager->persist($basket);
-            $user->addBasket($basket);
-
             return $user;
         });
 
-        $this->createMany(10, self::ROLE_USER_REFERENCE, function($i) {
+        $this->createMany(1, self::ROLE_USER_REFERENCE, function($i) {
             $user = new User();
             $user->setEmail(sprintf('user%d@example.com', $i));
             $user->setName($this->faker->unique()->firstName);
             $user->setCreateDate(new \DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
-            $user->setPassword($this->passwordEncoder->encodePassword(
-                $user,
-                'secret1S'
-            ));
+            $user->setPassword($this->passwordEncoder->encodePassword($user, 'secret1S'));
             $user->setUserProfile(new UserProfile());
 
             $userAddress = $this->createAddress();
@@ -113,7 +88,16 @@ class UserFixtures extends BaseFixture
             $this->manager->persist($userPassport);
             $user->addUserPassport($userPassport);
 
-            $basket = $this->createBasket($user);
+            return $user;
+        });
+
+        $manager->flush();
+
+        $this->createMany(10, 'basket', function($i) {
+            $manager = $this->getRandomReference(self::ROLE_MANAGER_REFERENCE);
+            $user = $this->getRandomReference(self::ROLE_USER_REFERENCE);
+            //dump($user); die('ok');
+            $basket = $this->createBasket($manager);
             $product = $this->createProduct();
             $this->manager->persist($product);
             $user->addProduct($product);
@@ -121,7 +105,7 @@ class UserFixtures extends BaseFixture
             $this->manager->persist($basket);
             $user->addBasket($basket);
 
-            return $user;
+            return $basket;
         });
 
         $manager->flush();
@@ -161,11 +145,11 @@ class UserFixtures extends BaseFixture
         return $userPassport;
     }
 
-    protected function createBasket($user): Basket
+    protected function createBasket($manager): Basket
     {
         $basket = new Basket();
         $basket->setShop('https://www.coolstuffinc.com')
-               ->setManager($user)
+               ->setManager($manager)
                ->setUserComment($this->faker->text);
 
         return $basket;
