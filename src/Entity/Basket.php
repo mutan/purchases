@@ -45,6 +45,7 @@ class Basket
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="baskets")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="~not_blank")s
      */
     private $manager;
 

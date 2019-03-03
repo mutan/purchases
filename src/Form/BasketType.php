@@ -26,7 +26,7 @@ class BasketType extends AbstractType
                         ->andWhere('u.roles LIKE :role')
                         ->setParameter('role', '%' . User::ROLE_MANAGER . '%');
                 },
-                'placeholder' => '--'
+                'placeholder' => ''
             ])
             ->add('userComment',TextareaType::class)
         ;
