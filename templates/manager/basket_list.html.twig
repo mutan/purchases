@@ -33,7 +33,7 @@
                 <td>{{ basket.createDate.format('Y-m-d') }}</td>
                 <td>{{ basket.user }}</td>
                 <td>
-                    <a class="dashed" href="{{ path('basket_show', {'id': basket.id} ) }}">{{ basket.idWithPrefix }}</a>
+                    <a class="dashed" href="{{ path('manager_basket_show', {'id': basket.id} ) }}">{{ basket.idWithPrefix }}</a>
                     {% if basket.userComment %}
                         <i class="far fa-comment pointer pl-1" data-toggle="tooltip" title="{{ basket.userComment }}"></i>
                     {% endif %}

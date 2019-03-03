@@ -82,7 +82,7 @@ class BasketController extends BaseController
      */
     public function show(Basket $basket, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
+        $this->denyAccessUnlessGranted('BASKET_SHOW', $basket);
 
         $modalBasketEditShow = false;
         $modalProductNewShow = false;
@@ -171,7 +171,7 @@ class BasketController extends BaseController
      */
     public function delete(Request $request, Basket $basket): Response
     {
-        $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
+        $this->denyAccessUnlessGranted('BASKET_DELETE', $basket);
 
         if (!$basket->getProducts()->isEmpty()) {
             $this->addFlash('danger','Заказ можно удалить, только если он не содержит товаров.');

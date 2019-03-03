@@ -58,7 +58,7 @@
                             <span class="nav-link">|</span>
                         </li>
                         <li class="nav-item {% if 'manager' in app.request.get('_route') %}active{% endif %}">
-                            <a class="nav-link" href="{{ path('manager_baskets') }}">Заказы</a>
+                            <a class="nav-link" href="{{ path('manager_basket_list') }}">Заказы</a>
                         </li>
                         <li class="nav-item {% if 'package' in app.request.get('_route') %}active{% endif %}">
                             <a class="nav-link" href="{{ path('package_index') }}">Посылки</a>

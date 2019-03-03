@@ -11,7 +11,7 @@ class BasketVoter extends Voter
 {
     protected function supports($attribute, $subject)
     {
-        return \in_array($attribute, ['BASKET_MANAGE'])
+        return \in_array($attribute, ['BASKET_SHOW', 'BASKET_ADD_PRODUCT', 'BASKET_EDIT', 'BASKET_DELETE', 'BASKET_MANAGE'])
             && $subject instanceof Basket;
     }
 
@@ -24,8 +24,16 @@ class BasketVoter extends Voter
 
         /** @var Basket $subject */
         switch ($attribute) {
-            case 'BASKET_MANAGE':
+            case 'BASKET_SHOW':
+            case 'BASKET_ADD_PRODUCT':
+            case 'BASKET_EDIT':
+            case 'BASKET_DELETE':
                 if ($subject->getUser() == $user && $subject->isNew()) {
+                    return true;
+                }
+                break;
+            case 'BASKET_MANAGE':
+                if ($subject->getManager() == $user) {
                     return true;
                 }
                 break;
