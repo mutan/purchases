@@ -70,7 +70,7 @@ class UserFixtures extends BaseFixture
             return $user;
         });
 
-        $this->createMany(1, self::ROLE_USER_REFERENCE, function($i) {
+        $this->createMany(10, self::ROLE_USER_REFERENCE, function($i) {
             $user = new User();
             $user->setEmail(sprintf('user%d@example.com', $i));
             $user->setName($this->faker->unique()->firstName);
@@ -94,10 +94,10 @@ class UserFixtures extends BaseFixture
         $manager->flush();
 
         $this->createMany(10, 'basket', function($i) {
+            $admin = $this->getRandomReference(self::ROLE_ADMIN_REFERENCE);
             $manager = $this->getRandomReference(self::ROLE_MANAGER_REFERENCE);
             $user = $this->getRandomReference(self::ROLE_USER_REFERENCE);
-            //dump($user); die('ok');
-            $basket = $this->createBasket($manager);
+            $basket = $this->createBasket($this->faker->randomElement([$admin, $manager]));
             $product = $this->createProduct();
             $this->manager->persist($product);
             $user->addProduct($product);
