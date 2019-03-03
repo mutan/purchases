@@ -6,6 +6,8 @@ use App\Entity\User;
 use App\Entity\Basket;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -29,6 +31,14 @@ class BasketType extends AbstractType
                 'placeholder' => ''
             ])
             ->add('userComment',TextareaType::class)
+            ->add('deliveryToStock', NumberType::class)
+            ->add('deliveryToRussia', NumberType::class)
+            ->add('deliveryToClient', NumberType::class)
+            ->add('additionalCost', NumberType::class)
+            ->add('additionalCostComment',TextareaType::class)
+            ->add('rate', NumberType::class)
+            ->add('isRateFinal', CheckboxType::class)
+            ->add('tracking', TextType::class)
         ;
     }
 

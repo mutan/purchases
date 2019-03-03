@@ -32,15 +32,33 @@ class ManagerController extends AbstractController
     /**
      * @Route("/basket/{id}", name="manager_basket_show", methods={"GET","POST"})
      * @param Basket $basket
-     * @param BasketRepository $basketRepository
+     * @param Request $request
      * @return Response
      */
-    public function basket(Basket $basket, BasketRepository $basketRepository) : Response
+    public function basket(Basket $basket, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
 
+        $modalBasketManageShow = false;
+
+        /* BASKET EDIT */
+        $basketForm = $this->createForm(BasketType::class, $basket);
+        $basketForm->handleRequest($request);
+
+        if ($basketForm->isSubmitted()) {
+            dump($basketForm); die('ok');
+            if ($basketForm->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('manager_basket_show', ['id' => $basket->getId()]);
+            } else {
+                $modalBasketManageShow = true;
+            }
+        }
+
         return $this->render('manager/basket_show.html.twig', [
-            'baskets' => $basketRepository->findAllByManager($this->getUser()),
+            'basket' => $basket,
+            'basketForm' => $basketForm->createView(),
+            'modalBasketManageShow' => $modalBasketManageShow,
         ]);
     }
 }

@@ -1,9 +1,8 @@
 {% extends 'layout/base.html.twig' %}
 
 {% form_theme basketForm 'layout/form/errors.html.twig' %}
-{% form_theme productForm 'layout/form/errors.html.twig' %}
 
-{% block title %}Адреса{{ parent() }}{% endblock %}
+{% block title %}Заказ участника СП{{ parent() }}{% endblock %}
 
 {% block body %}
 
@@ -27,11 +26,10 @@
             <br><strong>Курс $:</strong>{{ include('layout/bit/_basket_rate_icon.html.twig', {badge:true}) }}
         </div>
         <div class="col-12 col-md-4 text-right">
-            {% if is_granted('BASKET_EDIT', basket) %}
-                <button type="button" class="btn btn-sm btn-narrow btn-dark-green" data-toggle="modal" data-target="#modalBasketEdit">
+            {% if is_granted('BASKET_MANAGE', basket) %}
+                <button type="button" class="btn btn-sm btn-narrow btn-dark-green" data-toggle="modal" data-target="#modalBasketManage">
                     <i class="fa fa-edit pr-1"></i> Редактировать
                 </button>
-                {{ include('basket/_delete_form.html.twig') }}
             {% endif %}
         </div>
     </div>
@@ -40,7 +38,7 @@
     <div class="row">
         <div class="col-12">
             <h2 class="align-self-center">Товары
-                {% if is_granted('BASKET_ADD_PRODUCT', basket) %}
+                {% if is_granted('BASKET_MANAGE', basket) %}
                     <button type="button" class="btn btn-sm btn-narrow btn-dark-green" data-toggle="modal" data-target="#modalProductNew">
                         <i class="fa fa-plus"></i> <span class="d-none d-sm-inline pl-1">Добавить</span>
                     </button>
@@ -157,8 +155,8 @@
         </div>
     </div>
 
-    <!-- Modal: modalBasketEdit -->
-    <div class="modal fade" id="modalBasketEdit" tabindex="-1" role="dialog">
+    <!-- Modal: modalBasketManage -->
+    <div class="modal fade" id="modalBasketManage" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <!--Header-->
@@ -170,7 +168,7 @@
                 </div>
                 <!--Body-->
                 <div class="modal-body ui-front">{# без класса ui-front список autocomplite'a будет показан не рядом с полем поиска #}
-                    {{ include('basket/_form.html.twig') }}
+                    {{ include('manager/_form.html.twig') }}
                 </div>
                 <!--Footer-->
                 <div class="modal-footer">
@@ -180,35 +178,9 @@
             </div>
         </div>
     </div>
-    <!-- Modal: modalBasketEdit -->
+    <!-- Modal: modalBasketManage -->
 
-    <!-- Modal: modalProductNew -->
-    <div class="modal fade" id="modalProductNew" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                {{ form_start(productForm) }}
-                <!--Header-->
-                <div class="modal-header">
-                    <h4 class="modal-title">Новый товар</h4>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>×</span>
-                    </button>
-                </div>
-                <!--Body-->
-                <div class="modal-body">
-                    {{ include('product/_form.html.twig') }}
-                </div>
-                <!--Footer-->
-                <div class="modal-footer">
-                    <button class="btn btn-sm btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Сохранить') }}</button>
-                </div>
-                {{ form_end(productForm, {'render_rest': false}) }}
-            </div>
-        </div>
-    </div>
-    <!-- Modal: modalProductNew -->
-
-    <!-- Modal: modalProductEdit -->
+        <!-- Modal: modalProductEdit -->
     <div class="modal fade" id="modalProductEdit" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -221,6 +193,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% if modalBasketEditShow %}<script>$(() => { $('#modalBasketEdit').modal('show'); });</script> {% endif %}
-    {% if modalProductNewShow %}<script>$(() => { $('#modalProductNew').modal('show'); });</script> {% endif %}
+    {% if modalBasketManageShow %}<script>$(() => { $('#modalBasketManage').modal('show'); });</script> {% endif %}
 {% endblock %}

@@ -1,0 +1,52 @@
+{{ form_start(basketForm, {'attr': {'id': 'basket-shop-form'}}) }}
+    {{ form_widget(basketForm._token) }}
+    {{ form_errors(basketForm) }}
+
+<div class="form-row">
+    <div class="form-group col-12 col-sm-4">
+        {{ form_label(basketForm.deliveryToStock, 'Доставка по США') }}
+        {{ form_widget(basketForm.deliveryToStock, {'attr': {'class': 'form-control-sm'}}) }}
+    </div>
+    <div class="form-group col-12 col-sm-4">
+        {{ form_label(basketForm.deliveryToRussia, 'Доставка в Россию') }}
+        {{ form_widget(basketForm.deliveryToRussia, {'attr': {'class': 'form-control-sm'}}) }}
+    </div>
+    <div class="form-group col-12 col-sm-4">
+        {{ form_label(basketForm.deliveryToClient, 'Доставка по России') }}
+        {{ form_widget(basketForm.deliveryToClient, {'attr': {'class': 'form-control-sm'}}) }}
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-12 col-sm-4">
+        {{ form_label(basketForm.additionalCost, 'Доп. затраты') }}
+        {{ form_widget(basketForm.additionalCost, {'attr': {'class': 'form-control-sm'}}) }}
+    </div>
+
+    <div class="form-group col-12 col-sm-8">
+        <label for="{{ basketForm.rate.vars.id }}">Курс $</label>
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control form-control-sm" id="{{ basketForm.rate.vars.id }}" name="{{ basketForm.rate.vars.full_name }}">
+            <div class="input-group-append">
+                <label class="input-group-text" for="{{ basketForm.isRateFinal.vars.id }}">Окончательный?</label>
+                <div class="input-group-text">
+                    <input type="checkbox" id="{{ basketForm.isRateFinal.vars.id }}" name="{{ basketForm.isRateFinal.vars.full_name }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-12">
+        {{ form_label(basketForm.additionalCostComment, 'Комментарий к дополнительным затратам') }}
+        {{ form_widget(basketForm.additionalCostComment, {'attr': {'class': 'form-control-sm'}}) }}
+    </div>
+    <div class="form-group col-12">
+        {{ form_label(basketForm.tracking, 'Трекинг по США') }}
+        {{ form_widget(basketForm.tracking, {'attr': {'class': 'form-control-sm'}}) }}
+    </div>
+</div>
+
+{# csrf_token генерируется отдельным полем, в form_end можно запретить рендер остальных полей #}
+{# {{ form_end(form, {'render_rest': false}) }} #}
