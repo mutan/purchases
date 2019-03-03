@@ -30,4 +30,16 @@ class BasketRepository extends ServiceEntityRepository
             ->andWhere('b.status != :deleted')->setParameter('deleted', Basket::STATUS_DELETED)
             ->getQuery()->getResult();
     }
+
+    /**
+     * @param $user
+     * @return Basket[]
+     */
+    public function findAllByManager($user)
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.manager = :user')->setParameter('user', $user)
+            ->andWhere('b.status != :deleted')->setParameter('deleted', Basket::STATUS_DELETED)
+            ->getQuery()->getResult();
+    }
 }

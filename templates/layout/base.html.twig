@@ -53,12 +53,17 @@
                     <li class="nav-item {% if 'user_passport' in app.request.get('_route') %}active{% endif %}">
                         <a class="nav-link" href="{{ path('user_passport_index') }}">Паспорта</a>
                     </li>
-                    <li class="nav-item">
-                        <span class="nav-link">|</span>
-                    </li>
-                    <li class="nav-item {% if 'package' in app.request.get('_route') %}active{% endif %}">
-                        <a class="nav-link" href="{{ path('package_index') }}">Посылки</a>
-                    </li>
+                        {% if is_granted('ROLE_MANAGER') %}
+                        <li class="nav-item">
+                            <span class="nav-link">|</span>
+                        </li>
+                        <li class="nav-item {% if 'manager' in app.request.get('_route') %}active{% endif %}">
+                            <a class="nav-link" href="{{ path('manager_baskets') }}">Заказы</a>
+                        </li>
+                        <li class="nav-item {% if 'package' in app.request.get('_route') %}active{% endif %}">
+                            <a class="nav-link" href="{{ path('package_index') }}">Посылки</a>
+                        </li>
+                        {% endif %}
                     {% endif %}
                 </ul>
 

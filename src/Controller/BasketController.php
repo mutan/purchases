@@ -82,6 +82,8 @@ class BasketController extends BaseController
      */
     public function show(Basket $basket, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
+
         $modalBasketEditShow = false;
         $modalProductNewShow = false;
 
@@ -132,15 +134,11 @@ class BasketController extends BaseController
      * @Route("/product/{id}/edit", name="basket_product_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Product $product
-     * @param $debugLogPath
-     * @param $debugLogFile
      * @return Response
      */
-    public function editProduct(Request $request, Product $product, $debugLogPath, $debugLogFile): Response
+    public function editProduct(Request $request, Product $product): Response
     {
-        //$product = $productRepository->find($request->attributes query->get('product'));
-        //file_put_contents($debugLogPath . DIRECTORY_SEPARATOR . $debugLogFile, print_r($product->getName(), true));
-        //return $this->json([$request->request->get('product')]);
+        $this->denyAccessUnlessGranted('PRODUCT_MANAGE', $product);
 
         $form = $this->createForm(ProductType::class, $product, [
             'action' => $this->generateUrl('basket_product_edit', ['id' => $product->getId()]),

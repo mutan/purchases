@@ -1,18 +1,11 @@
 {% extends 'layout/base.html.twig' %}
 
-{% form_theme basketForm 'layout/form/errors.html.twig' %}
-
-{% block title %}Заказы{{ parent() }}{% endblock %}
+{% block title %}Заказы участников СП{{ parent() }}{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-sm-12 col-md-9">
-            <h1 class="mb-0 align-self-center">Заказы</h1>
-        </div>
-        <div class="col-sm-12 col-md-3 text-right">
-            <button type="button" class="btn btn-sm btn-narrow btn-dark-green" data-toggle="modal" data-target="#modalBasketNew">
-                <nobr><i class="fa fa-plus pr-1"></i> Новый заказ</nobr>
-            </button>
+            <h1 class="mb-0 align-self-center">Заказы участников СП</h1>
         </div>
     </div>
 
@@ -20,6 +13,7 @@
         <thead>
         <tr>
             <th rowspan="2">Дата создания</th>
+            <th rowspan="2">Пользователь</th>
             <th rowspan="2">Номер</th>
             <th rowspan="2">Статус</th>
             <th rowspan="2">Магазин</th>
@@ -37,6 +31,7 @@
         {% for basket in baskets %}
             <tr>
                 <td>{{ basket.createDate.format('Y-m-d') }}</td>
+                <td>{{ basket.user }}</td>
                 <td>
                     <a class="dashed" href="{{ path('basket_show', {'id': basket.id} ) }}">{{ basket.idWithPrefix }}</a>
                     {% if basket.userComment %}
@@ -75,39 +70,4 @@
         </tbody>
     </table>
 
-    <!-- Modal: modalBasketNew -->
-    <div class="modal fade" id="modalBasketNew" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <!--Header-->
-                <div class="modal-header">
-                    <h4 class="modal-title">Новый заказ</h4>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <!--Body-->
-                <div class="modal-body ui-front">{# без класса ui-front список autocomplite'a будет показан не рядом с полем поиска #}
-                    {{ include('basket/_form.html.twig', {'comment_placeholder': 'Можно написать позже'}) }}
-                </div>
-                <!--Footer-->
-                <div class="modal-footer">
-                    <button class="btn btn-sm btn-narrow btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Сохранить') }}</button>
-                </div>
-                {{ form_end(basketForm, {'render_rest': false}) }}
-            </div>
-        </div>
-    </div>
-    <!-- Modal: modalBasketNew -->
-
-{% endblock %}
-
-{% block javascripts %}
-    {% if modalBasketNewShow %}
-        <script>
-            $(() => {
-                $('#modalBasketNew').modal('show');
-            });
-        </script>
-    {% endif %}
 {% endblock %}
