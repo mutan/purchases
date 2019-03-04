@@ -45,7 +45,7 @@ class Basket
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="baskets")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank(message="~not_blank")s
+     * @Assert\NotBlank(message="~not_blank", groups={"create_edit_by_user"})
      */
     private $manager;
 
@@ -56,19 +56,20 @@ class Basket
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="~not_blank")
-     * @Assert\Url()
+     * @Assert\NotBlank(message="~not_blank", groups={"create_edit_by_user"})
+     * @Assert\Url(groups={"create_edit_by_user"})
      */
     private $shop;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(min=2, max=250, minMessage="~min", maxMessage="~max")
+     * @Assert\Length(min=2, max=250, minMessage="~min", maxMessage="~max", groups={"create_edit_by_user"})
      */
     private $userComment;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
+     * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $deliveryToStock;
 

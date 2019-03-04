@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Basket;
 use App\Entity\Product;
-use App\Form\BasketType;
+use App\Form\BasketUserType;
 use App\Form\ProductType;
 use App\Helpers\ShopHelper;
 use App\Repository\BasketRepository;
@@ -50,7 +50,7 @@ class BasketController extends BaseController
         $modalBasketNewShow = false;
 
         $basket = new Basket();
-        $basketForm = $this->createForm(BasketType::class, $basket);
+        $basketForm = $this->createForm(BasketUserType::class, $basket);
         $basketForm->handleRequest($request);
 
         if ($basketForm->isSubmitted()) {
@@ -88,7 +88,7 @@ class BasketController extends BaseController
         $modalProductNewShow = false;
 
         /* BASKET EDIT */
-        $basketForm = $this->createForm(BasketType::class, $basket);
+        $basketForm = $this->createForm(BasketUserType::class, $basket);
         $basketForm->handleRequest($request);
 
         if ($basketForm->isSubmitted()) {

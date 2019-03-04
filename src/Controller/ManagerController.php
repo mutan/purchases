@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Basket;
-use App\Form\BasketType;
+use App\Form\BasketManagerType;
 use App\Repository\BasketRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,11 +42,11 @@ class ManagerController extends AbstractController
         $modalBasketManageShow = false;
 
         /* BASKET EDIT */
-        $basketForm = $this->createForm(BasketType::class, $basket);
+        $basketForm = $this->createForm(BasketManagerType::class, $basket);
         $basketForm->handleRequest($request);
 
         if ($basketForm->isSubmitted()) {
-            dump($basketForm); die('ok');
+            //dump($basketForm); die('ok');
             if ($basketForm->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirectToRoute('manager_basket_show', ['id' => $basket->getId()]);
