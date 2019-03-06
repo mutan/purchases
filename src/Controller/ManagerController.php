@@ -45,8 +45,10 @@ class ManagerController extends AbstractController
         $basketForm = $this->createForm(BasketManagerType::class, $basket);
         $basketForm->handleRequest($request);
 
+        //dump($basket); die('ok');
+
         if ($basketForm->isSubmitted()) {
-            //dump($basketForm); die('ok');
+            //dump($request->request); die('ok');
             if ($basketForm->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirectToRoute('manager_basket_show', ['id' => $basket->getId()]);
