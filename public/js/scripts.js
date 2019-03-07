@@ -7,7 +7,7 @@ $(function () {
 /* JQuery автодополнение */
 /* http://api.jqueryui.com/autocomplete/ */
 
-$("#basket_shop").autocomplete({
+$("#basket_user_shop").autocomplete({
     minLength: 2,
     source: '/basket/autocomplete',
     select: function(event, ui) {

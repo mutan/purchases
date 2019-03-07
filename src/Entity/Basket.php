@@ -75,16 +75,19 @@ class Basket
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $deliveryToRussia;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $deliveryToClient;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $additionalCost;
 
@@ -95,6 +98,7 @@ class Basket
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
+     * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $rate;
 

@@ -19,11 +19,11 @@ class ProductType extends AbstractType
             ->add('url', TextType::class)
             ->add('article', TextType::class)
             ->add('userPrice', NumberType::class)
-            ->add('price', TextType::class)
-            ->add('amount', TextType::class)
+            ->add('price', NumberType::class)
+            ->add('amount', NumberType::class)
             ->add('comment', TextareaType::class)
-            ->add('expectedWeight', TextType::class)
-            ->add('purchasePrice', TextType::class)
+            ->add('expectedWeight', NumberType::class)
+            ->add('purchasePrice', NumberType::class)
             ->add('purchaseShop', TextType::class)
         ;
     }
