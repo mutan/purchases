@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Helpers\MailService;
 use Psr\Log\LoggerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * Строка ниже нужна для автодополнения PhpShtorm'a, т.к. метод parent::getUser() не знает, объект какого класса он вернет.
+ * Строка ниже нужна для автодополнения PhpShtorm'a,
+ * т.к. метод parent::getUser() не знает, объект какого класса он вернет.
  * @method User getUser()
  */
 abstract class BaseController extends AbstractController
@@ -20,5 +22,10 @@ abstract class BaseController extends AbstractController
     {
         $this->logger = $logger;
         $this->mailer = $mailer;
+    }
+
+    protected function getEm(): ObjectManager
+    {
+        return $this->getDoctrine()->getManager();
     }
 }

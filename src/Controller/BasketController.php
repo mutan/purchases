@@ -55,10 +55,9 @@ class BasketController extends BaseController
 
         if ($basketForm->isSubmitted()) {
             if ($basketForm->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
                 $basket->setUser($this->getUser());
-                $entityManager->persist($basket);
-                $entityManager->flush();
+                $this->getEm()->persist($basket);
+                $this->getEm()->flush();
 
                 return $this->redirectToRoute('basket_index');
             } else {
@@ -93,7 +92,7 @@ class BasketController extends BaseController
 
         if ($basketForm->isSubmitted()) {
             if ($basketForm->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
+                $this->getEm()->flush();
                 return $this->redirectToRoute('basket_show', ['id' => $basket->getId()]);
             } else {
                 $modalBasketEditShow = true;
@@ -107,12 +106,10 @@ class BasketController extends BaseController
 
         if ($productForm->isSubmitted()) {
             if ($productForm->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-
                 $product->setUser($this->getUser());
                 $product->setBasket($basket);
-                $entityManager->persist($product);
-                $entityManager->flush();
+                $this->getEm()->persist($product);
+                $this->getEm()->flush();
 
                 return $this->redirectToRoute('basket_show', ['id' => $basket->getId()]);
             } else {
@@ -146,7 +143,7 @@ class BasketController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->getEm()->flush();
             $reload = true;
         }
 
@@ -180,10 +177,8 @@ class BasketController extends BaseController
 
         if ($this->isCsrfTokenValid('delete'.$basket->getId(), $request->request->get('_token'))) {
             $basket->setStatus(Basket::STATUS_DELETED);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($basket);
-            $entityManager->flush();
+            $this->getEm()->persist($basket);
+            $this->getEm()->flush();
 
             $this->addFlash('info','Заказ удален.');
         }
@@ -202,9 +197,8 @@ class BasketController extends BaseController
         $this->denyAccessUnlessGranted('PRODUCT_MANAGE', $product);
 
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($product);
-            $entityManager->flush();
+            $this->getEm()->remove($product);
+            $this->getEm()->flush();
 
             $this->addFlash('info','Товар удален.');
         }
