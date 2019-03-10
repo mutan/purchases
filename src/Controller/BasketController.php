@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Basket;
 use App\Entity\Product;
+use App\Form\BasketUserData;
 use App\Form\BasketUserType;
 use App\Form\ProductType;
 use App\Helpers\ShopHelper;
@@ -49,15 +50,19 @@ class BasketController extends BaseController
     {
         $modalBasketNewShow = false;
 
-        $basket = new Basket();
-        $basketForm = $this->createForm(BasketUserType::class, $basket);
+        $basketUserData = new BasketUserData();
+        $basketForm = $this->createForm(BasketUserType::class, $basketUserData);
         $basketForm->handleRequest($request);
 
         if ($basketForm->isSubmitted()) {
             if ($basketForm->isValid()) {
+                $basket = new Basket();
+                $basketUserData->fill($basket);
                 $basket->setUser($this->getUser());
                 $this->getEm()->persist($basket);
                 $this->getEm()->flush();
+
+                $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} создан. теперь добавьте в него товары!");
 
                 return $this->redirectToRoute('basket_index');
             } else {
@@ -67,7 +72,6 @@ class BasketController extends BaseController
 
         return $this->render('basket/index.html.twig', [
             'baskets' => $basketRepository->findAllByUser($this->getUser()),
-            'basket' => $basket,
             'basketForm' => $basketForm->createView(),
             'modalBasketNewShow' => $modalBasketNewShow,
         ]);

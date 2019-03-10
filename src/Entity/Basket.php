@@ -45,7 +45,6 @@ class Basket
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="baskets")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank(message="~not_blank", groups={"create_edit_by_user"})
      */
     private $manager;
 
@@ -56,14 +55,11 @@ class Basket
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="~not_blank", groups={"create_edit_by_user"})
-     * @Assert\Url(groups={"create_edit_by_user"})
      */
     private $shop;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(min=2, max=250, minMessage="~min", maxMessage="~max", groups={"create_edit_by_user"})
      */
     private $userComment;
 
@@ -133,31 +129,31 @@ class Basket
         return $this->id;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getManager(): ?User
+    public function getManager(): User
     {
         return $this->manager;
     }
 
-    public function setManager(?User $manager): self
+    public function setManager(User $manager): self
     {
         $this->manager = $manager;
 
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -252,12 +248,12 @@ class Basket
         return $this;
     }
 
-    public function getShop(): ?string
+    public function getShop(): string
     {
         return $this->shop;
     }
 
-    public function setShop(?string $shop): self
+    public function setShop(string $shop): self
     {
         $this->shop = $shop;
 

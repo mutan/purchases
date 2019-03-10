@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Entity\Basket;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,8 +34,7 @@ class BasketUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Basket::class,
-            'validation_groups' => ['create_edit_by_user']
+            'data_class' => BasketUserData::class
         ]);
     }
 }
