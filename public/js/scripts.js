@@ -16,6 +16,30 @@ $("#basket_user_shop").autocomplete({
     }
 });
 
+/* Basket new */
+
+$('#basketNew').on('click', handleMainModal);
+
+function handleMainModal(e) {
+    e.preventDefault();
+    let content =
+
+        $.ajax({
+            url: `/basket/product/${id}/edit`,
+            type: 'POST',
+            beforeSend: ()=> {toggleButtonSpinnerIcon(e);},
+            complete: ()=> {toggleButtonSpinnerIcon(e);}
+        }).then(function (responce) {
+            reload(id, $('#modalProductEdit'), responce);
+        });
+}
+
+function toggleButtonSpinnerIcon(e) {
+    let icon = $(e.currentTarget).find('i');
+    alert(icon.attr("class"));
+    icon.toggleClass('fa-edit fa-spinner fa-spin');
+}
+
 /* Product edit */
 
 $('.product-edit').on('click', (e) => {

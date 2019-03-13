@@ -91,12 +91,16 @@ class BasketController extends BaseController
         $modalProductNewShow = false;
 
         /* BASKET EDIT */
-        $basketForm = $this->createForm(BasketUserType::class, $basket);
+        $basketUserData = new BasketUserData();
+        $basketUserData->extract($basket);
+        $basketForm = $this->createForm(BasketUserType::class, $basketUserData);
         $basketForm->handleRequest($request);
 
         if ($basketForm->isSubmitted()) {
             if ($basketForm->isValid()) {
+                $basketUserData->fill($basket);
                 $this->getEm()->flush();
+                $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} обновлен.");
                 return $this->redirectToRoute('basket_show', ['id' => $basket->getId()]);
             } else {
                 $modalBasketEditShow = true;
@@ -131,6 +135,41 @@ class BasketController extends BaseController
         ]);
     }
 
+
+
+
+
+
+    /**
+     * @Route("/new", name="basket_new_ajax", methods={"POST"})
+     * @param Request $request
+     * @param Product $product
+     * @return Response
+     */
+    public function newBasket(Request $request, Product $product): Response
+    {
+        $this->denyAccessUnlessGranted('PRODUCT_MANAGE', $product);
+
+        $form = $this->createForm(ProductType::class, $product, [
+            'action' => $this->generateUrl('basket_product_edit', ['id' => $product->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getEm()->flush();
+            $reload = true;
+        }
+
+        return new JsonResponse([
+            'message' => 'Success',
+            'reload' => $reload ?? false,
+            'output' => $this->renderView('product/_form_modal_content.html.twig', [
+                'product' => $product,
+                'productForm' => $form->createView(),
+            ])
+        ], 200);
+    }
+
     /**
      * @Route("/product/{id}/edit", name="basket_product_edit", methods={"GET","POST"})
      * @param Request $request
@@ -151,17 +190,14 @@ class BasketController extends BaseController
             $reload = true;
         }
 
-        $response = new JsonResponse(
-            [
-                'message' => 'Success',
-                'reload' => $reload ?? false,
-                'output' => $this->renderView('product/_form_modal_content.html.twig', [
-                    'product' => $product,
-                    'productForm' => $form->createView(),
-                ])
-            ], 200);
-
-        return $response;
+        return new JsonResponse([
+            'message' => 'Success',
+            'reload' => $reload ?? false,
+            'output' => $this->renderView('product/_form_modal_content.html.twig', [
+                'product' => $product,
+                'productForm' => $form->createView(),
+            ])
+        ], 200);
     }
 
     /**

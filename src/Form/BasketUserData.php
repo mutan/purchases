@@ -36,7 +36,7 @@ class BasketUserData
         $basket->setUserComment($this->getUserComment());
     }
 
-    private function extract(Basket $basket)
+    public function extract(Basket $basket)
     {
         $this->setManager($basket->getManager());
         $this->setShop($basket->getShop());

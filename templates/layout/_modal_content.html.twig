@@ -1,0 +1,16 @@
+{% form_theme productForm 'layout/form/errors.html.twig' %}
+
+<div class="modal-header">
+    <h4 class="modal-title">{{ modalTitle|default('') }}</h4>
+    <button type="button" class="close" data-dismiss="modal">
+        <span>×</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    {{ modalBody|default('') }}
+</div>
+
+<div class="modal-footer">
+    {{ modalFooter|default('') }}
+</div>
