@@ -16,29 +16,40 @@ $("#basket_user_shop").autocomplete({
     }
 });
 
-/* Basket new */
+/* Modal */
 
-$('#basketNew').on('click', handleMainModal);
+let Modal = {
+    newUrl: `/basket/new`,
 
-function handleMainModal(e) {
-    e.preventDefault();
-    let content =
+    getModal: function() {
+        return $('#modalMain');
+    },
 
+    toggleButtonSpinnerIcon: function(e) {
+        $(e.currentTarget).find('i').toggleClass('fa-spinner fa-spin');
+    },
+
+    handleMainModal: function(e) {
+        e.preventDefault();
         $.ajax({
-            url: `/basket/product/${id}/edit`,
+            url: this.newUrl,
             type: 'POST',
-            beforeSend: ()=> {toggleButtonSpinnerIcon(e);},
-            complete: ()=> {toggleButtonSpinnerIcon(e);}
+            beforeSend: ()=> {Modal.toggleButtonSpinnerIcon(e);},
+            complete: ()=> {Modal.toggleButtonSpinnerIcon(e);}
         }).then(function (responce) {
-            reload(id, $('#modalProductEdit'), responce);
+            Modal.getModal().find('.modal-content').html(responce.output);
+            Modal.getModal().modal('show');
         });
-}
+    }
+};
 
-function toggleButtonSpinnerIcon(e) {
-    let icon = $(e.currentTarget).find('i');
-    alert(icon.attr("class"));
-    icon.toggleClass('fa-edit fa-spinner fa-spin');
-}
+$('#basketNew').on('click', (e)=> {
+    Modal.handleMainModal(e);
+});
+
+
+
+
 
 /* Product edit */
 

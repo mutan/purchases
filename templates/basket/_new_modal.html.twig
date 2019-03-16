@@ -1,0 +1,17 @@
+{% form_theme basketForm 'layout/form/errors.html.twig' %}
+
+<div class="modal-header">
+    <h4 class="modal-title">Новый заказ</h4>
+    <button type="button" class="close" data-dismiss="modal">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<!--Body-->
+<div class="modal-body ui-front">{# без класса ui-front список autocomplite'a будет показан не рядом с полем поиска #}
+    {{ include('basket/_form.html.twig', {'comment_placeholder': 'Можно написать позже'}) }}
+</div>
+<!--Footer-->
+<div class="modal-footer">
+    <button class="btn btn-sm btn-narrow btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Сохранить') }}</button>
+</div>
+{{ form_end(basketForm, {'render_rest': false}) }}

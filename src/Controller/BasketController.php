@@ -16,13 +16,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/basket")
  * @IsGranted("ROLE_USER")
  */
 class BasketController extends BaseController
 {
     /**
-     * @Route("/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
+     * @Route("/basket/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -41,44 +40,59 @@ class BasketController extends BaseController
     }
 
     /**
-     * @Route("/", name="basket_index", methods={"GET","POST"})
+     * @Route("/basket/", name="basket_index", methods={"GET","POST"})
      * @param BasketRepository $basketRepository
+     * @return Response
+     */
+    public function index(BasketRepository $basketRepository): Response
+    {
+        return $this->render('basket/index.html.twig', [
+            'baskets' => $basketRepository->findAllByUser($this->getUser()),
+        ]);
+    }
+
+    /**
+     * @Route("/basket/new", name="basket_new", methods={"POST"})
      * @param Request $request
      * @return Response
      */
-    public function index(BasketRepository $basketRepository, Request $request): Response
+    public function new(Request $request): Response
     {
-        $modalBasketNewShow = false;
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $basketUserData = new BasketUserData();
         $basketForm = $this->createForm(BasketUserType::class, $basketUserData);
         $basketForm->handleRequest($request);
 
-        if ($basketForm->isSubmitted()) {
-            if ($basketForm->isValid()) {
-                $basket = new Basket();
-                $basketUserData->fill($basket);
-                $basket->setUser($this->getUser());
-                $this->getEm()->persist($basket);
-                $this->getEm()->flush();
+        if ($basketForm->isSubmitted() && $basketForm->isValid()) {
+            $basket = new Basket();
+            $basketUserData->fill($basket);
+            $basket->setUser($this->getUser());
+            $this->getEm()->persist($basket);
+            $this->getEm()->flush();
 
-                $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} создан. теперь добавьте в него товары!");
+            $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} создан. теперь добавьте в него товары!");
 
-                return $this->redirectToRoute('basket_index');
-            } else {
-                $modalBasketNewShow = true;
-            }
+            return $this->redirectToRoute('basket_index');
         }
 
-        return $this->render('basket/index.html.twig', [
-            'baskets' => $basketRepository->findAllByUser($this->getUser()),
-            'basketForm' => $basketForm->createView(),
-            'modalBasketNewShow' => $modalBasketNewShow,
-        ]);
+        return new JsonResponse([
+            'message' => 'Success',
+            'output' => $this->renderView('basket/_new_modal.html.twig', [
+                'basketForm' => $basketForm->createView(),
+            ])
+        ], 200);
     }
 
+
+
+
+
+
+
+
     /**
-     * @Route("/{id}", name="basket_show", methods={"GET","POST"})
+     * @Route("/basket/{id}", name="basket_show", methods={"GET","POST"})
      * @param Basket $basket
      * @param Request $request
      * @return Response
@@ -140,38 +154,9 @@ class BasketController extends BaseController
 
 
 
-    /**
-     * @Route("/new", name="basket_new_ajax", methods={"POST"})
-     * @param Request $request
-     * @param Product $product
-     * @return Response
-     */
-    public function newBasket(Request $request, Product $product): Response
-    {
-        $this->denyAccessUnlessGranted('PRODUCT_MANAGE', $product);
-
-        $form = $this->createForm(ProductType::class, $product, [
-            'action' => $this->generateUrl('basket_product_edit', ['id' => $product->getId()]),
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getEm()->flush();
-            $reload = true;
-        }
-
-        return new JsonResponse([
-            'message' => 'Success',
-            'reload' => $reload ?? false,
-            'output' => $this->renderView('product/_form_modal_content.html.twig', [
-                'product' => $product,
-                'productForm' => $form->createView(),
-            ])
-        ], 200);
-    }
 
     /**
-     * @Route("/product/{id}/edit", name="basket_product_edit", methods={"GET","POST"})
+     * @Route("/basket/product/{id}/edit", name="basket_product_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Product $product
      * @return Response
@@ -201,7 +186,7 @@ class BasketController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="basket_delete", methods={"DELETE"})
+     * @Route("/basket/{id}", name="basket_delete", methods={"DELETE"})
      * @param Request $request
      * @param Basket $basket
      * @return Response
@@ -227,7 +212,7 @@ class BasketController extends BaseController
     }
 
     /**
-     * @Route("/product/{id}", name="basket_product_delete", methods={"DELETE"})
+     * @Route("/basket/product/{id}", name="basket_product_delete", methods={"DELETE"})
      * @param Request $request
      * @param Product $product
      * @return Response
