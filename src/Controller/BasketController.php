@@ -73,11 +73,14 @@ class BasketController extends BaseController
 
             $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} создан. теперь добавьте в него товары!");
 
-            return $this->redirectToRoute('basket_index');
+            $reload = true;
+
+            //return $this->redirectToRoute('basket_index');
         }
 
         return new JsonResponse([
             'message' => 'Success',
+            'reload' => $reload ?? false,
             'output' => $this->renderView('basket/_new_modal.html.twig', [
                 'basketForm' => $basketForm->createView(),
             ])

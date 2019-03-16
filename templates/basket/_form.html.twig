@@ -1,25 +1,18 @@
-{{ form_start(basketForm, {'attr': {'id': 'basket-shop-form'}}) }}
-    {{ form_widget(basketForm._token) }}
-    {{ form_errors(basketForm) }}
-
-    <div class="form-row">
-        <div class="form-group col-12">
-            {{ form_label(basketForm.manager, 'Менеджер совместной покупки') }}
-            {{ form_widget(basketForm.manager, {'attr': {'class': 'form-control-sm'}}) }}
-        </div>
-
-        <div class="form-group col-12">
-            {{ form_label(basketForm.shop, 'Магазин (ссылка)') }}
-            {{ form_widget(basketForm.shop, {'attr': {'class': 'form-control-sm', 'placeholder': 'Начните вводить адрес сайта'}}) }}
-            <small id="product_shop_help" class="form-text text-muted">Должен начинаться с http</small>
-        </div>
-
-        <div class="form-group col-12">
-            {{ form_label(basketForm.userComment, 'Комментарий') }}
-            {{ form_widget(basketForm.userComment, {'attr': {'class': 'form-control-sm', 'rows': 5, 'placeholder': comment_placeholder|default('') }}) }}
-            <small id="product_userComment_help" class="form-text text-muted">Максимум 250 символов</small>
-        </div>
+<div class="form-row">
+    <div class="form-group col-12">
+        {{ form_label(basketForm.manager, 'Менеджер совместной покупки') }}
+        {{ form_widget(basketForm.manager, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
 
-{# csrf_token генерируется отдельным полем, в form_end можно запретить рендер остальных полей #}
-{# {{ form_end(form, {'render_rest': false}) }} #}
+    <div class="form-group col-12">
+        {{ form_label(basketForm.shop, 'Магазин (ссылка)') }}
+        {{ form_widget(basketForm.shop, {'attr': {'class': 'form-control-sm', 'placeholder': 'Начните вводить адрес сайта'}}) }}
+        <small id="product_shop_help" class="form-text text-muted">Должен начинаться с http</small>
+    </div>
+
+    <div class="form-group col-12">
+        {{ form_label(basketForm.userComment, 'Комментарий') }}
+        {{ form_widget(basketForm.userComment, {'attr': {'class': 'form-control-sm', 'rows': 5, 'placeholder': comment_placeholder|default('') }}) }}
+        <small id="product_userComment_help" class="form-text text-muted">Максимум 250 символов</small>
+    </div>
+</div>

@@ -26,6 +26,7 @@ class BasketRepository extends ServiceEntityRepository
     public function findAllByUser($user)
     {
         return $this->createQueryBuilder('b')
+            ->leftJoin('b.products', 'p')->addSelect('p')
             ->andWhere('b.user = :user')->setParameter('user', $user)
             ->andWhere('b.status != :deleted')->setParameter('deleted', Basket::STATUS_DELETED)
             ->getQuery()->getResult();

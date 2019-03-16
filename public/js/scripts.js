@@ -11,7 +11,7 @@ $("#basket_user_shop").autocomplete({
     minLength: 2,
     source: '/basket/autocomplete',
     select: function(event, ui) {
-        $('#basket_shop').val(ui.item.value);
+        $('#basket_user_shop').val(ui.item.value);
         //$('#basket-shop-form').submit();
     }
 });
@@ -29,7 +29,18 @@ let Modal = {
         $(e.currentTarget).find('i').toggleClass('fa-spinner fa-spin');
     },
 
-    handleMainModal: function(e) {
+    shopAutocomplete: function() {
+        $("#basket_user_shop").autocomplete({
+            minLength: 2,
+            source: '/basket/autocomplete',
+            select: function(event, ui) {
+                $('#basket_user_shop').val(ui.item.value);
+                //$('#basket-shop-form').submit();
+            }
+        });
+    },
+
+    handleMainModal: function(e, options) {
         e.preventDefault();
         $.ajax({
             url: this.newUrl,
@@ -37,14 +48,43 @@ let Modal = {
             beforeSend: ()=> {Modal.toggleButtonSpinnerIcon(e);},
             complete: ()=> {Modal.toggleButtonSpinnerIcon(e);}
         }).then(function (responce) {
-            Modal.getModal().find('.modal-content').html(responce.output);
-            Modal.getModal().modal('show');
+            //Modal.getModal().find('.modal-content').html(responce.output);
+            //Modal.getModal().modal('show');
+            Modal.reload(Modal.getModal(), responce, options);
+        });
+    },
+
+    reload: function($modal, responce, options) {
+        $modal.find('.modal-content').html(responce.output);
+        $modal.modal('show');
+        if (options.shopAutocomplete) {
+            Modal.shopAutocomplete();
+        }
+
+        $modal.find('form').on('submit', (e)=> {
+            e.preventDefault();
+            let formData = $(e.currentTarget).serialize();
+            const $submitButton = $(e.currentTarget).find('button[type=submit]');
+            $.ajax({
+                url: this.newUrl,
+                type: 'POST',
+                data: formData,
+                beforeSend: ()=> {
+                    $submitButton.prop('disabled', true).toggleClass('btn-dark-green btn-danger').html("<i class='fa fa-spinner fa-spin pr-1'></i> Идет сохранение");
+                }
+            }).then(function (responce) {
+                $submitButton.toggleClass('btn-dark-green btn-danger').html("Сохранено");
+                (responce.reload) ? location.reload() : Modal.reload($modal, responce, options);
+            });
         });
     }
+
 };
 
 $('#basketNew').on('click', (e)=> {
-    Modal.handleMainModal(e);
+    Modal.handleMainModal(e, {
+        shopAutocomplete: true
+    });
 });
 
 
