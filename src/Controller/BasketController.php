@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BasketController extends BaseController
 {
     /**
+     * Автодополнение поля shop в форме создания/редактирования заказа
      * @Route("/basket/shop/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
      * @param Request $request
      * @return Response
@@ -40,7 +41,8 @@ class BasketController extends BaseController
     }
 
     /**
-     * @Route("/basket/", name="basket_index", methods={"GET","POST"})
+     * Страница со списком заказов пользователя
+     * @Route("/basket/", name="basket_index", methods={"GET"})
      * @param BasketRepository $basketRepository
      * @return Response
      */
@@ -52,14 +54,13 @@ class BasketController extends BaseController
     }
 
     /**
+     * Форма создания нового заказа (ajax)
      * @Route("/basket/new", name="basket_new", methods={"POST"})
      * @param Request $request
      * @return Response
      */
     public function new(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
         $basketUserData = new BasketUserData();
         $basketForm = $this->createForm(BasketUserType::class, $basketUserData);
         $basketForm->handleRequest($request);
@@ -70,7 +71,6 @@ class BasketController extends BaseController
             $basket->setUser($this->getUser());
             $this->getEm()->persist($basket);
             $this->getEm()->flush();
-
             $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} создан. Теперь добавьте в него товары!");
             $reload = true;
         }
@@ -84,73 +84,56 @@ class BasketController extends BaseController
         ], 200);
     }
 
-
-
-
-
-
-
-
     /**
-     * @Route("/basket/{id}", name="basket_show", methods={"GET","POST"})
-     * @param Basket $basket
+     * Страница с одним заказом пользователя
+     * @Route("/basket/{id}", name="basket_show", methods={"GET"})
      * @param Request $request
+     * @param BasketRepository $basketRepository
      * @return Response
      */
-    public function show(Basket $basket, Request $request): Response
+    public function show(Request $request, BasketRepository $basketRepository): Response
     {
-        $this->denyAccessUnlessGranted('BASKET_SHOW', $basket);
+        $basket = $basketRepository->findWithRelations($request->get('id'));
+        $this->denyAccessUnlessGranted('BASKET_EDIT', $basket);
 
-        $modalBasketEditShow = false;
-        $modalProductNewShow = false;
+        return $this->render('basket/show.html.twig', [
+            'basket' => $basket,
+        ]);
+    }
 
-        /* BASKET EDIT */
+    /**
+     * Форма редактирования заказа (ajax)
+     * @Route("/basket/{id}/edit", name="basket_edit", methods={"POST"})
+     * @param Request $request
+     * @param BasketRepository $basketRepository
+     * @return Response
+     */
+    public function edit(Request $request, BasketRepository $basketRepository): Response
+    {
+        $basket = $basketRepository->findWithRelations($request->get('id'));
+        $this->denyAccessUnlessGranted('BASKET_EDIT', $basket);
+
         $basketUserData = new BasketUserData();
         $basketUserData->extract($basket);
         $basketForm = $this->createForm(BasketUserType::class, $basketUserData);
         $basketForm->handleRequest($request);
 
-        if ($basketForm->isSubmitted()) {
-            if ($basketForm->isValid()) {
-                $basketUserData->fill($basket);
-                $this->getEm()->flush();
-                $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} обновлен.");
-                return $this->redirectToRoute('basket_show', ['id' => $basket->getId()]);
-            } else {
-                $modalBasketEditShow = true;
-            }
+        if ($basketForm->isSubmitted() && $basketForm->isValid()) {
+            $basketUserData->fill($basket);
+            $this->getEm()->flush();
+            $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} обновлен.");
+            $reload = true;
         }
 
-        /* PRODUCT NEW */
-        $product = new Product();
-        $productForm = $this->createForm(ProductType::class, $product);
-        $productForm->handleRequest($request);
-
-        if ($productForm->isSubmitted()) {
-            if ($productForm->isValid()) {
-                $product->setUser($this->getUser());
-                $product->setBasket($basket);
-                $this->getEm()->persist($product);
-                $this->getEm()->flush();
-
-                return $this->redirectToRoute('basket_show', ['id' => $basket->getId()]);
-            } else {
-                $modalProductNewShow = true;
-            }
-        }
-
-        return $this->render('basket/show.html.twig', [
-            'basket' => $basket,
-            'basketForm' => $basketForm->createView(),
-            'product' => $product,
-            'productForm' => $productForm->createView(),
-            'modalBasketEditShow' => $modalBasketEditShow,
-            'modalProductNewShow' => $modalProductNewShow,
-        ]);
+        return new JsonResponse([
+            'message' => 'Success',
+            'reload' => $reload ?? false,
+            'output' => $this->renderView('basket/_edit_modal.html.twig', [
+                'basket' => $basket,
+                'basketForm' => $basketForm->createView(),
+            ])
+        ], 200);
     }
-
-
-
 
 
 

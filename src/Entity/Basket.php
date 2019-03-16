@@ -43,7 +43,7 @@ class Basket
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="baskets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="basketsByManager")
      * @ORM\JoinColumn(nullable=false)
      */
     private $manager;

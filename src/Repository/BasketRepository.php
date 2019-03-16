@@ -20,6 +20,20 @@ class BasketRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param $id
+     * @return Basket
+     */
+    public function findWithRelations($id)
+    {
+        return $this->createQueryBuilder('b')
+            ->leftJoin('b.user', 'bu')->addSelect('bu')
+            ->leftJoin('b.manager', 'bm')->addSelect('bm')
+            ->leftJoin('b.products', 'bp')->addSelect('bp')
+            ->andWhere('b.id = :id')->setParameter('id', $id)
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * @param $user
      * @return Basket[]
      */
@@ -39,6 +53,7 @@ class BasketRepository extends ServiceEntityRepository
     public function findAllByManager($user)
     {
         return $this->createQueryBuilder('b')
+            ->leftJoin('b.products', 'p')->addSelect('p')
             ->andWhere('b.manager = :user')->setParameter('user', $user)
             ->andWhere('b.status != :deleted')->setParameter('deleted', Basket::STATUS_DELETED)
             ->getQuery()->getResult();

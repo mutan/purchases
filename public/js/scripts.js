@@ -4,24 +4,9 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
 
-/* JQuery автодополнение */
-/* http://api.jqueryui.com/autocomplete/ */
-
-$("#basket_user_shop").autocomplete({
-    minLength: 2,
-    source: '/basket/autocomplete',
-    select: function(event, ui) {
-        $('#basket_user_shop').val(ui.item.value);
-        //$('#basket-shop-form').submit();
-    }
-});
-
 /* Modal */
 
 let Modal = {
-    newUrl: `/basket/new`,
-    editUrl: `/basket/new`,
-
     getModal: function() {
         return $('#modalMain');
     },
@@ -30,6 +15,8 @@ let Modal = {
         $(e.currentTarget).find('i').toggleClass('fa-spinner fa-spin');
     },
 
+    /* JQuery автодополнение */
+    /* http://api.jqueryui.com/autocomplete/ */
     shopAutocomplete: function(id) {
         $(id).autocomplete({
             minLength: 2,
@@ -44,7 +31,7 @@ let Modal = {
     handleMainModal: function(e, options) {
         e.preventDefault();
         $.ajax({
-            url: this.newUrl,
+            url: options.url,
             type: 'POST',
             beforeSend: ()=> {Modal.toggleButtonSpinnerIcon(e);},
             complete: ()=> {Modal.toggleButtonSpinnerIcon(e);}
@@ -65,7 +52,7 @@ let Modal = {
             let formData = $(e.currentTarget).serialize();
             const $submitButton = $(e.currentTarget).find('button[type=submit]');
             $.ajax({
-                url: this.newUrl,
+                url: options.url,
                 type: 'POST',
                 data: formData,
                 beforeSend: ()=> {
@@ -76,22 +63,26 @@ let Modal = {
             });
         });
     }
-
 };
 
 $('#basketNew').on('click', (e)=> {
     Modal.handleMainModal(e, {
+        url: `/basket/new`,
         shopAutocomplete: true,
         shopAutocompleteElem: '#basket_user_shop'
     });
 });
 
 $('#basketEdit').on('click', (e)=> {
+    let id = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
+        url: `/basket/${id}/edit`,
         shopAutocomplete: true,
         shopAutocompleteElem: '#basket_user_shop'
     });
 });
+
+
 
 
 
