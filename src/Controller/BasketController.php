@@ -71,7 +71,7 @@ class BasketController extends BaseController
             $basket->setUser($this->getUser());
             $this->getEm()->persist($basket);
             $this->getEm()->flush();
-            $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} создан. Теперь добавьте в него товары!");
+            $this->addFlash('success', "Заказ {$basket->getIdWithPrefix()} создан. Теперь добавьте в него товары!");
             $reload = true;
         }
 
@@ -85,7 +85,7 @@ class BasketController extends BaseController
     }
 
     /**
-     * Страница с одним заказом пользователя
+     * Страница с одним заказом и списком продуктов в нем
      * @Route("/basket/{id}", name="basket_show", methods={"GET"})
      * @param Request $request
      * @param BasketRepository $basketRepository
@@ -121,7 +121,7 @@ class BasketController extends BaseController
         if ($basketForm->isSubmitted() && $basketForm->isValid()) {
             $basketUserData->fill($basket);
             $this->getEm()->flush();
-            $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} обновлен.");
+            $this->addFlash('success', "Заказ {$basket->getIdWithPrefix()} обновлен.");
             $reload = true;
         }
 
