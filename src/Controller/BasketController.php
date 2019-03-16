@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BasketController extends BaseController
 {
     /**
-     * @Route("/basket/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
+     * @Route("/basket/shop/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -71,11 +71,8 @@ class BasketController extends BaseController
             $this->getEm()->persist($basket);
             $this->getEm()->flush();
 
-            $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} создан. теперь добавьте в него товары!");
-
+            $this->addFlash('info', "Заказ {$basket->getIdWithPrefix()} создан. Теперь добавьте в него товары!");
             $reload = true;
-
-            //return $this->redirectToRoute('basket_index');
         }
 
         return new JsonResponse([

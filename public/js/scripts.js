@@ -20,6 +20,7 @@ $("#basket_user_shop").autocomplete({
 
 let Modal = {
     newUrl: `/basket/new`,
+    editUrl: `/basket/new`,
 
     getModal: function() {
         return $('#modalMain');
@@ -29,12 +30,12 @@ let Modal = {
         $(e.currentTarget).find('i').toggleClass('fa-spinner fa-spin');
     },
 
-    shopAutocomplete: function() {
-        $("#basket_user_shop").autocomplete({
+    shopAutocomplete: function(id) {
+        $(id).autocomplete({
             minLength: 2,
-            source: '/basket/autocomplete',
+            source: '/basket/shop/autocomplete',
             select: function(event, ui) {
-                $('#basket_user_shop').val(ui.item.value);
+                $(id).val(ui.item.value);
                 //$('#basket-shop-form').submit();
             }
         });
@@ -48,8 +49,6 @@ let Modal = {
             beforeSend: ()=> {Modal.toggleButtonSpinnerIcon(e);},
             complete: ()=> {Modal.toggleButtonSpinnerIcon(e);}
         }).then(function (responce) {
-            //Modal.getModal().find('.modal-content').html(responce.output);
-            //Modal.getModal().modal('show');
             Modal.reload(Modal.getModal(), responce, options);
         });
     },
@@ -58,7 +57,7 @@ let Modal = {
         $modal.find('.modal-content').html(responce.output);
         $modal.modal('show');
         if (options.shopAutocomplete) {
-            Modal.shopAutocomplete();
+            Modal.shopAutocomplete(options.shopAutocompleteElem);
         }
 
         $modal.find('form').on('submit', (e)=> {
@@ -70,10 +69,9 @@ let Modal = {
                 type: 'POST',
                 data: formData,
                 beforeSend: ()=> {
-                    $submitButton.prop('disabled', true).toggleClass('btn-dark-green btn-danger').html("<i class='fa fa-spinner fa-spin pr-1'></i> Идет сохранение");
+                    $submitButton.prop('disabled', true).html("<i class='fa fa-spinner fa-spin pr-1'></i> Идет сохранение");
                 }
             }).then(function (responce) {
-                $submitButton.toggleClass('btn-dark-green btn-danger').html("Сохранено");
                 (responce.reload) ? location.reload() : Modal.reload($modal, responce, options);
             });
         });
@@ -83,11 +81,17 @@ let Modal = {
 
 $('#basketNew').on('click', (e)=> {
     Modal.handleMainModal(e, {
-        shopAutocomplete: true
+        shopAutocomplete: true,
+        shopAutocompleteElem: '#basket_user_shop'
     });
 });
 
-
+$('#basketEdit').on('click', (e)=> {
+    Modal.handleMainModal(e, {
+        shopAutocomplete: true,
+        shopAutocompleteElem: '#basket_user_shop'
+    });
+});
 
 
 

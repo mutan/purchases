@@ -1,1 +1,4 @@
-<span class="badge badge-dark">{{ basket.status }}</span>
+<span class="badge badge-primary pointer"
+      data-toggle="tooltip"
+      title="{% if basket.isNew %}Заказ со статусом new можно редактировать и удалять{% endif %}"
+>{{ basket.status }}</span>

@@ -19,7 +19,7 @@
         <tr>
             <th rowspan="2">Дата создания</th>
             <th rowspan="2">Номер</th>
-            <th rowspan="2">Статус</th>
+            <th rowspan="2">Статус/Курс $</th>
             <th rowspan="2">Магазин</th>
             <th rowspan="2">Сумма</th>
             <th colspan="3" class="text-center">Доставка</th>
@@ -37,9 +37,6 @@
                 <td>{{ basket.createDate.format('Y-m-d') }}</td>
                 <td>
                     <a class="dashed" href="{{ path('basket_show', {'id': basket.id} ) }}">{{ basket.idWithPrefix }}</a>
-                    {% if basket.userComment %}
-                        <i class="far fa-comment pointer pl-1" data-toggle="tooltip" title="{{ basket.userComment }}"></i>
-                    {% endif %}
                 </td>
                 <td>
                     {{ include('layout/bit/_basket_status.html.twig') }}
