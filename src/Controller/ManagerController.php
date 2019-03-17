@@ -111,7 +111,7 @@ class ManagerController extends BaseController
         return new JsonResponse([
             'message' => 'Success',
             'reload' => $reload ?? false,
-            'output' => $this->renderView('manager/_product_form.html.twig', [
+            'output' => $this->renderView('manager/_product_edit_modal.html.twig', [
                 'product' => $product,
                 'productForm' => $productForm->createView(),
             ])

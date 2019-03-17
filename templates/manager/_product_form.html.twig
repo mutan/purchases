@@ -1,38 +1,34 @@
 <div class="form-row">
     <div class="form-group col-md-12 col-lg-6">
-        {{ form_label(productForm.name, 'Название') }}
-        {{ form_widget(productForm.name, {'attr': {'class': 'form-control-sm'}}) }}
-        <small id="product_name_help" class="form-text text-muted">Как в магазине</small>
+        {{ form_label(productForm.price, 'Цена') }}
+        {{ form_widget(productForm.price, {'attr': {'class': 'form-control-sm'}}) }}
+        <small id="product_name_help" class="form-text text-muted">Цена выкупа для клиента</small>
     </div>
 
     <div class="form-group col-md-12 col-lg-6">
-        {{ form_label(productForm.url, 'Ссылка') }}
-        {{ form_widget(productForm.url, {'attr': {'class': 'form-control-sm'}}) }}
-        <small id="product_url_help" class="form-text text-muted">Именно на этот товар. Должен начинаться с http</small>
+        {{ form_label(productForm.expectedWeight, 'Предварительный вес') }}
+        {{ form_widget(productForm.expectedWeight, {'attr': {'class': 'form-control-sm'}}) }}
+        <small id="product_url_help" class="form-text text-muted">Предварительный вес, полученный из интернета</small>
+    </div>
+
+    <div class="form-group col-md-12 col-lg-6">
+        {{ form_label(productForm.weight, 'Итоговый вес') }}
+        {{ form_widget(productForm.weight, {'attr': {'class': 'form-control-sm'}}) }}
+        <small id="product_url_help" class="form-text text-muted">Окончательный вес после взвешивания после получения товара</small>
     </div>
 </div>
 
 <div class="form-row">
-    <div class="form-group col-6 col-sm-4">
-        {{ form_label(productForm.amount, 'Количество') }}
-        {{ form_widget(productForm.amount, {'attr': {'class': 'form-control-sm'}}) }}
+    <div class="form-group col-md-12 col-lg-6">
+        {{ form_label(productForm.purchasePrice, 'Реальная цена выкупа') }}
+        {{ form_widget(productForm.purchasePrice, {'attr': {'class': 'form-control-sm'}}) }}
+        <small id="product_url_help" class="form-text text-muted">Цена, по которой реально был выкуплен товар</small>
     </div>
-    <div class="form-group col-6 col-sm-4">
-        {{ form_label(productForm.userPrice, 'Цена') }}
-        {{ form_widget(productForm.userPrice, {'attr': {'class': 'form-control-sm'}}) }}
-        <small id="product_userPrice_help" class="form-text text-muted">Как в магазине</small>
-    </div>
-    <div class="form-group col-12 col-sm-4">
-        {{ form_label(productForm.article, 'Артикул/EbayID') }}
-        {{ form_widget(productForm.article, {'attr': {'class': 'form-control-sm'}}) }}
-        <small id="product_article_help" class="form-text text-muted">Если есть</small>
+
+    <div class="form-group col-md-12 col-lg-6">
+        {{ form_label(productForm.purchaseShop, 'Реальный магазин выкупа') }}
+        {{ form_widget(productForm.purchaseShop, {'attr': {'class': 'form-control-sm'}}) }}
+        <small id="product_url_help" class="form-text text-muted">Магазин, где реально был выкуплен товар</small>
     </div>
 </div>
 
-<div class="form-row">
-    <div class="form-group col-12">
-        {{ form_label(productForm.comment, 'Комментарий') }}
-        {{ form_widget(productForm.comment, {'attr': {'class': 'form-control-sm'}}) }}
-        <small id="product_comment_help" class="form-text text-muted">Например, характеристики товара, которые не определяются по ссылке и их надо выбирать отдельно на странице товара в магазине. Максимум 250 символов</small>
-    </div>
-</div>

@@ -41,7 +41,7 @@ class ProductManagerData
 
     public function fill(Product $product)
     {
-        $product->setPrice($this->price);
+        $product->setPrice((float) $this->price);
         $product->setExpectedWeight($this->expectedWeight);
         $product->setWeight($this->weight);
         $product->setPurchasePrice($this->purchasePrice);
