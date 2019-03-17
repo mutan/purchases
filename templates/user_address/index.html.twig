@@ -9,7 +9,7 @@
             <h1 class="mb-0 align-self-center">Адреса</h1>
         </div>
         <div class="col-sm-12 col-md-3 text-right">
-            <a class="btn btn-sm btn-narrow btn-dark-green" href="{{ path('user_address_new') }}">
+            <a class="btn btn-sm btn-narrow btn-dark-green" href="{{ path('user_address_new') }}" title="Создать">
                 <i class="fa fa-plus pr-1"></i> Создать
             </a>
         </div>
@@ -53,7 +53,7 @@
                                 Статус: {{ user_address.status }}
                             </div>
                             {% if is_granted('USER_ADDRESS_MANAGE', user_address) %}
-                                <a class="btn btn-sm btn-narrow btn-mdb-color darken-3 ml-auto" href="{{ path('user_address_edit', {'id': user_address.id}) }}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm btn-narrow btn-mdb-color darken-3 ml-auto" href="{{ path('user_address_edit', {'id': user_address.id}) }}" title="Редактировать"><i class="fas fa-edit"></i></a>
                                 {{ include('user_address/_delete_form.html.twig') }}
                             {% endif %}
                         </div>

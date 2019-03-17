@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('user_address_delete', {'id': user_address.id}) }}" onsubmit="return confirm('Действительно удалить?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user_address.id) }}">
-    <button class="btn btn-sm btn-narrow btn-danger ml-1"><i class="fas fa-trash"></i></button>
+    <button class="btn btn-sm btn-narrow btn-danger ml-1" title="Удалить"><i class="fas fa-trash"></i></button>
 </form>

@@ -217,7 +217,7 @@ class BasketController extends BaseController
         if ($productForm->isSubmitted() && $productForm->isValid()) {
             $productData->fill($product);
             $this->getEm()->flush();
-            $this->addFlash('success', "Заказ {$product->getIdWithPrefix()} обновлен.");
+            $this->addFlash('success', "Товар {$product->getIdWithPrefix()} обновлен.");
             $reload = true;
         }
 
