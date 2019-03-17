@@ -56,6 +56,7 @@ class BasketRepository extends ServiceEntityRepository
             ->leftJoin('b.products', 'p')->addSelect('p')
             ->andWhere('b.manager = :user')->setParameter('user', $user)
             ->andWhere('b.status != :deleted')->setParameter('deleted', Basket::STATUS_DELETED)
+            ->addOrderBy('b.shop')
             ->getQuery()->getResult();
     }
 }

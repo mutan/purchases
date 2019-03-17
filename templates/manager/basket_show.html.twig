@@ -1,7 +1,5 @@
 {% extends 'layout/base.html.twig' %}
 
-{% form_theme basketForm 'layout/form/errors.html.twig' %}
-
 {% block title %}Заказ участника СП{{ parent() }}{% endblock %}
 
 {% block body %}
@@ -16,34 +14,25 @@
 
     <div class="row">
         <div class="col-12 col-md-4">
-            <strong>Магазин:</strong> <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
+            {{ include('layout/bit/_basket_status.html.twig') }}
+            {{ include('layout/bit/_basket_rate_icon.html.twig') }}
+            <a href="{{ basket.shop }}" class="ml-1" target="_blank">{{ basket.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
             <br>
-            <strong>Комментарий:</strong> {% if basket.userComment %}{{ basket.userComment }}{% else %}–{% endif %}
-
+            <strong>Комментарий клиента:</strong> {% if basket.userComment %}{{ basket.userComment }}{% else %}–{% endif %}
         </div>
         <div class="col-12 col-md-4">
-            <strong>Статус:</strong> {{ include('layout/bit/_basket_status.html.twig') }}
-            <br><strong>Курс $:</strong>{{ include('layout/bit/_basket_rate_icon.html.twig', {badge:true}) }}
+
+
         </div>
         <div class="col-12 col-md-4 text-right">
-            {% if is_granted('BASKET_MANAGE', basket) %}
-                <button type="button" class="btn btn-sm btn-narrow btn-dark-green" data-toggle="modal" data-target="#modalBasketManage">
-                    <i class="fa fa-edit pr-1"></i> Редактировать
-                </button>
-            {% endif %}
+            <button type="button" class="btn btn-sm btn-narrow btn-dark-green basket-manager-edit" data-basket-id="{{ basket.id }}><i class="fa fa-edit pr-1"></i><i class="fa fa-edit"></i></button>
         </div>
     </div>
     <hr>
 
     <div class="row">
         <div class="col-12">
-            <h2 class="align-self-center">Товары
-                {% if is_granted('BASKET_MANAGE', basket) %}
-                    <button type="button" class="btn btn-sm btn-narrow btn-dark-green" data-toggle="modal" data-target="#modalProductNew">
-                        <i class="fa fa-plus"></i> <span class="d-none d-sm-inline pl-1">Добавить</span>
-                    </button>
-                {% endif %}
-            </h2>
+            <h2 class="align-self-center">Товары</h2>
         </div>
     </div>
 
@@ -57,14 +46,8 @@
                     <th style="width: 1%"><nobr>Кол-во</nobr></th>
                     <th style="width: 1%"><nobr>Цена $</nobr></th>
                     <th style="width: 1%"><nobr>Сумма $</nobr></th>
-                    <th style="width: 1%">
-                        <nobr>
-                            Сумма р. {{ include('layout/bit/_basket_rate_icon.html.twig') }}
-                        </nobr>
-                    </th>
-                    {% if is_granted('BASKET_MANAGE', basket) %}
-                        <th style="width: 1%">Действия</th>
-                    {% endif %}
+                    <th style="width: 1%"><nobr>Сумма р.</nobr></th>
+                    <th style="width: 1%">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -80,16 +63,14 @@
                         <td>{{ product.userPrice }}</td>
                         <td>{{ product.sum }}</td>
                         <td>{% if basket.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
-                        {% if is_granted('BASKET_MANAGE', basket) %}
-                            <td>
-                                <nobr>
-                                    <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-edit" data-id="{{ product.id }}">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    {{ include('product/_delete_form.html.twig') }}
-                                </nobr>
-                            </td>
-                        {% endif %}
+                        <td>
+                            <nobr>
+                                <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-manager-edit" data-product-id="{{ product.id }}">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                {{ include('product/_delete_form.html.twig') }}
+                            </nobr>
+                        </td>
                     </tr>
                 {% else %}
                     <tr>
@@ -155,43 +136,4 @@
         </div>
     </div>
 
-    <!-- Modal: modalBasketManage -->
-    <div class="modal fade" id="modalBasketManage" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <!--Header-->
-                <div class="modal-header">
-                    <h4 class="modal-title">Редактировать заказ {{ basket.idWithPrefix }}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <!--Body-->
-                <div class="modal-body ui-front">{# без класса ui-front список autocomplite'a будет показан не рядом с полем поиска #}
-                    {{ include('manager/_form.html.twig') }}
-                </div>
-                <!--Footer-->
-                <div class="modal-footer">
-                    <button class="btn btn-sm btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Обновить') }}</button>
-                </div>
-                {{ form_end(basketForm, {'render_rest': false}) }}
-            </div>
-        </div>
-    </div>
-    <!-- Modal: modalBasketManage -->
-
-    <!-- Modal: modalProductEdit -->
-    <div class="modal fade" id="modalProductEdit" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-
-            </div>
-        </div>
-    </div>
-    <!-- Modal: modalProductEdit -->
-
-{% endblock %}
-
-{% block javascripts %}
-    {% if modalBasketManageShow %}<script>$(() => { $('#modalBasketManage').modal('show'); });</script> {% endif %}
 {% endblock %}

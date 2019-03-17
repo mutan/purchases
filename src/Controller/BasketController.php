@@ -6,8 +6,8 @@ use App\Entity\Basket;
 use App\Entity\Product;
 use App\Form\BasketUserData;
 use App\Form\BasketUserType;
-use App\Form\ProductData;
-use App\Form\ProductType;
+use App\Form\ProductUserData;
+use App\Form\ProductUserType;
 use App\Helpers\ShopHelper;
 use App\Repository\BasketRepository;
 use App\Repository\ProductRepository;
@@ -87,7 +87,7 @@ class BasketController extends BaseController
     }
 
     /**
-     * Страница с одним заказом и списком продуктов в нем
+     * Страница с одним заказом и списком продуктов в нем для пользователя
      * @Route("/basket/{basket_id}", name="user_basket_show", methods={"GET"})
      * @param Request $request
      * @param BasketRepository $basketRepository
@@ -104,7 +104,7 @@ class BasketController extends BaseController
     }
 
     /**
-     * Форма редактирования заказа (ajax)
+     * Форма редактирования заказа пользователем (ajax)
      * @Route("/basket/{basket_id}/edit", name="user_basket_edit", methods={"POST"})
      * @param Request $request
      * @param BasketRepository $basketRepository
@@ -172,8 +172,8 @@ class BasketController extends BaseController
      */
     public function newProduct(Request $request, BasketRepository $basketRepository): Response
     {
-        $productData = new ProductData();
-        $productForm = $this->createForm(ProductType::class, $productData);
+        $productData = new ProductUserData();
+        $productForm = $this->createForm(ProductUserType::class, $productData);
         $productForm->handleRequest($request);
 
         if ($productForm->isSubmitted() && $productForm->isValid()) {
@@ -199,7 +199,7 @@ class BasketController extends BaseController
 
     /**
      * Форма редактирования товара (ajax)
-     * @Route("/basket/{basket_id}/product/{product_id}/edit", name="user_basket_product_edit", methods={"POST"})
+     * @Route("/basket/product/{product_id}/edit", name="user_product_edit", methods={"POST"})
      * @param Request $request
      * @param ProductRepository $productRepository
      * @return Response
@@ -209,9 +209,9 @@ class BasketController extends BaseController
         $product = $productRepository->find($request->get('product_id'));
         $this->denyAccessUnlessGranted('PRODUCT_OPERATE', $product);
 
-        $productData = new ProductData();
+        $productData = new ProductUserData();
         $productData->extract($product);
-        $productForm = $this->createForm(ProductType::class, $productData);
+        $productForm = $this->createForm(ProductUserType::class, $productData);
         $productForm->handleRequest($request);
 
         if ($productForm->isSubmitted() && $productForm->isValid()) {

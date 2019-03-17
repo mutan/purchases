@@ -68,7 +68,7 @@ let Modal = {
     }
 };
 
-$('#basket-new').on('click', (e)=> {
+$('#basket-user-new').on('click', (e)=> {
     Modal.handleMainModal(e, {
         url: `/basket/new`,
         shopAutocomplete: true,
@@ -76,7 +76,7 @@ $('#basket-new').on('click', (e)=> {
     });
 });
 
-$('#basket-edit').on('click', (e)=> {
+$('#basket-user-edit').on('click', (e)=> {
     let id = $(e.currentTarget).attr('data-basket-id');
     Modal.handleMainModal(e, {
         url: `/basket/${id}/edit`,
@@ -85,7 +85,7 @@ $('#basket-edit').on('click', (e)=> {
     });
 });
 
-$('#product-new').on('click', (e)=> {
+$('#product-user-new').on('click', (e)=> {
     let basketId = $(e.currentTarget).attr('data-basket-id');
     Modal.handleMainModal(e, {
         url: `/basket/${basketId}/product/new`,
@@ -93,11 +93,26 @@ $('#product-new').on('click', (e)=> {
     });
 });
 
-$('.product-edit').on('click', (e)=> {
-    let basketId = $(e.currentTarget).attr('data-basket-id');
+$('.product-user-edit').on('click', (e)=> {
     let productId = $(e.currentTarget).attr('data-product-id');
     Modal.handleMainModal(e, {
-        url: `/basket/${basketId}/product/${productId}/edit`,
+        url: `/basket/product/${productId}/edit`,
+        size: 'modal-lg'
+    });
+});
+
+$('.basket-manager-edit').on('click', (e)=> {
+    let basketId = $(e.currentTarget).attr('data-basket-id');
+    Modal.handleMainModal(e, {
+        url: `/manager/basket/${basketId}/edit`,
+        size: 'modal-lg'
+    });
+});
+
+$('.product-manager-edit').on('click', (e)=> {
+    let productId = $(e.currentTarget).attr('data-product-id');
+    Modal.handleMainModal(e, {
+        url: `/manager/product/${productId}/edit`,
         size: 'modal-lg'
     });
 });

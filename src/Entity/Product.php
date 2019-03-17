@@ -72,7 +72,8 @@ class Product
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
-     * @Assert\Type(type="float")
+     * @Assert\Regex(pattern="/^\d+(\.\d{1,2})?$/", message="~regexp.price")
+     * @Assert\GreaterThan(value=0)
      */
     private $price;
 
@@ -103,7 +104,8 @@ class Product
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
-     * @Assert\Type(type="float")
+     * @Assert\Regex(pattern="/^\d+(\.\d{1,2})?$/", message="~regexp.price")
+     * @Assert\GreaterThan(value=0)
      */
     private $purchasePrice;
 

@@ -12,14 +12,14 @@
     <table class="table table-sm table-responsive-sm">
         <thead>
         <tr>
-            <th rowspan="2">Дата создания</th>
-            <th rowspan="2">Пользователь</th>
             <th rowspan="2">Номер</th>
-            <th rowspan="2">Статус</th>
-            <th rowspan="2">Магазин</th>
-            <th rowspan="2">Сумма</th>
+            <th rowspan="2">Магазин/трекинг</th>
+            <th rowspan="2">Пользователь</th>
+            <th rowspan="2">Статус/<nobr>Курс $</nobr></th>
+            <th rowspan="2">Сумма за товары</th>
             <th colspan="3" class="text-center">Доставка</th>
             <th rowspan="2">Итого</th>
+            <th rowspan="2"></th>
         </tr>
         <tr>
             <th>по США</th>
@@ -30,19 +30,16 @@
         <tbody>
         {% for basket in baskets %}
             <tr>
-                <td>{{ basket.createDate.format('Y-m-d') }}</td>
-                <td>{{ basket.user }}</td>
+                <td><a class="dashed" href="{{ path('manager_basket_show', {'basket_id': basket.id} ) }}" title="Создан {{ basket.createDate.format('Y-m-d') }}">{{ basket.idWithPrefix }}</a></td>
                 <td>
-                    <a class="dashed" href="{{ path('manager_basket_show', {'id': basket.id} ) }}">{{ basket.idWithPrefix }}</a>
-                    {% if basket.userComment %}
-                        <i class="far fa-comment pointer pl-1" data-toggle="tooltip" title="{{ basket.userComment }}"></i>
-                    {% endif %}
+                    {{ basket.shop }}
+                    {% if basket.tracking %}<br>{{ basket.tracking }}{% endif %}
                 </td>
+                <td>{{ basket.user }}</td>
                 <td>
                     {{ include('layout/bit/_basket_status.html.twig') }}
                     {{ include('layout/bit/_basket_rate_icon.html.twig') }}
                 </td>
-                <td>{{ basket.shop }}</td>
                 <td>
                     {{ (basket.productsSum) ? basket.productsSum ~ '$' : '–' }}
                     <br>{{ (basket.rate and basket.productsSumRub) ? basket.productsSumRub ~ ' руб.' : '–' }}
@@ -59,7 +56,14 @@
                     <br>{{ basket.deliveryToClient ? basket.deliveryToClient ~ ' руб.' : '–'}}
                 </td>
                 <td>
-                    <br>{{ basket.rate and basket.totalRub ? basket.totalRub ~ ' руб.' : '–'}}
+                    <br>{{ basket.rate and basket.totalRub ? basket.totalRub ~ ' р.' : '–'}}
+                </td>
+                <td>
+                    <nobr>
+                        <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 basket-manager-edit" data-basket-id="{{ basket.id }}">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </nobr>
                 </td>
             </tr>
         {% else %}
@@ -69,5 +73,4 @@
         {% endfor %}
         </tbody>
     </table>
-
 {% endblock %}

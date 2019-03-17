@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Product;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ProductData
+class ProductUserData
 {
     /**
      * @Assert\NotBlank(message="~not_blank")

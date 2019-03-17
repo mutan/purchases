@@ -1,7 +1,3 @@
-{{ form_start(basketForm, {'attr': {'id': 'basket-shop-form'}}) }}
-    {{ form_widget(basketForm._token) }}
-    {{ form_errors(basketForm) }}
-
 <div class="form-row">
     <div class="form-group col-12 col-sm-4">
         {{ form_label(basketForm.deliveryToStock, 'Доставка по США') }}
@@ -58,6 +54,3 @@
         {{ form_widget(basketForm.tracking, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
 </div>
-
-{# csrf_token генерируется отдельным полем, в form_end можно запретить рендер остальных полей #}
-{# {{ form_end(form, {'render_rest': false}) }} #}

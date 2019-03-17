@@ -27,7 +27,7 @@
         </div>
         <div class="col-12 col-md-3 text-right">
             {% if is_granted('BASKET_OPERATE', basket) %}
-                <button type="button" id="basket-edit" data-basket-id="{{ basket.id }}" class="btn btn-sm btn-narrow btn-dark-green">
+                <button type="button" id="basket-user-edit" data-basket-id="{{ basket.id }}" class="btn btn-sm btn-narrow btn-dark-green">
                     <i class="fa fa-edit"></i> <span class="d-none d-sm-inline pl-1">Редактировать</span>
                 </button>
                 {{ include('basket/_delete_form.html.twig') }}
@@ -40,7 +40,7 @@
         <div class="col-12">
             <h2 class="align-self-center">Товары
                 {% if is_granted('BASKET_OPERATE', basket) %}
-                    <button type="button" id="product-new" data-basket-id="{{ basket.id }}" class="btn btn-sm btn-narrow btn-dark-green">
+                    <button type="button" id="product-user-new" data-basket-id="{{ basket.id }}" class="btn btn-sm btn-narrow btn-dark-green">
                         <i class="fa fa-plus"></i> <span class="d-none d-sm-inline pl-1">Добавить</span>
                     </button>
                 {% endif %}
@@ -80,7 +80,7 @@
                         {% if is_granted('BASKET_OPERATE', basket) %}
                             <td>
                                 <nobr>
-                                    <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-edit" data-product-id="{{ product.id }}" data-basket-id="{{ basket.id }}">
+                                    <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-user-edit" data-product-id="{{ product.id }}">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                 {{ include('product/_delete_form.html.twig') }}

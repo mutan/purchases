@@ -11,7 +11,10 @@ class ProductVoter extends Voter
 {
     protected function supports($attribute, $subject)
     {
-        return \in_array($attribute, ['PRODUCT_OPERATE'])
+        return \in_array($attribute, [
+                'PRODUCT_OPERATE', //by user
+                'PRODUCT_MANAGE' //by manager
+            ])
             && $subject instanceof Product;
     }
 
@@ -26,6 +29,11 @@ class ProductVoter extends Voter
         switch ($attribute) {
             case 'PRODUCT_OPERATE':
                 if ($subject->getUser() == $user && $subject->isActive()) {
+                    return true;
+                }
+                break;
+            case 'PRODUCT_MANAGE':
+                if ($subject->getBasket()->getManager() == $user) {
                     return true;
                 }
                 break;
