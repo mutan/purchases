@@ -26,9 +26,9 @@
             <br><strong>Курс $:</strong>{{ include('layout/bit/_basket_rate_icon.html.twig') }}
         </div>
         <div class="col-12 col-md-4 text-right">
-            {% if is_granted('BASKET_EDIT', basket) %}
-                <button type="button" id="basketEdit" data-id="{{ basket.id }}" class="btn btn-sm btn-narrow btn-dark-green">
-                    <i class="fa fa-edit pr-1"></i> Редактировать
+            {% if is_granted('BASKET_OPERATE', basket) %}
+                <button type="button" id="basket-edit" data-basket-id="{{ basket.id }}" class="btn btn-sm btn-narrow btn-dark-green">
+                    <i class="fa fa-edit"></i> <span class="d-none d-sm-inline pl-1">Редактировать</span>
                 </button>
                 {{ include('basket/_delete_form.html.twig') }}
             {% endif %}
@@ -39,8 +39,8 @@
     <div class="row">
         <div class="col-12">
             <h2 class="align-self-center">Товары
-                {% if is_granted('BASKET_ADD_PRODUCT', basket) %}
-                    <button type="button" class="btn btn-sm btn-narrow btn-dark-green" data-toggle="modal" data-target="#modalProductNew">
+                {% if is_granted('BASKET_OPERATE', basket) %}
+                    <button type="button" id="product-new" data-basket-id="{{ basket.id }}" class="btn btn-sm btn-narrow btn-dark-green">
                         <i class="fa fa-plus"></i> <span class="d-none d-sm-inline pl-1">Добавить</span>
                     </button>
                 {% endif %}
@@ -58,12 +58,8 @@
                     <th style="width: 1%"><nobr>Кол-во</nobr></th>
                     <th style="width: 1%"><nobr>Цена $</nobr></th>
                     <th style="width: 1%"><nobr>Сумма $</nobr></th>
-                    <th style="width: 1%">
-                        <nobr>
-                            Сумма р. {{ include('layout/bit/_basket_rate_icon.html.twig') }}
-                        </nobr>
-                    </th>
-                    {% if is_granted('BASKET_EDIT', basket) %}
+                    <th style="width: 1%"><nobr>Сумма р.</nobr></th>
+                    {% if is_granted('BASKET_OPERATE', basket) %}
                         <th style="width: 1%">Действия</th>
                     {% endif %}
                 </tr>
@@ -81,10 +77,10 @@
                         <td>{{ product.userPrice }}</td>
                         <td>{{ product.sum }}</td>
                         <td>{% if basket.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
-                        {% if is_granted('BASKET_EDIT', basket) %}
+                        {% if is_granted('BASKET_OPERATE', basket) %}
                             <td>
                                 <nobr>
-                                    <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-edit" data-id="{{ product.id }}">
+                                    <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-edit" data-product-id="{{ product.id }}" data-basket-id="{{ basket.id }}">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                 {{ include('product/_delete_form.html.twig') }}
@@ -105,7 +101,7 @@
                         <th></th>
                         <th>{{ basket.productsSum }}</th>
                         <th>{% if basket.rate %}{{ basket.productsSumRub }}{%- else -%}–{%- endif -%}</th>
-                        {% if is_granted('BASKET_EDIT', basket) %}<th></th>{% endif %}
+                        {% if is_granted('BASKET_OPERATE', basket) %}<th></th>{% endif %}
                     </tr>
                     {% if basket.deliveryToStock %}
                         <tr>
@@ -113,7 +109,7 @@
                             <td colspan="3">Доставка по США</td>
                             <td>{{ basket.deliveryToStock }}</td>
                             <td>{{ (basket.rate and basket.deliveryToStockRub) ? basket.deliveryToStockRub : '–' }}</td>
-                            {% if is_granted('BASKET_EDIT', basket) %}<td></td>{% endif %}
+                            {% if is_granted('BASKET_OPERATE', basket) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
                     {% if basket.deliveryToRussia %}
@@ -122,7 +118,7 @@
                             <td colspan="3">Доставка в Россию</td>
                             <td>{{ basket.deliveryToRussia }}</td>
                             <td>{{ (basket.rate and basket.deliveryToRussiaRub) ? basket.deliveryToRussiaRub : '–' }}</td>
-                            {% if is_granted('BASKET_EDIT', basket) %}<td></td>{% endif %}
+                            {% if is_granted('BASKET_OPERATE', basket) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
                     {% if basket.deliveryToClient %}
@@ -130,7 +126,7 @@
                             <td></td>
                             <td colspan="4">Доставка по России</td>
                             <td>{{ basket.deliveryToClient }}</td>
-                            {% if is_granted('BASKET_EDIT', basket) %}<td></td>{% endif %}
+                            {% if is_granted('BASKET_OPERATE', basket) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
                     {% if basket.additionalCost %}
@@ -141,14 +137,14 @@
                             </td>
                             <td>{{ basket.additionalCost }}</td>
                             <td colspan="2"></td>
-                            {% if is_granted('BASKET_EDIT', basket) %}<td></td>{% endif %}
+                            {% if is_granted('BASKET_OPERATE', basket) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
                     <tr>
                         <th></th>
                         <th colspan="4">Итого товары + доставка</th>
                         <th>{{ basket.rate and basket.totalRub ? basket.totalRub : '–'}}</th>
-                        {% if is_granted('BASKET_EDIT', basket) %}<th></th>{% endif %}
+                        {% if is_granted('BASKET_OPERATE', basket) %}<th></th>{% endif %}
                     </tr>
                 {% endif %}
                 </tbody>

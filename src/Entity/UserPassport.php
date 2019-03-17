@@ -39,14 +39,14 @@ class UserPassport
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="~not_blank")
-     * @Assert\Regex(pattern="/^\d{4}$/", message="~regexp.only-digits")
+     * @Assert\Regex(pattern="/^\d{4}$/", message="~regexp.series")
      */
     private $series;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="~not_blank")
-     * @Assert\Regex(pattern="/^\d{6}$/", message="~regexp.only-digits")
+     * @Assert\Regex(pattern="/^\d{6}$/", message="~regexp.number")
      */
     private $number;
 
@@ -73,7 +73,7 @@ class UserPassport
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="~not_blank")
-     * @Assert\Regex(pattern="/^\d{12}$/", message="~regexp.only-digits")
+     * @Assert\Regex(pattern="/^\d{12}$/", message="~regexp.inn")
      */
     private $inn;
 

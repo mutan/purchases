@@ -8,8 +8,8 @@
             <h1 class="mb-0 align-self-center">Заказы</h1>
         </div>
         <div class="col-sm-12 col-md-3 text-right">
-            <button type="button" id="basketNew" class="btn btn-sm btn-narrow btn-dark-green">
-                <nobr><i class="fa fa-plus pr-1"></i> Новый заказ</nobr>
+            <button type="button" id="basket-new" class="btn btn-sm btn-narrow btn-dark-green">
+                <nobr><i class="fa fa-plus"></i> <span class="d-none d-sm-inline pl-1">Новый заказ</span></nobr>
             </button>
         </div>
     </div>
@@ -36,7 +36,7 @@
             <tr>
                 <td>{{ basket.createDate.format('Y-m-d') }}</td>
                 <td>
-                    <a class="dashed" href="{{ path('basket_show', {'id': basket.id} ) }}">{{ basket.idWithPrefix }}</a>
+                    <a class="dashed" href="{{ path('basket_show', {'basket_id': basket.id} ) }}">{{ basket.idWithPrefix }}</a>
                 </td>
                 <td>
                     {{ include('layout/bit/_basket_status.html.twig') }}

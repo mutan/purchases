@@ -1,6 +1,3 @@
-{{ form_widget(productForm._token) }}
-{{ form_errors(productForm) }}
-
 <div class="form-row">
     <div class="form-group col-md-12 col-lg-6">
         {{ form_label(productForm.name, 'Название') }}
@@ -23,7 +20,7 @@
     <div class="form-group col-6 col-sm-4">
         {{ form_label(productForm.userPrice, 'Цена') }}
         {{ form_widget(productForm.userPrice, {'attr': {'class': 'form-control-sm'}}) }}
-        <small id="product_userPrice_help" class="form-text text-muted">Как в магазине. Разделитель целой и десятичной части – точка</small>
+        <small id="product_userPrice_help" class="form-text text-muted">Как в магазине</small>
     </div>
     <div class="form-group col-12 col-sm-4">
         {{ form_label(productForm.article, 'Артикул/EbayID') }}
@@ -39,6 +36,3 @@
         <small id="product_comment_help" class="form-text text-muted">Например, характеристики товара, которые не определяются по ссылке и их надо выбирать отдельно на странице товара в магазине. Максимум 250 символов</small>
     </div>
 </div>
-
-{# csrf_token генерируется отдельным полем, в form_end можно запретить рендер остальных полей #}
-{# {{ form_end(productForm, {'render_rest': false}) }} #}

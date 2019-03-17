@@ -36,11 +36,15 @@ let Modal = {
             beforeSend: ()=> {Modal.toggleButtonSpinnerIcon(e);},
             complete: ()=> {Modal.toggleButtonSpinnerIcon(e);}
         }).then(function (responce) {
+            console.dir(responce.output);
             Modal.reload(Modal.getModal(), responce, options);
         });
     },
 
     reload: function($modal, responce, options) {
+        if (options.size) {
+            $modal.find('.modal-dialog').addClass(options.size);
+        }
         $modal.find('.modal-content').html(responce.output);
         $modal.modal('show');
         if (options.shopAutocomplete) {
@@ -65,7 +69,7 @@ let Modal = {
     }
 };
 
-$('#basketNew').on('click', (e)=> {
+$('#basket-new').on('click', (e)=> {
     Modal.handleMainModal(e, {
         url: `/basket/new`,
         shopAutocomplete: true,
@@ -73,8 +77,8 @@ $('#basketNew').on('click', (e)=> {
     });
 });
 
-$('#basketEdit').on('click', (e)=> {
-    let id = $(e.currentTarget).attr('data-id');
+$('#basket-edit').on('click', (e)=> {
+    let id = $(e.currentTarget).attr('data-basket-id');
     Modal.handleMainModal(e, {
         url: `/basket/${id}/edit`,
         shopAutocomplete: true,
@@ -82,48 +86,19 @@ $('#basketEdit').on('click', (e)=> {
     });
 });
 
-
-
-
-
-/* Product edit */
-
-$('.product-edit').on('click', (e) => {
-    e.preventDefault();
-    let id = $(e.currentTarget).attr('data-id');
-
-    $.ajax({
-        url: `/basket/product/${id}/edit`,
-        type: 'POST',
-        beforeSend: ()=> {toggleEditSpinnerIcon(e);},
-        complete: ()=> {toggleEditSpinnerIcon(e);}
-    }).then(function (responce) {
-        reload(id, $('#modalProductEdit'), responce);
+$('#product-new').on('click', (e)=> {
+    let basketId = $(e.currentTarget).attr('data-basket-id');
+    Modal.handleMainModal(e, {
+        url: `/basket/${basketId}/product/new`,
+        size: 'modal-lg'
     });
 });
 
-function reload(id, $modal, responce) {
-    $modal.find('.modal-content').html(responce.output);
-    $modal.modal('show');
-
-    $modal.find('form').on('submit', (e)=> {
-        e.preventDefault();
-        let formData = $(e.currentTarget).serialize();
-        const $submitButton = $(e.currentTarget).find('button[type=submit]');
-        $.ajax({
-            url: `/basket/product/${id}/edit`,
-            type: 'POST',
-            data: formData,
-            beforeSend: ()=> {
-                $submitButton.prop('disabled', true).toggleClass('btn-dark-green btn-danger').html("<i class='fa fa-spinner fa-spin pr-1'></i> Идет сохранение");
-            }
-        }).then(function (responce) {
-            $submitButton.toggleClass('btn-dark-green btn-danger').html("Сохранено");
-            (responce.reload) ? location.reload() : reload(id, $modal, responce);
-        });
+$('.product-edit').on('click', (e)=> {
+    let basketId = $(e.currentTarget).attr('data-basket-id');
+    let productId = $(e.currentTarget).attr('data-product-id');
+    Modal.handleMainModal(e, {
+        url: `/basket/${basketId}/product/${productId}/edit`,
+        size: 'modal-lg'
     });
-}
-
-function toggleEditSpinnerIcon(e) {
-    $(e.currentTarget).find('i').toggleClass('fa-edit fa-spinner fa-spin');
-}
+});

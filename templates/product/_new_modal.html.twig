@@ -1,0 +1,23 @@
+{% form_theme productForm 'layout/form/errors.html.twig' %}
+
+<div class="modal-header">
+    <h4 class="modal-title">Новый товар</h4>
+    <button type="button" class="close" data-dismiss="modal">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+
+{{ form_start(productForm) }}
+    {{ form_widget(productForm._token) }}
+    {{ form_errors(productForm) }}
+<!--Body-->
+<div class="modal-body">
+    {{ include('product/_form.html.twig') }}
+</div>
+<!--Footer-->
+<div class="modal-footer">
+    <button class="btn btn-sm btn-narrow btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Сохранить') }}</button>
+</div>
+{{ form_end(productForm, {'render_rest': false}) }}
+{# csrf_token генерируется отдельным полем, в form_end можно запретить рендер остальных полей #}
+{# {{ form_end(form, {'render_rest': false}) }} #}
