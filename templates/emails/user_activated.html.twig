@@ -1,6 +1,6 @@
 {% extends 'emails/email_layout.html.twig' %}
 
-{% block subject %}Аккаунт активирован – {{ app_site_name }}{% endblock %}
+{% block subject %}Аккаунт активирован – {{ app_site_name_for_email }}{% endblock %}
 
 {% block body_text %}{% endblock %}
 
@@ -17,6 +17,6 @@
     </p>
     <p>
         ––<br>
-        Команда {{ app_site_name }}
+        Команда {{ app_site_name_for_email }}
     </p>
 {% endblock %}
