@@ -36,7 +36,6 @@ let Modal = {
             beforeSend: ()=> {Modal.toggleButtonSpinnerIcon(e);},
             complete: ()=> {Modal.toggleButtonSpinnerIcon(e);}
         }).then(function (responce) {
-            console.dir(responce.output);
             Modal.reload(Modal.getModal(), responce, options);
         });
     },
