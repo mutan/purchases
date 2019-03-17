@@ -30,8 +30,7 @@ class BasketManagerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Basket::class,
-            'validation_groups' => ['edit_by_manager']
+            'data_class' => BasketManagerData::class
         ]);
     }
 }

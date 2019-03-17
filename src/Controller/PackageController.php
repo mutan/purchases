@@ -10,13 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/package")
- */
 class PackageController extends AbstractController
 {
     /**
-     * @Route("/", name="package_index", methods={"GET"})
+     * @Route("/package/", name="package_index", methods={"GET"})
      */
     public function index(PackageRepository $packageRepository): Response
     {
@@ -26,7 +23,7 @@ class PackageController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="package_new", methods={"GET","POST"})
+     * @Route("/package/new", name="package_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +46,7 @@ class PackageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="package_show", methods={"GET"})
+     * @Route("/package/{id}", name="package_show", methods={"GET"})
      */
     public function show(Package $package): Response
     {
@@ -59,7 +56,7 @@ class PackageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="package_edit", methods={"GET","POST"})
+     * @Route("/package/{id}/edit", name="package_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Package $package): Response
     {
@@ -81,7 +78,7 @@ class PackageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="package_delete", methods={"DELETE"})
+     * @Route("/package/{id}", name="package_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Package $package): Response
     {

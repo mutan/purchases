@@ -12,13 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/manager")
  * @IsGranted("ROLE_MANAGER")
  */
 class ManagerController extends AbstractController
 {
     /**
-     * @Route("/baskets", name="manager_basket_list", methods={"GET"})
+     * @Route("/manager/baskets", name="manager_basket_list", methods={"GET"})
      * @param BasketRepository $basketRepository
      * @return Response
      */
@@ -30,7 +29,7 @@ class ManagerController extends AbstractController
     }
 
     /**
-     * @Route("/basket/{id}", name="manager_basket_show", methods={"GET","POST"})
+     * @Route("/manager/basket/{id}", name="manager_basket_show", methods={"GET","POST"})
      * @param Basket $basket
      * @param Request $request
      * @return Response

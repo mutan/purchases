@@ -2,19 +2,14 @@
 
 namespace App\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/info")
- */
 class InfoController extends AbstractController
 {
     /**
-     * @Route("/privacy_policy", name="info_privacy_policy", methods={"GET"})
+     * @Route("/info/privacy_policy", name="info_privacy_policy", methods={"GET"})
      */
     public function privacyPolicy(): Response
     {
@@ -22,7 +17,7 @@ class InfoController extends AbstractController
     }
 
     /**
-     * @Route("/what_and_where", name="info_what_and_where", methods={"GET"})
+     * @Route("/info/what_and_where", name="info_what_and_where", methods={"GET"})
      */
     public function index(): Response
     {
@@ -30,7 +25,7 @@ class InfoController extends AbstractController
     }
 
     /**
-     * @Route("/delivery", name="info_delivery", methods={"GET"})
+     * @Route("/info/delivery", name="info_delivery", methods={"GET"})
      */
     public function delivery(): Response
     {
@@ -38,7 +33,7 @@ class InfoController extends AbstractController
     }
 
     /**
-     * @Route("/profit", name="info_profit", methods={"GET"})
+     * @Route("/info/profit", name="info_profit", methods={"GET"})
      */
     public function profit(): Response
     {
