@@ -24,7 +24,7 @@ class BasketController extends BaseController
 {
     /**
      * Автодополнение поля shop в форме создания/редактирования заказа
-     * @Route("/basket/shop/autocomplete", name="basket_shop_autocomplite", methods={"GET","POST"})
+     * @Route("/basket/shop/autocomplete", name="user_basket_shop_autocomplite", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -44,7 +44,7 @@ class BasketController extends BaseController
 
     /**
      * Страница со списком заказов пользователя
-     * @Route("/basket/", name="basket_index", methods={"GET"})
+     * @Route("/basket/", name="user_basket_index", methods={"GET"})
      * @param BasketRepository $basketRepository
      * @return Response
      */
@@ -57,7 +57,7 @@ class BasketController extends BaseController
 
     /**
      * Форма создания заказа (ajax)
-     * @Route("/basket/new", name="basket_new", methods={"POST"})
+     * @Route("/basket/new", name="user_basket_new", methods={"POST"})
      * @param Request $request
      * @return Response
      */
@@ -88,7 +88,7 @@ class BasketController extends BaseController
 
     /**
      * Страница с одним заказом и списком продуктов в нем
-     * @Route("/basket/{basket_id}", name="basket_show", methods={"GET"})
+     * @Route("/basket/{basket_id}", name="user_basket_show", methods={"GET"})
      * @param Request $request
      * @param BasketRepository $basketRepository
      * @return Response
@@ -105,7 +105,7 @@ class BasketController extends BaseController
 
     /**
      * Форма редактирования заказа (ajax)
-     * @Route("/basket/{basket_id}/edit", name="basket_edit", methods={"POST"})
+     * @Route("/basket/{basket_id}/edit", name="user_basket_edit", methods={"POST"})
      * @param Request $request
      * @param BasketRepository $basketRepository
      * @return Response
@@ -139,7 +139,7 @@ class BasketController extends BaseController
 
     /**
      * Удаление заказа
-     * @Route("/basket/{id}", name="basket_delete", methods={"DELETE"})
+     * @Route("/basket/{id}", name="user_basket_delete", methods={"DELETE"})
      * @param Request $request
      * @param Basket $basket
      * @return Response
@@ -160,12 +160,12 @@ class BasketController extends BaseController
             $this->addFlash('success','Заказ удален.');
         }
 
-        return $this->redirectToRoute('basket_index');
+        return $this->redirectToRoute('user_basket_index');
     }
 
     /**
      * Форма создания товара (ajax)
-     * @Route("/basket/{basket_id}/product/new", name="basket_product_new", methods={"POST"})
+     * @Route("/basket/{basket_id}/product/new", name="user_basket_product_new", methods={"POST"})
      * @param Request $request
      * @param BasketRepository $basketRepository
      * @return Response
@@ -199,7 +199,7 @@ class BasketController extends BaseController
 
     /**
      * Форма редактирования товара (ajax)
-     * @Route("/basket/{basket_id}/product/{product_id}/edit", name="basket_product_edit", methods={"POST"})
+     * @Route("/basket/{basket_id}/product/{product_id}/edit", name="user_basket_product_edit", methods={"POST"})
      * @param Request $request
      * @param ProductRepository $productRepository
      * @return Response
@@ -233,7 +233,7 @@ class BasketController extends BaseController
 
     /**
      * Удаление товара
-     * @Route("/basket/product/{id}", name="basket_product_delete", methods={"DELETE"})
+     * @Route("/basket/product/{id}", name="user_basket_product_delete", methods={"DELETE"})
      * @param Request $request
      * @param Product $product
      * @return Response
@@ -249,6 +249,6 @@ class BasketController extends BaseController
             $this->addFlash('success','Товар удален.');
         }
 
-        return $this->redirectToRoute('basket_show', ['basket_id' => $product->getBasket()->getId()]);
+        return $this->redirectToRoute('user_basket_show', ['basket_id' => $product->getBasket()->getId()]);
     }
 }

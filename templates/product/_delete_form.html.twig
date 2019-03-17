@@ -1,4 +1,4 @@
-<form class="d-inline" method="post" action="{{ path('basket_product_delete', {'id': product.id}) }}" onsubmit="return confirm('Действительно удалить?');">
+<form class="d-inline" method="post" action="{{ path('user_basket_product_delete', {'id': product.id}) }}" onsubmit="return confirm('Действительно удалить?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
     <button class="btn btn-sm btn-narrow btn-danger"><i class="fas fa-trash"></i> {{ button_label|default('') }}</button>
