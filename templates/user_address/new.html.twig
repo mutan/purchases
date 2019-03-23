@@ -2,14 +2,14 @@
 
 {% form_theme form 'layout/form/errors.html.twig' %}
 
-{% block title %}Добавить заказ{{ parent() }}{% endblock %}
+{% block title %}Новый адрес{{ parent() }}{% endblock %}
 
 {% block body %}
     {{ form_start(form) }}
 
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-6">
-            <h1 class="mb-0 align-self-center">Добавить адрес</h1>
+            <h1 class="mb-0 align-self-center">Новый адрес</h1>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6 text-right">
             <button class="btn btn-sm btn-narrow btn-dark-green" type="submit" title="Сохранить" formnovalidate>{{ button_label|default('Сохранить') }}</button>
