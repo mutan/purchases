@@ -55,16 +55,18 @@
                 <tr>
                     <th style="width: 1%">#</th>
                     <th style="width: 20%">Название</th>
-                    <th style="width: 1%"><nobr>Кол-во</nobr></th>
-                    <th style="width: 1%"><nobr>Цена $</nobr></th>
-                    <th style="width: 1%"><nobr>Сумма $</nobr></th>
-                    <th style="width: 1%"><nobr>Сумма р.</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Кол-во</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Цена $</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Сумма $</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Сумма р.</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Вес г</nobr></th>
                     {% if is_granted('BASKET_OPERATE', basket) %}
-                        <th style="width: 1%">Действия</th>
+                        <th class="text-right" style="width: 1%">Действия</th>
                     {% endif %}
                 </tr>
                 </thead>
                 <tbody>
+                {# @var \App\Entity\Product product #}
                 {% for product in basket.products %}
                     <tr>
                         <td>{{ loop.index }}</td>
@@ -73,12 +75,16 @@
                             {% if product.article %}{{ product.article }}{% endif %}
                             {% if product.comment %}<br>{{ product.comment }}{% endif %}
                         </td>
-                        <td>{{ product.amount }}</td>
-                        <td>{{ product.userPrice }}</td>
-                        <td>{{ product.sum }}</td>
-                        <td>{% if basket.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
+                        <td class="text-right">{{ product.amount }}</td>
+                        <td class="text-right">{{ product.userPrice }}</td>
+                        <td class="text-right">{{ product.sum }}</td>
+                        <td class="text-right">{% if basket.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
+                        <td class="text-right">
+                            {% if product.expectedWeight %}{{ product.expectedWeight }}{%- else -%}–{%- endif -%}/
+                            {% if product.weight %}{{ product.weight }}{%- else -%}–{%- endif -%}
+                        </td>
                         {% if is_granted('BASKET_OPERATE', basket) %}
-                            <td>
+                            <td class="text-right">
                                 <nobr>
                                     <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-user-edit" data-product-id="{{ product.id }}">
                                         <i class="fa fa-edit"></i>
@@ -97,12 +103,12 @@
                     <tr>
                         <th></th>
                         <th>Итого товары</th>
-                        <th>{{ basket.productsAmount }}</th>
+                        <th class="text-right">{{ basket.productsAmount }}</th>
                         <th></th>
-                        <th>{{ basket.productsSum }}</th>
-                        <th>{% if basket.rate %}{{ basket.productsSumRub }}{%- else -%}–{%- endif -%}</th>
+                        <th class="text-right">{{ basket.productsSum }}</th>
+                        <th class="text-right">{% if basket.rate %}{{ basket.productsSumRub }}{%- else -%}–{%- endif -%}</th>
                         {% if is_granted('BASKET_OPERATE', basket) %}<th></th>{% endif %}
-                    </tr>
+                    </tr>b
                     {% if basket.deliveryToStock %}
                         <tr>
                             <td></td>
@@ -143,7 +149,7 @@
                     <tr>
                         <th></th>
                         <th colspan="4">Итого товары + доставка</th>
-                        <th>{{ basket.rate and basket.totalRub ? basket.totalRub : '–'}}</th>
+                        <th class="text-right">{{ basket.rate and basket.totalRub ? basket.totalRub : '–'}}</th>
                         {% if is_granted('BASKET_OPERATE', basket) %}<th></th>{% endif %}
                     </tr>
                 {% endif %}

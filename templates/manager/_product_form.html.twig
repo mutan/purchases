@@ -6,13 +6,13 @@
     </div>
 
     <div class="form-group col-md-12 col-lg-6">
-        {{ form_label(productForm.expectedWeight, 'Предварительный вес') }}
+        {{ form_label(productForm.expectedWeight, 'Предварительный вес, г') }}
         {{ form_widget(productForm.expectedWeight, {'attr': {'class': 'form-control-sm'}}) }}
         <small id="product_url_help" class="form-text text-muted">Предварительный вес, полученный из интернета</small>
     </div>
 
     <div class="form-group col-md-12 col-lg-6">
-        {{ form_label(productForm.weight, 'Итоговый вес') }}
+        {{ form_label(productForm.weight, 'Итоговый вес, г') }}
         {{ form_widget(productForm.weight, {'attr': {'class': 'form-control-sm'}}) }}
         <small id="product_url_help" class="form-text text-muted">Окончательный вес после взвешивания после получения товара</small>
     </div>
