@@ -80,8 +80,13 @@
                         <td class="text-right">{{ product.sum }}</td>
                         <td class="text-right">{% if basket.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
                         <td class="text-right">
-                            {% if product.expectedWeight %}{{ product.expectedWeight }}{%- else -%}–{%- endif -%}/
-                            {% if product.weight %}{{ product.weight }}{%- else -%}–{%- endif -%}
+                            {% if product.weight %}
+                                {{ product.weight }}
+                            {%- elseif product.expectedWeight -%}
+                                <span class="dashed pointer" data-toggle="tooltip" title="Ожидаемый вес. Окончательный вес будет проставлен после того, как мы сами взвесим товар, или получим вес от форвардера.">{{ product.expectedWeight }}</span>
+                            {%- else -%}
+                                –
+                            {%- endif -%}
                         </td>
                         {% if is_granted('BASKET_OPERATE', basket) %}
                             <td class="text-right">
@@ -108,7 +113,7 @@
                         <th class="text-right">{{ basket.productsSum }}</th>
                         <th class="text-right">{% if basket.rate %}{{ basket.productsSumRub }}{%- else -%}–{%- endif -%}</th>
                         {% if is_granted('BASKET_OPERATE', basket) %}<th></th>{% endif %}
-                    </tr>b
+                    </tr>
                     {% if basket.deliveryToStock %}
                         <tr>
                             <td></td>
