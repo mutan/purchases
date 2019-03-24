@@ -13,6 +13,7 @@ class TestController extends AbstractController
      */
     public function index(Request $resuest, $debugLogPath, $debugLogFile)
     {
+        # see log at var\log\debug.log
         file_put_contents($debugLogPath . DIRECTORY_SEPARATOR . $debugLogFile, print_r('test', true));
 
         throw $this->createNotFoundException('Test');
