@@ -399,6 +399,22 @@ class Basket
         return $sum;
     }
 
+    public function getProductsWeightSum()
+    {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+//            if ($product->getWeight()) {
+//                $sum += $product->getWeight();
+//            } else {
+//                $sum += $product->getExpectedWeight();
+//            }
+
+            $sum += ($product->getWeight() ? $product->getWeight() : $product->getExpectedWeight());
+        }
+
+        return $sum;
+    }
+
     public function getDeliveryToStockRub()
     {
         return ceil($this->getDeliveryToStock() * $this->getRate());

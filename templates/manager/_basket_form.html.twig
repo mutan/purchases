@@ -1,14 +1,14 @@
 <div class="form-row">
     <div class="form-group col-12 col-sm-4">
-        {{ form_label(basketForm.deliveryToStock, 'Доставка по США') }}
+        {{ form_label(basketForm.deliveryToStock, 'Доставка по США, $') }}
         {{ form_widget(basketForm.deliveryToStock, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
     <div class="form-group col-12 col-sm-4">
-        {{ form_label(basketForm.deliveryToRussia, 'Доставка в Россию') }}
+        {{ form_label(basketForm.deliveryToRussia, 'Доставка в Россию, $') }}
         {{ form_widget(basketForm.deliveryToRussia, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
     <div class="form-group col-12 col-sm-4">
-        {{ form_label(basketForm.deliveryToClient, 'Доставка по России') }}
+        {{ form_label(basketForm.deliveryToClient, 'Доставка по России, руб.') }}
         {{ form_widget(basketForm.deliveryToClient, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
 </div>
