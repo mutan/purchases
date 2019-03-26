@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use App\Entity\Traits\UserTokenTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 // TODO переделать в ManyToOne + UNIQUE на поле user_id
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserProfileRepository")
- * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity("user")
  */
 class UserProfile
 {
@@ -27,6 +28,12 @@ class UserProfile
      */
     private $lastLoginDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userProfile")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -40,6 +47,18 @@ class UserProfile
     public function setLastLoginDate(?\DateTimeInterface $lastLoginDate): self
     {
         $this->lastLoginDate = $lastLoginDate;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
