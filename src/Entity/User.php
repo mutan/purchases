@@ -479,11 +479,11 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|UserProfile[]
+     * @return UserProfile
      */
-    public function getUserProfile(): Collection
+    public function getUserProfile(): UserProfile
     {
-        return $this->userProfile;
+        return $this->userProfile->first();
     }
 
     public function addUserProfile(UserProfile $userProfile): self

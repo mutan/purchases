@@ -42,7 +42,10 @@ class LoginSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $user = $this->userRepository->find($user->getId());
+        $user = $this->userRepository->createQueryBuilder('u')
+                ->leftJoin('u.userProfile', 'up')->addSelect('up')
+                ->andWhere('u.id = :id')->setParameter('id', $user->getId())
+                ->getQuery()->getOneOrNullResult();
         $user->getUserProfile()->setLastLoginDate(new \DateTime());
 
         $this->manager->persist($user);
