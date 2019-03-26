@@ -149,7 +149,7 @@ class UserFixtures extends BaseFixture
                      ->setGiveBy($this->faker->sentence)
                      ->setGiveDate($this->faker->dateTime())
                      ->setBirthDate($this->faker->dateTime())
-                     ->setInn($this->faker->creditCardNumber);
+                     ->setInn($this->faker->randomNumber(6) . $this->faker->randomNumber(6));
 
         return $userPassport;
     }

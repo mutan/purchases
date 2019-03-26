@@ -17,7 +17,7 @@ class BasketManagerData
      * @Assert\Regex(pattern="/^\d+(\.\d{1,2})?$/", message="~regexp.price")
      * @Assert\GreaterThan(value=0)
      */
-    public $deliveryToRussia;
+    public $deliveryToRussiaPerKg;
 
     /**
      * @Assert\Regex(pattern="/^\d+(\.\d{1,2})?$/", message="~regexp.price")
@@ -54,7 +54,7 @@ class BasketManagerData
     public function fill(Basket $basket)
     {
         $basket->setDeliveryToStock($this->deliveryToStock);
-        $basket->setDeliveryToRussia($this->deliveryToRussia);
+        $basket->setDeliveryToRussiaPerKg($this->deliveryToRussiaPerKg);
         $basket->setDeliveryToClient($this->deliveryToClient);
         $basket->setAdditionalCost($this->additionalCost);
         $basket->setAdditionalCostComment($this->additionalCostComment);
@@ -66,7 +66,7 @@ class BasketManagerData
     public function extract(Basket $basket)
     {
         $this->deliveryToStock = $basket->getDeliveryToStock();
-        $this->deliveryToRussia = $basket->getDeliveryToRussia();
+        $this->deliveryToRussiaPerKg = $basket->getDeliveryToRussiaPerKg();
         $this->deliveryToClient = $basket->getDeliveryToClient();
         $this->additionalCost = $basket->getAdditionalCost();
         $this->additionalCostComment = $basket->getAdditionalCostComment();

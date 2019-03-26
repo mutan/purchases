@@ -75,15 +75,15 @@
                             {% if product.article %}{{ product.article }}{% endif %}
                             {% if product.comment %}<br>{{ product.comment }}{% endif %}
                         </td>
-                        <td class="text-right">{{ product.amount }}</td>
-                        <td class="text-right">{{ product.userPrice }}</td>
-                        <td class="text-right">{{ product.sum }}</td>
-                        <td class="text-right">{% if basket.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
+                        <td class="text-right">{{ product.amount }} шт.</td>
+                        <td class="text-right">{{ product.userPrice }} $</td>
+                        <td class="text-right">{{ product.sum }} $</td>
+                        <td class="text-right">{% if basket.rate %}{{ product.sumRub }} руб.{%- else -%}–{%- endif -%}</td>
                         <td class="text-right">
                             {% if product.weight %}
-                                {{ product.weight }}
+                                {{ product.weight }} г
                             {%- elseif product.expectedWeight -%}
-                                <span class="dashed pointer" data-toggle="tooltip" title="Ожидаемый вес. Окончательный вес будет проставлен после того, как мы сами взвесим товар, или получим вес от форвардера.">{{ product.expectedWeight }}</span>
+                                <span class="dashed pointer" data-toggle="tooltip" title="Ожидаемый вес. Окончательный вес будет проставлен после того, как мы сами взвесим товар, или получим вес от форвардера.">{{ product.expectedWeight }} г</span>
                             {%- else -%}
                                 –
                             {%- endif -%}
@@ -108,10 +108,10 @@
                     <tr>
                         <th></th>
                         <th>Итого товары</th>
-                        <th class="text-right">{{ basket.productsAmount }}</th>
+                        <th class="text-right">{{ basket.productsAmount }} шт.</th>
                         <th></th>
-                        <th class="text-right">{{ basket.productsSum }}</th>
-                        <th class="text-right">{% if basket.rate %}{{ basket.productsSumRub }}{%- else -%}–{%- endif -%}</th>
+                        <th class="text-right">{{ basket.productsSum }} $</th>
+                        <th class="text-right">{% if basket.rate %}{{ basket.productsSumRub }} руб.{%- else -%}–{%- endif -%}</th>
                         <th class="text-right">{{ basket.productsWeightSum }} г</th>
                         {% if is_granted('BASKET_OPERATE', basket) %}<th></th>{% endif %}
                     </tr>
@@ -119,29 +119,24 @@
                         <tr>
                             <td></td>
                             <td colspan="3">Доставка по США</td>
-                            <td class="text-right">{{ basket.deliveryToStock }}</td>
-                            <td class="text-right">{{ (basket.rate and basket.deliveryToStockRub) ? basket.deliveryToStockRub : '–' }}</td>
+                            <td class="text-right">{{ basket.deliveryToStock }} $</td>
+                            <td class="text-right">{% if basket.rate %}{{ basket.deliveryToStockRub }} руб.{%- else -%}–{%- endif -%}</td>
                             <td></td>
                             {% if is_granted('BASKET_OPERATE', basket) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
-                    {% if basket.deliveryToRussia %}
+                    {% if basket.deliveryToRussiaPerKg %}
                         <tr>
                             <td></td>
-                            <td colspan="3">Доставка в Россию</td>
-                            <td class="text-right">
-                                {{ basket.deliveryToRussia }}
-                                {# TODO
-                                    1. Удалить поле deliveryToRussia
-                                    2. Добавить поле deliveryToRussiaForKg
-                                    3. добавить basket.getDeliveryToRussia
-                                #}
+                            <td colspan="3">
+                                Доставка в Россию
                                 <i class="far fa-question-circle pointer"
                                    data-toggle="tooltip"
-                                   title="{{ basket.productsWeightSum }}г (вес всех товаров) * {{ basket.productsWeightSum }}$ (стоимость доставки за 1кг)"
+                                   title="{{ basket.productsWeightSum }}г (вес всех товаров) / 1000 (г в кг) * {{ basket.deliveryToRussiaPerKg }}$ (стоимость доставки за 1кг)"
                                 ></i>
                             </td>
-                            <td class="text-right">{{ (basket.rate and basket.deliveryToRussiaRub) ? basket.deliveryToRussiaRub : '–' }}</td>
+                            <td class="text-right">{{ basket.deliveryToRussia }} $</td>
+                            <td class="text-right">{% if basket.rate %}{{ basket.deliveryToRussiaRub }} руб.{%- else -%}–{%- endif -%}</td>
                             <td></td>
                             {% if is_granted('BASKET_OPERATE', basket) %}<td></td>{% endif %}
                         </tr>
@@ -150,7 +145,7 @@
                         <tr>
                             <td></td>
                             <td colspan="4">Доставка по России</td>
-                            <td class="text-right">{{ basket.deliveryToClient }}</td>
+                            <td class="text-right">{{ basket.deliveryToClient }} руб.</td>
                             <td></td>
                             {% if is_granted('BASKET_OPERATE', basket) %}<td></td>{% endif %}
                         </tr>
@@ -158,15 +153,14 @@
                     {% if basket.additionalCost %}
                         <tr>
                             <td></td>
-                            <td colspan="2">
+                            <td colspan="3">
                                 Дополнительные затраты
                                 {% if basket.additionalCostComment %}
                                     <i class="far fa-comment pointer" data-toggle="tooltip" title="{{ basket.additionalCostComment }}"></i>
                                 {% endif %}
                             </td>
-                            <td class="text-right">{{ basket.additionalCost }}</td>
-                            <td></td>
-                            <td></td>
+                            <td class="text-right">{{ basket.additionalCost }} $</td>
+                            <td class="text-right">{% if basket.rate %}{{ basket.additionalCostRub }} руб.{%- else -%}–{%- endif -%}</td>
                             <td></td>
                             {% if is_granted('BASKET_OPERATE', basket) %}<td></td>{% endif %}
                         </tr>
@@ -174,7 +168,7 @@
                     <tr>
                         <th></th>
                         <th colspan="4">Итого товары + доставка</th>
-                        <th class="text-right">{{ basket.rate and basket.totalRub ? basket.totalRub : '–'}}</th>
+                        <th class="text-right">{% if basket.rate and basket.totalRub %}{{ basket.totalRub }} руб.{%- else -%}–{%- endif -%}</th>
                         <th></th>
                         {% if is_granted('BASKET_OPERATE', basket) %}<th></th>{% endif %}
                     </tr>

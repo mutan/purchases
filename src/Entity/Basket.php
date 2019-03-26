@@ -70,19 +70,19 @@ class Basket
     private $deliveryToStock;
 
     /**
-     * @ORM\Column(type="float", nullable=true, options={"comment":"Доставка в Россию за кг, руб"})
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Доставка в Россию за кг, $"})
      * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
-    private $deliveryToRussia;
+    private $deliveryToRussiaPerKg;
 
     /**
-     * @ORM\Column(type="float", nullable=true, options={"comment":"Доставка по России, руб"})
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Доставка по России, руб"})
      * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $deliveryToClient;
 
     /**
-     * @ORM\Column(type="float", nullable=true, options={"comment":"Доп. платежи"})
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Доп. платежи"})
      * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $additionalCost;
@@ -104,7 +104,7 @@ class Basket
     private $isRateFinal = false;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Тркенинг-номер"})
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Трекинг-номер"})
      * @Assert\Length(min=2, max=250, minMessage="~min", maxMessage="~max")
      */
     private $tracking;
@@ -224,14 +224,14 @@ class Basket
         return $this;
     }
 
-    public function getDeliveryToRussia(): ?float
+    public function getDeliveryToRussiaPerKg(): ?float
     {
-        return $this->deliveryToRussia;
+        return $this->deliveryToRussiaPerKg;
     }
 
-    public function setDeliveryToRussia(?float $deliveryToRussia): self
+    public function setDeliveryToRussiaPerKg(?float $deliveryToRussiaPerKg): self
     {
-        $this->deliveryToRussia = $deliveryToRussia;
+        $this->deliveryToRussiaPerKg = $deliveryToRussiaPerKg;
 
         return $this;
     }
@@ -301,7 +301,7 @@ class Basket
         return $this->rate;
     }
 
-    public function setRate(float $rate): self
+    public function setRate(?float $rate): self
     {
         $this->rate = $rate;
 
@@ -420,13 +420,27 @@ class Basket
         return ceil($this->getDeliveryToStock() * $this->getRate());
     }
 
+    public function getDeliveryToRussia()
+    {
+        return $this->getProductsWeightSum() / 1000 * $this->getDeliveryToRussiaPerKg();
+    }
+
     public function getDeliveryToRussiaRub()
     {
         return ceil($this->getDeliveryToRussia() * $this->getRate());
     }
 
+    public function getAdditionalCostRub()
+    {
+        return ceil($this->getAdditionalCost() * $this->getRate());
+    }
+
     public function getTotalRub()
     {
-        return $this->getProductsSumRub() + $this->getDeliveryToStockRub() + $this->getDeliveryToRussiaRub() + $this->getDeliveryToClient();
+        return $this->getProductsSumRub()
+             + $this->getDeliveryToStockRub()
+             + $this->getDeliveryToRussiaRub()
+             + $this->getDeliveryToClient()
+             + $this->getAdditionalCostRub();
     }
 }

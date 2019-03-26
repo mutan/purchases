@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Basket;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -17,7 +16,7 @@ class BasketManagerType extends AbstractType
     {
         $builder
             ->add('deliveryToStock', NumberType::class)
-            ->add('deliveryToRussia', NumberType::class)
+            ->add('deliveryToRussiaPerKg', NumberType::class)
             ->add('deliveryToClient', NumberType::class)
             ->add('additionalCost', NumberType::class)
             ->add('additionalCostComment',TextareaType::class)
