@@ -10,6 +10,7 @@ parameters:
     app_recaptcha_url: 'https://www.google.com/recaptcha/api.js'
     app_recaptcha_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     app_recaptcha_secret: '%env(GOOGLE_RECAPTCHA_SECRET)%'
+    sentry_dsn: '%env(SENTRY_DSN)%'
     locale: 'ru'
     debug_log_directory: '%kernel.logs_dir%'
     debug_log_file: 'debug.log'

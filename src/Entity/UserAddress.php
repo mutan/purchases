@@ -37,71 +37,70 @@ class UserAddress
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Фамилия"})
      * @Assert\NotBlank(message="~not_blank")
-     *
      */
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Имя"})
      * @Assert\NotBlank(message="~not_blank")
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Отчество"})
      */
     private $middleName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Страна"})
      * @Assert\NotBlank(message="~not_blank")
      */
     private $country;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Почтовый идекс"})
      * @Assert\NotBlank(message="~not_blank")
      */
     private $postCode;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Регион"})
      * @Assert\NotBlank(message="~not_blank")
      */
     private $region;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Город"})
      * @Assert\NotBlank(message="~not_blank")
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Улица"})
      * @Assert\NotBlank(message="~not_blank")
      */
     private $street;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Дом"})
      * @Assert\NotBlank(message="~not_blank")
      */
     private $house;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Строение или корпус"})
      */
     private $building;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Квартира"})
      */
     private $flat;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Телефон"})
      * @Assert\NotBlank(message="~not_blank")
      */
     private $phone;

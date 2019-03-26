@@ -42,14 +42,14 @@ class Product
     private $basket;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Название товара"})
      * @Assert\NotBlank(message="~not_blank")
      * @Assert\Length(min=1, max=250, minMessage="~min", maxMessage="~max")
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=2000)
+     * @ORM\Column(type="string", length=2000, options={"comment":"Ссылка на товар"})
      * @Assert\NotBlank(message="~not_blank")
      * @Assert\Length(min=1, max=2000, minMessage="~min", maxMessage="~max")
      * @Assert\Url()
@@ -57,60 +57,60 @@ class Product
     private $url;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Артикул или EbayID"})
      * @Assert\Length(min=1, max=250, minMessage="~min", maxMessage="~max")
      *
      */
     private $article;
 
     /**
-     * @ORM\Column(type="decimal", precision=7, scale=2)
+     * @ORM\Column(type="decimal", precision=7, scale=2, options={"comment":"Цена, указанная пользователем"})
      * @Assert\NotBlank(message="~not_blank")
      * @Assert\GreaterThan(value=0)
      */
     private $userPrice;
 
     /**
-     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Цена, указанная менеджером"})
      * @Assert\Regex(pattern="/^\d+(\.\d{1,2})?$/", message="~regexp.price")
      * @Assert\GreaterThan(value=0)
      */
     private $price;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"comment":"Кол-во"})
      * @Assert\NotBlank(message="~not_blank")
      * @Assert\Type(type="integer")
      */
     private $amount;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Комментарий пользователя"})
      * @Assert\Length(min=2, max=250, minMessage="~min", maxMessage="~max")
      */
     private $comment;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true, options={"comment":"Ожидаемый вес"})
      * @Assert\Type(type="integer")
      */
     private $expectedWeight;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true, options={"comment":"Окончательный вес"})
      * @Assert\Type(type="integer")
      */
     private $weight;
 
     /**
-     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Реальная цена выкупа"})
      * @Assert\Regex(pattern="/^\d+(\.\d{1,2})?$/", message="~regexp.price")
      * @Assert\GreaterThan(value=0)
      */
     private $purchasePrice;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Реальный магазин выкупа"})
      * @Assert\Length(min=1, max=250, minMessage="~min", maxMessage="~max")
      */
     private $purchaseShop;

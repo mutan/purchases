@@ -54,57 +54,57 @@ class Basket
     private $products;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Магазин"})
      */
     private $shop;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Комментарий пользователя"})
      */
     private $userComment;
 
     /**
-     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Доставка по США, $"})
      * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $deliveryToStock;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="float", nullable=true, options={"comment":"Доставка в Россию за кг, руб"})
      * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $deliveryToRussia;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="float", nullable=true, options={"comment":"Доставка по России, руб"})
      * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $deliveryToClient;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="float", nullable=true, options={"comment":"Доп. платежи"})
      * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $additionalCost;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, options={"comment":"Комментарий к доп. платежам"})
      */
     private $additionalCostComment;
 
     /**
-     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Курс $"})
      * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $rate;
 
     /**
-     * @ORM\Column(type="boolean", options={"default"=false})
+     * @ORM\Column(type="boolean", options={"default"=false, "comment":"Курс окончательный?"})
      */
     private $isRateFinal = false;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Тркенинг-номер"})
      * @Assert\Length(min=2, max=250, minMessage="~min", maxMessage="~max")
      */
     private $tracking;

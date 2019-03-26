@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Entity\Traits\UserTokenTrait;
 use Doctrine\ORM\Mapping as ORM;
 
-// TODO переделать в ManyToOne
+// TODO переделать в ManyToOne + UNIQUE на поле user_id
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserProfileRepository")
@@ -23,12 +23,6 @@ class UserProfile
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="userProfile", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     */
-    private $user;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastLoginDate;
@@ -36,18 +30,6 @@ class UserProfile
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function getLastLoginDate(): ?\DateTimeInterface

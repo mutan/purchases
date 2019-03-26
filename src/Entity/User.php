@@ -55,12 +55,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\UserProfile", mappedBy="user", cascade={"persist", "remove"})
-     */
-    private $userProfile;
-
-    /**
-     * @ORM\Column(type="string", length=30, unique=true)
+     * @ORM\Column(type="string", length=30, unique=true, options={"comment":"Имя пользователя (никнейм)"})
      * @Assert\NotBlank(message="Имя пользователя не может быть пустым")
      * @Assert\Regex(pattern="/^\w+$/", message="Имя пользователя может содержать только буквы, цифры и знак подчеркивания.")
      * @Assert\Length(
@@ -293,23 +288,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUserProfile(): ?UserProfile
-    {
-        return $this->userProfile;
-    }
-
-    public function setUserProfile(UserProfile $userProfile): self
-    {
-        $this->userProfile = $userProfile;
-
-        // set the owning side of the relation if necessary
-        if ($this !== $userProfile->getUser()) {
-            $userProfile->setUser($this);
-        }
-
-        return $this;
-    }
-
     /**
      * @return Collection|UserAddress[]
      */
@@ -442,23 +420,23 @@ class User implements UserInterface
         return $this->basketsByManager;
     }
 
-    public function addBasketByManager(Basket $basketByManager): self
+    public function addBasketsByManager(Basket $basketsByManager): self
     {
-        if (!$this->basketsByManager->contains($basketByManager)) {
-            $this->basketsByManager[] = $basketByManager;
-            $basketByManager->setUser($this);
+        if (!$this->basketsByManager->contains($basketsByManager)) {
+            $this->basketsByManager[] = $basketsByManager;
+            $basketsByManager->setManager($this);
         }
 
         return $this;
     }
 
-    public function removeBasketByManager(Basket $basketByManager): self
+    public function removeBasketsByManager(Basket $basketsByManager): self
     {
-        if ($this->basketsByManager->contains($basketByManager)) {
-            $this->basketsByManager->removeElement($basketByManager);
+        if ($this->basketsByManager->contains($basketsByManager)) {
+            $this->basketsByManager->removeElement($basketsByManager);
             // set the owning side to null (unless already changed)
-            if ($basketByManager->getUser() === $this) {
-                $basketByManager->setUser(null);
+            if ($basketsByManager->getManager() === $this) {
+                $basketsByManager->setManager(null);
             }
         }
 

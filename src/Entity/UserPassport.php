@@ -37,41 +37,41 @@ class UserPassport
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Серия"})
      * @Assert\NotBlank(message="~not_blank")
      * @Assert\Regex(pattern="/^\d{4}$/", message="~regexp.series")
      */
     private $series;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Номер"})
      * @Assert\NotBlank(message="~not_blank")
      * @Assert\Regex(pattern="/^\d{6}$/", message="~regexp.number")
      */
     private $number;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"Кем выдан"})
      * @Assert\NotBlank(message="~not_blank")
      */
     private $giveBy;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", options={"comment":"Дата выдачи"})
      * @Assert\NotBlank(message="~not_blank")
      * @Assert\Date
      */
     private $giveDate;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", options={"comment":"Дата рождения"})
      * @Assert\NotBlank(message="~not_blank")
      * @Assert\Date
      */
     private $birthDate;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"comment":"ИНН"})
      * @Assert\NotBlank(message="~not_blank")
      * @Assert\Regex(pattern="/^\d{12}$/", message="~regexp.inn")
      */
