@@ -22,23 +22,15 @@ class UserRepository extends ServiceEntityRepository
     public function findOneByActivationToken(?string $token): ?User
     {
         return $this->createQueryBuilder('u')
-            ->leftJoin('u.userProfile', 'up')
-            ->addSelect('up')
-            ->andWhere('up.activationToken = :token')
-            ->setParameter('token', $token)
-            ->getQuery()
-            ->getOneOrNullResult();
+            ->andWhere('u.activationToken = :token')->setParameter('token', $token)
+            ->getQuery()->getOneOrNullResult();
     }
 
     public function findOneByResetToken(?string $token): ?User
     {
         return $this->createQueryBuilder('u')
-            ->leftJoin('u.userProfile', 'up')
-            ->addSelect('up')
-            ->andWhere('up.resetToken = :token')
-            ->setParameter('token', $token)
-            ->getQuery()
-            ->getOneOrNullResult();
+            ->andWhere('u.resetToken = :token')->setParameter('token', $token)
+            ->getQuery()->getOneOrNullResult();
     }
 
     /**

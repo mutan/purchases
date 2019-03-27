@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UserTokenTrait;
 use App\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
@@ -19,6 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface
 {
+    use UserTokenTrait;
     use TimestampableTrait;
 
     const ROLE_USER    = 'ROLE_USER';
@@ -133,9 +135,10 @@ class User implements UserInterface
     private $basketsByManager;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserProfile", mappedBy="user", orphanRemoval=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $userProfile;
+    private $lastLoginDate;
+
 
     public function __construct()
     {
@@ -144,7 +147,6 @@ class User implements UserInterface
         $this->products = new ArrayCollection();
         $this->baskets = new ArrayCollection();
         $this->basketsByManager = new ArrayCollection();
-        $this->userProfile = new ArrayCollection();
     }
 
     /**
@@ -290,6 +292,18 @@ class User implements UserInterface
     public function clearInactiveReason(): self
     {
         $this->inactive_reason = null;
+
+        return $this;
+    }
+
+    public function getLastLoginDate(): ?\DateTimeInterface
+    {
+        return $this->lastLoginDate;
+    }
+
+    public function setLastLoginDate(?\DateTimeInterface $lastLoginDate): self
+    {
+        $this->lastLoginDate = $lastLoginDate;
 
         return $this;
     }
@@ -476,36 +490,5 @@ class User implements UserInterface
     {
         return $this->getStatus()         == self::STATUS_INACTIVE
             && $this->getInactiveReason() == self::INACTIVE_REASON_NOT_ACTIVATED;
-    }
-
-    /**
-     * @return UserProfile
-     */
-    public function getUserProfile(): UserProfile
-    {
-        return $this->userProfile->first();
-    }
-
-    public function addUserProfile(UserProfile $userProfile): self
-    {
-        if (!$this->userProfile->contains($userProfile)) {
-            $this->userProfile[] = $userProfile;
-            $userProfile->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserProfile(UserProfile $userProfile): self
-    {
-        if ($this->userProfile->contains($userProfile)) {
-            $this->userProfile->removeElement($userProfile);
-            // set the owning side to null (unless already changed)
-            if ($userProfile->getUser() === $this) {
-                $userProfile->setUser(null);
-            }
-        }
-
-        return $this;
     }
 }

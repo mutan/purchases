@@ -7,7 +7,6 @@ use App\Entity\Product;
 use App\Entity\User;
 use App\Entity\UserAddress;
 use App\Entity\UserPassport;
-use App\Entity\UserProfile;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -27,9 +26,6 @@ class UserFixtures extends BaseFixture
     protected function loadData(ObjectManager $manager)
     {
         $this->createMany(1, self::ROLE_ADMIN_REFERENCE, function($i) {
-            $userProfile = new UserProfile();
-            $this->manager->persist($userProfile);
-
             $user = new User();
             $user->setEmail('akim_now@mail.ru');
             $user->setName('Akim');
@@ -38,7 +34,6 @@ class UserFixtures extends BaseFixture
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'secret1S'));
-            $user->addUserProfile($userProfile);
 
             $userAddress = $this->createAddress();
             $this->manager->persist($userAddress);
@@ -52,9 +47,6 @@ class UserFixtures extends BaseFixture
         });
 
         $this->createMany(1, self::ROLE_MANAGER_REFERENCE, function($i) {
-            $userProfile = new UserProfile();
-            $this->manager->persist($userProfile);
-
             $user = new User();
             $user->setEmail('gamerxxx@mail.ru');
             $user->setName('Яша');
@@ -63,7 +55,6 @@ class UserFixtures extends BaseFixture
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'secret1S'));
-            $user->addUserProfile($userProfile);
 
             $userAddress = $this->createAddress();
             $this->manager->persist($userAddress);
@@ -77,9 +68,6 @@ class UserFixtures extends BaseFixture
         });
 
         $this->createMany(10, self::ROLE_USER_REFERENCE, function($i) {
-            $userProfile = new UserProfile();
-            $this->manager->persist($userProfile);
-
             $user = new User();
             $user->setEmail(sprintf('user%d@example.com', $i));
             $user->setName($this->faker->unique()->firstName);
@@ -87,7 +75,6 @@ class UserFixtures extends BaseFixture
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'secret1S'));
-            $user->addUserProfile($userProfile);
 
             $userAddress = $this->createAddress();
             $this->manager->persist($userAddress);

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\UserProfile;
 use App\Repository\UserRepository;
 use App\Form\RegisterType;
 use App\Form\ResetPasswordType;
@@ -80,7 +79,6 @@ class SecurityController extends BaseController
 
             /** @var User $user */
             $user = $form->getData();
-            $user->setUserProfile(new UserProfile());
 
             try {
                 if (!$captchaValidator->validateCaptcha($request->get('g-recaptcha-response'))) {
@@ -91,7 +89,7 @@ class SecurityController extends BaseController
                 $token = $tokenGenerator->generateToken();
 
                 $user->setPassword($passwordEncoder->encodePassword($user, $user->getPlainPassword()));
-                $user->getUserProfile()->setActivationToken($token);
+                $user->setActivationToken($token);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
@@ -142,15 +140,14 @@ class SecurityController extends BaseController
     {
         $user = $userRepository->findOneByActivationToken($token);
 
-        if (!$user || !$user->getUserProfile()->isActivationTokenValid($token)) {
+        if (!$user || !$user->isActivationTokenValid($token)) {
             throw new NotFoundHttpException("Activation token doesn't exist or is not valid");
         }
 
         $user->setStatus(User::STATUS_ACTIVE)
              ->clearInactiveReason();
 
-        $user->getUserProfile()
-             ->setActivatedAt(new \DateTime())
+        $user->setActivatedAt(new \DateTime())
              ->clearActivationToken();
 
         $em = $this->getDoctrine()->getManager();
@@ -221,7 +218,7 @@ class SecurityController extends BaseController
 
                 $token = $tokenGenerator->generateToken();
 
-                $user->getUserProfile()->setResetToken($token);
+                $user->setResetToken($token);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
@@ -275,7 +272,7 @@ class SecurityController extends BaseController
         /** @var User $user */
         $user = $userRepository->findOneByResetToken($token);
 
-        if (!$user || !$user->getUserProfile()->isResetTokenValid($token)) {
+        if (!$user || !$user->isResetTokenValid($token)) {
             throw new NotFoundHttpException("Reset password token doesn't exist or is not valid");
         }
 
@@ -293,15 +290,14 @@ class SecurityController extends BaseController
             }
 
             $user->setPassword($passwordEncoder->encodePassword($user, $user->getPlainPassword()));
-            $user->getUserProfile()->clearResetToken();
+            $user->clearResetToken();
 
             // Активируем пользователя, если он еще не активирован
             if ($user->isNotActivated()) {
                 $user->setStatus(User::STATUS_ACTIVE)
                      ->clearInactiveReason();
 
-                $user->getUserProfile()
-                     ->setActivatedAt(new \DateTime())
+                $user->setActivatedAt(new \DateTime())
                      ->clearActivationToken();
 
                 $this->logger->info('User activated by reset password link', [

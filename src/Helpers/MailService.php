@@ -75,7 +75,7 @@ class MailService
     {
         $url = $this->router->generate(
             'app_user_activate',
-            ['token' => $user->getUserProfile()->getActivationToken()],
+            ['token' => $user->getActivationToken()],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 
@@ -101,7 +101,7 @@ class MailService
     {
         $url = $this->router->generate(
             'app_reset_password',
-            ['token' => $user->getUserProfile()->getResetToken()],
+            ['token' => $user->getResetToken()],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
 
