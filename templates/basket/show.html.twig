@@ -13,19 +13,17 @@
     <hr>
 
     <div class="row">
-        <div class="col-12 col-md-3">
-            <strong>Менеджер:</strong> {{ basket.manager }}
+        <div class="col-12 col-md-4">
+            {{ include('layout/bit/_basket_status.html.twig') }}
+            {{ include('layout/bit/_basket_rate_icon.html.twig') }}
+            <a href="{{ basket.shop }}" class="ml-1" target="_blank">{{ basket.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
             <br>
-            <strong>Магазин:</strong> <a href="{{ basket.shop }}" target="_blank">{{ basket.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
+            <strong>Менеджер:</strong> {{ basket.manager }}
         </div>
-        <div class="col-12 col-md-3">
-            <strong>Статус:</strong> {{ include('layout/bit/_basket_status.html.twig') }}
-            <br><strong>Курс $:</strong>{{ include('layout/bit/_basket_rate_icon.html.twig') }}
-        </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-4">
             <strong>Комментарий:</strong> {% if basket.userComment %}{{ basket.userComment }}{% else %}–{% endif %}
         </div>
-        <div class="col-12 col-md-3 text-right">
+        <div class="col-12 col-md-4 text-right">
             {% if is_granted('BASKET_OPERATE', basket) %}
                 <button type="button" id="basket-user-edit" data-basket-id="{{ basket.id }}" class="btn btn-sm btn-narrow btn-dark-green">
                     <i class="fa fa-edit"></i> <span class="d-none d-sm-inline pl-1">Редактировать</span>

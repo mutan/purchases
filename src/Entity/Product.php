@@ -14,8 +14,8 @@ class Product
 {
     use TimestampableTrait;
 
-    const STATUS_ACTIVE   = 'active'; // готов к покупке
-    const STATUS_DELETED  = 'deleted'; // удален по инициативе пользователя
+    const STATUS_ACTIVE = 'active'; // готов к покупке
+    const STATUS_DELETED = 'deleted'; // удален по инициативе пользователя
     const STATUS_CANCELED = 'canceled'; // не удалось купить
 
     const ALLOWED_STATUSES = [

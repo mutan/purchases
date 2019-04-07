@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\TimestampableTrait;
+use App\Helpers\Entiry\BasketHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,16 +17,17 @@ class Basket
 {
     use TimestampableTrait;
 
-    const STATUS_NEW      = 'new';
+    const STATUS_NEW = 'new';
+    const STATUS_APPROVED = 'approved'; // утвержден клиентом
     const STATUS_REDEEMED = 'redeemed'; // в процессе выкупа
-    const STATUS_BOUGHT   = 'bought'; // выкуплен
-    const STATUS_SENT     = 'sent'; // отправлен пользователю
-    const STATUS_RECEIVED = 'received'; // получен пользователем
-    const STATUS_CANCELED = 'canceled'; // отменен пользователем, виден пользователю
-    const STATUS_DELETED  = 'deleted'; // удален по инициативе пользователя, не виден пользователю
+    const STATUS_BOUGHT = 'bought'; // выкуплен
+    const STATUS_SENT = 'sent'; // отправлен клиенту
+    const STATUS_RECEIVED = 'received'; // получен клиентом
+    const STATUS_CANCELED = 'canceled'; // отменен клиентом, виден клиенту
+    const STATUS_DELETED = 'deleted'; // удален по инициативе клиента, не виден клиенту
 
     const ALLOWED_STATUSES = [
-        self::STATUS_NEW, self::STATUS_REDEEMED, self:: STATUS_BOUGHT,
+        self::STATUS_NEW, self::STATUS_APPROVED, self::STATUS_REDEEMED, self:: STATUS_BOUGHT,
         self::STATUS_SENT, self::STATUS_RECEIVED, self::STATUS_CANCELED, self::STATUS_DELETED,
     ];
 
@@ -442,5 +444,17 @@ class Basket
              + $this->getDeliveryToRussiaRub()
              + $this->getDeliveryToClient()
              + $this->getAdditionalCostRub();
+    }
+
+    public function getStatusLabel() {
+        return BasketHelper::STATUSES[$this->getStatus()]['label'];
+    }
+
+    public function getStatusDescription() {
+        return BasketHelper::STATUSES[$this->getStatus()]['description'];
+    }
+
+    public function isChangeStatusAllowed($newStatus) {
+        return in_array($newStatus, BasketHelper::STATUSES[$this->getStatus()]['next_allowed_statuses']);
     }
 }

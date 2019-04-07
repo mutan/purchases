@@ -13,9 +13,9 @@ class Package
 {
     use TimestampableTrait;
 
-    const STATUS_NEW              = 'new';
-    const STATUS_WAITING_ARRIVAL  = 'waiting_arrival'; // ожидается менеджером СП
-    const STATUS_RECEIVED         = 'recieved'; // получена менеджером СП
+    const STATUS_NEW = 'new';
+    const STATUS_WAITING_ARRIVAL = 'waiting_arrival'; // ожидается менеджером СП
+    const STATUS_RECEIVED = 'recieved'; // получена менеджером СП
 
     const ALLOWED_STATUSES = [
         self::STATUS_NEW, self::STATUS_WAITING_ARRIVAL, self::STATUS_RECEIVED,
