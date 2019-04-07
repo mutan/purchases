@@ -166,6 +166,10 @@ class Basket
             throw new \InvalidArgumentException("Invalid basket status");
         }
 
+        if (!in_array($status, BasketHelper::STATUSES[$this->getStatus()]['next_allowed_statuses'])) {
+            throw new \InvalidArgumentException("Changing basket status from {$this->getStatus()} to {$status} is not allowed");
+        }
+
         $this->status = $status;
 
         return $this;
@@ -452,9 +456,5 @@ class Basket
 
     public function getStatusDescription() {
         return BasketHelper::STATUSES[$this->getStatus()]['description'];
-    }
-
-    public function isChangeStatusAllowed($newStatus) {
-        return in_array($newStatus, BasketHelper::STATUSES[$this->getStatus()]['next_allowed_statuses']);
     }
 }

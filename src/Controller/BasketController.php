@@ -139,7 +139,7 @@ class BasketController extends BaseController
 
     /**
      * Удаление заказа
-     * @Route("/basket/{id}", name="user_basket_delete", methods={"DELETE"})
+     * @Route("/basket/{id}/delete", name="user_basket_delete", methods={"GET"})
      * @param Request $request
      * @param Basket $basket
      * @return Response
@@ -153,12 +153,10 @@ class BasketController extends BaseController
             return $this->redirect($request->headers->get('referer'));
         }
 
-        if ($this->isCsrfTokenValid('delete'.$basket->getId(), $request->request->get('_token'))) {
-            $basket->setStatus(Basket::STATUS_DELETED);
-            $this->getEm()->persist($basket);
-            $this->getEm()->flush();
-            $this->addFlash('success','Заказ удален.');
-        }
+        $basket->setStatus(Basket::STATUS_DELETED);
+        $this->getEm()->persist($basket);
+        $this->getEm()->flush();
+        $this->addFlash('success','Заказ удален.');
 
         return $this->redirectToRoute('user_basket_index');
     }
