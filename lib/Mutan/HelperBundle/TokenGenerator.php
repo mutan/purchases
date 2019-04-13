@@ -4,53 +4,61 @@ namespace Mutan\HelperBundle;
 
 class TokenGenerator
 {
-    const ALPHABET_TYPE_FULL = 'full';
-    const ALPHABET_TYPE_NUMERIC = 'numeric';
-    const ALPHABET_TYPE_NUMERIC_NO_ZERO = 'nozero';
-
-
-    private $length;
-
-    public function __construct(int $length = 32)
-    {
-        $this->length = $length;
-    }
+    const CHAR_LOWER   = 1;
+    const CHAR_UPPER   = 2;
+    const CHAR_NUMERIC = 4;
+    const CHAR_SPECIAL = 8;
 
     /**
-     * @param $length
+     * If $length is less then 32, it's set to 32
+     * @param int $length
      * @return string
      * @throws \Exception
      */
-    public function getSecureToken($length): string
+    public function getHexadecimalToken(int $length = 32): string
     {
-        return bin2hex(\random_bytes($length));
+        $length = \intval($length/2);
+        if ($length < 16) {
+            $length = 16;
+        }
+        return \bin2hex(\random_bytes($length));
     }
 
     /**
-     * @param $length
+     * @param int $length
      * @return string
      * @throws \Exception
      */
-    public function getToken($length)
+    public function getToken(int $length): string
+    {
+        return $this->getCustomToken($length, self::CHAR_LOWER | self::CHAR_UPPER | self::CHAR_NUMERIC);
+    }
+
+    public function getCustomToken(int $length, $flags): string
     {
         $token = "";
-        $alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        $alphabet.= "abcdefghijklmnopqrstuvwxyz";
-        $alphabet.= "0123456789";
-
-        $alphabet = $this->getAlphabet();
-        $max = strlen($alphabet);
-
-        for ($i=0; $i < $length; $i++) {
-            $token .= $alphabet[random_int(0, $max-1)];
+        $characters = $this->getCharacters($flags);
+        for ($i = 0; $i < $length; $i++) {
+            $token .= $characters[\random_int(0, \strlen($characters) - 1)];
         }
-
         return $token;
     }
 
-    private function getAlphabet()
+    private function getCharacters($flags)
     {
-
-        return ;
+        $characters = '';
+        if ($flags & self::CHAR_LOWER) {
+            $characters .= 'abcdefghijklmnopqrstuvwxyz';
+        }
+        if ($flags & self::CHAR_UPPER) {
+            $characters .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        }
+        if ($flags & self::CHAR_NUMERIC) {
+            $characters .= '0123456789';
+        }
+        if ($flags & self::CHAR_SPECIAL) {
+            $characters .= '_+-=!#$%&?@~';
+        }
+        return $characters;
     }
 }
