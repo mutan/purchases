@@ -1,0 +1,10 @@
+services:
+    # explicitly configure the service
+    # this is the service's id
+    mt_helper.token_generator:
+        class: Mutan\HelperBundle\TokenGenerator
+        public: true
+
+    Mutan\HelperBundle\TokenGenerator:
+        alias: mt_helper.token_generator
+        public: false
