@@ -5,15 +5,16 @@ namespace App\Controller;
 use App\Helpers\LitemfApiService;
 use App\Repository\UserAddressRepository;
 use App\Repository\UserPassportRepository;
-use Mutan\HelperBundle\LoggerAwareTrait;
 use Mutan\HelperBundle\TokenGenerator;
+use Mutan\HelperBundle\Traits\LoggerAwareTrait;
+use Mutan\HelperBundle\Traits\ParameterBagAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class WelcomeController extends AbstractController
 {
-    use LoggerAwareTrait;
+    use LoggerAwareTrait, ParameterBagAwareTrait;
     /**
      * @Route("/", name="app_homepage")
      * @param LitemfApiService $litemfApiService
