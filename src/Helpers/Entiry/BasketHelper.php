@@ -6,6 +6,7 @@ use App\Entity\Basket;
 
 class BasketHelper
 {
+    // TODO Ужас ужас переделать
     const STATUSES = [
         Basket::STATUS_NEW => [
             'label' => 'Новый',

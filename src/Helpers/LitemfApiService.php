@@ -9,6 +9,9 @@ use Zend\Http\Request;
 
 class LitemfApiService
 {
+    // TODO переделать на cURL
+    // https://stackoverflow.com/questions/5356075/how-to-get-an-option-previously-set-with-curl-setopt
+    // https://github.com/sergeiavdeev/EasyWayAPI/blob/master/EasyWay/API/EWConnector.php
     protected function call($method, $params)
     {
         $request = new Request();
