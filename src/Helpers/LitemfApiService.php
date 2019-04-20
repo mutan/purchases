@@ -4,41 +4,46 @@ namespace App\Helpers;
 
 use App\Entity\UserAddress;
 use App\Entity\UserPassport;
-use Zend\Http\Client;
-use Zend\Http\Request;
 
 class LitemfApiService
 {
-    // TODO переделать на cURL
-    // https://stackoverflow.com/questions/5356075/how-to-get-an-option-previously-set-with-curl-setopt
-    // https://github.com/sergeiavdeev/EasyWayAPI/blob/master/EasyWay/API/EWConnector.php
-    protected function call($method, $params)
+    const API_URL = 'https://api.litemf.com/v2/rpc';
+
+    protected function execute($method, $data)
     {
-        $request = new Request();
-        $request->getHeaders()->addHeaders([
-            'Content-Type' => 'application/json',
-            'X-Auth-Api-Key' => getenv("LITEMF_API_KEY")
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => self::API_URL,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_POST => true,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'X-Auth-Api-Key: ' . getenv("LITEMF_API_KEY"),
+                'Cache-Control: no-cache',
+            ],
+            CURLOPT_POSTFIELDS  => json_encode([
+                'id' => uniqid('bty_'),
+                'method' => $method,
+                'params' => $data
+            ]),
         ]);
-        $request->setMethod(Request::METHOD_POST)
-                ->setUri(getenv("LITEMF_API_HOST"))
-                ->setContent(json_encode([
-                    'id' => uniqid(),
-                    'method' => $method,
-                    'params' => $params
-                ]));
 
-        $client = new Client();
-        $response = $client->send($request);
+        $output = curl_exec($curl);
 
-        echo $response->getBody(); die('ok');
+        return $output;
     }
 
     // TODO временный метод для тестов
-    public function getCountry(UserAddress $userAddrss)
+    public function getCountry()
     {
-        $params = [];
+        $params = [
+            'filter' => [
+                'code' => 'ru'
+            ]
+        ];
 
-        $this->call('getCountry', $params);
+        return $this->execute('getCountry', $params);
     }
 
     public function createAddress(UserAddress $userAddress, UserPassport $userPassport)
@@ -74,9 +79,7 @@ class LitemfApiService
         ];
 
         $params['data'] = $data;
-        
-        //dump($params); die('ok');
 
-        $this->call('createAddress', $params);
+        return $this->execute('createAddress', $params);
     }
 }

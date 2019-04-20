@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
+        "ext-curl": "*",
         "doctrine/annotations": "^1.6",
         "google/recaptcha": "^1.2",
         "mutan/helper-bundle": "*@dev",

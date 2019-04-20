@@ -23,9 +23,9 @@ class WelcomeController extends AbstractController
      * @param TokenGenerator $tokenGenerator
      * @return Response
      */
-    public function index(LitemfApiService $litemfApiService, UserAddressRepository $userAddressRepository, UserPassportRepository $userPassportRepository, TokenGenerator $tokenGenerator) : Response
+    public function index(LitemfApiService $litemfApiService, UserAddressRepository $userAddressRepository, UserPassportRepository $userPassportRepository, TokenGenerator $tokenGenerator, $debugLogFile) : Response
     {
-        dump($tokenGenerator->generateToken(64)); die('ok');
+        dump($tokenGenerator->getCustomPassword(10, 0, 0, 10, 0)); die('ok');
 
 
         $userAddres   = $userAddressRepository->find(2);

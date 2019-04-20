@@ -12,19 +12,20 @@ class RebuildDatabase extends Command
 {
     protected function configure()
     {
-        $this
-            ->setName('app:rebuild-database') # php bin/console app:rebuild-database
-            ->setDescription('Rebuilds database. Works only on development.')
-            ->setHelp('This command allows you to consequentially drop, create and then re-fill the database with fake data. Works only on development.');
+        $this->setName('app:rebuild-database') # php bin/console app:rebuild-database
+             ->setDescription('Rebuilds database. Works only on development.')
+             ->setHelp('This command allows you to consequentially drop, create and then re-fill the database with fake data. Works only on development.');
     }
 
     /**
      * Выполняет последовательно следующие команды:
-     * php bin/console doctrine:database:drop --force
-     * php bin/console doctrine:database:create
-     * php bin/console make:migration
-     * php bin/console doctrine:migrations:migrate --no-interaction
-     * php bin/console doctrine:fixtures:load --no-interaction
+     *      php bin/console doctrine:database:drop --force
+     *      php bin/console doctrine:database:create
+     *      php bin/console make:migration
+     *      php bin/console doctrine:migrations:migrate --no-interaction
+     *      php bin/console doctrine:fixtures:load --no-interaction
+     * @param InputInterface $input
+     * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
