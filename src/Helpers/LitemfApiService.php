@@ -4,9 +4,17 @@ namespace App\Helpers;
 
 use App\Entity\UserAddress;
 use App\Entity\UserPassport;
+use Mutan\HelperBundle\Exception\ApiMessageException;
+use Mutan\HelperBundle\Traits\LoggerAwareTrait;
+use Throwable;
 
+/**
+ * @link https://docs.google.com/document/d/1KrqvjpwUxt5Id02bsXilMcYQScDcyxpyKnEpIV5lXe0/edit
+ */
 class LitemfApiService
 {
+    use LoggerAwareTrait;
+
     const API_URL = 'https://api.litemf.com/v2/rpc';
 
     protected function execute($method, $data)
@@ -29,12 +37,51 @@ class LitemfApiService
             ]),
         ]);
 
-        $output = curl_exec($curl);
+        try {
+            $response = curl_exec($curl);
+            $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            curl_close($curl);
+        } catch (Throwable $e) {
+            if (is_resource($curl)) {
+                curl_close($curl);
+            }
+            $this->logger->error('LiteMF API server error: ' . $e->getMessage());
+            throw new ApiMessageException('(Exception) LiteMF API server error: ' . $e->getMessage(), null, $e);
+        }
 
-        return $output;
+        if ($code != 200) {
+            $this->logger->error('LiteMF API error: wrong responce code', [
+                'code' => $code,
+                'response' => $response
+            ]);
+            throw new ApiMessageException('(Exception) LiteMF API error: wrong responce code: ' . $code);
+        }
+
+        if ($response) {
+            $response = json_decode($response, true);
+        } else {
+            $this->logger->error('LiteMF API error: null response.', [
+                'code' => $code,
+                'response' => $response
+            ]);
+            throw new ApiMessageException('(Exception) LiteMF API error: null response: ' . $response['error']['message']);
+        }
+
+        if ($response['status'] != 'ok') {
+            $this->logger->error('LiteMF API response error.', [
+                'code' => $response['error']['code'],
+                'message' => $response['error']['message']
+            ]);
+            throw new ApiMessageException('(Exception) LiteMF API response error: ' . $response['error']['message']);
+        }
+
+        return $response['result'];
     }
 
     // TODO временный метод для тестов
+    /**
+     * @return array(jsonrpc, id, result, status)
+     */
     public function getCountry()
     {
         $params = [
@@ -43,7 +90,9 @@ class LitemfApiService
             ]
         ];
 
-        return $this->execute('getCountry', $params);
+        //$params = [];
+
+        return $this->execute('getCountr', $params);
     }
 
     public function createAddress(UserAddress $userAddress, UserPassport $userPassport)
