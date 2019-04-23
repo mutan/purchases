@@ -1,7 +1,4 @@
 {
-    "clue/stream-filter": {
-        "version": "v1.4.0"
-    },
     "composer/ca-bundle": {
         "version": "1.1.4"
     },
@@ -113,14 +110,8 @@
             "ref": "155d19cc6b4fddd9393064f553bdbe3f2f16c918"
         }
     },
-    "guzzlehttp/psr7": {
-        "version": "1.5.2"
-    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
-    },
-    "jean85/pretty-package-versions": {
-        "version": "1.2"
     },
     "monolog/monolog": {
         "version": "1.24.0"
@@ -137,50 +128,17 @@
     "ocramius/proxy-manager": {
         "version": "2.2.2"
     },
-    "php-http/client-common": {
-        "version": "1.9.1"
-    },
-    "php-http/curl-client": {
-        "version": "v1.7.1"
-    },
-    "php-http/discovery": {
-        "version": "1.6.1"
-    },
-    "php-http/httplug": {
-        "version": "v1.1.0"
-    },
-    "php-http/message": {
-        "version": "1.7.2"
-    },
-    "php-http/message-factory": {
-        "version": "v1.0.2"
-    },
-    "php-http/promise": {
-        "version": "v1.0.0"
-    },
     "psr/cache": {
         "version": "1.0.1"
     },
     "psr/container": {
         "version": "1.0.0"
     },
-    "psr/http-factory": {
-        "version": "1.0.0"
-    },
-    "psr/http-message": {
-        "version": "1.0.1"
-    },
     "psr/log": {
         "version": "1.1.0"
     },
     "psr/simple-cache": {
         "version": "1.0.1"
-    },
-    "ralouphie/getallheaders": {
-        "version": "2.0.5"
-    },
-    "ramsey/uuid": {
-        "version": "3.8.0"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -199,9 +157,6 @@
             "version": "4.0",
             "ref": "05daf6b214e54aed4089f3480f944a67ac3a7889"
         }
-    },
-    "sentry/sdk": {
-        "version": "2.0.0"
     },
     "sentry/sentry": {
         "version": "2.0.1"
@@ -473,9 +428,6 @@
     },
     "zendframework/zend-code": {
         "version": "3.3.1"
-    },
-    "zendframework/zend-diactoros": {
-        "version": "2.1.1"
     },
     "zendframework/zend-escaper": {
         "version": "2.6.0"

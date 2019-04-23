@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator\Constraints as AppAssert;
+use Mutan\HelperBundle\Validator\Constraints as MutanAssert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -83,7 +83,7 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank(message="Пароль не может быть пустым.", groups={"reset_password"})
-     * @AppAssert\ComplexPassword(message="Пароль должен содержать цифры и латинские буквы в нижнем и верхнем регистре.", groups={"reset_password"})
+     * @MutanAssert\ComplexPassword(message="Пароль должен содержать цифры, а также латинские буквы в нижнем и верхнем регистре.", groups={"reset_password"})
      * @Assert\Length(
      *     min=8,
      *     max=4096,
