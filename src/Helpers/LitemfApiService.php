@@ -49,22 +49,21 @@ class LitemfApiService
             throw new ApiMessageException('(Exception) LiteMF API server error: ' . $e->getMessage(), null, $e);
         }
 
-        if ($code != 200) {
-            $this->logger->error('LiteMF API error: wrong responce code', [
+        $response = json_decode($response, true);
+        if (empty($response)) {
+            $this->logger->error('LiteMF API invalid json response.', [
                 'code' => $code,
                 'response' => $response
             ]);
-            throw new ApiMessageException('(Exception) LiteMF API error: wrong responce code: ' . $code);
+            throw new ApiMessageException('(Exception) LiteMF API invalid json response: ' . $response['error']['message']);
         }
 
-        if ($response) {
-            $response = json_decode($response, true);
-        } else {
-            $this->logger->error('LiteMF API error: null response.', [
+        if ($code != 200) {
+            $this->logger->error('LiteMF API error: wrong response code', [
                 'code' => $code,
                 'response' => $response
             ]);
-            throw new ApiMessageException('(Exception) LiteMF API error: null response: ' . $response['error']['message']);
+            throw new ApiMessageException('(Exception) LiteMF API error: wrong response code: ' . $code);
         }
 
         if ($response['status'] != 'ok') {

@@ -47,3 +47,13 @@ services:
         arguments:
             $key: '%app_recaptcha_key%'
             $secret: '%app_recaptcha_secret%'
+
+    app.monolog.processor.memory:
+        class: Monolog\Processor\MemoryPeakUsageProcessor
+        tags:
+            - { name: monolog.processor }
+
+    App\Helpers\LitemfApiService:
+        tags:
+            - { name: monolog.logger, channel: secret }
+            - { name: app.monolog.processor.memory }
