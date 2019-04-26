@@ -3,10 +3,10 @@
     "license": "proprietary",
     "require": {
         "php": "^7.2",
-        "ext-ctype": "*",
-        "ext-curl": "*",
-        "ext-iconv": "*",
-        "ext-json": "*",
+        "ext-ctype": "^7.2",
+        "ext-curl": "^7.2",
+        "ext-iconv": "^7.2",
+        "ext-json": "^7.2",
         "doctrine/annotations": "^1.6",
         "google/recaptcha": "^1.2",
         "mutan/helper-bundle": "*@dev",
@@ -26,8 +26,7 @@
         "symfony/twig-bundle": "4.2.*",
         "symfony/validator": "4.2.*",
         "symfony/webpack-encore-pack": "^1.0",
-        "symfony/yaml": "4.2.*",
-        "zendframework/zend-http": "^2.9"
+        "symfony/yaml": "4.2.*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",

@@ -66,10 +66,15 @@ class LitemfApiService
             throw new ApiMessageException('(Exception) LiteMF API error: wrong response code: ' . $code);
         }
 
+        if (!array_key_exists('status', $response) || !array_key_exists('result', $response)) {
+            $this->logger->error('LiteMF API error: invalid response body', ['response' => $response]);
+            throw new ApiMessageException('(Exception) LiteMF API error: invalid response body.');
+        }
+
         if ($response['status'] != 'ok') {
             $this->logger->error('LiteMF API response error.', [
-                'code' => $response['error']['code'],
-                'message' => $response['error']['message']
+                'code' => $response['error']['code'] ?? '',
+                'message' => $response['error']['message'] ?? '',
             ]);
             throw new ApiMessageException('(Exception) LiteMF API response error: ' . $response['error']['message']);
         }
