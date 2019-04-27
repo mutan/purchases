@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Helpers\LitemfApiService;
 use App\Repository\UserAddressRepository;
 use App\Repository\UserPassportRepository;
-use Mutan\HelperBundle\TokenGenerator;
+use Mutan\HelperBundle\Service\TokenGenerator;
 use Mutan\HelperBundle\Traits\LoggerAwareTrait;
 use Mutan\HelperBundle\Traits\ParameterBagAwareTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

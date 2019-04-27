@@ -83,7 +83,7 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank(message="Пароль не может быть пустым.", groups={"reset_password"})
-     * @MutanAssert\ComplexPassword(message="Пароль должен содержать цифры, а также латинские буквы в нижнем и верхнем регистре.", groups={"reset_password"})
+     * @MutanAssert\AlphanumericPassword(message="Пароль должен содержать цифры, а также латинские буквы в нижнем и верхнем регистре.", groups={"reset_password"})
      * @Assert\Length(
      *     min=8,
      *     max=4096,
