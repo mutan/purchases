@@ -43,7 +43,7 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Helpers\CaptchaValidator:
+    App\Services\CaptchaValidator:
         arguments:
             $key: '%app_recaptcha_key%'
             $secret: '%app_recaptcha_secret%'
@@ -53,7 +53,7 @@ services:
         tags:
             - { name: monolog.processor }
 
-    App\Helpers\LitemfApiService:
+    App\Services\LitemfApiService:
         tags:
             - { name: monolog.logger, channel: secret }
             - { name: app.monolog.processor.memory }

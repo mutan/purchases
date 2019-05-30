@@ -6,7 +6,7 @@
         "ext-ctype": "^7.2",
         "ext-curl": "^7.2",
         "ext-iconv": "^7.2",
-        "ext-json": "^7.2",
+        "ext-json": "*",
         "doctrine/annotations": "^1.6",
         "google/recaptcha": "^1.2",
         "sensio/framework-extra-bundle": "^5.2",

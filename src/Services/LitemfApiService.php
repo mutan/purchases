@@ -2,18 +2,23 @@
 
 namespace App\Services;
 
+use Exception;
+use Throwable;
 use App\Entity\UserAddress;
 use App\Entity\UserPassport;
-use Mutan\HelperBundle\Exception\ApiMessageException;
-use Mutan\HelperBundle\Traits\LoggerAwareTrait;
-use Throwable;
+use Psr\Log\LoggerInterface;
 
 /**
  * @link https://docs.google.com/document/d/1KrqvjpwUxt5Id02bsXilMcYQScDcyxpyKnEpIV5lXe0/edit
  */
 class LitemfApiService
 {
-    use LoggerAwareTrait;
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
 
     const API_URL = 'https://api.litemf.com/v2/rpc';
 
@@ -46,7 +51,7 @@ class LitemfApiService
                 curl_close($curl);
             }
             $this->logger->error('LiteMF API server error: ' . $e->getMessage());
-            throw new ApiMessageException('(Exception) LiteMF API server error: ' . $e->getMessage(), null, $e);
+            throw new Exception('(Exception) LiteMF API server error: ' . $e->getMessage(), null, $e);
         }
 
         $response = json_decode($response, true);
@@ -55,7 +60,7 @@ class LitemfApiService
                 'code' => $code,
                 'response' => $response
             ]);
-            throw new ApiMessageException('(Exception) LiteMF API invalid json response: ' . $response['error']['message']);
+            throw new Exception('(Exception) LiteMF API invalid json response: ' . $response['error']['message']);
         }
 
         if ($code != 200) {
@@ -63,12 +68,12 @@ class LitemfApiService
                 'code' => $code,
                 'response' => $response
             ]);
-            throw new ApiMessageException('(Exception) LiteMF API error: wrong response code: ' . $code);
+            throw new Exception('(Exception) LiteMF API error: wrong response code: ' . $code);
         }
 
         if (!array_key_exists('status', $response) || !array_key_exists('result', $response)) {
             $this->logger->error('LiteMF API error: invalid response body', ['response' => $response]);
-            throw new ApiMessageException('(Exception) LiteMF API error: invalid response body.');
+            throw new Exception('(Exception) LiteMF API error: invalid response body.');
         }
 
         if ($response['status'] != 'ok') {
@@ -76,7 +81,7 @@ class LitemfApiService
                 'code' => $response['error']['code'] ?? '',
                 'message' => $response['error']['message'] ?? '',
             ]);
-            throw new ApiMessageException('(Exception) LiteMF API response error: ' . $response['error']['message']);
+            throw new Exception('(Exception) LiteMF API response error: ' . $response['error']['message']);
         }
 
         return $response['result'];
