@@ -2,16 +2,20 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\TimestampableTrait;
+use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\TimestampableEntityTrait;
+use App\Entity\Interfaces\PrefixableEntityInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PackageRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Package
+class Package implements PrefixableEntityInterface
 {
-    use TimestampableTrait;
+    use TimestampableEntityTrait;
+
+    const PREFIX = 'P'; //Package
 
     const STATUS_NEW = 'new';
     const STATUS_WAITING_ARRIVAL = 'waiting_arrival'; // ожидается менеджером СП
@@ -71,7 +75,6 @@ class Package
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -83,7 +86,6 @@ class Package
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
-
         return $this;
     }
 
@@ -95,7 +97,6 @@ class Package
     public function setWeight(?int $weight): self
     {
         $this->weight = $weight;
-
         return $this;
     }
 
@@ -107,7 +108,6 @@ class Package
     public function setDeliveryCost(?float $deliveryCost): self
     {
         $this->deliveryCost = $deliveryCost;
-
         return $this;
     }
 
@@ -119,7 +119,6 @@ class Package
     public function setTracking(string $tracking): self
     {
         $this->tracking = $tracking;
-
         return $this;
     }
 
@@ -131,23 +130,27 @@ class Package
     public function setStatus(string $status): self
     {
         if (!in_array($status, self::ALLOWED_STATUSES)) {
-            throw new \InvalidArgumentException("Invalid package status");
+            throw new InvalidArgumentException("Invalid package status");
         }
 
         $this->status = $status;
-
         return $this;
     }
 
     /* ADDITIONAL METHODS */
 
+    public function getPrefix(): string
+    {
+        return self::PREFIX;
+    }
+
+    public function getIdWithPrefix(): string
+    {
+        return $this->getPrefix() . $this->getId();
+    }
+
     public function __toString()
     {
         return $this->getIdWithPrefix();
-    }
-
-    public function getIdWithPrefix()
-    {
-        return 'PA' . $this->id;
     }
 }

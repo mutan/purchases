@@ -3,8 +3,8 @@
 namespace App\Security;
 
 use App\Entity\User;
-use App\Helpers\MailService;
-use App\Helpers\TokenGenerator;
+use App\Services\MailService;
+use App\Services\TokenGenerator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Psr\Log\LoggerInterface;
 use App\Repository\UserRepository;

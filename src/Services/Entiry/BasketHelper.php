@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Entiry;
+namespace App\Services\Entiry;
 
 use App\Entity\Basket;
 

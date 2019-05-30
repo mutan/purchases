@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\UserTokenTrait;
-use App\Entity\Traits\TimestampableTrait;
+use DateTimeInterface;
+use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\UserTokenTrait;
 use Doctrine\Common\Collections\Collection;
+use App\Validator\Constraints as AppAssert;
+use App\Entity\Traits\TimestampableEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\Interfaces\PrefixableEntityInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Mutan\HelperBundle\Validator\Constraints as MutanAssert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -18,10 +21,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("email")
  * @UniqueEntity("name")
  */
-class User implements UserInterface
+class User implements UserInterface, PrefixableEntityInterface
 {
     use UserTokenTrait;
-    use TimestampableTrait;
+    use TimestampableEntityTrait;
+
+    const PREFIX = 'U'; //User
 
     const ROLE_USER    = 'ROLE_USER';
     const ROLE_MANAGER = 'ROLE_MANAGER';
@@ -83,7 +88,7 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank(message="Пароль не может быть пустым.", groups={"reset_password"})
-     * @MutanAssert\AlphanumericPassword(message="Пароль должен содержать цифры, а также латинские буквы в нижнем и верхнем регистре.", groups={"reset_password"})
+     * @AppAssert\AlphanumericPassword(message="Пароль должен содержать цифры, а также латинские буквы в нижнем и верхнем регистре.", groups={"reset_password"})
      * @Assert\Length(
      *     min=8,
      *     max=4096,
@@ -221,7 +226,7 @@ class User implements UserInterface
     {
         foreach ($roles as $role) {
             if (!in_array($role, self::ALLOWED_ROLES)) {
-                throw new \InvalidArgumentException("Invalid user roles");
+                throw new InvalidArgumentException("Invalid user roles");
             }
         }
 
@@ -265,7 +270,7 @@ class User implements UserInterface
     public function setStatus(string $status): self
     {
         if (!in_array($status, self::ALLOWED_STATUSES)) {
-            throw new \InvalidArgumentException("Invalid user status");
+            throw new InvalidArgumentException("Invalid user status");
         }
 
         $this->status = $status;
@@ -281,7 +286,7 @@ class User implements UserInterface
     public function setInactiveReason(?string $inactive_reason): self
     {
         if (!in_array($inactive_reason, self::ALLOWED_INACTIVE_REASONS)) {
-            throw new \InvalidArgumentException("Invalid user inactive reason");
+            throw new InvalidArgumentException("Invalid user inactive reason");
         }
 
         $this->inactive_reason = $inactive_reason;
@@ -296,12 +301,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLastLoginDate(): ?\DateTimeInterface
+    public function getLastLoginDate(): ?DateTimeInterface
     {
         return $this->lastLoginDate;
     }
 
-    public function setLastLoginDate(?\DateTimeInterface $lastLoginDate): self
+    public function setLastLoginDate(?DateTimeInterface $lastLoginDate): self
     {
         $this->lastLoginDate = $lastLoginDate;
 
@@ -465,14 +470,19 @@ class User implements UserInterface
 
     /* ADDITIONAL METHODS */
 
-    public function __toString()
+    public function getPrefix(): string
     {
-        return "{$this->getName()} ({$this->getEmail()})";
+        return self::PREFIX;
     }
 
-    public function getIdWithPrefix()
+    public function getIdWithPrefix(): string
     {
-        return 'U' . $this->id;
+        return $this->getPrefix() . $this->getId();
+    }
+
+    public function __toString()
+    {
+        return $this->getIdWithPrefix();
     }
 
     public function isActive()

@@ -2,6 +2,8 @@
 
 namespace App\Entity\Traits;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 trait UserTokenTrait
@@ -33,17 +35,15 @@ trait UserTokenTrait
 
     public function setResetToken(string $token): self
     {
-        $this->resetToken          = $token;
-        $this->resetTokenExpiresAt = (new \DateTime())->modify('+1 hour')->getTimestamp();
-
+        $this->resetToken = $token;
+        $this->resetTokenExpiresAt = (new DateTime())->modify('+1 hour')->getTimestamp();
         return $this;
     }
 
     public function setActivationToken(string $token): self
     {
-        $this->activationToken          = $token;
-        $this->activationTokenExpiresAt = (new \DateTime())->modify('+24 hour')->getTimestamp();
-
+        $this->activationToken = $token;
+        $this->activationTokenExpiresAt = (new DateTime())->modify('+24 hour')->getTimestamp();
         return $this;
     }
 
@@ -73,29 +73,26 @@ trait UserTokenTrait
 
     public function clearResetToken(): self
     {
-        $this->resetToken          = null;
+        $this->resetToken = null;
         $this->resetTokenExpiresAt = null;
-
         return $this;
     }
 
     public function clearActivationToken(): self
     {
-        $this->activationToken          = null;
+        $this->activationToken = null;
         $this->activationTokenExpiresAt = null;
-
         return $this;
     }
 
-    public function getActivatedAt(): ?\DateTimeInterface
+    public function getActivatedAt(): ?DateTimeInterface
     {
         return $this->activatedAt;
     }
 
-    public function setActivatedAt(?\DateTimeInterface $activatedAt): self
+    public function setActivatedAt(?DateTimeInterface $activatedAt): self
     {
         $this->activatedAt = $activatedAt;
-
         return $this;
     }
 }

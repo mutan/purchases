@@ -2,16 +2,21 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\TimestampableTrait;
+use DateTimeInterface;
+use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\TimestampableEntityTrait;
+use App\Entity\Interfaces\PrefixableEntityInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserPassportRepository")
  */
-class UserPassport
+class UserPassport implements PrefixableEntityInterface
 {
-    use TimestampableTrait;
+    use TimestampableEntityTrait;
+
+    const PREFIX = 'UP'; //User Passport
 
     const STATUS_NEW      = 'new';
     const STATUS_APPROVED = 'approved';
@@ -95,7 +100,6 @@ class UserPassport
     public function setSeries(string $series): self
     {
         $this->series = $series;
-
         return $this;
     }
 
@@ -107,7 +111,6 @@ class UserPassport
     public function setNumber(string $number): self
     {
         $this->number = $number;
-
         return $this;
     }
 
@@ -119,31 +122,28 @@ class UserPassport
     public function setGiveBy(string $giveBy): self
     {
         $this->giveBy = $giveBy;
-
         return $this;
     }
 
-    public function getGiveDate(): ?\DateTimeInterface
+    public function getGiveDate(): ?DateTimeInterface
     {
         return $this->giveDate;
     }
 
-    public function setGiveDate(?\DateTimeInterface $giveDate): self
+    public function setGiveDate(?DateTimeInterface $giveDate): self
     {
         $this->giveDate = $giveDate;
-
         return $this;
     }
 
-    public function getBirthDate(): ?\DateTimeInterface
+    public function getBirthDate(): ?DateTimeInterface
     {
         return $this->birthDate;
     }
 
-    public function setBirthDate(?\DateTimeInterface $birthDate): self
+    public function setBirthDate(?DateTimeInterface $birthDate): self
     {
         $this->birthDate = $birthDate;
-
         return $this;
     }
 
@@ -155,7 +155,6 @@ class UserPassport
     public function setInn(string $inn): self
     {
         $this->inn = $inn;
-
         return $this;
     }
 
@@ -167,11 +166,10 @@ class UserPassport
     public function setStatus(string $status): self
     {
         if (!in_array($status, self::ALLOWED_STATUSES)) {
-            throw new \InvalidArgumentException("Invalid user_passport status");
+            throw new InvalidArgumentException("Invalid user_passport status");
         }
 
         $this->status = $status;
-
         return $this;
     }
 
@@ -183,20 +181,24 @@ class UserPassport
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 
     /* ADDITIONAL METHODS */
 
-    public function __toString()
+    public function getPrefix(): string
     {
-        return $this->getIdWithPrefix();
+        return self::PREFIX;
     }
 
     public function getIdWithPrefix(): string
     {
-        return 'UP' . $this->id;
+        return $this->getPrefix() . $this->getId();
+    }
+
+    public function __toString()
+    {
+        return $this->getIdWithPrefix();
     }
 
     public function isNew()

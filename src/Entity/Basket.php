@@ -2,20 +2,25 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\TimestampableTrait;
-use App\Helpers\Entiry\BasketHelper;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTimeInterface;
+use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
+use App\Services\Entiry\BasketHelper;
+use Doctrine\Common\Collections\Collection;
+use App\Entity\Traits\TimestampableEntityTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\Interfaces\PrefixableEntityInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BasketRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Basket
+class Basket implements PrefixableEntityInterface
 {
-    use TimestampableTrait;
+    use TimestampableEntityTrait;
+
+    const PREFIX = 'O'; //Order
 
     const STATUS_NEW = 'new';
     const STATUS_APPROVED = 'approved'; // утвержден клиентом
@@ -163,11 +168,11 @@ class Basket
     public function setStatus(string $status): self
     {
         if (!in_array($status, self::ALLOWED_STATUSES)) {
-            throw new \InvalidArgumentException("Invalid basket status");
+            throw new InvalidArgumentException("Invalid basket status");
         }
 
         if (!in_array($status, BasketHelper::STATUSES[$this->getStatus()]['next_allowed_statuses'])) {
-            throw new \InvalidArgumentException("Changing basket status from {$this->getStatus()} to {$status} is not allowed");
+            throw new InvalidArgumentException("Changing basket status from {$this->getStatus()} to {$status} is not allowed");
         }
 
         $this->status = $status;
@@ -206,12 +211,12 @@ class Basket
         return $this;
     }
 
-      public function getBoughtDate(): ?\DateTimeInterface
+    public function getBoughtDate(): ?DateTimeInterface
     {
         return $this->boughtDate;
     }
 
-    public function setBoughtDate(?\DateTimeInterface $boughtDate): self
+    public function setBoughtDate(?DateTimeInterface $boughtDate): self
     {
         $this->boughtDate = $boughtDate;
 
@@ -340,14 +345,19 @@ class Basket
 
     /* ADDITIONAL METHODS */
 
+    public function getPrefix(): string
+    {
+        return self::PREFIX;
+    }
+
+    public function getIdWithPrefix(): string
+    {
+        return $this->getPrefix() . $this->getId();
+    }
+
     public function __toString()
     {
         return $this->getIdWithPrefix();
-    }
-
-    public function getIdWithPrefix()
-    {
-        return 'OR' . $this->id;
     }
 
     public function isNew()

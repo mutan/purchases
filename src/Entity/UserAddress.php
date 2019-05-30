@@ -2,16 +2,20 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\TimestampableTrait;
+use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\TimestampableEntityTrait;
+use App\Entity\Interfaces\PrefixableEntityInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserAddressRepository")
  */
-class UserAddress
+class UserAddress implements PrefixableEntityInterface
 {
-    use TimestampableTrait;
+    use TimestampableEntityTrait;
+
+    const PREFIX = 'UA'; //User Address
 
     const STATUS_NEW      = 'new';
     const STATUS_APPROVED = 'approved';
@@ -130,7 +134,6 @@ class UserAddress
     public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
-
         return $this;
     }
 
@@ -142,7 +145,6 @@ class UserAddress
     public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
-
         return $this;
     }
 
@@ -154,7 +156,6 @@ class UserAddress
     public function setMiddleName(?string $middleName): self
     {
         $this->middleName = $middleName;
-
         return $this;
     }
 
@@ -166,7 +167,6 @@ class UserAddress
     public function setCountry(?string $country): self
     {
         $this->country = $country;
-
         return $this;
     }
 
@@ -178,7 +178,6 @@ class UserAddress
     public function setPostCode(?string $postCode): self
     {
         $this->postCode = $postCode;
-
         return $this;
     }
 
@@ -190,7 +189,6 @@ class UserAddress
     public function setRegion(?string $region): self
     {
         $this->region = $region;
-
         return $this;
     }
 
@@ -202,7 +200,6 @@ class UserAddress
     public function setCity(?string $city): self
     {
         $this->city = $city;
-
         return $this;
     }
 
@@ -214,7 +211,6 @@ class UserAddress
     public function setStreet(?string $street): self
     {
         $this->street = $street;
-
         return $this;
     }
 
@@ -226,7 +222,6 @@ class UserAddress
     public function setHouse(?string $house): self
     {
         $this->house = $house;
-
         return $this;
     }
 
@@ -238,7 +233,6 @@ class UserAddress
     public function setBuilding(?string $building): self
     {
         $this->building = $building;
-
         return $this;
     }
 
@@ -250,7 +244,6 @@ class UserAddress
     public function setFlat(?string $flat): self
     {
         $this->flat = $flat;
-
         return $this;
     }
 
@@ -262,7 +255,6 @@ class UserAddress
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
-
         return $this;
     }
 
@@ -274,7 +266,6 @@ class UserAddress
     public function setEmail(?string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -286,11 +277,10 @@ class UserAddress
     public function setStatus(string $status): self
     {
         if (!in_array($status, self::ALLOWED_STATUSES)) {
-            throw new \InvalidArgumentException("Invalid user_address status");
+            throw new InvalidArgumentException("Invalid user_address status");
         }
 
         $this->status = $status;
-
         return $this;
     }
 
@@ -302,20 +292,24 @@ class UserAddress
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 
     /* ADDITIONAL METHODS */
 
+    public function getPrefix(): string
+    {
+        return self::PREFIX;
+    }
+
+    public function getIdWithPrefix(): string
+    {
+        return $this->getPrefix() . $this->getId();
+    }
+
     public function __toString()
     {
         return $this->getIdWithPrefix();
-    }
-
-    public function getIdWithPrefix()
-    {
-        return 'UA' . $this->id;
     }
 
     public function isNew()

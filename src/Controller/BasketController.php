@@ -8,7 +8,7 @@ use App\Form\BasketUserData;
 use App\Form\BasketUserType;
 use App\Form\ProductUserData;
 use App\Form\ProductUserType;
-use App\Helpers\ShopHelper;
+use App\Services\ShopHelper;
 use App\Repository\BasketRepository;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;

@@ -2,17 +2,21 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\TimestampableTrait;
+use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\TimestampableEntityTrait;
+use App\Entity\Interfaces\PrefixableEntityInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Product
+class Product implements PrefixableEntityInterface
 {
-    use TimestampableTrait;
+    use TimestampableEntityTrait;
+
+    const PREFIX = 'G'; //Good
 
     const STATUS_ACTIVE = 'active'; // готов к покупке
     const STATUS_DELETED = 'deleted'; // удален по инициативе пользователя
@@ -133,7 +137,6 @@ class Product
     public function setName(?string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -145,7 +148,6 @@ class Product
     public function setUrl(?string $url): self
     {
         $this->url = $url;
-
         return $this;
     }
 
@@ -157,7 +159,6 @@ class Product
     public function setUserPrice(?float $userPrice): self
     {
         $this->userPrice = $userPrice;
-
         return $this;
     }
 
@@ -169,7 +170,6 @@ class Product
     public function setPrice(?float $price): self
     {
         $this->price = $price;
-
         return $this;
     }
 
@@ -181,7 +181,6 @@ class Product
     public function setAmount(?int $amount): self
     {
         $this->amount = $amount;
-
         return $this;
     }
 
@@ -193,7 +192,6 @@ class Product
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
-
         return $this;
     }
 
@@ -205,7 +203,6 @@ class Product
     public function setArticle(?string $article): self
     {
         $this->article = $article;
-
         return $this;
     }
 
@@ -217,7 +214,6 @@ class Product
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 
@@ -229,11 +225,10 @@ class Product
     public function setStatus(string $status): self
     {
         if (!in_array($status, self::ALLOWED_STATUSES)) {
-            throw new \InvalidArgumentException("Invalid product status");
+            throw new InvalidArgumentException("Invalid product status");
         }
 
         $this->status = $status;
-
         return $this;
     }
 
@@ -245,7 +240,6 @@ class Product
     public function setBasket(?Basket $basket): self
     {
         $this->basket = $basket;
-
         return $this;
     }
 
@@ -257,7 +251,6 @@ class Product
     public function setExpectedWeight(?int $expectedWeight): self
     {
         $this->expectedWeight = $expectedWeight;
-
         return $this;
     }
 
@@ -269,7 +262,6 @@ class Product
     public function setWeight(?int $weight): self
     {
         $this->weight = $weight;
-
         return $this;
     }
 
@@ -281,7 +273,6 @@ class Product
     public function setPurchasePrice(?float $purchasePrice): self
     {
         $this->purchasePrice = $purchasePrice;
-
         return $this;
     }
 
@@ -293,20 +284,24 @@ class Product
     public function setPurchaseShop(?string $purchaseShop): self
     {
         $this->purchaseShop = $purchaseShop;
-
         return $this;
     }
 
     /* ADDITIONAL METHODS */
 
+    public function getPrefix(): string
+    {
+        return self::PREFIX;
+    }
+
+    public function getIdWithPrefix(): string
+    {
+        return $this->getPrefix() . $this->getId();
+    }
+
     public function __toString()
     {
         return $this->getIdWithPrefix();
-    }
-
-    public function getIdWithPrefix()
-    {
-        return 'PR' . $this->id;
     }
 
     public function isActive()
@@ -327,14 +322,12 @@ class Product
     public function getSum()
     {
         $price = $this->getPrice() ?: $this->getUserPrice();
-
         return $this->getAmount() * $price;
     }
 
     public function getSumRub()
     {
         $price = $this->getPrice() ?: $this->getUserPrice();
-
         return ceil($this->getAmount() * $price * $this->getBasket()->getRate());
     }
 }
