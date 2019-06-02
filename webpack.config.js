@@ -7,10 +7,12 @@ Encore
     .setOutputPath('public/build/') // directory where compiled assets will be stored
     .setPublicPath('/build') // public path used by the web server to access the output path
 
-    .createSharedEntry('app', './assets/js/app.js')
+    .addEntry('app', './assets/js/app.js')
     //.addEntry('app', './assets/js/app.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
+
+    .splitEntryChunks()
 
     // runtime.js file will be output and needs to be included in your pages
     // if the same module (e.g. jquery) is required by several entry files, they will require the same object
