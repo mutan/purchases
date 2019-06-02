@@ -7,7 +7,7 @@ Encore
     .setOutputPath('public/build/') // directory where compiled assets will be stored
     .setPublicPath('/build') // public path used by the web server to access the output path
 
-    //.addEntry('app', './assets/js/app.js')
+    .addEntry('app', './assets/js/app.js')
     .addEntry('angle', './assets/js/angle.js')
     //.addEntry('modernizr', './assets/js/modernizr.custom.js')
     //.addEntry('js.storage', './assets/js/js.storage.js')

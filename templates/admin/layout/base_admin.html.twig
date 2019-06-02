@@ -8,7 +8,7 @@
 
     <!-- =============== VENDOR STYLES ===============-->
     <!-- FONT AWESOME-->
-    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.css">
+    {#<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.css">#}
     <!-- SIMPLE LINE ICONS-->
     <link rel="stylesheet" href="/vendor/simple-line-icons/css/simple-line-icons.css">
     <!-- ANIMATE.CSS-->
@@ -23,7 +23,7 @@
 
     {% block stylesheets %}
         {# 'app' must match the first argument to addEntry() in webpack.config.js #}
-        {#{{ encore_entry_link_tags('app') }}#}
+        {{ encore_entry_link_tags('app') }}
         {{ encore_entry_link_tags('angle') }}
     {% endblock %}
 </head>
@@ -1163,7 +1163,7 @@
 <!-- MODERNIZR-->
 <script src="/vendor/modernizr/modernizr.custom.js"></script>
 <!-- JQUERY-->
-<script src="/vendor/jquery/dist/jquery.js"></script>
+{#<script src="/vendor/jquery/dist/jquery.js"></script>#}
 <!-- BOOTSTRAP-->
 <script src="/vendor/popper.js/dist/umd/popper.js"></script>
 <script src="/vendor/bootstrap/dist/js/bootstrap.js"></script>
@@ -1183,7 +1183,7 @@
 
 {% block javascripts %}
     {#{{ encore_entry_script_tags('modernizr') }}#}
-    {#{{ encore_entry_script_tags('app') }}#}
+    {{ encore_entry_script_tags('app') }}
     {#{{ encore_entry_script_tags('js.storage') }}#}
     {#{{ encore_entry_script_tags('animo') }}#}
     {{ encore_entry_script_tags('angle') }}
