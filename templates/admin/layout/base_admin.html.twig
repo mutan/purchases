@@ -14,18 +14,18 @@
     <!-- ANIMATE.CSS-->
     <link rel="stylesheet" href="/vendor/animate.css/animate.css">
     <!-- WHIRL (spinners)-->
-    <link rel="stylesheet" href="/vendor/whirl/dist/whirl.css">
+    {#<link rel="stylesheet" href="/vendor/whirl/dist/whirl.css">#}
     <!-- =============== PAGE VENDOR STYLES ===============-->
     <!-- =============== BOOTSTRAP STYLES ===============-->
     <link rel="stylesheet" href="/css/bootstrap.css" id="bscss">
     <!-- =============== APP STYLES ===============-->
-    <link rel="stylesheet" href="/css/app.css" id="maincss">
+    {#<link rel="stylesheet" href="/css/app.css" id="maincss">#}
 
-    {#{% block stylesheets %}#}
+    {% block stylesheets %}
         {# 'app' must match the first argument to addEntry() in webpack.config.js #}
         {#{{ encore_entry_link_tags('app') }}#}
-        {#{{ encore_entry_link_tags('angle') }}#}
-    {#{% endblock %}#}
+        {{ encore_entry_link_tags('angle') }}
+    {% endblock %}
 </head>
 
 <body>
@@ -1179,15 +1179,15 @@
 <script src="/vendor/jquery-localize/dist/jquery.localize.js"></script>
 <!-- =============== PAGE VENDOR SCRIPTS ===============-->
 <!-- =============== APP SCRIPTS ===============-->
-<script src="/js/app.js"></script>
+{#<script src="/js/app.js"></script>#}
 
-{#{% block javascripts %}#}
+{% block javascripts %}
     {#{{ encore_entry_script_tags('modernizr') }}#}
     {#{{ encore_entry_script_tags('app') }}#}
     {#{{ encore_entry_script_tags('js.storage') }}#}
     {#{{ encore_entry_script_tags('animo') }}#}
-    {#{{ encore_entry_script_tags('angle') }}#}
-{#{% endblock %}#}
+    {{ encore_entry_script_tags('angle') }}
+{% endblock %}
 </body>
 
 </html>

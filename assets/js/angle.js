@@ -1,6 +1,7 @@
 /* CSS */
 
 require('../css/angle.css');
+require('../css/theme-g.css');
 require('../css/whirl.css');
 
 /*!
