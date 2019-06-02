@@ -1,5 +1,6 @@
 let Encore = require('@symfony/webpack-encore');
 
+// плагин для прямого копирования файлов, в нашем случае из asset в build
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 Encore
@@ -11,19 +12,24 @@ Encore
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 
-    .cleanupOutputBeforeBuild()
-    .enableBuildNotifications()
+    // runtime.js file will be output and needs to be included in your pages
+    // if the same module (e.g. jquery) is required by several entry files, they will require the same object
+    .enableSingleRuntimeChunk()
+    .cleanupOutputBeforeBuild() //the output directory is emptied between each build (to remove old files)
+    .enableBuildNotifications() //display build notifications using webpack-notifier
     .enableSourceMaps(!Encore.isProduction()) // В режиме разработки будем генерировать карту ресурсов
     .enableVersioning(Encore.isProduction()) // enables hashed filenames (e.g. app.abc123.css)
     .enableSassLoader() // enables Sass/SCSS support
-    .autoProvidejQuery() // uncomment if you're having problems with a jQuery plugin
+    .autoProvidejQuery() // Makes jQuery available everywhere
 
+    //PostCSS, используется тут только для автопрефиксов
     .enablePostCssLoader((options) => {
         options.config = {
             path: 'config/postcss.config.js'
         }
-    }) //PostCSS and autoprefixing
+    })
 
+    // эти папки/файлы копируем как есть
     .addPlugin(new CopyWebpackPlugin([
         { from: './assets/favicon.ico', to: '' },
         { from: './assets/images', to: 'images' },
