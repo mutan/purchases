@@ -2,13 +2,12 @@
 // customize Bootstrap variables here
 
 /* CSS LIBRARIES */
-
+@import "~animate.css/animate.css";
 @import "~bootstrap/scss/bootstrap";
-@import "~@fortawesome/fontawesome-free/css/all.css";
-
+@import "~simple-line-icons/scss/simple-line-icons";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
 
 /* FONTS */
-
 @import url('https://fonts.googleapis.com/css?family=Raleway|Ubuntu|Roboto&subset=cyrillic');
 
 /* CUSTOM SCSS */
