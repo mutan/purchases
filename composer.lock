@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4118f6e4e292e7986a96096d94cbc4ae",
+    "content-hash": "e93b2d8b64d2ad07b30e7952be9184d6",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1894,16 +1894,16 @@
         },
         {
             "name": "symfony/asset",
-            "version": "v4.3.0",
+            "version": "v4.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
-                "reference": "5cc4a0cf86cbaeb3dc5bf3d875261169141574c9"
+                "reference": "7eee96a8630f9448304ae4f0e3b474ea4e033664"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/asset/zipball/5cc4a0cf86cbaeb3dc5bf3d875261169141574c9",
-                "reference": "5cc4a0cf86cbaeb3dc5bf3d875261169141574c9",
+                "url": "https://api.github.com/repos/symfony/asset/zipball/7eee96a8630f9448304ae4f0e3b474ea4e033664",
+                "reference": "7eee96a8630f9448304ae4f0e3b474ea4e033664",
                 "shasum": ""
             },
             "require": {
@@ -1919,7 +1919,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.3-dev"
+                    "dev-master": "4.2-dev"
                 }
             },
             "autoload": {
@@ -1946,7 +1946,7 @@
             ],
             "description": "Symfony Asset Component",
             "homepage": "https://symfony.com",
-            "time": "2019-04-06T23:25:14+00:00"
+            "time": "2019-01-16T20:35:37+00:00"
         },
         {
             "name": "symfony/cache",
