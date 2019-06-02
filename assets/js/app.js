@@ -3,7 +3,7 @@
 const $  = require('jquery');
 //require('@fortawesome/fontawesome-free/js/all');
 //require('datatables.net-bs4');
-//require('bootstrap');
+require('bootstrap');
 //require('popper.js');
 //require('jquery.easing/jquery.easing');
 //require('jquery-localize/dist/jquery.localize');

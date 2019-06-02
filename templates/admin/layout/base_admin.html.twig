@@ -17,7 +17,7 @@
     {#<link rel="stylesheet" href="/vendor/whirl/dist/whirl.css">#}
     <!-- =============== PAGE VENDOR STYLES ===============-->
     <!-- =============== BOOTSTRAP STYLES ===============-->
-    <link rel="stylesheet" href="/css/bootstrap.css" id="bscss">
+    {#<link rel="stylesheet" href="/css/bootstrap.css" id="bscss">#}
     <!-- =============== APP STYLES ===============-->
     {#<link rel="stylesheet" href="/css/app.css" id="maincss">#}
 
@@ -1140,16 +1140,7 @@
     <section class="section-container">
         <!-- Page content-->
         <div class="content-wrapper">
-            <div class="content-heading">
-                <div>Page title
-                    <small>Subtitle</small>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <p>A row with content</p>
-                </div>
-            </div>
+            {% block body %}{% endblock %}
         </div>
     </section>
     <!-- Page footer-->
@@ -1166,7 +1157,7 @@
 {#<script src="/vendor/jquery/dist/jquery.js"></script>#}
 <!-- BOOTSTRAP-->
 <script src="/vendor/popper.js/dist/umd/popper.js"></script>
-<script src="/vendor/bootstrap/dist/js/bootstrap.js"></script>
+{#<script src="/vendor/bootstrap/dist/js/bootstrap.js"></script>#}
 <!-- STORAGE API-->
 <script src="/vendor/js-storage/js.storage.js"></script>
 <!-- JQUERY EASING-->
