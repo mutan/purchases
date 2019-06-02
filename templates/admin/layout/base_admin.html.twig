@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Angle - Bootstrap Admin Template</title>
+    <title>Админка {{ app_site_name }}</title>
     {% block stylesheets %}
         {# 'app' must match the first argument to addEntry() in webpack.config.js #}
         {{ encore_entry_link_tags('app') }}
@@ -22,10 +22,10 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#/">
                     <div class="brand-logo">
-                        <img class="img-fluid" src="img/logo.png" alt="App Logo">
+                        <img class="img-fluid" src="{{ asset('build/images/logo.png') }}" alt="App Logo">
                     </div>
                     <div class="brand-logo-collapsed">
-                        <img class="img-fluid" src="img/logo-single.png" alt="App Logo">
+                        <img class="img-fluid" src="{{ asset('build/images/logo-single.png') }}" alt="App Logo">
                     </div>
                 </a>
             </div>

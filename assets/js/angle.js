@@ -14,7 +14,6 @@ require('../css/whirl.css');
  *
  */
 
-
 (function(window, document, $, undefined) {
 
     if (typeof $ === 'undefined') {
