@@ -13,10 +13,7 @@
         "last 2 versions",
         "ios >= 8"
     ],
-    "dependencies": {
-        "jquery-localize": "^0.1.0",
-        "screenfull": "^4.2.0"
-    },
+    "dependencies": {},
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^5.4.0",
         "@symfony/webpack-encore": "^0.27.0",

@@ -26,6 +26,15 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/elements", name="admin_index", methods="GET")
+     * @return Response
+     */
+    public function elements(): Response
+    {
+        return $this->render('admin/elements.html.twig', []);
+    }
+
+    /**
      * @Route("/users", name="user_list", methods="GET")
      * @param UserRepository $userRepository
      * @param Request $request

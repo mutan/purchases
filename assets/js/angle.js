@@ -4234,16 +4234,3 @@ require('../css/whirl.css');
         registerForm.parsley(parsleyOptions);
 
 }(jQuery, window, document));
-// Custom jQuery
-// -----------------------------------
-
-
-(function(window, document, $, undefined) {
-
-    $(function() {
-
-        // document ready
-
-    });
-
-})(window, document, window.jQuery);
