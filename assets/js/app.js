@@ -1,13 +1,21 @@
 /* JS LIBRARIES */
 
 const $  = require('jquery');
-//require('@fortawesome/fontawesome-free/js/all');
-//require('datatables.net-bs4');
+require('jquery.easing/jquery.easing');
+require('jquery-localize/dist/jquery.localize');
+require('popper.js');
 require('bootstrap');
-//require('popper.js');
-//require('jquery.easing/jquery.easing');
-//require('jquery-localize/dist/jquery.localize');
-//require('screenfull/dist/screenfull.js');
+
+/*require('./modernizr.custom.js');
+const $  = require('jquery');
+require('popper.js');
+require('bootstrap');
+require('./js.storage.js');
+require('jquery.easing/jquery.easing');
+require('./animo.js');
+require('screenfull');
+require('jquery-localize/dist/jquery.localize');
+require('./angle.js');*/
 
 /* CSS */
 
