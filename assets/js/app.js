@@ -1,10 +1,10 @@
 /* JS LIBRARIES */
 
-const $  = require('jquery');
-require('jquery.easing/jquery.easing');
-require('jquery-localize/dist/jquery.localize');
-require('popper.js');
-require('bootstrap');
+// const $  = require('jquery');
+// require('jquery.easing/jquery.easing');
+// require('jquery-localize/dist/jquery.localize');
+// require('popper.js');
+// require('bootstrap');
 
 /*require('./modernizr.custom.js');
 const $  = require('jquery');

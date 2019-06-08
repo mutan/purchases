@@ -13,7 +13,7 @@ Encore
     //.addEntry('js.storage', './assets/js/js.storage.js')
     //.addEntry('animo', './assets/js/animo.js')
 
-    .splitEntryChunks()
+    //.splitEntryChunks()
 
     // runtime.js file will be output and needs to be included in your pages
     // if the same module (e.g. jquery) is required by several entry files, they will require the same object
