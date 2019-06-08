@@ -26,7 +26,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/elements", name="admin_index", methods="GET")
+     * @Route("/elements", name="admin_elements", methods="GET")
      * @return Response
      */
     public function elements(): Response

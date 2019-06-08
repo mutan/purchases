@@ -8,23 +8,23 @@
 
     <!-- =============== VENDOR STYLES ===============-->
     <!-- FONT AWESOME-->
-    {#<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.css">#}
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.css">
     <!-- SIMPLE LINE ICONS-->
-    {#<link rel="stylesheet" href="/vendor/simple-line-icons/css/simple-line-icons.css">#}
+    <link rel="stylesheet" href="/vendor/simple-line-icons/css/simple-line-icons.css">
     <!-- ANIMATE.CSS-->
     <link rel="stylesheet" href="/vendor/animate.css/animate.css">
     <!-- WHIRL (spinners)-->
-    {#<link rel="stylesheet" href="/vendor/whirl/dist/whirl.css">#}
+    <link rel="stylesheet" href="/vendor/whirl/dist/whirl.css">
     <!-- =============== PAGE VENDOR STYLES ===============-->
     <!-- =============== BOOTSTRAP STYLES ===============-->
-    {#<link rel="stylesheet" href="/css/bootstrap.css" id="bscss">#}
+    <link rel="stylesheet" href="/css/bootstrap.css" id="bscss">
     <!-- =============== APP STYLES ===============-->
-    {#<link rel="stylesheet" href="/css/app.css" id="maincss">#}
+    <link rel="stylesheet" href="/css/app.css" id="maincss">
 
     {% block stylesheets %}
         {# 'app' must match the first argument to addEntry() in webpack.config.js #}
-        {{ encore_entry_link_tags('app') }}
-        {{ encore_entry_link_tags('angle') }}
+        {#{{ encore_entry_link_tags('app') }}#}
+        {#{{ encore_entry_link_tags('angle') }}#}
     {% endblock %}
 </head>
 
@@ -1154,10 +1154,10 @@
 <!-- MODERNIZR-->
 <script src="/vendor/modernizr/modernizr.custom.js"></script>
 <!-- JQUERY-->
-{#<script src="/vendor/jquery/dist/jquery.js"></script>#}
+<script src="/vendor/jquery/dist/jquery.js"></script>
 <!-- BOOTSTRAP-->
 <script src="/vendor/popper.js/dist/umd/popper.js"></script>
-{#<script src="/vendor/bootstrap/dist/js/bootstrap.js"></script>#}
+<script src="/vendor/bootstrap/dist/js/bootstrap.js"></script>
 <!-- STORAGE API-->
 <script src="/vendor/js-storage/js.storage.js"></script>
 <!-- JQUERY EASING-->
@@ -1170,14 +1170,14 @@
 <script src="/vendor/jquery-localize/dist/jquery.localize.js"></script>
 <!-- =============== PAGE VENDOR SCRIPTS ===============-->
 <!-- =============== APP SCRIPTS ===============-->
-{#<script src="/js/app.js"></script>#}
+<script src="/js/app.js"></script>
 
 {% block javascripts %}
     {#{{ encore_entry_script_tags('modernizr') }}#}
-    {{ encore_entry_script_tags('app') }}
     {#{{ encore_entry_script_tags('js.storage') }}#}
     {#{{ encore_entry_script_tags('animo') }}#}
-    {{ encore_entry_script_tags('angle') }}
+    {#{{ encore_entry_script_tags('app') }}#}
+    {#{{ encore_entry_script_tags('angle') }}#}
 {% endblock %}
 </body>
 
