@@ -8,12 +8,8 @@ Encore
     .setPublicPath('/build') // public path used by the web server to access the output path
 
     .addEntry('app', './assets/js/app.js')
-    //.addEntry('angle', './assets/js/angle.js')
-    //.addEntry('modernizr', './assets/js/modernizr.custom.js')
-    //.addEntry('js.storage', './assets/js/js.storage.js')
-    //.addEntry('animo', './assets/js/animo.js')
 
-    .splitEntryChunks()
+    //.splitEntryChunks()
 
     // runtime.js file will be output and needs to be included in your pages
     // if the same module (e.g. jquery) is required by several entry files, they will require the same object
