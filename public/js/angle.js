@@ -1588,9 +1588,9 @@
         if (!wrapper.length) {
             wrapper =
                 parent.children('.card-heading').nextAll() //find('.card-body, .card-footer')
-                .wrapAll('<div/>')
-                .parent()
-                .addClass('card-wrapper');
+                    .wrapAll('<div/>')
+                    .parent()
+                    .addClass('card-wrapper');
             collapseOpts = {};
         }
 
@@ -2057,9 +2057,9 @@
         // hover mode don't try to expand active collapse
         if (!useAsideHover())
             currentItem
-            .addClass('active') // activate the parent
-            .children('.collapse') // find the collapse
-            .collapse('show'); // and show it
+                .addClass('active') // activate the parent
+                .children('.collapse') // find the collapse
+                .collapse('show'); // and show it
 
         // remove this if you use only collapsible sidebar items
         $sidebar.find('li > a + ul').on('show.bs.collapse', function(e) {
@@ -2439,14 +2439,14 @@
 
         // activate Nestable for list 1
         $('#nestable').nestable({
-                group: 1
-            })
+            group: 1
+        })
             .on('change', updateOutput);
 
         // activate Nestable for list 2
         $('#nestable2').nestable({
-                group: 1
-            })
+            group: 1
+        })
             .on('change', updateOutput);
 
         // output initial serialised data
@@ -3064,10 +3064,10 @@
 
             // Create new event element
             var newEvent = $('<div/>').css({
-                    'background-color': currColor,
-                    'border-color': currColor,
-                    'color': '#fff'
-                })
+                'background-color': currColor,
+                'border-color': currColor,
+                'color': '#fff'
+            })
                 .html(val);
 
             // Prepends to the external events list
@@ -4027,10 +4027,10 @@
             templates: {
                 select:
                     '<div class="checkbox c-checkbox">' +
-                        '<label class="mb-0">' +
-                            '<input type="{{ctx.type}}" class="{{css.selectBox}}" value="{{ctx.value}}" {{ctx.checked}}>' +
-                            '<span class="fa fa-check"></span>' +
-                        '</label>'+
+                    '<label class="mb-0">' +
+                    '<input type="{{ctx.type}}" class="{{css.selectBox}}" value="{{ctx.value}}" {{ctx.checked}}>' +
+                    '<span class="fa fa-check"></span>' +
+                    '</label>'+
                     '</div>',
                 // templates for BS4
                 actionButton: '<button class="btn btn-secondary" type="button" title="{{ctx.text}}">{{ctx.content}}</button>',

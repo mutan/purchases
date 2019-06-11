@@ -2,9 +2,6 @@
     "composer/ca-bundle": {
         "version": "1.1.4"
     },
-    "container-interop/container-interop": {
-        "version": "1.2.0"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -136,9 +133,6 @@
     },
     "psr/log": {
         "version": "1.1.0"
-    },
-    "psr/simple-cache": {
-        "version": "1.0.1"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -424,7 +418,7 @@
         },
         "files": [
             "./assets/css/app.css",
-            "./assets/js/app.js",
+            "./assets/js/angle.js",
             "./config/packages/assets.yaml",
             "./config/packages/prod/webpack_encore.yaml",
             "./config/packages/webpack_encore.yaml",
@@ -450,25 +444,7 @@
     "zendframework/zend-code": {
         "version": "3.3.1"
     },
-    "zendframework/zend-escaper": {
-        "version": "2.6.0"
-    },
     "zendframework/zend-eventmanager": {
         "version": "3.2.1"
-    },
-    "zendframework/zend-http": {
-        "version": "2.9.1"
-    },
-    "zendframework/zend-loader": {
-        "version": "2.6.0"
-    },
-    "zendframework/zend-stdlib": {
-        "version": "3.2.1"
-    },
-    "zendframework/zend-uri": {
-        "version": "2.6.1"
-    },
-    "zendframework/zend-validator": {
-        "version": "2.12.0"
     }
 }

@@ -11,7 +11,7 @@ use App\Repository\UserRepository;
 
 /**
  * @Route("/admin")
- * @IsGranted("ROLE_ADMIN")
+
  */
 class AdminController extends AbstractController
 {
