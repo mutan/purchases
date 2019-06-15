@@ -35,6 +35,15 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/spinners", name="admin_spinners", methods="GET")
+     * @return Response
+     */
+    public function spinners(): Response
+    {
+        return $this->render('admin/spinners.html.twig', []);
+    }
+
+    /**
      * @Route("/users", name="user_list", methods="GET")
      * @param UserRepository $userRepository
      * @param Request $request

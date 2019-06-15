@@ -943,10 +943,10 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-animate.css@^3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/animate.css/-/animate.css-3.7.1.tgz#07da14b94185b73f06fcb90faeddb97846b2d481"
-  integrity sha512-FglP5lfDn2hRefXxXkvqBH2YGJRDRCuytbRU2bD86TIPyVe6yFQIx/XDmijOVoYRvBGKz3B8Y7cgzvLez4pTjA==
+animate.css@3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/animate.css/-/animate.css-3.6.0.tgz#de069fd9f36cbbbb06e39a09a04e909baccf5f9f"
+  integrity sha512-XConwzPTf8LOW7CPlCahqHldkQVlZfP97Jui0WFvjj8CxrEG1DiNVDinzK2jr35+eHMR8lp8B0JFa2IS4AzOxQ==
 
 "animo@github:thrivingkings/animo.js":
   version "1.0.3"
@@ -4019,6 +4019,11 @@ loader-utils@1.2.3, loader-utils@^1.0.1, loader-utils@^1.0.2, loader-utils@^1.1.
     emojis-list "^2.0.0"
     json5 "^1.0.1"
 
+loaders.css@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/loaders.css/-/loaders.css-0.1.2.tgz#3a9fb43726c73334a38142af9d0629019b658743"
+  integrity sha1-Op+0NybHMzSjgUKvnQYpAZtlh0M=
+
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
@@ -6293,6 +6298,11 @@ spdy@^4.0.0:
     http-deceiver "^1.2.7"
     select-hose "^2.0.0"
     spdy-transport "^3.0.0"
+
+spinkit@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/spinkit/-/spinkit-1.2.5.tgz#90f9f466a20e8e39ef24da959c1e611c2a30dd54"
+  integrity sha1-kPn0ZqIOjjnvJNqVnB5hHCow3VQ=
 
 split-string@^3.0.1, split-string@^3.0.2:
   version "3.1.0"
