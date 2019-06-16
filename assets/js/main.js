@@ -1,9 +1,10 @@
 /* JS LIBRARIES */
 
 require('./modernizr.custom');
+const $ = require('jquery');
+global.$ = global.jQuery = $;
 
 /*
-const $ = require('jquery');
 require('./popper');
 require('./bootstrap');
 require('./js.storage');
