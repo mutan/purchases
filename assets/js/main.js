@@ -1,7 +1,3 @@
-/* CSS */
-
-require('../css/main.scss');
-
 /* JS LIBRARIES */
 
 require('./modernizr.custom');
@@ -17,5 +13,9 @@ require('./screenfull');
 require('./jquery.localize');
 require('./app');
 */
+
+/* CSS */
+
+require('../css/main.scss');
 
 /* CUSTOM JS */
