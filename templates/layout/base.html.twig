@@ -6,8 +6,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="icon" href="{{ asset('/favicon.ico') }}">
     <title>{% block title %} – buytoyou.ru{% endblock %}</title>
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('main') }}
+    {% endblock %}
 </head>
 <body>
     <!-- User switch -->
@@ -188,12 +189,9 @@
     </footer>
     <!-- /Footer -->
 
-
-    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
-    <script type="text/javascript">
-        new WOW().init(); // Animations initialization
-    </script>
-    {% block javascripts %}{% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('main') }}
+    {% endblock %}
 </body>
 
 </html>

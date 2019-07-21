@@ -6,7 +6,7 @@
 parameters:
     app_site_name: 'buytoyou.ru'
     app_site_name_for_email: 'buytoyou'
-    no_reply_email: 'no-reply@buytoyou.ru'
+    no_reply_email: 'noreply@buytoyou.ru'
     app_recaptcha_url: 'https://www.google.com/recaptcha/api.js'
     app_recaptcha_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     app_recaptcha_secret: '%env(GOOGLE_RECAPTCHA_SECRET)%'

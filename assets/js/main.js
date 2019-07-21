@@ -7,6 +7,7 @@ require('../css/main.scss');
 
 const $ = require('jquery');
 //global.$ = global.jQuery = $;
+require('jquery-ui');
 
 //Если включить, теги i будут заменяться на svg
 //require('@fortawesome/fontawesome-free/js/all');
@@ -16,6 +17,8 @@ require('bootstrap/dist/js/bootstrap');
 
 require('datatables.net/js/jquery.dataTables');
 require('datatables.net-bs4/js/dataTables.bootstrap4');
+
+require('mdbootstrap/js/mdb');
 
 
 /* JS CUSTOM */
