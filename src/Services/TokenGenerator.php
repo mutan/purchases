@@ -17,9 +17,9 @@ class TokenGenerator
      * @return string
      * @throws Exception
      */
-    public function getToken(int $length): string
+    public function generateToken(int $length): string
     {
-        return $this->getCustomToken($length, self::CHAR_LOWER | self::CHAR_UPPER | self::CHAR_NUMERIC);
+        return $this->generateCustomToken($length, self::CHAR_LOWER | self::CHAR_UPPER | self::CHAR_NUMERIC);
     }
 
     /**
@@ -28,7 +28,7 @@ class TokenGenerator
      * @return string
      * @throws Exception
      */
-    public function getHexadecimalToken(int $length = 10): string
+    public function generateHexadecimalToken(int $length = 10): string
     {
         if ($length > 64 || $length < 1) {
             throw new \InvalidArgumentException('Length must be an integer between 1 and 64');
@@ -43,9 +43,9 @@ class TokenGenerator
      * @return string
      * @throws Exception
      */
-    public function getPassword(int $length): string
+    public function generatePassword(int $length): string
     {
-        return $this->getCustomPassword($length, 1, 1, 1, 0);
+        return $this->generateCustomPassword($length, 1, 1, 1, 0);
     }
 
     /**
@@ -57,7 +57,7 @@ class TokenGenerator
      * @return string
      * @throws Exception
      */
-    public function getCustomPassword(int $length, int $lower, int $upper, int $numeric, int $special): string
+    public function generateCustomPassword(int $length, int $lower, int $upper, int $numeric, int $special): string
     {
         if ($length < $lower + $upper + $numeric + $special) {
             throw new Exception('Length can not be less then sum of characters');
@@ -66,19 +66,19 @@ class TokenGenerator
         $characters = '';
         $flags = 0;
         if ($lower) {
-            $characters .= $this->getCustomToken($lower, self::CHAR_LOWER);
+            $characters .= $this->generateCustomToken($lower, self::CHAR_LOWER);
             $flags += self::CHAR_LOWER;
         }
         if ($upper) {
-            $characters .= $this->getCustomToken($upper, self::CHAR_UPPER);
+            $characters .= $this->generateCustomToken($upper, self::CHAR_UPPER);
             $flags += self::CHAR_UPPER;
         }
         if ($numeric) {
-            $characters .= $this->getCustomToken($numeric, self::CHAR_NUMERIC);
+            $characters .= $this->generateCustomToken($numeric, self::CHAR_NUMERIC);
             $flags += self::CHAR_NUMERIC;
         }
         if ($special) {
-            $characters .= $this->getCustomToken($special, self::CHAR_SPECIAL);
+            $characters .= $this->generateCustomToken($special, self::CHAR_SPECIAL);
             $flags += self::CHAR_SPECIAL;
         }
 
@@ -86,7 +86,7 @@ class TokenGenerator
             if (!$flags) {
                 $flags = self::CHAR_LOWER | self::CHAR_UPPER | self::CHAR_NUMERIC | self::CHAR_SPECIAL;
             }
-            $characters .= $this->getCustomToken($length - strlen($characters), $flags);
+            $characters .= $this->generateCustomToken($length - strlen($characters), $flags);
         }
 
         return str_shuffle($characters);
@@ -98,7 +98,7 @@ class TokenGenerator
      * @return string
      * @throws Exception
      */
-    public function getCustomToken(int $length, $flags): string
+    public function generateCustomToken(int $length, $flags): string
     {
         $token = "";
         $characters = $this->getCharacters($flags);

@@ -3,21 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Form\ForgotPasswordType;
 use App\Form\RegisterType;
 use App\Form\ResetPasswordType;
-use App\Form\ForgotPasswordType;
+use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
-use App\Services\TokenGenerator;
 use App\Services\CaptchaValidator;
+use App\Services\TokenGenerator;
+use Exception;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
 class SecurityController extends BaseController
@@ -51,10 +52,11 @@ class SecurityController extends BaseController
 
     /**
      * @Route("/logout", name="app_logout")
+     * @throws Exception
      */
     public function logout()
     {
-        throw new \Exception('Will be intercepted before getting here');
+        throw new Exception('Will be intercepted before getting here');
     }
 
     /**
@@ -64,6 +66,7 @@ class SecurityController extends BaseController
      * @param TokenGenerator $tokenGenerator
      * @param CaptchaValidator $captchaValidator
      * @return Response
+     * @throws Exception
      */
     public function register(
         Request $request,
@@ -86,7 +89,7 @@ class SecurityController extends BaseController
                     throw new ValidatorException('Wrong captcha');
                 }
 
-                $token = $tokenGenerator->generateToken();
+                $token = $tokenGenerator->generateHexadecimalToken(64);
 
                 $user->setPassword($passwordEncoder->encodePassword($user, $user->getPlainPassword()));
                 $user->setActivationToken($token);
@@ -129,6 +132,7 @@ class SecurityController extends BaseController
      * @param LoginFormAuthenticator $formAuthenticator
      * @param string $token
      * @return Response
+     * @throws Exception
      */
     public function activate(
         Request $request,
@@ -181,6 +185,7 @@ class SecurityController extends BaseController
      * @param TokenGenerator $tokenGenerator
      * @param CaptchaValidator $captchaValidator
      * @return Response
+     * @throws Exception
      */
     public function forgotPassword(
         Request $request,
@@ -216,7 +221,7 @@ class SecurityController extends BaseController
                     ]);
                 }
 
-                $token = $tokenGenerator->generateToken();
+                $token = $tokenGenerator->generateHexadecimalToken(64);
 
                 $user->setResetToken($token);
 
@@ -255,6 +260,7 @@ class SecurityController extends BaseController
      * @param LoginFormAuthenticator $formAuthenticator
      * @param string $token
      * @return Response
+     * @throws Exception
      */
     public function resetPassword(
         Request $request,
