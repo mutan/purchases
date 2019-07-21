@@ -8,7 +8,6 @@ Encore
     .setPublicPath('/build') // public path used by the web server to access the output path
 
     .addEntry('main', './assets/js/main.js')
-    .addEntry('loaders', './assets/js/loaders.js')
 
     //.splitEntryChunks()
 

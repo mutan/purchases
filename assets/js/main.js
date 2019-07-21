@@ -1,22 +1,21 @@
-/* JS LIBRARIES */
-
-require('./modernizr.custom');
-const $ = require('jquery');
-global.$ = global.jQuery = $;
-
-/*
-require('./popper');
-require('./bootstrap');
-require('./js.storage');
-require('./jquery.easing');
-require('./animo');
-require('./screenfull');
-require('./jquery.localize');
-require('./app');
-*/
-
 /* CSS */
 
 require('../css/main.scss');
 
-/* CUSTOM JS */
+
+/* JS LIBRARIES */
+
+const $ = require('jquery');
+//global.$ = global.jQuery = $;
+
+//Если включить, теги i будут заменяться на svg
+//require('@fortawesome/fontawesome-free/js/all');
+
+require('popper.js/dist/popper');
+require('bootstrap/dist/js/bootstrap');
+
+require('datatables.net/js/jquery.dataTables');
+require('datatables.net-bs4/js/dataTables.bootstrap4');
+
+
+/* JS CUSTOM */
