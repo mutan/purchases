@@ -18,7 +18,4 @@ require('bootstrap/dist/js/bootstrap');
 require('datatables.net/js/jquery.dataTables');
 require('datatables.net-bs4/js/dataTables.bootstrap4');
 
-require('mdbootstrap/js/mdb');
-
-
 /* JS CUSTOM */

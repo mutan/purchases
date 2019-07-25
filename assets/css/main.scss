@@ -1,15 +1,63 @@
 /* FONTS */
 @import url('https://fonts.googleapis.com/css?family=Raleway|Ubuntu|Roboto&subset=cyrillic');
 
+
 /* CUSTOM BOOTSTRAP VARIABLES */
-// customize Bootstrap variables here
+
+// Убираем отступы у sm
+$container-max-widths: (/*sm: 540px,*/ md: 720px, lg: 960px, xl: 1280px) !default;
+
 
 /* CSS LIBRARIES */
-@import "~@fortawesome/fontawesome-free";
+
+@import "~bootswatch/dist/spacelab/variables";
 @import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/spacelab/bootswatch";
+
+@import "~@fortawesome/fontawesome-free/css/all.css";
 @import '~datatables.net-bs4/css/dataTables.bootstrap4.css';
 
-@import "~mdbootstrap/css/mdb.css";
-@import "~mdbootstrap/css/style.css";
 
 /* CUSTOM SCSS */
+
+html {
+  font-size: 14px;
+  position: relative; /* Sticky footer styles */
+  min-height: 100%; /* Sticky footer styles */
+}
+
+body {
+  margin-bottom: 150px; /* Margin bottom by footer height */
+  font-family: 'Ubuntu', sans-serif !important;
+}
+
+.footer {
+  position: absolute; /* Sticky footer styles */
+  bottom: 0; /* Sticky footer styles */
+  width: 100%; /* Sticky footer styles */
+  /* Set the fixed height of the footer here */
+  //height: 150px;
+  background-color: #f5f5f5;
+}
+
+.footer .menu .item {
+  margin-bottom: 16px;
+}
+
+ol, ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 60px 15px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
