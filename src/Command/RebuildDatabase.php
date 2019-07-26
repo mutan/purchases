@@ -44,7 +44,7 @@ class RebuildDatabase extends Command
 
         // Выполняем команды
         $commands = [
-            ['doctrine:database:drop', ['command' => 'doctrine:database:drop', '--force' => true]],
+            //['doctrine:database:drop', ['command' => 'doctrine:database:drop', '--force' => true]],
             ['doctrine:database:create', ['command' => 'doctrine:database:create']],
             ['make:migration', ['command' => 'make:migration']],
             ['doctrine:migrations:migrate', ['command' => 'doctrine:migrations:migrate']],
