@@ -58,16 +58,16 @@ let Modal = {
             type: 'POST',
             beforeSend: ()=> {Modal.toggleButtonSpinnerIcon(e);},
             complete: ()=> {Modal.toggleButtonSpinnerIcon(e);}
-        }).then(function (responce) {
-            Modal.reload(Modal.getModal(), responce, options);
+        }).then(function (response) {
+            Modal.reload(Modal.getModal(), response, options);
         });
     },
 
-    reload: function($modal, responce, options) {
+    reload: function($modal, response, options) {
         if (options.size) {
             $modal.find('.modal-dialog').addClass(options.size);
         }
-        $modal.find('.modal-content').html(responce.output);
+        $modal.find('.modal-content').html(response.output);
         $modal.modal('show');
         if (options.shopAutocomplete) {
             Modal.shopAutocomplete(options.shopAutocompleteElem);
@@ -84,8 +84,8 @@ let Modal = {
                 beforeSend: ()=> {
                     $submitButton.prop('disabled', true).html("<i class='fa fa-spinner fa-spin pr-1'></i> Идет сохранение");
                 }
-            }).then(function (responce) {
-                (responce.reload) ? location.reload() : Modal.reload($modal, responce, options);
+            }).then(function (response) {
+                (response.reload) ? location.reload() : Modal.reload($modal, response, options);
             });
         });
     }
