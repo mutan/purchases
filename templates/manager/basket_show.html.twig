@@ -25,7 +25,7 @@
 
         </div>
         <div class="col-12 col-md-4 text-right">
-            <button type="button" class="btn btn-sm btn-narrow btn-dark-green basket-manager-edit" data-basket-id="{{ basket.id }}"><i class="fa fa-edit"></i></button>
+            <button type="button" class="btn btn-sm btn-narrow btn-dark-green basket-manager-edit" data-id="{{ basket.id }}"><i class="fa fa-edit"></i></button>
         </div>
     </div>
     <hr>
@@ -65,7 +65,7 @@
                         <td>{% if basket.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
                         <td>
                             <nobr>
-                                <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-manager-edit" data-product-id="{{ product.id }}">
+                                <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-manager-edit" data-id="{{ product.id }}">
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 {{ include('product/_delete_form.html.twig') }}

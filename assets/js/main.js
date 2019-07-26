@@ -100,7 +100,7 @@ $('#basket-user-new').on('click', (e)=> {
 });
 
 $('#basket-user-edit').on('click', (e)=> {
-    let id = $(e.currentTarget).attr('data-basket-id');
+    let id = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
         url: `/basket/${id}/edit`,
         shopAutocomplete: true,
@@ -109,7 +109,7 @@ $('#basket-user-edit').on('click', (e)=> {
 });
 
 $('#product-user-new').on('click', (e)=> {
-    let basketId = $(e.currentTarget).attr('data-basket-id');
+    let basketId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
         url: `/basket/${basketId}/product/new`,
         size: 'modal-lg'
@@ -117,7 +117,7 @@ $('#product-user-new').on('click', (e)=> {
 });
 
 $('.product-user-edit').on('click', (e)=> {
-    let productId = $(e.currentTarget).attr('data-product-id');
+    let productId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
         url: `/basket/product/${productId}/edit`,
         size: 'modal-lg'
@@ -125,7 +125,7 @@ $('.product-user-edit').on('click', (e)=> {
 });
 
 $('.basket-manager-edit').on('click', (e)=> {
-    let basketId = $(e.currentTarget).attr('data-basket-id');
+    let basketId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
         url: `/manager/basket/${basketId}/edit`,
         size: 'modal-lg'
@@ -133,7 +133,7 @@ $('.basket-manager-edit').on('click', (e)=> {
 });
 
 $('.product-manager-edit').on('click', (e)=> {
-    let productId = $(e.currentTarget).attr('data-product-id');
+    let productId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
         url: `/manager/product/${productId}/edit`,
         size: 'modal-lg'
