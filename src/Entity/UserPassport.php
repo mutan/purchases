@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use DateTimeInterface;
-use InvalidArgumentException;
-use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Traits\TimestampableEntityTrait;
 use App\Entity\Interfaces\PrefixableEntityInterface;
+use App\Entity\Traits\TimestampableEntityTrait;
+use DateTimeInterface;
+use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

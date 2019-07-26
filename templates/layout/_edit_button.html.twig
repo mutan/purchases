@@ -1,0 +1,4 @@
+{# Первое употребление route (в качестве класса) нужен, чтобы повесить jQuery-event #}
+<a class="btn btn-sm btn-primary {{ route }}" href="{{ path(route, {'id': id}) }}" data-id="{{ id }}" title="Редактировать">
+    <i class="fas fa-edit"></i>
+</a>
