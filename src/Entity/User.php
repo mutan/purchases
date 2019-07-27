@@ -27,17 +27,17 @@ class User implements UserInterface, PrefixableEntityInterface
     use UserTokenTrait;
     use TimestampableEntityTrait;
 
-    const PREFIX = 'U'; //User
+    const PREFIX = 'U'; // User
 
-    const ROLE_USER    = 'ROLE_USER';
-    const ROLE_ADMIN   = 'ROLE_ADMIN';
+    const ROLE_USER = 'ROLE_USER';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
 
     const ALLOWED_ROLES = [
         self::ROLE_USER,
         self::ROLE_ADMIN,
     ];
 
-    const STATUS_ACTIVE   = 'active';
+    const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
 
     const ALLOWED_STATUSES = [
@@ -45,7 +45,7 @@ class User implements UserInterface, PrefixableEntityInterface
         self::STATUS_INACTIVE,
     ];
 
-    const INACTIVE_REASON_BANNED        = 'banned';
+    const INACTIVE_REASON_BANNED = 'banned';
     const INACTIVE_REASON_NOT_ACTIVATED = 'not_activated';
 
     const ALLOWED_INACTIVE_REASONS = [

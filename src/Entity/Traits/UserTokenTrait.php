@@ -5,6 +5,7 @@ namespace App\Entity\Traits;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 trait UserTokenTrait
 {
@@ -33,6 +34,11 @@ trait UserTokenTrait
      */
     private $activatedAt;
 
+    /**
+     * @param string $token
+     * @return UserTokenTrait
+     * @throws Exception
+     */
     public function setResetToken(string $token): self
     {
         $this->resetToken = $token;
@@ -40,6 +46,11 @@ trait UserTokenTrait
         return $this;
     }
 
+    /**
+     * @param string $token
+     * @return UserTokenTrait
+     * @throws Exception
+     */
     public function setActivationToken(string $token): self
     {
         $this->activationToken = $token;

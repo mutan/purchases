@@ -11,16 +11,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserPassportRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class UserPassport implements PrefixableEntityInterface
 {
     use TimestampableEntityTrait;
 
-    const PREFIX = 'UP'; //User Passport
+    const PREFIX = 'UP'; // User Passport
 
-    const STATUS_NEW      = 'new';
+    const STATUS_NEW = 'new';
     const STATUS_APPROVED = 'approved';
-    const STATUS_DELETED  = 'deleted';
+    const STATUS_DELETED = 'deleted';
 
     const ALLOWED_STATUSES = [
         self::STATUS_NEW,

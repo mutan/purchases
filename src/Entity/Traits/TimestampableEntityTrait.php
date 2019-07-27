@@ -5,6 +5,7 @@ namespace App\Entity\Traits;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 // !!! Don't forget to add into entity class notation: @ORM\HasLifecycleCallbacks
 
@@ -45,6 +46,7 @@ trait TimestampableEntityTrait
     /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
+     * @throws Exception
      */
     public function updateTimestamps(): self
     {

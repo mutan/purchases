@@ -10,16 +10,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserAddressRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class UserAddress implements PrefixableEntityInterface
 {
     use TimestampableEntityTrait;
 
-    const PREFIX = 'UA'; //User Address
+    const PREFIX = 'UA'; // User Address
 
-    const STATUS_NEW      = 'new';
+    const STATUS_NEW = 'new';
     const STATUS_APPROVED = 'approved';
-    const STATUS_DELETED  = 'deleted';
+    const STATUS_DELETED = 'deleted';
 
     const ALLOWED_STATUSES = [
         self::STATUS_NEW,
