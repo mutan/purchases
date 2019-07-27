@@ -24,10 +24,8 @@ class UserAddressController extends BaseController
      */
     public function index(UserAddressRepository $userAddressRepository): Response
     {
-        $user = $this->getUser();
-
         return $this->render('user_address/index.html.twig', [
-            'user_addresses' => $userAddressRepository->findAllByUser($user),
+            'user_addresses' => $userAddressRepository->findAllByUser($this->getUser()),
         ]);
     }
 

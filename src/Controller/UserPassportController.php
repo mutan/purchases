@@ -24,10 +24,8 @@ class UserPassportController extends BaseController
      */
     public function index(UserPassportRepository $userPassportRepository): Response
     {
-        $user = $this->getUser();
-
         return $this->render('user_passport/index.html.twig', [
-            'user_passports' => $userPassportRepository->findAllByUser($user),
+            'user_passports' => $userPassportRepository->findAllByUser($this->getUser()),
         ]);
     }
 
