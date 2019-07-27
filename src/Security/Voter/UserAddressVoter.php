@@ -5,32 +5,46 @@ namespace App\Security\Voter;
 use App\Entity\UserAddress;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserAddressVoter extends Voter
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     protected function supports($attribute, $subject)
     {
-        // replace with your own logic
-        // https://symfony.com/doc/current/security/voters.html
-        return \in_array($attribute, ['USER_ADDRESS_MANAGE'])
+        // If the attribute isn't one we support, return false
+        // Only vote on UserAddress objects inside this voter
+        return in_array($attribute, [
+                'USER_ADDRESS_EDIT', // by user
+            ])
             && $subject instanceof UserAddress;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
+        // The user must be logged in; if not, deny access
         $user = $token->getUser();
-        // if the user is anonymous, do not grant access
         if (!$user instanceof UserInterface) {
             return false;
         }
 
+        // ROLE_ADMIN can do anything
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            return true;
+        }
+
+        // You know $subject is a UserPassport object, thanks to supports
+        // Check conditions and return true to grant permission
         /** @var UserAddress $subject */
-        // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
-            case 'USER_ADDRESS_MANAGE':
-                // logic to determine if the user can EDIT
-                // return true or false
+            case 'USER_ADDRESS_EDIT':
                 if ($subject->getUser() == $user && $subject->isNew()) {
                     return true;
                 }
