@@ -11,8 +11,8 @@ class AlphanumericPasswordValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof SpecialCharacterPassword) {
-            throw new UnexpectedTypeException($constraint, SpecialCharacterPassword::class);
+        if (!$constraint instanceof AlphanumericPassword) {
+            throw new UnexpectedTypeException($constraint, AlphanumericPassword::class);
         }
 
         // custom constraints should ignore null and empty values to allow

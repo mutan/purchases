@@ -32,7 +32,6 @@ class UserFixtures extends BaseFixture
             $user->setLastname('Губанов');
             $user->setFirstname('Аким');
             $user->setMiddlename('Сергееыич');
-
             $user->setRoles([User::ROLE_ADMIN]);
             $user->setCreateDate(new DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);

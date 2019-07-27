@@ -10,7 +10,7 @@
                    {% if form.vars.checked -%}checked="checked"{% endif %}
             >
             <label for="register_termsAccepted" class="custom-control-label">
-                Я даю согласие на <a href="{{ path('user_privacy_policy') }}">обработку своих персональных данных</a>
+                Я даю согласие на <a href="{{ path('info_privacy_policy') }}">обработку своих персональных данных</a>
             </label>
         </div>
         {%- if errors|length > 0 -%}

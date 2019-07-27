@@ -13,7 +13,7 @@
     <!-- User switch -->
     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
         <div class="alert alert-danger alert-fixed text-center mb-0" style="border-radius: 0; font-size: 0.9rem; padding: .3rem 1.25rem;">
-            You are currently switched to user <strong>{{ app.user.name }} ({{ app.user.email }})</strong>.
+            You are currently switched to user <strong>{{ app.user.fullname }} ({{ app.user.email }})</strong>.
             <a class="alert-link" href="{{ path('app_homepage', {'_switch_user' : '_exit'}) }}"> <i class="fas fa-sign-out-alt ml-2"></i> Exit</a>
         </div>
     {% endif %}
@@ -62,7 +62,7 @@
                     {% if is_granted('ROLE_USER') %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
-                                <i class="fa fa-user"></i> <span class="pl-1">{{ app.user.name }}</span>
+                                <i class="fa fa-user"></i> <span class="pl-1">{{ app.user.fullname }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="#">Профиль</a>

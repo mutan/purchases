@@ -20,7 +20,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="`user`")
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("email")
- * @UniqueEntity("nickname")
  */
 class User implements UserInterface, PrefixableEntityInterface
 {
@@ -199,17 +198,6 @@ class User implements UserInterface, PrefixableEntityInterface
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNickname(): ?string
-    {
-        return $this->nickname;
-    }
-
-    public function setNickname(string $nickname): self
-    {
-        $this->nickname = $nickname;
-        return $this;
     }
 
     public function getLastname(): ?string
@@ -541,6 +529,11 @@ class User implements UserInterface, PrefixableEntityInterface
     public function __toString()
     {
         return $this->getIdWithPrefix();
+    }
+
+    public function getFullName(): string
+    {
+        return $this->getLastname() . ' ' . $this->getFirstname() . ' ' . $this->getMiddlename();
     }
 
     public function isActive()
