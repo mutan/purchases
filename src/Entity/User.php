@@ -30,12 +30,10 @@ class User implements UserInterface, PrefixableEntityInterface
     const PREFIX = 'U'; //User
 
     const ROLE_USER    = 'ROLE_USER';
-    const ROLE_MANAGER = 'ROLE_MANAGER';
     const ROLE_ADMIN   = 'ROLE_ADMIN';
 
     const ALLOWED_ROLES = [
         self::ROLE_USER,
-        self::ROLE_MANAGER,
         self::ROLE_ADMIN,
     ];
 

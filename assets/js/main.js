@@ -139,3 +139,13 @@ $('.product-manager-edit').on('click', (e)=> {
         size: 'modal-lg'
     });
 });
+
+
+
+$('.user_passport_edit').on('click', (e)=> {
+    let id = $(e.currentTarget).attr('data-id');
+    Modal.handleMainModal(e, {
+        url: `/user/passport/${id}/edit`,
+        size: 'modal-lg'
+    });
+});

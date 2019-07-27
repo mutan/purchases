@@ -87,7 +87,6 @@
 
     <main style="padding-top: {%- if is_granted('ROLE_PREVIOUS_ADMIN') -%}78px{%- else -%}57px{%- endif -%}">
         <div class="container mt-4 mb-4">
-            <!-- Flash messages -->
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
@@ -98,7 +97,6 @@
                     </div>
                 {% endfor %}
             {% endfor %}
-            <!-- /Flash messages -->
 
             {% block body %}{% endblock %}
         </div>

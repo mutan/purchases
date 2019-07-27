@@ -1,5 +1,17 @@
-    {{ form_errors(form) }}
+{% form_theme form 'layout/form/_errors.html.twig' %}
 
+<div class="modal-header">
+    <h4 class="modal-title">{{ title }}</h4>
+    <button type="button" class="close" data-dismiss="modal">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+
+{{ form_start(form) }}
+    {{ form_widget(form._token) }}
+    {{ form_errors(form) }}
+<!--Body-->
+<div class="modal-body">
     <div class="form-row">
         <div class="form-group col-sm-12 col-md-6 col-lg-3">
             {{ form_label(form.series, 'Серия') }}
@@ -34,6 +46,10 @@
             {{ form_help(form.giveDate) }}
         </div>
     </div>
-
-    {{ form_widget(form) }}
-{{ form_end(form) }}
+</div>
+<!--Footer-->
+<div class="modal-footer">
+    {{ include('layout/_save_button.html.twig') }}
+</div>
+{{ form_widget(form) }}
+{{ form_end(form, {'render_rest': false}) }}

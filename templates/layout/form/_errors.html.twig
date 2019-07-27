@@ -1,8 +1,8 @@
 {# 1 – убран класс alert (красный фон) #}
-{#<span class="{% if form is not rootform %}invalid-feedback{% else %}alert alert-danger{% endif %} d-block">#}
+    {#<span class="{% if form is not rootform %}invalid-feedback{% else %}alert alert-danger{% endif %} d-block">#}
 
 {# 2 – Убраны эти идиотские бейджи на красном фоне #}
-{# <span class="form-error-icon badge badge-danger text-uppercase">{{ 'Error'|trans({}, 'validators') }}</span> #}
+    {# <span class="form-error-icon badge badge-danger text-uppercase">{{ 'Error'|trans({}, 'validators') }}</span> #}
 
 {% block form_errors -%}
     {%- if errors|length > 0 -%}
