@@ -20,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="`user`")
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("email")
- * @UniqueEntity("name")
+ * @UniqueEntity("nickname")
  */
 class User implements UserInterface, PrefixableEntityInterface
 {
@@ -61,24 +61,41 @@ class User implements UserInterface, PrefixableEntityInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30, unique=true, options={"comment":"Имя пользователя (никнейм)"})
-     * @Assert\NotBlank(message="Имя пользователя не может быть пустым")
-     * @Assert\Regex(pattern="/^\w+$/", message="Имя пользователя может содержать только буквы, цифры и знак подчеркивания.")
-     * @Assert\Length(
-     *     min=3,
-     *     max=30,
-     *     minMessage="Имя должно состоять минимум из {{ limit }} символов.",
-     *     maxMessage="Имя должно состоять максимум из {{ limit }} символов."
-     * )
-     */
-    private $name;
-
-    /**
      * @ORM\Column(type="string", length=100, unique=true)
      * @Assert\NotBlank(message="Емейл не может быть пустым.", groups={"forgot_password"})
      * @Assert\Email(message="Введите существующий емейл.", groups={"forgot_password"})
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255, options={"comment":"Фамилия"})
+     * @Assert\NotBlank(message="Фамилия не может быть пустой")
+     * @Assert\Regex(pattern="/^\W+$/", message="Никнейм может содержать только буквы")
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="string", length=255, options={"comment":"Имя"})
+     * @Assert\NotBlank(message="Имя не может быть пустым")
+     * @Assert\Regex(pattern="/^\W+$/", message="Никнейм может содержать только буквы")
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Отчество"})
+     * @Assert\Regex(pattern="/^\W+$/", message="Никнейм может содержать только буквы")
+     */
+    private $middlename;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Ссылка на аккаунт Вконтакте"})
+     */
+    private $vk;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Ссылка на Телеграм аккаунт"})
+     */
+    private $telegram;
 
     /**
      * @ORM\Column(type="json")
@@ -143,7 +160,6 @@ class User implements UserInterface, PrefixableEntityInterface
      */
     private $lastLoginDate;
 
-
     public function __construct()
     {
         $this->userAddresses = new ArrayCollection();
@@ -185,15 +201,58 @@ class User implements UserInterface, PrefixableEntityInterface
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getNickname(): ?string
     {
-        return $this->name;
+        return $this->nickname;
     }
 
-    public function setName(string $name): self
+    public function setNickname(string $nickname): self
     {
-        $this->name = $name;
+        $this->nickname = $nickname;
+        return $this;
+    }
 
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+        return $this;
+    }
+
+    public function getMiddlename(): ?string
+    {
+        return $this->middlename;
+    }
+
+    public function setVk(string $vk): self
+    {
+        $this->vk = $vk;
+        return $this;
+    }
+
+    public function getVk(): ?string
+    {
+        return $this->vk;
+    }
+
+    public function setMiddlename(string $middlename): self
+    {
+        $this->middlename = $middlename;
         return $this;
     }
 

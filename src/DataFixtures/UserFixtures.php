@@ -7,14 +7,15 @@ use App\Entity\Product;
 use App\Entity\User;
 use App\Entity\UserAddress;
 use App\Entity\UserPassport;
+use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends BaseFixture
 {
-    public const ROLE_USER_REFERENCE    = 'role_user';
+    public const ROLE_USER_REFERENCE = 'role_user';
     public const ROLE_MANAGER_REFERENCE = 'role_manager';
-    public const ROLE_ADMIN_REFERENCE   = 'role_admin';
+    public const ROLE_ADMIN_REFERENCE = 'role_admin';
 
     private $passwordEncoder;
 
@@ -28,9 +29,12 @@ class UserFixtures extends BaseFixture
         $this->createMany(1, self::ROLE_ADMIN_REFERENCE, function($i) {
             $user = new User();
             $user->setEmail('akim_now@mail.ru');
-            $user->setName('Akim');
-            $user->setRoles([User::ROLE_ADMIN, User::ROLE_MANAGER]);
-            $user->setCreateDate(new \DateTime('-10 day'));
+            $user->setLastname('Губанов');
+            $user->setFirstname('Аким');
+            $user->setMiddlename('Сергееыич');
+
+            $user->setRoles([User::ROLE_ADMIN]);
+            $user->setCreateDate(new DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'secret1S'));
@@ -49,9 +53,11 @@ class UserFixtures extends BaseFixture
         $this->createMany(1, self::ROLE_MANAGER_REFERENCE, function($i) {
             $user = new User();
             $user->setEmail('gamerxxx@mail.ru');
-            $user->setName('Яша');
-            $user->setRoles([User::ROLE_MANAGER]);
-            $user->setCreateDate(new \DateTime('-10 day'));
+            $user->setLastname('Михальченко');
+            $user->setFirstname('Яков');
+            $user->setMiddlename('Андреевич');
+            $user->setRoles([]);
+            $user->setCreateDate(new DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'secret1S'));
@@ -70,7 +76,8 @@ class UserFixtures extends BaseFixture
         $this->createMany(10, self::ROLE_USER_REFERENCE, function($i) {
             $user = new User();
             $user->setEmail(sprintf('user%d@example.com', $i));
-            $user->setName($this->faker->unique()->firstName);
+            $user->setLastname($this->faker->lastName);
+            $user->setFirstname($this->faker->firstName);
             $user->setCreateDate(new \DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
