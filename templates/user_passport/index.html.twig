@@ -9,7 +9,7 @@
         <h1 class="mb-0">Мои паспорта</h1>
     </div>
     <div class="col-sm-12 col-md-3 align-self-center text-right">
-        <a class="btn btn-sm btn-primary" href="{{ path('user_passport_new') }}" title="Добавить">
+        <a id="user_passport_new" class="btn btn-sm btn-primary" href="{{ path('user_passport_new') }}" title="Добавить">
             <i class="fa fa-plus"></i> Добавить
         </a>
     </div>
@@ -41,7 +41,7 @@
                         <strong>Статус:</strong> {{ user_passport.status }}
                     </div>
                     <div class="align-self-center ml-auto">
-                        {% if is_granted('USER_PASSPORT_MANAGE', user_passport) %}
+                        {% if is_granted('USER_PASSPORT_EDIT', user_passport) %}
                             {{ include('layout/_edit_button.html.twig', {'route': 'user_passport_edit', 'id': user_passport.id}) }}
                             {{ include('layout/_delete_button.html.twig', {'route': 'user_passport_delete', 'id': user_passport.id}) }}
                         {% endif %}

@@ -140,8 +140,25 @@ $('.product-manager-edit').on('click', (e)=> {
     });
 });
 
-
-
+$('#user_address_new').on('click', (e)=> {
+    Modal.handleMainModal(e, {
+        url: `/user/address/new`,
+        size: 'modal-lg'
+    });
+});
+$('.user_address_edit').on('click', (e)=> {
+    let id = $(e.currentTarget).attr('data-id');
+    Modal.handleMainModal(e, {
+        url: `/user/address/${id}/edit`,
+        size: 'modal-lg'
+    });
+});
+$('#user_passport_new').on('click', (e)=> {
+    Modal.handleMainModal(e, {
+        url: `/user/passport/new`,
+        size: 'modal-lg'
+    });
+});
 $('.user_passport_edit').on('click', (e)=> {
     let id = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {

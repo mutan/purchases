@@ -46,7 +46,7 @@ class UserPassportController extends BaseController
             $userPassport->setUser($this->getUser());
             $this->getEm()->persist($userPassport);
             $this->getEm()->flush();
-            $this->addFlash('success', "Пасспорт добавлен");
+            $this->addFlash('success', "Паспорт добавлен");
             $reload = true;
         }
 
@@ -55,7 +55,7 @@ class UserPassportController extends BaseController
             'reload' => $reload ?? false,
             'output' => $this->renderView('user_passport/_user_passport_modal.html.twig', [
                 'form' => $form->createView(),
-                'title' => 'Новый пасспорт'
+                'title' => 'Новый паспорт'
             ])
         ], 200);
     }
@@ -68,14 +68,14 @@ class UserPassportController extends BaseController
      */
     public function edit(Request $request, UserPassport $userPassport): JsonResponse
     {
-        $this->denyAccessUnlessGranted('USER_PASSPORT_MANAGE', $userPassport);
+        $this->denyAccessUnlessGranted('USER_PASSPORT_EDIT', $userPassport);
 
         $form = $this->createForm(UserPassportType::class, $userPassport);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getEm()->flush();
-            $this->addFlash('success', "Пасспорт обновлен");
+            $this->addFlash('success', "Паспорт обновлен");
             $reload = true;
         }
 
@@ -83,9 +83,9 @@ class UserPassportController extends BaseController
             'message' => 'Success',
             'reload' => $reload ?? false,
             'output' => $this->renderView('user_passport/_user_passport_modal.html.twig', [
-                'user_address' => $userPassport,
+                'user_passport' => $userPassport,
                 'form' => $form->createView(),
-                'title' => 'Редактировать пасспорт'
+                'title' => 'Редактировать паспорт'
             ])
         ], 200);
     }
@@ -98,19 +98,18 @@ class UserPassportController extends BaseController
      */
     public function delete(Request $request, UserPassport $userPassport): Response
     {
-        $this->denyAccessUnlessGranted('USER_PASSPORT_MANAGE', $userPassport);
+        $this->denyAccessUnlessGranted('USER_PASSPORT_EDIT', $userPassport);
 
         if (!$userPassport->isNew()) {
-            $this->addFlash('danger', "Статус заказа {$userPassport->getIdWithPrefix()} – {$userPassport->getStatus()}. Удаление невозможно.");
+            $this->addFlash('danger', "Статус паспорта {$userPassport->getIdWithPrefix()} – {$userPassport->getStatus()}. Удалить можно только паспорт в статусе New");
             return $this->redirectToRoute('user_passport_index');
         }
 
         if ($this->isCsrfTokenValid('delete'.$userPassport->getId(), $request->request->get('_token'))) {
             $userPassport->setStatus(UserPassport::STATUS_DELETED);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($userPassport);
-            $entityManager->flush();
+            $this->getEm()->persist($userPassport);
+            $this->getEm()->flush();
+            $this->addFlash('danger', "Паспорт {$userPassport->getIdWithPrefix()} удален.");
         }
 
         return $this->redirectToRoute('user_passport_index');
