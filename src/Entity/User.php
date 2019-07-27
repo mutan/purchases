@@ -45,8 +45,8 @@ class User implements UserInterface, PrefixableEntityInterface
         self::STATUS_INACTIVE,
     ];
 
-    const INACTIVE_REASON_BANNED = 'banned';
-    const INACTIVE_REASON_NOT_ACTIVATED = 'not_activated';
+    const INACTIVE_REASON_BANNED = 'banned'; // banned by admin (for any reason, including user's request)
+    const INACTIVE_REASON_NOT_ACTIVATED = 'not_activated'; // not activated after registration
 
     const ALLOWED_INACTIVE_REASONS = [
         self::INACTIVE_REASON_BANNED,
