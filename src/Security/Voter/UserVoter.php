@@ -40,7 +40,7 @@ class UserVoter extends Voter
             return true;
         }
 
-        // You know $subject is a UserPassport object, thanks to supports
+        // You know $subject is a User object, thanks to supports
         // Check conditions and return true to grant permission
         /** @var User $subject */
         switch ($attribute) {
