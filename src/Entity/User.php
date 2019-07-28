@@ -227,7 +227,13 @@ class User implements UserInterface, PrefixableEntityInterface
         return $this->middlename;
     }
 
-    public function setVk(string $vk): self
+    public function setMiddlename(string $middlename): self
+    {
+        $this->middlename = $middlename;
+        return $this;
+    }
+
+    public function setVk(?string $vk): self
     {
         $this->vk = $vk;
         return $this;
@@ -238,10 +244,15 @@ class User implements UserInterface, PrefixableEntityInterface
         return $this->vk;
     }
 
-    public function setMiddlename(string $middlename): self
+    public function setTelegram(?string $telegram): self
     {
-        $this->middlename = $middlename;
+        $this->telegram = $telegram;
         return $this;
+    }
+
+    public function getTelegram(): ?string
+    {
+        return $this->telegram;
     }
 
     public function getEmail(): ?string

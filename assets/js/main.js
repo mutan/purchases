@@ -140,6 +140,11 @@ $('.product-manager-edit').on('click', (e)=> {
     });
 });
 
+$('#user_profile_edit').on('click', (e)=> {
+    Modal.handleMainModal(e, {
+        url: `/user/profile/edit`
+    });
+});
 $('#user_address_new').on('click', (e)=> {
     Modal.handleMainModal(e, {
         url: `/user/address/new`,

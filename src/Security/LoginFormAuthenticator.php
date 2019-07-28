@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Services\MailService;
 use App\Services\TokenGenerator;
 use Doctrine\Common\Persistence\ObjectManager;
+use Exception;
 use Psr\Log\LoggerInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -99,6 +100,13 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     }
 
     // This is your opportunity to check to see if the user's password is correct, or any other last, security checks
+
+    /**
+     * @param mixed $credentials
+     * @param UserInterface $user
+     * @return bool
+     * @throws Exception
+     */
     public function checkCredentials($credentials, UserInterface $user)
     {
         $result = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
@@ -106,7 +114,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         if ($result) {
             /** @var User $user */
             if ($user->isNotActivated()) {
-                $user->setActivationToken($this->tokenGenerator->generateToken());
+                $user->setActivationToken($this->tokenGenerator->generateHexadecimalToken(64));
                 $this->manager->persist($user);
                 $this->manager->flush();
                 $this->mailer->sendUserRegisteredWithActivationEmailMessage($user);
@@ -114,9 +122,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
             if (!$user->isActive()) {
                 $messages = [
-                    User::INACTIVE_REASON_BANNED        => 'Ваш аккаунт заблокирован администрацией.',
+                    User::INACTIVE_REASON_BANNED => 'Ваш аккаунт заблокирован администрацией.',
                     User::INACTIVE_REASON_NOT_ACTIVATED => 'Ваш аккаунт не был активирован после регистрации. Новое письмо с активационной ссылкой отправлено на ваш емейл.',
-                    'unknown_reason'                    => 'Пользователь не активен по неизвестной причине. Обратитесь к администратору.'
+                    'unknown_reason' => 'Пользователь не активен по неизвестной причине. Обратитесь к администратору.'
                 ];
 
                 $message = isset($messages[$user->getInactiveReason()])

@@ -1,0 +1,32 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block title %}Мои профиль{{ parent() }}{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-9 align-self-center">
+        <h1 class="mb-0">Мой профиль</h1>
+    </div>
+    <div class="col-sm-12 col-md-3 align-self-center text-right">
+        <a id="user_profile_edit" class="btn btn-sm btn-primary" href="{{ path('user_profile_edit') }}" title="Редактировать">
+            <i class="fa fa-edit"></i> Редактировать
+        </a>
+    </div>
+</div>
+<hr>
+
+<div class="row pb-3">
+    <div class="col-sm-12 col-md-6 col-lg-4">
+        <p><strong>ФИО:</strong> {{ user.fullname }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        {% if user.vk %}
+            <p><strong>Вконтакте:</strong> {{ user.vk }}</p>
+        {% endif %}
+        {% if user.vk %}
+            <p><strong>Telegram:</strong> {{ user.telegram }}</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

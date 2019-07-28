@@ -9,7 +9,7 @@
         {{ encore_entry_link_tags('main') }}
     {% endblock %}
 </head>
-<body>
+<body class="d-flex flex-column">
     <!-- User switch -->
     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
         <div class="alert alert-danger alert-fixed text-center mb-0" style="border-radius: 0; font-size: 0.9rem; padding: .3rem 1.25rem;">
@@ -42,7 +42,7 @@
                     <li class="nav-item {% if 'user_basket' in app.request.get('_route') %}active{% endif %}">
                         <a class="nav-link" href="{{ path('user_basket_index') }}">Мои заказы</a>
                     </li>
-                        {% if is_granted('ROLE_MANAGER') %}
+                        {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item d-none d-sm-inline">
                             <span class="nav-link">|</span>
                         </li>
@@ -65,7 +65,7 @@
                                 <i class="fa fa-user"></i> <span class="pl-1">{{ app.user.fullname }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Профиль</a>
+                                <a class="dropdown-item" href="{{ path('user_profile') }}">Профиль</a>
                                 <a class="dropdown-item" href="{{ path('user_address_index') }}">Мои адреса</a>
                                 <a class="dropdown-item" href="{{ path('user_passport_index') }}">Мои паспорта</a>
                                 <div class="dropdown-divider"></div>
@@ -85,7 +85,7 @@
     </nav>
     <!-- Navbar -->
 
-    <main style="padding-top: {%- if is_granted('ROLE_PREVIOUS_ADMIN') -%}78px{%- else -%}57px{%- endif -%}">
+    <main class="flex-fill" style="padding-top: {%- if is_granted('ROLE_PREVIOUS_ADMIN') -%}78px{%- else -%}57px{%- endif -%}">
         <div class="container mt-4 mb-4">
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
