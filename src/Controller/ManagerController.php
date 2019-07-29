@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Basket;
-use App\Form\BasketManagerData;
-use App\Form\BasketManagerType;
+use App\Entity\Order;
+use App\Form\OrderManagerType;
 use App\Form\ProductManagerData;
 use App\Form\ProductManagerType;
-use App\Repository\BasketRepository;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,65 +21,65 @@ class ManagerController extends BaseController
 {
     /**
      * Страница со списком заказов менеджера
-     * @Route("/manager/baskets", name="manager_basket_list", methods={"GET"})
-     * @param BasketRepository $basketRepository
+     * @Route("/manager/orders", name="manager_order_list", methods={"GET"})
+     * @param OrderRepository $orderRepository
      * @return Response
      */
-    public function baskets(BasketRepository $basketRepository) : Response
+    public function orders(OrderRepository $orderRepository) : Response
     {
-        return $this->render('manager/basket_list.html.twig', [
-            'baskets' => $basketRepository->findAllByManager($this->getUser()),
+        return $this->render('manager/order_list.html.twig', [
+            'orders' => $orderRepository->findAllByManager($this->getUser()),
         ]);
     }
 
     /**
      * Форма редактирования заказа менеджером (ajax)
-     * @Route("/manager/basket/{basket_id}/edit", name="manager_basket_edit", methods={"POST"})
+     * @Route("/manager/order/{order_id}/edit", name="manager_order_edit", methods={"POST"})
      * @param Request $request
-     * @param BasketRepository $basketRepository
+     * @param OrderRepository $orderRepository
      * @return Response
      */
-    public function editBasket(Request $request, BasketRepository $basketRepository) : Response
+    public function editOrder(Request $request, OrderRepository $orderRepository) : Response
     {
-        $basket = $basketRepository->findWithRelations($request->get('basket_id'));
-        $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
+        $order = $orderRepository->findWithRelations($request->get('order_id'));
+        $this->denyAccessUnlessGranted('ORDER_MANAGE', $order);
 
-        $basketManagerData = new BasketManagerData();
-        $basketManagerData->extract($basket);
-        $basketForm = $this->createForm(BasketManagerType::class, $basketManagerData);
-        $basketForm->handleRequest($request);
+        $orderManagerData = new OrderManagerData();
+        $orderManagerData->extract($order);
+        $orderForm = $this->createForm(OrderManagerType::class, $orderManagerData);
+        $orderForm->handleRequest($request);
 
-        if ($basketForm->isSubmitted() && $basketForm->isValid()) {
-            $basketManagerData->fill($basket);
+        if ($orderForm->isSubmitted() && $orderForm->isValid()) {
+            $orderManagerData->fill($order);
             $this->getEm()->flush();
-            $this->addFlash('success', "Заказ {$basket->getIdWithPrefix()} обновлен.");
+            $this->addFlash('success', "Заказ {$order->getIdWithPrefix()} обновлен.");
             $reload = true;
         }
 
         return new JsonResponse([
             'message' => 'Success',
             'reload' => $reload ?? false,
-            'output' => $this->renderView('manager/_basket_edit_modal.html.twig', [
-                'basket' => $basket,
-                'basketForm' => $basketForm->createView(),
+            'output' => $this->renderView('manager/_order_edit_modal.html.twig', [
+                'order' => $order,
+                'orderForm' => $orderForm->createView(),
             ])
         ], 200);
     }
 
     /**
      * Страница с одним заказом и списком продуктов для менеджера
-     * @Route("/manager/basket/{basket_id}", name="manager_basket_show", methods={"GET"})
+     * @Route("/manager/order/{order_id}", name="manager_order_show", methods={"GET"})
      * @param Request $request
-     * @param BasketRepository $basketRepository
+     * @param OrderRepository $orderRepository
      * @return Response
      */
-    public function show(Request $request, BasketRepository $basketRepository): Response
+    public function show(Request $request, OrderRepository $orderRepository): Response
     {
-        $basket = $basketRepository->findWithRelations($request->get('basket_id'));
-        $this->denyAccessUnlessGranted('BASKET_MANAGE', $basket);
+        $order = $orderRepository->findWithRelations($request->get('order_id'));
+        $this->denyAccessUnlessGranted('ORDER_MANAGE', $order);
 
-        return $this->render('manager/basket_show.html.twig', [
-            'basket' => $basket,
+        return $this->render('manager/order_show.html.twig', [
+            'order' => $order,
         ]);
     }
 

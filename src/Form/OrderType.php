@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Order;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
@@ -11,14 +12,14 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class BasketUserType extends AbstractType
+class OrderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('shop',TextType::class, ['attr' => ['autofocus' => true]])
             ->add('manager', EntityType::class, [
-                'class'       => User::class,
+                'class' => User::class,
                 'query_builder' => function (UserRepository $userRepository) {
                     return $userRepository
                         ->createQueryBuilder('u')
@@ -34,7 +35,7 @@ class BasketUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => BasketUserData::class
+            'data_class' => Order::class
         ]);
     }
 }

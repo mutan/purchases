@@ -2,14 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Basket;
+use App\Entity\Order;
 use App\Entity\Product;
-use App\Form\BasketUserData;
-use App\Form\BasketUserType;
+use App\Form\OrderType;
 use App\Form\ProductUserData;
 use App\Form\ProductUserType;
 use App\Services\ShopHelper;
-use App\Repository\BasketRepository;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,13 +17,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * @Route("/order")
  * @IsGranted("ROLE_USER")
  */
-class BasketController extends BaseController
+class OrderController extends BaseController
 {
     /**
      * Автодополнение поля shop в форме создания/редактирования заказа
-     * @Route("/basket/shop/autocomplete", name="user_basket_shop_autocomplite", methods={"GET","POST"})
+     * @Route("/shop/autocomplete", name="order_shop_autocomplite", methods={"GET","POST"})
      * @param Request $request
      * @return Response
      */
@@ -44,131 +44,127 @@ class BasketController extends BaseController
 
     /**
      * Страница со списком заказов пользователя
-     * @Route("/basket/", name="user_basket_index", methods={"GET"})
-     * @param BasketRepository $basketRepository
+     * @Route("/", name="order_index", methods={"GET"})
+     * @param OrderRepository $orderRepository
      * @return Response
      */
-    public function index(BasketRepository $basketRepository): Response
+    public function index(OrderRepository $orderRepository): Response
     {
-        return $this->render('basket/index.html.twig', [
-            'baskets' => $basketRepository->findAllByUser($this->getUser()),
+        return $this->render('order/index.html.twig', [
+            'orders' => $orderRepository->findAllByUser($this->getUser()),
         ]);
     }
 
     /**
      * Форма создания заказа (ajax)
-     * @Route("/basket/new", name="user_basket_new", methods={"POST"})
+     * @Route("/new", name="order_new", methods={"POST"})
      * @param Request $request
      * @return Response
      */
     public function new(Request $request): Response
     {
-        $basketUserData = new BasketUserData();
-        $basketForm = $this->createForm(BasketUserType::class, $basketUserData);
-        $basketForm->handleRequest($request);
+        $order = new Order();
+        $orderForm = $this->createForm(OrderType::class, $order);
+        $orderForm->handleRequest($request);
 
-        if ($basketForm->isSubmitted() && $basketForm->isValid()) {
-            $basket = new Basket();
-            $basketUserData->fill($basket);
-            $basket->setUser($this->getUser());
-            $this->getEm()->persist($basket);
+        if ($orderForm->isSubmitted() && $orderForm->isValid()) {
+            $order->setUser($this->getUser());
+            $this->getEm()->persist($order);
             $this->getEm()->flush();
-            $this->addFlash('success', "Заказ {$basket->getIdWithPrefix()} создан. Теперь добавьте в него товары!");
+            $this->addFlash('success', "Заказ {$order->getIdWithPrefix()} создан. Теперь добавьте в него товары!");
             $reload = true;
         }
 
         return new JsonResponse([
             'message' => 'Success',
             'reload' => $reload ?? false,
-            'output' => $this->renderView('basket/_new_modal.html.twig', [
-                'basketForm' => $basketForm->createView(),
+            'output' => $this->renderView('order/_new_modal.html.twig', [
+                'orderForm' => $orderForm->createView(),
             ])
         ], 200);
     }
 
     /**
      * Страница с одним заказом и списком продуктов в нем для пользователя
-     * @Route("/basket/{basket_id}", name="user_basket_show", methods={"GET"})
+     * @Route("/{order_id}", name="order_show", methods={"GET"})
      * @param Request $request
-     * @param BasketRepository $basketRepository
+     * @param OrderRepository $orderRepository
      * @return Response
      */
-    public function show(Request $request, BasketRepository $basketRepository): Response
+    public function show(Request $request, OrderRepository $orderRepository): Response
     {
-        $basket = $basketRepository->findWithRelations($request->get('basket_id'));
-        $this->denyAccessUnlessGranted('BASKET_OPERATE', $basket);
+        $order = $orderRepository->findWithRelations($request->get('order_id'));
+        $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
 
-        return $this->render('basket/show.html.twig', [
-            'basket' => $basket,
+        return $this->render('order/show.html.twig', [
+            'order' => $order,
         ]);
     }
 
     /**
      * Форма редактирования заказа пользователем (ajax)
-     * @Route("/basket/{basket_id}/edit", name="user_basket_edit", methods={"POST"})
+     * @Route("/{order_id}/edit", name="order_edit", methods={"POST"})
      * @param Request $request
-     * @param BasketRepository $basketRepository
+     * @param OrderRepository $orderRepository
      * @return Response
      */
-    public function edit(Request $request, BasketRepository $basketRepository): Response
+    public function edit(Request $request, OrderRepository $orderRepository): Response
     {
-        $basket = $basketRepository->findWithRelations($request->get('basket_id'));
-        $this->denyAccessUnlessGranted('BASKET_OPERATE', $basket);
+        $order = $orderRepository->findWithRelations($request->get('order_id'));
+        $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
 
-        $basketUserData = new BasketUserData();
-        $basketUserData->extract($basket);
-        $basketForm = $this->createForm(BasketUserType::class, $basketUserData);
-        $basketForm->handleRequest($request);
+        $order = new Order();
+        $orderForm = $this->createForm(OrderType::class, $order);
+        $orderForm->handleRequest($request);
 
-        if ($basketForm->isSubmitted() && $basketForm->isValid()) {
-            $basketUserData->fill($basket);
+        if ($orderForm->isSubmitted() && $orderForm->isValid()) {
             $this->getEm()->flush();
-            $this->addFlash('success', "Заказ {$basket->getIdWithPrefix()} обновлен.");
+            $this->addFlash('success', "Заказ {$order->getIdWithPrefix()} обновлен.");
             $reload = true;
         }
 
         return new JsonResponse([
             'message' => 'Success',
             'reload' => $reload ?? false,
-            'output' => $this->renderView('basket/_edit_modal.html.twig', [
-                'basket' => $basket,
-                'basketForm' => $basketForm->createView(),
+            'output' => $this->renderView('order/_edit_modal.html.twig', [
+                'order' => $order,
+                'orderForm' => $orderForm->createView(),
             ])
         ], 200);
     }
 
     /**
      * Удаление заказа
-     * @Route("/basket/{id}/delete", name="user_basket_delete", methods={"GET"})
+     * @Route("/{id}/delete", name="order_delete", methods={"GET"})
      * @param Request $request
-     * @param Basket $basket
+     * @param Order $order
      * @return Response
      */
-    public function delete(Request $request, Basket $basket): Response
+    public function delete(Request $request, Order $order): Response
     {
-        $this->denyAccessUnlessGranted('BASKET_OPERATE', $basket);
+        $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
 
-        if (!$basket->getProducts()->isEmpty()) {
+        if (!$order->getProducts()->isEmpty()) {
             $this->addFlash('warning','Заказ можно удалить, только если он не содержит товаров.');
             return $this->redirect($request->headers->get('referer'));
         }
 
-        $basket->setStatus(Basket::STATUS_DELETED);
-        $this->getEm()->persist($basket);
+        $order->setStatus(Order::STATUS_DELETED);
+        $this->getEm()->persist($order);
         $this->getEm()->flush();
         $this->addFlash('success','Заказ удален.');
 
-        return $this->redirectToRoute('user_basket_index');
+        return $this->redirectToRoute('order_index');
     }
 
     /**
      * Форма создания товара (ajax)
-     * @Route("/basket/{basket_id}/product/new", name="user_basket_product_new", methods={"POST"})
+     * @Route("/{order_id}/product/new", name="order_product_new", methods={"POST"})
      * @param Request $request
-     * @param BasketRepository $basketRepository
+     * @param OrderRepository $orderRepository
      * @return Response
      */
-    public function newProduct(Request $request, BasketRepository $basketRepository): Response
+    public function newProduct(Request $request, OrderRepository $orderRepository): Response
     {
         $productData = new ProductUserData();
         $productForm = $this->createForm(ProductUserType::class, $productData);
@@ -176,10 +172,10 @@ class BasketController extends BaseController
 
         if ($productForm->isSubmitted() && $productForm->isValid()) {
             $product = new Product();
-            $basket = $basketRepository->findWithRelations($request->get('basket_id'));
+            $order = $orderRepository->findWithRelations($request->get('order_id'));
             $productData->fill($product);
             $product->setUser($this->getUser());
-            $product->setBasket($basket);
+            $product->setOrder($order);
             $this->getEm()->persist($product);
             $this->getEm()->flush();
             $this->addFlash('success', "Товар {$product->getIdWithPrefix()} добавлен.");
@@ -197,7 +193,7 @@ class BasketController extends BaseController
 
     /**
      * Форма редактирования товара (ajax)
-     * @Route("/basket/product/{product_id}/edit", name="user_product_edit", methods={"POST"})
+     * @Route("/product/{product_id}/edit", name="product_edit", methods={"POST"})
      * @param Request $request
      * @param ProductRepository $productRepository
      * @return Response
@@ -231,7 +227,7 @@ class BasketController extends BaseController
 
     /**
      * Удаление товара
-     * @Route("/basket/product/{id}", name="user_basket_product_delete", methods={"DELETE"})
+     * @Route("/product/{id}", name="order_product_delete", methods={"DELETE"})
      * @param Request $request
      * @param Product $product
      * @return Response
@@ -247,6 +243,6 @@ class BasketController extends BaseController
             $this->addFlash('success','Товар удален.');
         }
 
-        return $this->redirectToRoute('user_basket_show', ['basket_id' => $product->getBasket()->getId()]);
+        return $this->redirectToRoute('order_show', ['order_id' => $product->getOrder()->getId()]);
     }
 }

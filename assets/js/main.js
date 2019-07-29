@@ -91,9 +91,9 @@ let Modal = {
     }
 };
 
-$('#basket-user-new').on('click', (e)=> {
+$('#order_new').on('click', (e)=> {
     Modal.handleMainModal(e, {
-        url: `/basket/new`,
+        url: `/order/new`,
         shopAutocomplete: true,
         shopAutocompleteElem: '#basket_user_shop'
     });

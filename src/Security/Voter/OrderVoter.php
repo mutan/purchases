@@ -2,13 +2,13 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Basket;
+use App\Entity\Order;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class BasketVoter extends Voter
+class OrderVoter extends Voter
 {
     private $security;
 
@@ -20,11 +20,11 @@ class BasketVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // If the attribute isn't one we support, return false
-        // Only vote on Basket objects inside this voter
+        // Only vote on Order objects inside this voter
         return in_array($attribute, [
-                'BASKET_EDIT', // by user
+                'ORDER_EDIT', // by user
             ])
-            && $subject instanceof Basket;
+            && $subject instanceof Order;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -40,11 +40,11 @@ class BasketVoter extends Voter
             return true;
         }
 
-        // You know $subject is a Basket object, thanks to supports
+        // You know $subject is a Order object, thanks to supports
         // Check conditions and return true to grant permission
-        /** @var Basket $subject */
+        /** @var Order $subject */
         switch ($attribute) {
-            case 'BASKET_EDIT':
+            case 'ORDER_EDIT':
                 if ($subject->getUser() == $user && $subject->isNew()) {
                     return true;
                 }

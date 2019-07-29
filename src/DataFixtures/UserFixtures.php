@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Basket;
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Entity\UserAddress;
@@ -31,8 +31,8 @@ class UserFixtures extends BaseFixture
             $user->setEmail('akim_now@mail.ru');
             $user->setLastname('Губанов');
             $user->setFirstname('Аким');
-            $user->setMiddlename('Сергееыич');
-            $user->setRoles([User::ROLE_ADMIN]);
+            $user->setMiddlename('Сергеевич');
+            $user->setRoles([User::ROLE_ADMIN, User::ROLE_MANAGER]);
             $user->setCreateDate(new DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
@@ -95,19 +95,19 @@ class UserFixtures extends BaseFixture
 
         $manager->flush();
 
-        $this->createMany(10, 'basket', function($i) {
+        $this->createMany(10, 'order', function($i) {
             $admin = $this->getRandomReference(self::ROLE_ADMIN_REFERENCE);
             $manager = $this->getRandomReference(self::ROLE_MANAGER_REFERENCE);
             $user = $this->getRandomReference(self::ROLE_USER_REFERENCE);
-            $basket = $this->createBasket($this->faker->randomElement([$admin, $manager]));
+            $order = $this->createOrder($this->faker->randomElement([$admin, $manager]));
             $product = $this->createProduct();
             $this->manager->persist($product);
             $user->addProduct($product);
-            $basket->addProduct($product);
-            $this->manager->persist($basket);
-            $user->addBasket($basket);
+            $order->addProduct($product);
+            $this->manager->persist($order);
+            $user->addOrder($order);
 
-            return $basket;
+            return $order;
         });
 
         $manager->flush();
@@ -147,14 +147,14 @@ class UserFixtures extends BaseFixture
         return $userPassport;
     }
 
-    protected function createBasket($manager): Basket
+    protected function createOrder($manager): Order
     {
-        $basket = new Basket();
-        $basket->setShop('https://www.coolstuffinc.com')
+        $order = new Order();
+        $order->setShop('https://www.coolstuffinc.com')
                ->setManager($manager)
                ->setUserComment($this->faker->text);
 
-        return $basket;
+        return $order;
     }
 
     protected function createProduct(): Product

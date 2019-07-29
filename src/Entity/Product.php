@@ -40,10 +40,10 @@ class Product implements PrefixableEntityInterface
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Basket", inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $basket;
+    private $order;
 
     /**
      * @ORM\Column(type="string", length=255, options={"comment":"Название товара"})
@@ -232,14 +232,14 @@ class Product implements PrefixableEntityInterface
         return $this;
     }
 
-    public function getBasket(): ?Basket
+    public function getOrder(): ?Order
     {
-        return $this->basket;
+        return $this->order;
     }
 
-    public function setBasket(?Basket $basket): self
+    public function setOrder(?Order $order): self
     {
-        $this->basket = $basket;
+        $this->order = $order;
         return $this;
     }
 
@@ -328,6 +328,6 @@ class Product implements PrefixableEntityInterface
     public function getSumRub()
     {
         $price = $this->getPrice() ?: $this->getUserPrice();
-        return ceil($this->getAmount() * $price * $this->getBasket()->getRate());
+        return ceil($this->getAmount() * $price * $this->getOrder()->getRate());
     }
 }

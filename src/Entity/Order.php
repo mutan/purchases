@@ -5,7 +5,6 @@ namespace App\Entity;
 use DateTimeInterface;
 use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
-use App\Services\Entiry\BasketHelper;
 use Doctrine\Common\Collections\Collection;
 use App\Entity\Traits\TimestampableEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,10 +12,11 @@ use App\Entity\Interfaces\PrefixableEntityInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\BasketRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @ORM\Table(name="`order`")
  * @ORM\HasLifecycleCallbacks
  */
-class Basket implements PrefixableEntityInterface
+class Order implements PrefixableEntityInterface
 {
     use TimestampableEntityTrait;
 
@@ -44,19 +44,19 @@ class Basket implements PrefixableEntityInterface
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="baskets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="basketsByManager")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ordersByManager")
      * @ORM\JoinColumn(nullable=false)
      */
     private $manager;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="basket", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="order", orphanRemoval=true)
      */
     private $products;
 
@@ -117,7 +117,7 @@ class Basket implements PrefixableEntityInterface
     private $tracking;
 
     /**
-     * @ORM\Column(type="string", length=255, options={"default" = Basket::STATUS_NEW})
+     * @ORM\Column(type="string", length=255, options={"default" = Order::STATUS_NEW})
      */
     private $status = self::STATUS_NEW;
 
@@ -168,11 +168,7 @@ class Basket implements PrefixableEntityInterface
     public function setStatus(string $status): self
     {
         if (!in_array($status, self::ALLOWED_STATUSES)) {
-            throw new InvalidArgumentException("Invalid basket status");
-        }
-
-        if (!in_array($status, BasketHelper::STATUSES[$this->getStatus()]['next_allowed_statuses'])) {
-            throw new InvalidArgumentException("Changing basket status from {$this->getStatus()} to {$status} is not allowed");
+            throw new InvalidArgumentException("Invalid order status");
         }
 
         $this->status = $status;
@@ -192,7 +188,7 @@ class Basket implements PrefixableEntityInterface
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
-            $product->setBasket($this);
+            $product->setOrder($this);
         }
 
         return $this;
@@ -203,8 +199,8 @@ class Basket implements PrefixableEntityInterface
         if ($this->products->contains($product)) {
             $this->products->removeElement($product);
             // set the owning side to null (unless already changed)
-            if ($product->getBasket() === $this) {
-                $product->setBasket(null);
+            if ($product->getOrder() === $this) {
+                $product->setOrder(null);
             }
         }
 
@@ -259,7 +255,7 @@ class Basket implements PrefixableEntityInterface
         return $this;
     }
 
-    public function getShop(): string
+    public function getShop(): ?string
     {
         return $this->shop;
     }
@@ -461,10 +457,10 @@ class Basket implements PrefixableEntityInterface
     }
 
     public function getStatusLabel() {
-        return BasketHelper::STATUSES[$this->getStatus()]['label'];
+        return 'label';
     }
 
     public function getStatusDescription() {
-        return BasketHelper::STATUSES[$this->getStatus()]['description'];
+        return 'description';
     }
 }

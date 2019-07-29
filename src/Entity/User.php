@@ -29,10 +29,12 @@ class User implements UserInterface, PrefixableEntityInterface
     const PREFIX = 'U'; // User
 
     const ROLE_USER = 'ROLE_USER';
+    const ROLE_MANAGER = 'ROLE_MANAGER';
     const ROLE_ADMIN = 'ROLE_ADMIN';
 
     const ALLOWED_ROLES = [
         self::ROLE_USER,
+        self::ROLE_MANAGER,
         self::ROLE_ADMIN,
     ];
 
@@ -145,14 +147,14 @@ class User implements UserInterface, PrefixableEntityInterface
     private $products;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Basket", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user", orphanRemoval=true)
      */
-    private $baskets;
+    private $orders;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Basket", mappedBy="manager", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="manager", orphanRemoval=true)
      */
-    private $basketsByManager;
+    private $ordersByManager;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -164,8 +166,8 @@ class User implements UserInterface, PrefixableEntityInterface
         $this->userAddresses = new ArrayCollection();
         $this->userPassports = new ArrayCollection();
         $this->products = new ArrayCollection();
-        $this->baskets = new ArrayCollection();
-        $this->basketsByManager = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+        $this->ordersByManager = new ArrayCollection();
     }
 
     /**
@@ -464,30 +466,30 @@ class User implements UserInterface, PrefixableEntityInterface
     }
 
     /**
-     * @return Collection|Basket[]
+     * @return Collection|Order[]
      */
-    public function getBaskets(): Collection
+    public function getOrders(): Collection
     {
-        return $this->baskets;
+        return $this->orders;
     }
 
-    public function addBasket(Basket $basket): self
+    public function addOrder(Order $order): self
     {
-        if (!$this->baskets->contains($basket)) {
-            $this->baskets[] = $basket;
-            $basket->setUser($this);
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeBasket(Basket $basket): self
+    public function removeOrder(Order $order): self
     {
-        if ($this->baskets->contains($basket)) {
-            $this->baskets->removeElement($basket);
+        if ($this->orders->contains($order)) {
+            $this->orders->removeElement($order);
             // set the owning side to null (unless already changed)
-            if ($basket->getUser() === $this) {
-                $basket->setUser(null);
+            if ($order->getUser() === $this) {
+                $order->setUser(null);
             }
         }
 
@@ -495,30 +497,30 @@ class User implements UserInterface, PrefixableEntityInterface
     }
 
     /**
-     * @return Collection|Basket[]
+     * @return Collection|Order[]
      */
-    public function getBasketsByManager(): Collection
+    public function getOrdersByManager(): Collection
     {
-        return $this->basketsByManager;
+        return $this->ordersByManager;
     }
 
-    public function addBasketsByManager(Basket $basketsByManager): self
+    public function addOrdersByManager(Order $ordersByManager): self
     {
-        if (!$this->basketsByManager->contains($basketsByManager)) {
-            $this->basketsByManager[] = $basketsByManager;
-            $basketsByManager->setManager($this);
+        if (!$this->ordersByManager->contains($ordersByManager)) {
+            $this->ordersByManager[] = $ordersByManager;
+            $ordersByManager->setManager($this);
         }
 
         return $this;
     }
 
-    public function removeBasketsByManager(Basket $basketsByManager): self
+    public function removeOrdersByManager(Order $ordersByManager): self
     {
-        if ($this->basketsByManager->contains($basketsByManager)) {
-            $this->basketsByManager->removeElement($basketsByManager);
+        if ($this->ordersByManager->contains($ordersByManager)) {
+            $this->ordersByManager->removeElement($ordersByManager);
             // set the owning side to null (unless already changed)
-            if ($basketsByManager->getManager() === $this) {
-                $basketsByManager->setManager(null);
+            if ($ordersByManager->getManager() === $this) {
+                $ordersByManager->setManager(null);
             }
         }
 
