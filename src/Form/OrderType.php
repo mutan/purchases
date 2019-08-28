@@ -23,8 +23,8 @@ class OrderType extends AbstractType
                 'query_builder' => function (UserRepository $userRepository) {
                     return $userRepository
                         ->createQueryBuilder('u')
-                        ->andWhere('u.roles LIKE :role')
-                        ->setParameter('role', '%' . User::ROLE_MANAGER . '%');
+                        ->andWhere('in_json_array(u.roles, :role) = true')
+                        ->setParameter('role', User::ROLE_MANAGER);
                 },
                 'placeholder' => ''
             ])

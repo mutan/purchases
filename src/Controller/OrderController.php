@@ -10,6 +10,7 @@ use App\Form\ProductUserType;
 use App\Services\ShopHelper;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,6 +91,7 @@ class OrderController extends BaseController
      * @param Request $request
      * @param OrderRepository $orderRepository
      * @return Response
+     * @throws NonUniqueResultException
      */
     public function show(Request $request, OrderRepository $orderRepository): Response
     {
@@ -107,6 +109,7 @@ class OrderController extends BaseController
      * @param Request $request
      * @param OrderRepository $orderRepository
      * @return Response
+     * @throws NonUniqueResultException
      */
     public function edit(Request $request, OrderRepository $orderRepository): Response
     {
@@ -163,6 +166,7 @@ class OrderController extends BaseController
      * @param Request $request
      * @param OrderRepository $orderRepository
      * @return Response
+     * @throws NonUniqueResultException
      */
     public function newProduct(Request $request, OrderRepository $orderRepository): Response
     {

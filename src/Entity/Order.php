@@ -148,7 +148,7 @@ class Order implements PrefixableEntityInterface
         return $this;
     }
 
-    public function getManager(): User
+    public function getManager(): ?User
     {
         return $this->manager;
     }
