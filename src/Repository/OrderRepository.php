@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -22,6 +23,7 @@ class OrderRepository extends ServiceEntityRepository
     /**
      * @param $id
      * @return Order
+     * @throws NonUniqueResultException
      */
     public function findWithRelations($id)
     {
