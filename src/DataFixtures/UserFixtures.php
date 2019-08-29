@@ -7,15 +7,20 @@ use App\Entity\Product;
 use App\Entity\User;
 use App\Entity\UserAddress;
 use App\Entity\UserPassport;
+use App\Entity\UserRole;
 use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends BaseFixture
 {
-    public const ROLE_USER_REFERENCE = 'role_user';
-    public const ROLE_MANAGER_REFERENCE = 'role_manager';
-    public const ROLE_ADMIN_REFERENCE = 'role_admin';
+    public const USER_REFERENCE = 'user';
+    public const MANAGER_REFERENCE = 'manager';
+    public const ADMIN_REFERENCE = 'admin';
+
+    public const ROLE_USER_REFERENCE = 'ROLE_USER';
+    public const ROLE_MANAGER_REFERENCE = 'ROLE_MANAGER';
+    public const ROLE_ADMIN_REFERENCE = 'ROLE_ADMIN';
 
     private $passwordEncoder;
 
@@ -26,13 +31,43 @@ class UserFixtures extends BaseFixture
 
     protected function loadData(ObjectManager $manager)
     {
+        /* CREATE USER ROLES */
+
+        $this->createMany(1, self::ROLE_USER_REFERENCE, function($i) {
+            $userRole = new UserRole();
+            $userRole->setName(self::ROLE_USER_REFERENCE);
+            $this->manager->persist($userRole);
+            $this->manager->flush();
+            return $userRole;
+        });
+
+        $this->createMany(1, self::ROLE_MANAGER_REFERENCE, function($i) {
+            $userRole = new UserRole();
+            $userRole->setName(self::ROLE_MANAGER_REFERENCE);
+            $this->manager->persist($userRole);
+            $this->manager->flush();
+            return $userRole;
+        });
+
         $this->createMany(1, self::ROLE_ADMIN_REFERENCE, function($i) {
+            $userRole = new UserRole();
+            $userRole->setName(self::ROLE_ADMIN_REFERENCE);
+            $this->manager->persist($userRole);
+            $this->manager->flush();
+            return $userRole;
+        });
+
+        $manager->flush();
+
+        $this->createMany(1, self::ADMIN_REFERENCE, function($i) {
             $user = new User();
             $user->setEmail('akim_now@mail.ru');
             $user->setLastname('Губанов');
             $user->setFirstname('Аким');
             $user->setMiddlename('Сергеевич');
-            $user->setRoles([User::ROLE_ADMIN, User::ROLE_MANAGER]);
+            $user->addRole($this->getRandomReference(self::ROLE_USER_REFERENCE));
+            $user->addRole($this->getRandomReference(self::ROLE_MANAGER_REFERENCE));
+            $user->addRole($this->getRandomReference(self::ROLE_ADMIN_REFERENCE));
             $user->setCreateDate(new DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
@@ -49,13 +84,14 @@ class UserFixtures extends BaseFixture
             return $user;
         });
 
-        $this->createMany(1, self::ROLE_MANAGER_REFERENCE, function($i) {
+        $this->createMany(1, self::MANAGER_REFERENCE, function($i) {
             $user = new User();
             $user->setEmail('gamerxxx@mail.ru');
             $user->setLastname('Михальченко');
             $user->setFirstname('Яков');
             $user->setMiddlename('Андреевич');
-            $user->setRoles([]);
+            $user->addRole($this->getRandomReference(self::ROLE_USER_REFERENCE));
+            $user->addRole($this->getRandomReference(self::ROLE_MANAGER_REFERENCE));
             $user->setCreateDate(new DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
@@ -72,11 +108,12 @@ class UserFixtures extends BaseFixture
             return $user;
         });
 
-        $this->createMany(10, self::ROLE_USER_REFERENCE, function($i) {
+        $this->createMany(10, self::USER_REFERENCE, function($i) {
             $user = new User();
             $user->setEmail(sprintf('user%d@example.com', $i));
             $user->setLastname($this->faker->lastName);
             $user->setFirstname($this->faker->firstName);
+            $user->addRole($this->getRandomReference(self::ROLE_USER_REFERENCE));
             $user->setCreateDate(new \DateTime('-10 day'));
             $user->setStatus(User::STATUS_ACTIVE);
             $user->clearInactiveReason();
@@ -96,9 +133,9 @@ class UserFixtures extends BaseFixture
         $manager->flush();
 
         $this->createMany(10, 'order', function($i) {
-            $admin = $this->getRandomReference(self::ROLE_ADMIN_REFERENCE);
-            $manager = $this->getRandomReference(self::ROLE_MANAGER_REFERENCE);
-            $user = $this->getRandomReference(self::ROLE_USER_REFERENCE);
+            $admin = $this->getRandomReference(self::ADMIN_REFERENCE);
+            $manager = $this->getRandomReference(self::MANAGER_REFERENCE);
+            $user = $this->getRandomReference(self::USER_REFERENCE);
             $order = $this->createOrder($this->faker->randomElement([$admin, $manager]));
             $product = $this->createProduct();
             $this->manager->persist($product);

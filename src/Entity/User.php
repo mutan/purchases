@@ -28,16 +28,6 @@ class User implements UserInterface, PrefixableEntityInterface
 
     const PREFIX = 'U'; // User
 
-    const ROLE_USER = 'ROLE_USER';
-    const ROLE_MANAGER = 'ROLE_MANAGER';
-    const ROLE_ADMIN = 'ROLE_ADMIN';
-
-    const ALLOWED_ROLES = [
-        self::ROLE_USER,
-        self::ROLE_MANAGER,
-        self::ROLE_ADMIN,
-    ];
-
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
 
@@ -99,11 +89,6 @@ class User implements UserInterface, PrefixableEntityInterface
     private $telegram;
 
     /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [self::ROLE_USER];
-
-    /**
      * @Assert\NotBlank(message="Пароль не может быть пустым.", groups={"reset_password"})
      * @AppAssert\AlphanumericPassword(message="Пароль должен содержать цифры, а также латинские буквы в нижнем и верхнем регистре.", groups={"reset_password"})
      * @Assert\Length(
@@ -161,6 +146,11 @@ class User implements UserInterface, PrefixableEntityInterface
      */
     private $lastLoginDate;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\UserRole", inversedBy="users")
+     */
+    private $roles;
+
     public function __construct()
     {
         $this->userAddresses = new ArrayCollection();
@@ -168,6 +158,7 @@ class User implements UserInterface, PrefixableEntityInterface
         $this->products = new ArrayCollection();
         $this->orders = new ArrayCollection();
         $this->ordersByManager = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -265,32 +256,6 @@ class User implements UserInterface, PrefixableEntityInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = self::ROLE_USER;
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        foreach ($roles as $role) {
-            if (!in_array($role, self::ALLOWED_ROLES)) {
-                throw new InvalidArgumentException("Invalid user roles");
-            }
-        }
-
-        $this->roles = $roles;
-
         return $this;
     }
 
@@ -302,7 +267,6 @@ class User implements UserInterface, PrefixableEntityInterface
     public function setPlainPassword(string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
-
         return $this;
     }
 
@@ -317,7 +281,6 @@ class User implements UserInterface, PrefixableEntityInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -331,9 +294,7 @@ class User implements UserInterface, PrefixableEntityInterface
         if (!in_array($status, self::ALLOWED_STATUSES)) {
             throw new InvalidArgumentException("Invalid user status");
         }
-
         $this->status = $status;
-
         return $this;
     }
 
@@ -347,16 +308,13 @@ class User implements UserInterface, PrefixableEntityInterface
         if (!in_array($inactive_reason, self::ALLOWED_INACTIVE_REASONS)) {
             throw new InvalidArgumentException("Invalid user inactive reason");
         }
-
         $this->inactive_reason = $inactive_reason;
-
         return $this;
     }
 
     public function clearInactiveReason(): self
     {
         $this->inactive_reason = null;
-
         return $this;
     }
 
@@ -368,7 +326,6 @@ class User implements UserInterface, PrefixableEntityInterface
     public function setLastLoginDate(?DateTimeInterface $lastLoginDate): self
     {
         $this->lastLoginDate = $lastLoginDate;
-
         return $this;
     }
 
@@ -386,7 +343,6 @@ class User implements UserInterface, PrefixableEntityInterface
             $this->userAddresses[] = $userAddress;
             $userAddress->setUser($this);
         }
-
         return $this;
     }
 
@@ -399,7 +355,6 @@ class User implements UserInterface, PrefixableEntityInterface
                 $userAddress->setUser(null);
             }
         }
-
         return $this;
     }
 
@@ -417,7 +372,6 @@ class User implements UserInterface, PrefixableEntityInterface
             $this->userPassports[] = $userPassport;
             $userPassport->setUser($this);
         }
-
         return $this;
     }
 
@@ -430,7 +384,6 @@ class User implements UserInterface, PrefixableEntityInterface
                 $userPassport->setUser(null);
             }
         }
-
         return $this;
     }
 
@@ -448,7 +401,6 @@ class User implements UserInterface, PrefixableEntityInterface
             $this->products[] = $product;
             $product->setUser($this);
         }
-
         return $this;
     }
 
@@ -461,7 +413,6 @@ class User implements UserInterface, PrefixableEntityInterface
                 $product->setUser(null);
             }
         }
-
         return $this;
     }
 
@@ -479,7 +430,6 @@ class User implements UserInterface, PrefixableEntityInterface
             $this->orders[] = $order;
             $order->setUser($this);
         }
-
         return $this;
     }
 
@@ -492,7 +442,6 @@ class User implements UserInterface, PrefixableEntityInterface
                 $order->setUser(null);
             }
         }
-
         return $this;
     }
 
@@ -510,7 +459,6 @@ class User implements UserInterface, PrefixableEntityInterface
             $this->ordersByManager[] = $ordersByManager;
             $ordersByManager->setManager($this);
         }
-
         return $this;
     }
 
@@ -524,6 +472,31 @@ class User implements UserInterface, PrefixableEntityInterface
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserRole[]
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(UserRole $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+    public function removeRole(UserRole $role): self
+    {
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
+        }
         return $this;
     }
 
