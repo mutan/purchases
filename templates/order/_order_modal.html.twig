@@ -1,0 +1,38 @@
+{% form_theme form 'layout/form/_errors.html.twig' %}
+
+<div class="modal-header">
+    <h4 class="modal-title">{{ title }}</h4>
+    <button type="button" class="close" data-dismiss="modal">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+
+{{ form_start(form) }}
+    {{ form_widget(form._token) }}
+    {{ form_errors(form) }}
+
+<div class="modal-body ui-front">{# без класса ui-front список autocomplite'a будет показан не рядом с полем поиска #}
+    <div class="form-row">
+        <div class="form-group col-12">
+            {{ form_label(form.manager, 'Менеджер совместной покупки') }}
+            {{ form_widget(form.manager, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+        <div class="form-group col-12">
+            {{ form_label(form.shop, 'Магазин') }}
+            {{ form_widget(form.shop, {'attr': {'class': 'form-control-sm', 'placeholder': 'Начните вводить адрес сайта'}}) }}
+            <small id="product_shop_help" class="form-text text-muted">Ссылка, должна начинаться с http</small>
+        </div>
+        <div class="form-group col-12">
+            {{ form_label(form.userComment, 'Комментарий') }}
+            {{ form_widget(form.userComment, {'attr': {'class': 'form-control-sm', 'rows': 5, 'placeholder': comment_placeholder|default('') }}) }}
+            <small id="product_userComment_help" class="form-text text-muted">Максимум 250 символов</small>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    {{ include('layout/_save_button.html.twig') }}
+</div>
+{{ form_widget(form) }}
+{{ form_end(form, {'render_rest': false}) }}
+{# csrf_token генерируется отдельным полем, в form_end можно запретить рендер остальных полей #}

@@ -52,6 +52,7 @@ class Order implements PrefixableEntityInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ordersByManager")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $manager;
 
@@ -62,6 +63,7 @@ class Order implements PrefixableEntityInterface
 
     /**
      * @ORM\Column(type="string", length=255, options={"comment":"Магазин"})
+     * @Assert\NotBlank()
      */
     private $shop;
 

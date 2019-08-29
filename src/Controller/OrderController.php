@@ -60,15 +60,15 @@ class OrderController extends BaseController
      * Форма создания заказа (ajax)
      * @Route("/new", name="order_new", methods={"POST"})
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function new(Request $request): Response
+    public function new(Request $request): JsonResponse
     {
         $order = new Order();
-        $orderForm = $this->createForm(OrderType::class, $order);
-        $orderForm->handleRequest($request);
+        $form = $this->createForm(OrderType::class, $order);
+        $form->handleRequest($request);
 
-        if ($orderForm->isSubmitted() && $orderForm->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $order->setUser($this->getUser());
             $this->getEm()->persist($order);
             $this->getEm()->flush();
@@ -79,8 +79,9 @@ class OrderController extends BaseController
         return new JsonResponse([
             'message' => 'Success',
             'reload' => $reload ?? false,
-            'output' => $this->renderView('order/_new_modal.html.twig', [
-                'orderForm' => $orderForm->createView(),
+            'output' => $this->renderView('order/_order_modal.html.twig', [
+                'form' => $form->createView(),
+                'title' => 'Новый заказ'
             ])
         ], 200);
     }

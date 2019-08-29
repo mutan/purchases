@@ -546,7 +546,7 @@ class User implements UserInterface, PrefixableEntityInterface
 
     public function getFullName(): string
     {
-        return $this->getLastname() . ' ' . $this->getFirstname() . ' ' . $this->getMiddlename();
+        return $this->getLastname() . ' ' . $this->getFirstname();
     }
 
     public function isActive()

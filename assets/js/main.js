@@ -7,7 +7,11 @@ require('../css/main.scss');
 
 const $ = require('jquery');
 //global.$ = global.jQuery = $;
-require('jquery-ui');
+require('jquery-ui/themes/base/core.css');
+require('jquery-ui/themes/base/theme.css');
+require('jquery-ui/themes/base/autocomplete.css');
+require('jquery-ui/ui/core');
+require('jquery-ui/ui/widgets/autocomplete');
 
 //Если включить, теги i будут заменяться на svg
 //require('@fortawesome/fontawesome-free/js/all');
@@ -43,7 +47,7 @@ let Modal = {
     shopAutocomplete: function(id) {
         $(id).autocomplete({
             minLength: 2,
-            source: '/basket/shop/autocomplete',
+            source: '/order/shop/autocomplete',
             select: function(event, ui) {
                 $(id).val(ui.item.value);
                 //$('#basket-shop-form').submit();
@@ -91,14 +95,6 @@ let Modal = {
     }
 };
 
-$('#order_new').on('click', (e)=> {
-    Modal.handleMainModal(e, {
-        url: `/order/new`,
-        shopAutocomplete: true,
-        shopAutocompleteElem: '#basket_user_shop'
-    });
-});
-
 $('#basket-user-edit').on('click', (e)=> {
     let id = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
@@ -137,6 +133,16 @@ $('.product-manager-edit').on('click', (e)=> {
     Modal.handleMainModal(e, {
         url: `/manager/product/${productId}/edit`,
         size: 'modal-lg'
+    });
+});
+
+
+
+$('#order_new').on('click', (e)=> {
+    Modal.handleMainModal(e, {
+        url: `/order/new`,
+        shopAutocomplete: true,
+        shopAutocompleteElem: '#order_shop' // элемент, на который вешаем autocomplete
     });
 });
 
