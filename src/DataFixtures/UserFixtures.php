@@ -7,7 +7,7 @@ use App\Entity\Product;
 use App\Entity\User;
 use App\Entity\UserAddress;
 use App\Entity\UserPassport;
-use App\Entity\UserRole;
+use App\Entity\Role;
 use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -34,7 +34,7 @@ class UserFixtures extends BaseFixture
         /* CREATE USER ROLES */
 
         $this->createMany(1, self::ROLE_USER_REFERENCE, function($i) {
-            $userRole = new UserRole();
+            $userRole = new Role();
             $userRole->setName(self::ROLE_USER_REFERENCE);
             $this->manager->persist($userRole);
             $this->manager->flush();
@@ -42,7 +42,7 @@ class UserFixtures extends BaseFixture
         });
 
         $this->createMany(1, self::ROLE_MANAGER_REFERENCE, function($i) {
-            $userRole = new UserRole();
+            $userRole = new Role();
             $userRole->setName(self::ROLE_MANAGER_REFERENCE);
             $this->manager->persist($userRole);
             $this->manager->flush();
@@ -50,7 +50,7 @@ class UserFixtures extends BaseFixture
         });
 
         $this->createMany(1, self::ROLE_ADMIN_REFERENCE, function($i) {
-            $userRole = new UserRole();
+            $userRole = new Role();
             $userRole->setName(self::ROLE_ADMIN_REFERENCE);
             $this->manager->persist($userRole);
             $this->manager->flush();

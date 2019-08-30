@@ -8,9 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="UserRol1eRepository")
+ * @ORM\Entity(repositoryClass="RoleRepository")
  */
-class UserRole implements PrefixableEntityInterface
+class Role implements PrefixableEntityInterface
 {
     const PREFIX = 'UR'; // User Role
 

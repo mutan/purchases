@@ -28,6 +28,10 @@ class User implements UserInterface, PrefixableEntityInterface
 
     const PREFIX = 'U'; // User
 
+    const ROLE_USER = 'ROLE_USER';
+    const ROLE_MANAGER = 'ROLE_MANAGER';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
 
@@ -147,7 +151,7 @@ class User implements UserInterface, PrefixableEntityInterface
     private $lastLoginDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\UserRole", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
      */
     private $roles;
 
@@ -476,14 +480,24 @@ class User implements UserInterface, PrefixableEntityInterface
     }
 
     /**
-     * @return Collection|UserRole[]
+     * @see UserInterface
      */
-    public function getRoles(): Collection
+    public function getRoles(): array
     {
-        return $this->roles;
+        $roles = $this->roles;
+
+        // guarantee every user at least has ROLE_USER
+        $rolesArray[] = self::ROLE_USER;
+
+        foreach ($roles as $role) {
+            /* @var Role $role */
+            $rolesArray[] = $role->getName();
+        }
+
+        return array_unique($rolesArray);
     }
 
-    public function addRole(UserRole $role): self
+    public function addRole(Role $role): self
     {
         if (!$this->roles->contains($role)) {
             $this->roles[] = $role;
@@ -492,7 +506,7 @@ class User implements UserInterface, PrefixableEntityInterface
         return $this;
     }
 
-    public function removeRole(UserRole $role): self
+    public function removeRole(Role $role): self
     {
         if ($this->roles->contains($role)) {
             $this->roles->removeElement($role);
@@ -514,7 +528,7 @@ class User implements UserInterface, PrefixableEntityInterface
 
     public function __toString()
     {
-        return $this->getIdWithPrefix();
+        return $this->getIdWithPrefix() . ' ' . $this->getFullName();
     }
 
     public function getFullName(): string
