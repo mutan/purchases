@@ -112,7 +112,9 @@ $('.product-manager-edit').on('click', (e)=> {
     let productId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
         url: `/manager/product/${productId}/edit`,
-        size: 'modal-lg'
+        size: 'modal-lg',
+        shopAutocomplete: true,
+        shopAutocompleteElem: '#product_manager_purchaseShop' // элемент, на который вешаем autocomplete
     });
 });
 $('#product-new').on('click', (e)=> {
@@ -141,7 +143,7 @@ $('#order_edit').on('click', (e)=> {
     Modal.handleMainModal(e, {
         url: `/order/${id}/edit`,
         shopAutocomplete: true,
-        shopAutocompleteElem: '#order_shop'
+        shopAutocompleteElem: '#order_shop'  // элемент, на который вешаем autocomplete
     });
 });
 $('#user_profile_edit').on('click', (e)=> {
