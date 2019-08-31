@@ -22,7 +22,7 @@ class ProductVoter extends Voter
         // If the attribute isn't one we support, return false
         // Only vote on Product objects inside this voter
         return in_array($attribute, [
-                'PRODUCT_EDIT', //by user
+                'PRODUCT_EDIT_DELETE', //by user
             ])
             && $subject instanceof Product;
     }
@@ -44,8 +44,8 @@ class ProductVoter extends Voter
         // Check conditions and return true to grant permission
         /** @var Product $subject */
         switch ($attribute) {
-            case 'PRODUCT_EDIT':
-                if ($subject->getUser() == $user && $subject->isActive()) {
+            case 'PRODUCT_EDIT_DELETE':
+                if ($subject->getUser() == $user && $subject->isActive() && $subject->getOrder()->isNew()) {
                     return true;
                 }
                 break;

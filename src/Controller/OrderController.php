@@ -207,7 +207,7 @@ class OrderController extends BaseController
     public function editProduct(Request $request, ProductRepository $productRepository): Response
     {
         $product = $productRepository->find($request->get('product_id'));
-        $this->denyAccessUnlessGranted('PRODUCT_EDIT', $product);
+        $this->denyAccessUnlessGranted('PRODUCT_EDIT_DELETE', $product);
 
         $productData = new ProductUserData();
         $productData->extract($product);
