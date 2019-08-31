@@ -156,7 +156,7 @@ class OrderController extends BaseController
         $order->setStatus(Order::STATUS_DELETED);
         $this->getEm()->persist($order);
         $this->getEm()->flush();
-        $this->addFlash('success','Заказ удален.');
+        $this->addFlash('success','Заказ {$order->getIdWithPrefix()} удален.');
 
         return $this->redirectToRoute('order_index');
     }
@@ -241,13 +241,13 @@ class OrderController extends BaseController
      */
     public function deleteProduct(Request $request, Product $product): Response
     {
-        $this->denyAccessUnlessGranted('PRODUCT_OPERATE', $product);
+        $this->denyAccessUnlessGranted('PRODUCT_EDIT_DELETE', $product);
 
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
             $this->getEm()->remove($product);
             $this->getEm()->flush();
 
-            $this->addFlash('success','Товар удален.');
+            $this->addFlash('success',"Товар {$product->getIdWithPrefix()} удален.");
         }
 
         return $this->redirectToRoute('order_show', ['order_id' => $product->getOrder()->getId()]);
