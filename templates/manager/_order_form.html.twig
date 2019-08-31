@@ -1,29 +1,29 @@
 <div class="form-row">
     <div class="form-group col-12 col-sm-4">
-        {{ form_label(basketForm.deliveryToStock, 'Доставка по США, $') }}
-        {{ form_widget(basketForm.deliveryToStock, {'attr': {'class': 'form-control-sm'}}) }}
+        {{ form_label(orderForm.deliveryToStock, 'Доставка по США, $') }}
+        {{ form_widget(orderForm.deliveryToStock, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
     <div class="form-group col-12 col-sm-4">
-        {{ form_label(basketForm.deliveryToRussiaPerKg, 'Доставка в Россию за кг, $') }}
-        {{ form_widget(basketForm.deliveryToRussiaPerKg, {'attr': {'class': 'form-control-sm'}}) }}
+        {{ form_label(orderForm.deliveryToRussiaPerKg, 'Доставка в Россию за кг, $') }}
+        {{ form_widget(orderForm.deliveryToRussiaPerKg, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
     <div class="form-group col-12 col-sm-4">
-        {{ form_label(basketForm.deliveryToClient, 'Доставка по России, руб.') }}
-        {{ form_widget(basketForm.deliveryToClient, {'attr': {'class': 'form-control-sm'}}) }}
+        {{ form_label(orderForm.deliveryToClient, 'Доставка по России, руб.') }}
+        {{ form_widget(orderForm.deliveryToClient, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
 </div>
 
 <div class="form-row">
     <div class="form-group col-12 col-sm-4">
-        {{ form_label(basketForm.additionalCost, 'Доп. затраты') }}
-        {{ form_widget(basketForm.additionalCost, {'attr': {'class': 'form-control-sm'}}) }}
+        {{ form_label(orderForm.additionalCost, 'Доп. затраты') }}
+        {{ form_widget(orderForm.additionalCost, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
 
     <div class="form-group col-12 col-sm-8">
-        <label for="{{ basketForm.rate.vars.id }}">
+        <label for="{{ orderForm.rate.vars.id }}">
             Курс $
-            {% if (basketForm.rate.vars.errors) %}
-                {% for error in basketForm.rate.vars.errors %}
+            {% if (orderForm.rate.vars.errors) %}
+                {% for error in orderForm.rate.vars.errors %}
                 <span class="invalid-feedback d-block">
                     <span class="d-block"><span class="form-error-message">{{ error.message }}</span></span>
                  </span>
@@ -32,12 +32,12 @@
         </label>
 
         <div class="input-group input-group-sm">
-            <input type="text" class="form-control form-control-sm" id="{{ basketForm.rate.vars.id }}" name="{{ basketForm.rate.vars.full_name }}" value="{{ basketForm.rate.vars.value }}">
+            <input type="text" class="form-control form-control-sm" id="{{ orderForm.rate.vars.id }}" name="{{ orderForm.rate.vars.full_name }}" value="{{ orderForm.rate.vars.value }}">
             <div class="input-group-append">
-                <label class="input-group-text" for="{{ basketForm.isRateFinal.vars.id }}">Окончательный?</label>
+                <label class="input-group-text" for="{{ orderForm.isRateFinal.vars.id }}">Окончательный?</label>
                 <div class="input-group-text">
-                    <input type="checkbox" id="{{ basketForm.isRateFinal.vars.id }}" name="{{ basketForm.isRateFinal.vars.full_name }}"
-                           {% if basketForm.vars.value.isRateFinal %}checked{% endif %}>
+                    <input type="checkbox" id="{{ orderForm.isRateFinal.vars.id }}" name="{{ orderForm.isRateFinal.vars.full_name }}"
+                           {% if orderForm.vars.value.isRateFinal %}checked{% endif %}>
                 </div>
             </div>
         </div>
@@ -46,11 +46,11 @@
 
 <div class="form-row">
     <div class="form-group col-12">
-        {{ form_label(basketForm.additionalCostComment, 'Комментарий к дополнительным затратам') }}
-        {{ form_widget(basketForm.additionalCostComment, {'attr': {'class': 'form-control-sm'}}) }}
+        {{ form_label(orderForm.additionalCostComment, 'Комментарий к дополнительным затратам') }}
+        {{ form_widget(orderForm.additionalCostComment, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
     <div class="form-group col-12">
-        {{ form_label(basketForm.tracking, 'Трекинг по США') }}
-        {{ form_widget(basketForm.tracking, {'attr': {'class': 'form-control-sm'}}) }}
+        {{ form_label(orderForm.tracking, 'Трекинг по США') }}
+        {{ form_widget(orderForm.tracking, {'attr': {'class': 'form-control-sm'}}) }}
     </div>
 </div>

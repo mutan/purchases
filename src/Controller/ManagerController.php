@@ -8,6 +8,7 @@ use App\Form\ProductManagerData;
 use App\Form\ProductManagerType;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,19 +40,17 @@ class ManagerController extends BaseController
      * @param Request $request
      * @param OrderRepository $orderRepository
      * @return Response
+     * @throws NonUniqueResultException
      */
     public function editOrder(Request $request, OrderRepository $orderRepository) : Response
     {
         $order = $orderRepository->findWithRelations($request->get('order_id'));
         $this->denyAccessUnlessGranted('ORDER_MANAGE', $order);
 
-        $orderManagerData = new OrderManagerData();
-        $orderManagerData->extract($order);
-        $orderForm = $this->createForm(OrderManagerType::class, $orderManagerData);
+        $orderForm = $this->createForm(OrderManagerType::class, $order);
         $orderForm->handleRequest($request);
 
         if ($orderForm->isSubmitted() && $orderForm->isValid()) {
-            $orderManagerData->fill($order);
             $this->getEm()->flush();
             $this->addFlash('success', "Заказ {$order->getIdWithPrefix()} обновлен.");
             $reload = true;

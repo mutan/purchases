@@ -50,7 +50,7 @@ let Modal = {
             source: '/order/shop/autocomplete',
             select: function(event, ui) {
                 $(id).val(ui.item.value);
-                //$('#basket-shop-form').submit();
+                //$('#order-shop-form').submit();
             }
         });
     },
@@ -101,14 +101,13 @@ let Modal = {
 
 
 
-$('.basket-manager-edit').on('click', (e)=> {
-    let basketId = $(e.currentTarget).attr('data-id');
+$('.order-manager-edit').on('click', (e)=> {
+    let orderId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
-        url: `/manager/basket/${basketId}/edit`,
+        url: `/manager/order/${orderId}/edit`,
         size: 'modal-lg'
     });
 });
-
 $('.product-manager-edit').on('click', (e)=> {
     let productId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
@@ -116,14 +115,10 @@ $('.product-manager-edit').on('click', (e)=> {
         size: 'modal-lg'
     });
 });
-
-
-
-
 $('#product-new').on('click', (e)=> {
-    let basketId = $(e.currentTarget).attr('data-id');
+    let orderId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
-        url: `/order/${basketId}/product/new`,
+        url: `/order/${orderId}/product/new`,
         size: 'modal-lg'
     });
 });

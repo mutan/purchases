@@ -57,7 +57,7 @@ class OrderVoter extends Voter
                 }
                 break;
             case 'ORDER_MANAGE':
-                if ($subject->getManager() == $user) {
+                if ($subject->getManager() == $user) { //TODO какое-то еще условие должно быть по статусам
                     return true;
                 }
                 break;

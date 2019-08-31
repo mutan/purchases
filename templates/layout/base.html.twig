@@ -38,7 +38,7 @@
                         <li class="nav-item d-none d-sm-inline">
                             <span class="nav-link">|</span>
                         </li>
-                        <li class="nav-item {% if 'manager_basket' in app.request.get('_route') %}active{% endif %}">
+                        <li class="nav-item {% if 'manager_order' in app.request.get('_route') %}active{% endif %}">
                             <a class="nav-link" href="{{ path('manager_order_list') }}">Заказы участников</a>
                         </li>
                         <li class="nav-item {% if 'package' in app.request.get('_route') %}active{% endif %}">
