@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Services\Entity\OrderHelper;
 use DateTimeInterface;
 use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
@@ -438,10 +439,10 @@ class Order implements PrefixableEntityInterface
     }
 
     public function getStatusLabel() {
-        return 'label';
+        return OrderHelper::STATUSES[$this->getStatus()]['label'];
     }
 
     public function getStatusDescription() {
-        return 'description';
+        return OrderHelper::STATUSES[$this->getStatus()]['description'];
     }
 }

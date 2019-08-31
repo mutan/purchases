@@ -1,11 +1,11 @@
 {% if order.rate %}
     <span class="badge badge-{{ order.isRateFinal ? 'primary' : 'danger' }} pointer"
           data-toggle="tooltip"
-          title="{{ order.isRateFinal ? 'Окончательный курс $' : 'Курс $ – предварительный. Окончательный будет проставлен после того, как платеж магазину будет подтвержден банком' }}"
+          title="{{ order.isRateFinal ? 'Окончательный курс' : 'Курс – предварительный. Окончательный будет проставлен после того, как платеж магазину будет подтвержден банком' }}"
     >{{ order.rate }} <i class="fa fa-ruble-sign"></i></span>
 {% else %}
     <span class="badge badge-danger pointer"
           data-toggle="tooltip"
-          title="Заказу еще не проставлен курс $"
+          title="Заказу еще не проставлен курс"
     >–</span>
 {%- endif -%}
