@@ -51,6 +51,18 @@ ol, ul {
   cursor: pointer;
 }
 
+.navbar-nav > .nav-item.active {
+  background-color: #345578;
+  border-radius: 0.2rem;
+}
+
+.btn-group-xs > .btn, .btn-xs {
+  padding: .25rem .4rem;
+  font-size: .875rem;
+  line-height: .5;
+  border-radius: .2rem;
+}
+
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */

@@ -31,10 +31,10 @@
                 <!-- Left -->
                 <ul class="navbar-nav mr-auto">
                     {% if is_granted('ROLE_USER') %}
-                    <li class="nav-item {% if 'user_basket' in app.request.get('_route') %}active{% endif %}">
+                    <li class="nav-item {% if 'order_index' in app.request.get('_route') %}active{% endif %}">
                         <a class="nav-link" href="{{ path('order_index') }}">Мои заказы</a>
                     </li>
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_MANAGER') %}
                         <li class="nav-item d-none d-sm-inline">
                             <span class="nav-link">|</span>
                         </li>
@@ -81,7 +81,7 @@
     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
         <div class="alert alert-danger alert-fixed text-center mb-0" style="border-radius: 0; font-size: 0.9rem; padding: .3rem 1.25rem; margin-top: 58px;">
             You are currently switched to user <strong>{{ app.user.fullname }} ({{ app.user.email }})</strong>.
-            <a class="alert-link" href="{{ path('app_homepage', {'_switch_user' : '_exit'}) }}"> <i class="fas fa-sign-out-alt ml-2"></i> Exit</a>
+            <a class="btn btn-danger btn-xs ml-1" href="{{ path('app_homepage', {'_switch_user' : '_exit'}) }}"> <i class="fas fa-sign-out-alt ml-0"></i> Exit</a>
         </div>
     {% endif %}
     <!-- /User switch -->
