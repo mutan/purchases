@@ -18,7 +18,11 @@ class OrderHelper
             'description' => 'Заказы со статусом Утвержден больше нельзя редактировать или удалять, но можно вернуть обратно в статус Новый.',
             'next_allowed_statuses' => [Order::STATUS_NEW, Order::STATUS_REDEEMED],
         ],
-        Order::STATUS_REDEEMED => 'Выкупается',
+        Order::STATUS_REDEEMED => [
+            'label' => 'Выкупается',
+            'description' => 'Менеджер начал выкупать ваш заказ. Редактировать или удалять заказ, а также товары в нем, больше нельзя.',
+            'next_allowed_statuses' => [Order::STATUS_BOUGHT],
+        ],
         Order::STATUS_BOUGHT => 'Выкуплен',
         Order::STATUS_SENT => 'Отправлен',
         Order::STATUS_RECEIVED => 'Получен',

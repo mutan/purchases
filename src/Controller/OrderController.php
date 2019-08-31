@@ -97,8 +97,6 @@ class OrderController extends BaseController
     public function show(Request $request, OrderRepository $orderRepository): Response
     {
         $order = $orderRepository->findWithRelations($request->get('order_id'));
-        $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
-
         return $this->render('order/show.html.twig', [
             'order' => $order,
         ]);
