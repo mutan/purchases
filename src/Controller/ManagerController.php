@@ -15,13 +15,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
+ * @Route("/manager")
  * @IsGranted("ROLE_MANAGER")
  */
 class ManagerController extends BaseController
 {
     /**
      * Страница со списком заказов менеджера
-     * @Route("/manager/orders", name="manager_order_list", methods={"GET"})
+     * @Route("/orders", name="manager_order_list", methods={"GET"})
      * @param OrderRepository $orderRepository
      * @return Response
      */
@@ -34,7 +35,7 @@ class ManagerController extends BaseController
 
     /**
      * Форма редактирования заказа менеджером (ajax)
-     * @Route("/manager/order/{order_id}/edit", name="manager_order_edit", methods={"POST"})
+     * @Route("/order/{order_id}/edit", name="manager_order_edit", methods={"POST"})
      * @param Request $request
      * @param OrderRepository $orderRepository
      * @return Response
@@ -68,7 +69,7 @@ class ManagerController extends BaseController
 
     /**
      * Страница с одним заказом и списком продуктов для менеджера
-     * @Route("/manager/order/{order_id}", name="manager_order_show", methods={"GET"})
+     * @Route("/order/{order_id}", name="manager_order_show", methods={"GET"})
      * @param Request $request
      * @param OrderRepository $orderRepository
      * @return Response
@@ -85,7 +86,7 @@ class ManagerController extends BaseController
 
     /**
      * Форма редактирования товара для менеджера (ajax)
-     * @Route("manager/product/{product_id}/edit", name="manager_product_edit", methods={"POST"})
+     * @Route("/product/{product_id}/edit", name="manager_product_edit", methods={"POST"})
      * @param Request $request
      * @param ProductRepository $productRepository
      * @return Response

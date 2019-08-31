@@ -24,6 +24,7 @@ class OrderVoter extends Voter
         return in_array($attribute, [
                 'ORDER_EDIT', // by user
                 'ORDER_DELETE', // by user
+                'ORDER_MANAGE', // by manager
             ])
             && $subject instanceof Order;
     }
@@ -52,6 +53,11 @@ class OrderVoter extends Voter
                 break;
             case 'ORDER_DELETE':
                 if ($subject->getUser() == $user && $subject->isNew() && !$subject->hasProducts()) {
+                    return true;
+                }
+                break;
+            case 'ORDER_MANAGE':
+                if ($subject->getManager() == $user) {
                     return true;
                 }
                 break;

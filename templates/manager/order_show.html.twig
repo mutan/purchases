@@ -4,28 +4,28 @@
 
 {% block body %}
 
-    {# @var $basket Basket #}
+    {# @var $order Order #}
     <div class="row">
         <div class="col-12">
-            <h1 class="align-self-center mb-0">Заказ {{ basket.idWithPrefix }}</h1>
+            <h1 class="align-self-center mb-0">Заказ {{ order.idWithPrefix }}</h1>
         </div>
     </div>
     <hr>
 
     <div class="row">
         <div class="col-12 col-md-4">
-            {{ include('layout/bit/_basket_status.html.twig') }}
-            {{ include('layout/bit/_basket_rate_icon.html.twig') }}
-            <a href="{{ basket.shop }}" class="ml-1" target="_blank">{{ basket.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
+            {{ include('layout/bit/_order_status.html.twig') }}
+            {{ include('layout/bit/_order_rate_icon.html.twig') }}
+            <a href="{{ order.shop }}" class="ml-1" target="_blank">{{ order.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
             <br>
-            <strong>Комментарий клиента:</strong> {% if basket.userComment %}{{ basket.userComment }}{% else %}–{% endif %}
+            <strong>Комментарий клиента:</strong> {% if order.userComment %}{{ order.userComment }}{% else %}–{% endif %}
         </div>
         <div class="col-12 col-md-4">
 
 
         </div>
         <div class="col-12 col-md-4 text-right">
-            <button type="button" class="btn btn-sm btn-narrow btn-dark-green basket-manager-edit" data-id="{{ basket.id }}"><i class="fa fa-edit"></i></button>
+            <button type="button" class="btn btn-sm btn-narrow btn-dark-green order-manager-edit" data-id="{{ order.id }}"><i class="fa fa-edit"></i></button>
         </div>
     </div>
     <hr>
@@ -51,7 +51,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for product in basket.products %}
+                {% for product in order.products %}
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>
@@ -62,7 +62,7 @@
                         <td>{{ product.amount }}</td>
                         <td>{{ product.userPrice }}</td>
                         <td>{{ product.sum }}</td>
-                        <td>{% if basket.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
+                        <td>{% if order.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
                         <td>
                             <nobr>
                                 <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-manager-edit" data-id="{{ product.id }}">
@@ -77,58 +77,58 @@
                         <td colspan="7">Вы еще не добавили ни одного товара.</td>
                     </tr>
                 {% endfor %}
-                {% if basket.products.count %}
+                {% if order.products.count %}
                     <tr>
                         <th></th>
                         <th>Итого товары</th>
-                        <th>{{ basket.productsAmount }}</th>
+                        <th>{{ order.productsAmount }}</th>
                         <th></th>
-                        <th>{{ basket.productsSum }}</th>
-                        <th>{% if basket.rate %}{{ basket.productsSumRub }}{%- else -%}–{%- endif -%}</th>
-                        {% if is_granted('BASKET_MANAGE', basket) %}<th></th>{% endif %}
+                        <th>{{ order.productsSum }}</th>
+                        <th>{% if order.rate %}{{ order.productsSumRub }}{%- else -%}–{%- endif -%}</th>
+                        {% if is_granted('ORDER_MANAGE', order) %}<th></th>{% endif %}
                     </tr>
-                    {% if basket.deliveryToStock %}
+                    {% if order.deliveryToStock %}
                         <tr>
                             <td></td>
                             <td colspan="3">Доставка по США</td>
-                            <td>{{ basket.deliveryToStock }}</td>
-                            <td>{{ (basket.rate and basket.deliveryToStockRub) ? basket.deliveryToStockRub : '–' }}</td>
-                            {% if is_granted('BASKET_MANAGE', basket) %}<td></td>{% endif %}
+                            <td>{{ order.deliveryToStock }}</td>
+                            <td>{{ (order.rate and order.deliveryToStockRub) ? order.deliveryToStockRub : '–' }}</td>
+                            {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
-                    {% if basket.deliveryToRussia %}
+                    {% if order.deliveryToRussia %}
                         <tr>
                             <td></td>
                             <td colspan="3">Доставка в Россию</td>
-                            <td>{{ basket.deliveryToRussia }}</td>
-                            <td>{{ (basket.rate and basket.deliveryToRussiaRub) ? basket.deliveryToRussiaRub : '–' }}</td>
-                            {% if is_granted('BASKET_MANAGE', basket) %}<td></td>{% endif %}
+                            <td>{{ order.deliveryToRussia }}</td>
+                            <td>{{ (order.rate and order.deliveryToRussiaRub) ? order.deliveryToRussiaRub : '–' }}</td>
+                            {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
-                    {% if basket.deliveryToClient %}
+                    {% if order.deliveryToClient %}
                         <tr>
                             <td></td>
                             <td colspan="4">Доставка по России</td>
-                            <td>{{ basket.deliveryToClient }}</td>
-                            {% if is_granted('BASKET_MANAGE', basket) %}<td></td>{% endif %}
+                            <td>{{ order.deliveryToClient }}</td>
+                            {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
-                    {% if basket.additionalCost %}
+                    {% if order.additionalCost %}
                         <tr>
                             <td></td>
                             <td colspan="2">
-                                Дополнительные затраты <i class="far fa-comment" data-toggle="tooltip" title="{{ basket.additionalCostComment }}"></i>
+                                Дополнительные затраты <i class="far fa-comment" data-toggle="tooltip" title="{{ order.additionalCostComment }}"></i>
                             </td>
-                            <td>{{ basket.additionalCost }}</td>
+                            <td>{{ order.additionalCost }}</td>
                             <td colspan="2"></td>
-                            {% if is_granted('BASKET_MANAGE', basket) %}<td></td>{% endif %}
+                            {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
                     <tr>
                         <th></th>
                         <th colspan="4">Итого товары + доставка</th>
-                        <th>{{ basket.rate and basket.totalRub ? basket.totalRub : '–'}}</th>
-                        {% if is_granted('BASKET_MANAGE', basket) %}<th></th>{% endif %}
+                        <th>{{ order.rate and order.totalRub ? order.totalRub : '–'}}</th>
+                        {% if is_granted('ORDER_MANAGE', order) %}<th></th>{% endif %}
                     </tr>
                 {% endif %}
                 </tbody>
