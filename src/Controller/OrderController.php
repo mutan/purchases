@@ -45,7 +45,7 @@ class OrderController extends BaseController
 
     /**
      * Страница со списком заказов пользователя
-     * @Route("/", name="order_index", methods={"GET"})
+     * @Route("/", name="user_order_index", methods={"GET"})
      * @param OrderRepository $orderRepository
      * @return Response
      */
@@ -58,7 +58,7 @@ class OrderController extends BaseController
 
     /**
      * Форма создания заказа (ajax)
-     * @Route("/new", name="order_new", methods={"POST"})
+     * @Route("/new", name="user_order_new", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
@@ -88,7 +88,7 @@ class OrderController extends BaseController
 
     /**
      * Страница с одним заказом и списком продуктов в нем для пользователя
-     * @Route("/{order_id}", name="order_show", methods={"GET"})
+     * @Route("/{order_id}", name="user_order_show", methods={"GET"})
      * @param Request $request
      * @param OrderRepository $orderRepository
      * @return Response
@@ -104,7 +104,7 @@ class OrderController extends BaseController
 
     /**
      * Форма редактирования заказа пользователем (ajax)
-     * @Route("/{order_id}/edit", name="order_edit", methods={"POST"})
+     * @Route("/{order_id}/edit", name="user_order_edit", methods={"POST"})
      * @param Request $request
      * @param OrderRepository $orderRepository
      * @return Response
@@ -137,7 +137,7 @@ class OrderController extends BaseController
 
     /**
      * Удаление заказа
-     * @Route("/{id}/delete", name="order_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="user_order_delete", methods={"DELETE"})
      * @param Request $request
      * @param Order $order
      * @return Response
@@ -164,7 +164,7 @@ class OrderController extends BaseController
 
     /**
      * Форма создания товара (ajax)
-     * @Route("/{order_id}/product/new", name="order_product_new", methods={"POST"})
+     * @Route("/{order_id}/product/new", name="user_order_product_new", methods={"POST"})
      * @param Request $request
      * @param OrderRepository $orderRepository
      * @return Response
@@ -200,7 +200,7 @@ class OrderController extends BaseController
 
     /**
      * Форма редактирования товара (ajax)
-     * @Route("/product/{id}/edit", name="order_product_edit", methods={"POST"})
+     * @Route("/product/{id}/edit", name="user_order_product_edit", methods={"POST"})
      * @param Request $request
      * @param ProductRepository $productRepository
      * @return Response
@@ -235,7 +235,7 @@ class OrderController extends BaseController
 
     /**
      * Удаление товара
-     * @Route("/product/{id}", name="order_product_delete", methods={"DELETE"})
+     * @Route("/product/{id}", name="user_order_product_delete", methods={"DELETE"})
      * @param Request $request
      * @param Product $product
      * @return Response

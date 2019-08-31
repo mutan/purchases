@@ -23,6 +23,7 @@ class ProductVoter extends Voter
         // Only vote on Product objects inside this voter
         return in_array($attribute, [
                 'PRODUCT_EDIT_DELETE', //by user
+                'PRODUCT_MANAGE', //by user
             ])
             && $subject instanceof Product;
     }
@@ -46,6 +47,11 @@ class ProductVoter extends Voter
         switch ($attribute) {
             case 'PRODUCT_EDIT_DELETE':
                 if ($subject->getUser() == $user && $subject->isActive() && $subject->getOrder()->isNew()) {
+                    return true;
+                }
+                break;
+            case 'PRODUCT_MANAGE':
+                if ($subject->getOrder()->getManager() == $user) { //TODO какое-то еще условие должно быть по статусам
                     return true;
                 }
                 break;

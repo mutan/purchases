@@ -31,8 +31,8 @@
                 <!-- Left -->
                 <ul class="navbar-nav mr-auto">
                     {% if is_granted('ROLE_USER') %}
-                    <li class="nav-item {% if 'order_index' in app.request.get('_route') %}active{% endif %}">
-                        <a class="nav-link" href="{{ path('order_index') }}">Мои заказы</a>
+                    <li class="nav-item {% if 'user_order' in app.request.get('_route') %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('user_order_index') }}">Мои заказы</a>
                     </li>
                         {% if is_granted('ROLE_MANAGER') %}
                         <li class="nav-item d-none d-sm-inline">

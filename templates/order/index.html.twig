@@ -36,7 +36,7 @@
             <tr>
                 <td>{{ order.createDate.format('Y-m-d') }}</td>
                 <td>
-                    <a class="dashed" href="{{ path('order_show', {'order_id': order.id} ) }}">{{ order.idWithPrefix }}</a>
+                    <a class="dashed" href="{{ path('user_order_show', {'order_id': order.id} ) }}">{{ order.idWithPrefix }}</a>
                 </td>
                 <td>
                     {{ include('layout/bit/_order_status.html.twig') }}

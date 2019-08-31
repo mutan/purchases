@@ -72,7 +72,7 @@
 </div>
 <!--Footer-->
 <div class="modal-footer">
-    <button class="btn btn-sm btn-narrow btn-dark-green" type="submit" formnovalidate>{{ button_label|default('Обновить') }}</button>
+    {{ include('layout/_save_button.html.twig') }}
 </div>
 {{ form_end(orderForm, {'render_rest': false}) }}
 {# csrf_token генерируется отдельным полем, в form_end можно запретить рендер остальных полей #}

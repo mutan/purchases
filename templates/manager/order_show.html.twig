@@ -22,10 +22,11 @@
         </div>
         <div class="col-12 col-md-4">
 
-
         </div>
         <div class="col-12 col-md-4 text-right">
-            <button type="button" class="btn btn-sm btn-narrow btn-dark-green order-manager-edit" data-id="{{ order.id }}"><i class="fa fa-edit"></i></button>
+            <button type="button" data-id="{{ order.id }}" class="btn btn-sm btn-primary order-manager-edit">
+                <i class="fa fa-edit"></i> <span class="d-none d-sm-inline pl-1">Редактировать</span>
+            </button>
         </div>
     </div>
     <hr>
@@ -38,7 +39,7 @@
 
     <div class="row">
         <div class="col-12">
-            <table class="table table-sm table-responsive-sm">
+            <table class="table table-sm table-hover table-responsive-sm">
                 <thead>
                 <tr>
                     <th style="width: 1%">#</th>
@@ -65,7 +66,7 @@
                         <td>{% if order.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
                         <td>
                             <nobr>
-                                <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-manager-edit" data-id="{{ product.id }}">
+                                <button type="button" class="btn btn-sm btn-primary mr-2 product-manager-edit" data-id="{{ product.id }}">
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 {{ include('product/_delete_form.html.twig') }}

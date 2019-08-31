@@ -72,6 +72,7 @@ class ManagerController extends BaseController
      * @param Request $request
      * @param OrderRepository $orderRepository
      * @return Response
+     * @throws NonUniqueResultException
      */
     public function show(Request $request, OrderRepository $orderRepository): Response
     {
@@ -82,6 +83,8 @@ class ManagerController extends BaseController
             'order' => $order,
         ]);
     }
+
+
 
     /**
      * Форма редактирования товара для менеджера (ajax)
