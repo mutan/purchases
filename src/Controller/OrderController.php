@@ -139,7 +139,7 @@ class OrderController extends BaseController
 
     /**
      * Удаление заказа
-     * @Route("/{id}/delete", name="order_delete", methods={"GET"})
+     * @Route("/{id}/delete", name="order_delete", methods={"DELETE"})
      * @param Request $request
      * @param Order $order
      * @return Response
@@ -148,7 +148,7 @@ class OrderController extends BaseController
     {
         $this->denyAccessUnlessGranted('ORDER_DELETE', $order);
 
-        if (!$order->hasProducts()) {
+        if ($order->hasProducts()) {
             $this->addFlash('warning','Заказ можно удалить, только если он не содержит товаров.');
             return $this->redirect($request->headers->get('referer'));
         }
@@ -206,7 +206,7 @@ class OrderController extends BaseController
     public function editProduct(Request $request, ProductRepository $productRepository): Response
     {
         $product = $productRepository->find($request->get('product_id'));
-        $this->denyAccessUnlessGranted('PRODUCT_OPERATE', $product);
+        $this->denyAccessUnlessGranted('PRODUCT_EDIT', $product);
 
         $productData = new ProductUserData();
         $productData->extract($product);

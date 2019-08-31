@@ -39,8 +39,8 @@
     <div class="row">
         <div class="col-12">
             <h2 class="align-self-center">Товары
-                {% if is_granted('ORDER_OPERATE', order) %}
-                    <button type="button" id="product-user-new" data-id="{{ order.id }}" class="btn btn-sm btn-narrow btn-dark-green">
+                {% if is_granted('ORDER_EDIT', order) %}
+                    <button type="button" id="product-new" data-id="{{ order.id }}" class="btn btn-sm btn-primary">
                         <i class="fa fa-plus"></i> <span class="d-none d-sm-inline pl-1">Добавить</span>
                     </button>
                 {% endif %}
@@ -91,7 +91,7 @@
                         {% if is_granted('ORDER_EDIT', order) %}
                             <td class="text-right">
                                 <nobr>
-                                    <button type="button" class="btn btn-sm btn-narrow btn-mdb-color darken-3 mr-2 product-user-edit" data-id="{{ product.id }}">
+                                    <button type="button" class="btn btn-sm btn-primary mr-2 product-edit" data-id="{{ product.id }}">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                 {{ include('product/_delete_form.html.twig') }}

@@ -97,21 +97,9 @@ let Modal = {
 
 
 
-$('#product-user-new').on('click', (e)=> {
-    let basketId = $(e.currentTarget).attr('data-id');
-    Modal.handleMainModal(e, {
-        url: `/basket/${basketId}/product/new`,
-        size: 'modal-lg'
-    });
-});
 
-$('.product-user-edit').on('click', (e)=> {
-    let productId = $(e.currentTarget).attr('data-id');
-    Modal.handleMainModal(e, {
-        url: `/basket/product/${productId}/edit`,
-        size: 'modal-lg'
-    });
-});
+
+
 
 $('.basket-manager-edit').on('click', (e)=> {
     let basketId = $(e.currentTarget).attr('data-id');
@@ -132,13 +120,18 @@ $('.product-manager-edit').on('click', (e)=> {
 
 
 
-
-$('#order_edit').on('click', (e)=> {
-    let id = $(e.currentTarget).attr('data-id');
+$('#product-new').on('click', (e)=> {
+    let basketId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {
-        url: `/order/${id}/edit`,
-        shopAutocomplete: true,
-        shopAutocompleteElem: '#order_shop'
+        url: `/order/${basketId}/product/new`,
+        size: 'modal-lg'
+    });
+});
+$('.product-edit').on('click', (e)=> {
+    let productId = $(e.currentTarget).attr('data-id');
+    Modal.handleMainModal(e, {
+        url: `/order/product/${productId}/edit`,
+        size: 'modal-lg'
     });
 });
 $('#order_new').on('click', (e)=> {
@@ -148,7 +141,14 @@ $('#order_new').on('click', (e)=> {
         shopAutocompleteElem: '#order_shop' // элемент, на который вешаем autocomplete
     });
 });
-
+$('#order_edit').on('click', (e)=> {
+    let id = $(e.currentTarget).attr('data-id');
+    Modal.handleMainModal(e, {
+        url: `/order/${id}/edit`,
+        shopAutocomplete: true,
+        shopAutocompleteElem: '#order_shop'
+    });
+});
 $('#user_profile_edit').on('click', (e)=> {
     Modal.handleMainModal(e, {
         url: `/user/profile/edit`
