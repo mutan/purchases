@@ -146,7 +146,6 @@ class Order implements PrefixableEntityInterface
     public function setUser(User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 
@@ -158,7 +157,6 @@ class Order implements PrefixableEntityInterface
     public function setManager(User $manager): self
     {
         $this->manager = $manager;
-
         return $this;
     }
 
@@ -172,9 +170,7 @@ class Order implements PrefixableEntityInterface
         if (!in_array($status, self::ALLOWED_STATUSES)) {
             throw new InvalidArgumentException("Invalid order status");
         }
-
         $this->status = $status;
-
         return $this;
     }
 
@@ -192,7 +188,6 @@ class Order implements PrefixableEntityInterface
             $this->products[] = $product;
             $product->setOrder($this);
         }
-
         return $this;
     }
 
@@ -205,7 +200,6 @@ class Order implements PrefixableEntityInterface
                 $product->setOrder(null);
             }
         }
-
         return $this;
     }
 
@@ -217,7 +211,6 @@ class Order implements PrefixableEntityInterface
     public function setBoughtDate(?DateTimeInterface $boughtDate): self
     {
         $this->boughtDate = $boughtDate;
-
         return $this;
     }
 
@@ -229,7 +222,6 @@ class Order implements PrefixableEntityInterface
     public function setDeliveryToStock(?float $deliveryToStock): self
     {
         $this->deliveryToStock = $deliveryToStock;
-
         return $this;
     }
 
@@ -241,7 +233,6 @@ class Order implements PrefixableEntityInterface
     public function setDeliveryToRussiaPerKg(?float $deliveryToRussiaPerKg): self
     {
         $this->deliveryToRussiaPerKg = $deliveryToRussiaPerKg;
-
         return $this;
     }
 
@@ -253,7 +244,6 @@ class Order implements PrefixableEntityInterface
     public function setDeliveryToClient(?float $deliveryToClient): self
     {
         $this->deliveryToClient = $deliveryToClient;
-
         return $this;
     }
 
@@ -265,7 +255,6 @@ class Order implements PrefixableEntityInterface
     public function setShop(string $shop): self
     {
         $this->shop = $shop;
-
         return $this;
     }
 
@@ -277,7 +266,6 @@ class Order implements PrefixableEntityInterface
     public function setUserComment(?string $userComment): self
     {
         $this->userComment = $userComment;
-
         return $this;
     }
 
@@ -289,7 +277,6 @@ class Order implements PrefixableEntityInterface
     public function setAdditionalCost(?float $additionalCost): self
     {
         $this->additionalCost = $additionalCost;
-
         return $this;
     }
 
@@ -301,7 +288,6 @@ class Order implements PrefixableEntityInterface
     public function setAdditionalCostComment(?string $additionalCostComment): self
     {
         $this->additionalCostComment = $additionalCostComment;
-
         return $this;
     }
 
@@ -313,7 +299,6 @@ class Order implements PrefixableEntityInterface
     public function setRate(?float $rate): self
     {
         $this->rate = $rate;
-
         return $this;
     }
 
@@ -325,7 +310,6 @@ class Order implements PrefixableEntityInterface
     public function setIsRateFinal(bool $isRateFinal): self
     {
         $this->isRateFinal = $isRateFinal;
-
         return $this;
     }
 
@@ -337,7 +321,6 @@ class Order implements PrefixableEntityInterface
     public function setTracking(?string $tracking): self
     {
         $this->tracking = $tracking;
-
         return $this;
     }
 
@@ -389,7 +372,6 @@ class Order implements PrefixableEntityInterface
         foreach ($this->getProducts() as $product) {
             $amount += $product->getAmount();
         }
-
         return $amount;
     }
 
@@ -399,7 +381,6 @@ class Order implements PrefixableEntityInterface
         foreach ($this->getProducts() as $product) {
             $sum += $product->getSum();
         }
-
         return $sum;
     }
 
@@ -409,7 +390,6 @@ class Order implements PrefixableEntityInterface
         foreach ($this->getProducts() as $product) {
             $sum += $product->getSumRub();
         }
-
         return $sum;
     }
 
@@ -425,7 +405,6 @@ class Order implements PrefixableEntityInterface
 
             $sum += ($product->getWeight() ? $product->getWeight() : $product->getExpectedWeight());
         }
-
         return $sum;
     }
 
