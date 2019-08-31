@@ -151,10 +151,13 @@ class OrderController extends BaseController
             return $this->redirect($request->headers->get('referer'));
         }
 
-        $order->setStatus(Order::STATUS_DELETED);
-        $this->getEm()->persist($order);
-        $this->getEm()->flush();
-        $this->addFlash('success','Заказ {$order->getIdWithPrefix()} удален.');
+        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
+            $order->setStatus(Order::STATUS_DELETED);
+            $id = $order->getIdWithPrefix();
+            $this->getEm()->persist($order);
+            $this->getEm()->flush();
+            $this->addFlash('success',"Заказ {$id} удален.");
+        }
 
         return $this->redirectToRoute('order_index');
     }
@@ -197,14 +200,14 @@ class OrderController extends BaseController
 
     /**
      * Форма редактирования товара (ajax)
-     * @Route("/product/{product_id}/edit", name="product_edit", methods={"POST"})
+     * @Route("/product/{id}/edit", name="order_product_edit", methods={"POST"})
      * @param Request $request
      * @param ProductRepository $productRepository
      * @return Response
      */
     public function editProduct(Request $request, ProductRepository $productRepository): Response
     {
-        $product = $productRepository->find($request->get('product_id'));
+        $product = $productRepository->find($request->get('id'));
         $this->denyAccessUnlessGranted('PRODUCT_EDIT_DELETE', $product);
 
         $productData = new ProductUserData();
@@ -242,10 +245,10 @@ class OrderController extends BaseController
         $this->denyAccessUnlessGranted('PRODUCT_EDIT_DELETE', $product);
 
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+            $id = $product->getIdWithPrefix();
             $this->getEm()->remove($product);
             $this->getEm()->flush();
-
-            $this->addFlash('success',"Товар {$product->getIdWithPrefix()} удален.");
+            $this->addFlash('success',"Товар {$id} удален.");
         }
 
         return $this->redirectToRoute('order_show', ['order_id' => $product->getOrder()->getId()]);
