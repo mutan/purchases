@@ -130,7 +130,7 @@ class OrderController extends BaseController
             'message' => 'Success',
             'reload' => $reload ?? false,
             'output' => $this->renderView('order/_order_modal.html.twig', [
-                'title' => 'Редактировать заказ',
+                'title' => "Редактировать заказ {$order->getIdWithPrefix()}",
                 'order' => $order,
                 'form' => $orderForm->createView(),
             ])
@@ -190,8 +190,9 @@ class OrderController extends BaseController
         return new JsonResponse([
             'message' => 'Success',
             'reload' => $reload ?? false,
-            'output' => $this->renderView('product/_new_modal.html.twig', [
-                'productForm' => $productForm->createView(),
+            'output' => $this->renderView('product/_product_modal.html.twig', [
+                'title' => 'Новый товар',
+                'form' => $productForm->createView(),
             ])
         ], 200);
     }
@@ -223,9 +224,10 @@ class OrderController extends BaseController
         return new JsonResponse([
             'message' => 'Success',
             'reload' => $reload ?? false,
-            'output' => $this->renderView('product/_edit_modal.html.twig', [
+            'output' => $this->renderView('product/_product_modal.html.twig', [
+                'title' => "Редактировать товар {$product->getIdWithPrefix()}",
                 'product' => $product,
-                'productForm' => $productForm->createView(),
+                'form' => $productForm->createView(),
             ])
         ], 200);
     }
