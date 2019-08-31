@@ -23,6 +23,7 @@ class OrderVoter extends Voter
         // Only vote on Order objects inside this voter
         return in_array($attribute, [
                 'ORDER_EDIT', // by user
+                'ORDER_DELETE', // by user
             ])
             && $subject instanceof Order;
     }
@@ -46,6 +47,11 @@ class OrderVoter extends Voter
         switch ($attribute) {
             case 'ORDER_EDIT':
                 if ($subject->getUser() == $user && $subject->isNew()) {
+                    return true;
+                }
+                break;
+            case 'ORDER_DELETE':
+                if ($subject->getUser() == $user && $subject->isNew() && !$subject->hasProducts()) {
                     return true;
                 }
                 break;

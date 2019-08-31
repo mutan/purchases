@@ -117,7 +117,6 @@ class OrderController extends BaseController
         $order = $orderRepository->findWithRelations($request->get('order_id'));
         $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
 
-        $order = new Order();
         $orderForm = $this->createForm(OrderType::class, $order);
         $orderForm->handleRequest($request);
 
@@ -130,9 +129,10 @@ class OrderController extends BaseController
         return new JsonResponse([
             'message' => 'Success',
             'reload' => $reload ?? false,
-            'output' => $this->renderView('order/_edit_modal.html.twig', [
+            'output' => $this->renderView('order/_order_modal.html.twig', [
+                'title' => 'Редактировать заказ',
                 'order' => $order,
-                'orderForm' => $orderForm->createView(),
+                'form' => $orderForm->createView(),
             ])
         ], 200);
     }
@@ -146,9 +146,9 @@ class OrderController extends BaseController
      */
     public function delete(Request $request, Order $order): Response
     {
-        $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
+        $this->denyAccessUnlessGranted('ORDER_DELETE', $order);
 
-        if (!$order->getProducts()->isEmpty()) {
+        if (!$order->hasProducts()) {
             $this->addFlash('warning','Заказ можно удалить, только если он не содержит товаров.');
             return $this->redirect($request->headers->get('referer'));
         }

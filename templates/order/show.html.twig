@@ -16,7 +16,7 @@
         <div class="col-12 col-md-4">
             {{ include('layout/bit/_order_status.html.twig') }}
             {{ include('layout/bit/_order_rate_icon.html.twig') }}
-            <a href="{{ order.shop }}" class="ml-1" target="_blank">{{ order.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
+            <a href="{{ order.shop }}" target="_blank">{{ order.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
             <br>
             <strong>Менеджер:</strong> {{ order.manager }}
         </div>
@@ -25,11 +25,12 @@
         </div>
         <div class="col-12 col-md-4 text-right">
             {% if is_granted('ORDER_EDIT', order) %}
-                <button type="button" id="order_edit" data-id="{{ order.id }}" class="btn btn-sm btn-narrow btn-dark-green">
+                <button type="button" id="order_edit" data-id="{{ order.id }}" class="btn btn-sm btn-primary">
                     <i class="fa fa-edit"></i> <span class="d-none d-sm-inline pl-1">Редактировать</span>
                 </button>
+            {% endif %}
+            {% if is_granted('ORDER_DELETE', order) %}
                 {{ include('order/_delete_form.html.twig') }}
-                <a href="{{ path('order_delete', {'id': order.id}) }}" class="btn btn-sm btn-narrow btn-danger"><i class="fas fa-trash"></i></a>
             {% endif %}
         </div>
     </div>

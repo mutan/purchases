@@ -95,14 +95,7 @@ let Modal = {
     }
 };
 
-$('#basket-user-edit').on('click', (e)=> {
-    let id = $(e.currentTarget).attr('data-id');
-    Modal.handleMainModal(e, {
-        url: `/basket/${id}/edit`,
-        shopAutocomplete: true,
-        shopAutocompleteElem: '#basket_user_shop'
-    });
-});
+
 
 $('#product-user-new').on('click', (e)=> {
     let basketId = $(e.currentTarget).attr('data-id');
@@ -138,6 +131,16 @@ $('.product-manager-edit').on('click', (e)=> {
 
 
 
+
+
+$('#order_edit').on('click', (e)=> {
+    let id = $(e.currentTarget).attr('data-id');
+    Modal.handleMainModal(e, {
+        url: `/order/${id}/edit`,
+        shopAutocomplete: true,
+        shopAutocompleteElem: '#order_shop'
+    });
+});
 $('#order_new').on('click', (e)=> {
     Modal.handleMainModal(e, {
         url: `/order/new`,

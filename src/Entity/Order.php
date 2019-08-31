@@ -438,6 +438,10 @@ class Order implements PrefixableEntityInterface
              + $this->getAdditionalCostRub();
     }
 
+    public function hasProducts() {
+        return !$this->getProducts()->isEmpty();
+    }
+
     public function getStatusLabel() {
         return OrderHelper::STATUSES[$this->getStatus()]['label'];
     }
