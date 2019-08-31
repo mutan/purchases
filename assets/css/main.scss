@@ -21,7 +21,6 @@ $container-max-widths: (/*sm: 540px,*/ md: 720px, lg: 960px, xl: 1280px) !defaul
 /* CUSTOM SCSS */
 
 html {
-  font-size: 14px;
   position: relative; /* Sticky footer styles */
   min-height: 100%; /* Sticky footer styles */
 }
@@ -42,6 +41,10 @@ body {
 ol, ul {
   list-style: none;
   padding: 0;
+}
+
+.card-wrapper {
+    width: 400px;
 }
 
 /* Custom page CSS

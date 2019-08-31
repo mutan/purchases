@@ -6,7 +6,7 @@ class ShopHelper
 {
     const SHOP_AMAZON = 'https://www.amazon.com';
     const SHOP_CHANNEL_FIREBALL = 'https://www.channelfireball.com';
-    const SHOP_COOL_STUFF_INC = 'https://www.coolstuffinc.com';
+    const SHOP_COOLSTUFF_INC = 'https://www.coolstuffinc.com';
     const SHOP_EBAY = 'https://www.ebay.com';
     const SHOP_MINIATURE_MARKET = 'https://www.miniaturemarket.com';
     const SHOP_ORIGINAL_MAGIC_ART = 'https://www.originalmagicart.store';
@@ -16,7 +16,7 @@ class ShopHelper
     const SHOP_LIST_FOR_AUTOCOMPLETE = [
         self::SHOP_AMAZON,
         self::SHOP_CHANNEL_FIREBALL,
-        self::SHOP_COOL_STUFF_INC,
+        self::SHOP_COOLSTUFF_INC,
         self::SHOP_EBAY,
         self::SHOP_MINIATURE_MARKET,
         self::SHOP_ORIGINAL_MAGIC_ART,
@@ -29,7 +29,7 @@ class ShopHelper
     const SHOP_LIST_LOGOS = [
         self::SHOP_AMAZON => '',
         self::SHOP_CHANNEL_FIREBALL => '',
-        self::SHOP_COOL_STUFF_INC => 'coolstuffinc-logo.png',
+        self::SHOP_COOLSTUFF_INC => 'coolstuffinc-logo.png',
         self::SHOP_EBAY => '',
         self::SHOP_MINIATURE_MARKET => '',
         self::SHOP_ORIGINAL_MAGIC_ART => '',
