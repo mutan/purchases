@@ -5,6 +5,7 @@
 {% block body %}
 
     {# @var $order Order #}
+    {# @var $product Product #}
     <div class="row">
         <div class="col-12">
             <h1 class="align-self-center mb-0">Заказ {{ order.idWithPrefix }}</h1>
@@ -53,6 +54,7 @@
                 </thead>
                 <tbody>
                 {% for product in order.products %}
+                    {# @var $product Product #}
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>
@@ -62,8 +64,8 @@
                         </td>
                         <td>{{ product.amount }}</td>
                         <td>{{ product.userPrice }}</td>
-                        <td>{{ product.sum }}</td>
-                        <td>{% if order.rate %}{{ product.sumRub }}{%- else -%}{%- endif -%}</td>
+                        <td>{{ product.total }}</td>
+                        <td>{% if order.rate %}{{ product.totalRub }}{%- else -%}{%- endif -%}</td>
                         <td>
                             <nobr>
                                 <button type="button" class="btn btn-sm btn-primary mr-2 product-manager-edit" data-id="{{ product.id }}">

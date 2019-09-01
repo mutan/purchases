@@ -77,16 +77,23 @@
                             {% if product.comment %}<br>{{ product.comment }}{% endif %}
                         </td>
                         <td class="text-right">{{ product.amount }}</td>
-                        <td class="text-right">{{ product.price ? product.price : product.userPrice }}</td>
+                        <td class="text-right">
+                            {% if product.userPrice %}
+                                <span class="{% if product.price and (product.price != product.userPrice) %}striked{%- endif -%}">{{ product.userPrice }}</span>
+                            {%- else -%}
+                                –
+                            {%- endif -%}
+                            {% if product.price and (product.price != product.userPrice) %}<br>{{ product.price }}{%- endif -%}
+                        </td>
                         <td class="text-right">{{ product.total }}</td>
                         <td class="text-right">{% if order.rate %}{{ product.totalRub }}{%- else -%}–{%- endif -%}</td>
                         <td class="text-right">
                             {% if product.expectedWeight %}
-                                <span class="{% if product.weight %}striked{%- endif -%}">{{ product.expectedWeight }} г</span>
+                                <span class="{% if product.weight and (product.weight != product.expectedWeight) %}striked{%- endif -%}">{{ product.expectedWeight }} г</span>
                             {%- else -%}
                                 –
                             {%- endif -%}
-                            {% if product.weight %}<br>{{ product.weight }} г{%- endif -%}
+                            {% if product.weight and (product.weight != product.expectedWeight) %}<br>{{ product.weight }} г{%- endif -%}
                         </td>
                         {% if is_granted('ORDER_EDIT', order) %}
                             <td class="text-right">
