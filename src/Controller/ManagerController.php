@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Order;
 use App\Form\OrderManagerType;
-use App\Form\ProductManagerData;
 use App\Form\ProductManagerType;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
@@ -84,8 +82,6 @@ class ManagerController extends BaseController
         ]);
     }
 
-
-
     /**
      * Форма редактирования товара для менеджера (ajax)
      * @Route("/product/{product_id}/edit", name="manager_product_edit", methods={"POST"})
@@ -98,13 +94,10 @@ class ManagerController extends BaseController
         $product = $productRepository->find($request->get('product_id'));
         $this->denyAccessUnlessGranted('PRODUCT_MANAGE', $product);
 
-        $productManagerData = new ProductManagerData();
-        $productManagerData->extract($product);
-        $productForm = $this->createForm(ProductManagerType::class, $productManagerData);
+        $productForm = $this->createForm(ProductManagerType::class, $product);
         $productForm->handleRequest($request);
 
         if ($productForm->isSubmitted() && $productForm->isValid()) {
-            $productManagerData->fill($product);
             $this->getEm()->flush();
             $this->addFlash('success', "Товар {$product->getIdWithPrefix()} обновлен.");
             $reload = true;

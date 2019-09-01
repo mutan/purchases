@@ -63,13 +63,13 @@ class Product implements PrefixableEntityInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Артикул или EbayID"})
      * @Assert\Length(min=1, max=250, minMessage="~min", maxMessage="~max")
-     *
      */
     private $article;
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=2, options={"comment":"Цена, указанная пользователем"})
      * @Assert\NotBlank(message="~not_blank")
+     * @Assert\Regex(pattern="/^\d+(\.\d{1,2})?$/", message="~regexp.price")
      * @Assert\GreaterThan(value=0)
      */
     private $userPrice;

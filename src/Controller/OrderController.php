@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Form\OrderType;
-use App\Form\ProductUserData;
 use App\Form\ProductUserType;
 use App\Services\ShopHelper;
 use App\Repository\OrderRepository;
@@ -159,7 +158,7 @@ class OrderController extends BaseController
             $this->addFlash('success',"Заказ {$id} удален.");
         }
 
-        return $this->redirectToRoute('order_index');
+        return $this->redirectToRoute('user_order_index');
     }
 
     /**
@@ -172,14 +171,12 @@ class OrderController extends BaseController
      */
     public function newProduct(Request $request, OrderRepository $orderRepository): Response
     {
-        $productData = new ProductUserData();
-        $productForm = $this->createForm(ProductUserType::class, $productData);
+        $product = new Product();
+        $productForm = $this->createForm(ProductUserType::class, $product);
         $productForm->handleRequest($request);
 
         if ($productForm->isSubmitted() && $productForm->isValid()) {
-            $product = new Product();
             $order = $orderRepository->findWithRelations($request->get('order_id'));
-            $productData->fill($product);
             $product->setUser($this->getUser());
             $product->setOrder($order);
             $this->getEm()->persist($product);
@@ -210,13 +207,10 @@ class OrderController extends BaseController
         $product = $productRepository->find($request->get('id'));
         $this->denyAccessUnlessGranted('PRODUCT_EDIT_DELETE', $product);
 
-        $productData = new ProductUserData();
-        $productData->extract($product);
-        $productForm = $this->createForm(ProductUserType::class, $productData);
+        $productForm = $this->createForm(ProductUserType::class, $product);
         $productForm->handleRequest($request);
 
         if ($productForm->isSubmitted() && $productForm->isValid()) {
-            $productData->fill($product);
             $this->getEm()->flush();
             $this->addFlash('success', "Товар {$product->getIdWithPrefix()} обновлен.");
             $reload = true;
@@ -251,6 +245,6 @@ class OrderController extends BaseController
             $this->addFlash('success',"Товар {$id} удален.");
         }
 
-        return $this->redirectToRoute('order_show', ['order_id' => $product->getOrder()->getId()]);
+        return $this->redirectToRoute('user_order_show', ['order_id' => $product->getOrder()->getId()]);
     }
 }
