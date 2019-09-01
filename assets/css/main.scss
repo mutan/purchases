@@ -57,6 +57,11 @@ ol, ul {
   cursor: pointer;
 }
 
+.striked {
+  text-decoration: line-through;
+  color: darkgray;
+}
+
 .navbar-nav > .nav-item.active {
   background-color: #345578;
   border-radius: 0.2rem;

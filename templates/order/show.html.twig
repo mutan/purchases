@@ -54,20 +54,16 @@
             <table class="table table-sm table-hover table-responsive-sm">
                 <thead>
                 <tr>
-                    <th rowspan="2" style="width: 1%">#</th>
-                    <th rowspan="2" style="width: 20%">Название</th>
-                    <th rowspan="2" class="text-right" style="width: 1%"><nobr>Кол-во, шт.</nobr></th>
-                    <th rowspan="2" class="text-right" style="width: 1%"><nobr>Цена, $</nobr></th>
-                    <th rowspan="2" class="text-right" style="width: 1%"><nobr>Сумма, $</nobr></th>
-                    <th rowspan="2" class="text-right" style="width: 1%"><nobr>Сумма, р.</nobr></th>
-                    <th colspan="2" class="text-center" style="width: 1%"><nobr>Вес, г</nobr></th>
+                    <th style="width: 1%">#</th>
+                    <th style="width: 20%">Название</th>
+                    <th class="text-right" style="width: 1%"><nobr>Кол-во, шт.</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Цена, $</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Сумма, $</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Сумма, р.</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Вес, г</nobr></th>
                     {% if is_granted('ORDER_EDIT', order) %}
-                        <th rowspan="2" class="text-right" style="width: 1%">Действия</th>
+                        <th class="text-right" style="width: 1%">Действия</th>
                     {% endif %}
-                </tr>
-                <tr>
-                    <th>ожидаемый</th>
-                    <th>итоговый</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -85,10 +81,12 @@
                         <td class="text-right">{{ product.total }}</td>
                         <td class="text-right">{% if order.rate %}{{ product.totalRub }}{%- else -%}–{%- endif -%}</td>
                         <td class="text-right">
-                            {% if product.expectedWeight %}{{ product.expectedWeight }} г{%- else -%}–{%- endif -%}
-                        </td>
-                        <td class="text-right">
-                            {% if product.weight %}{{ product.weight }} г{%- else -%}–{%- endif -%}
+                            {% if product.expectedWeight %}
+                                <span class="{% if product.weight %}striked{%- endif -%}">{{ product.expectedWeight }} г</span>
+                            {%- else -%}
+                                –
+                            {%- endif -%}
+                            {% if product.weight %}<br>{{ product.weight }} г{%- endif -%}
                         </td>
                         {% if is_granted('ORDER_EDIT', order) %}
                             <td class="text-right">
