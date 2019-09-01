@@ -113,6 +113,7 @@
                             <td colspan="3">Доставка по США</td>
                             <td class="text-right">{{ order.deliveryToStock }} $</td>
                             <td class="text-right">{{ (order.rate and order.deliveryToStockRub) ? order.deliveryToStockRub ~ ' руб.' : '–' }}</td>
+                            <td></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
@@ -122,6 +123,7 @@
                             <td colspan="3">Доставка в Россию</td>
                             <td class="text-right">{{ order.deliveryToRussia }} $</td>
                             <td class="text-right">{{ (order.rate and order.deliveryToRussiaRub) ? order.deliveryToRussiaRub ~ ' руб.' : '–' }}</td>
+                            <td></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
@@ -129,7 +131,8 @@
                         <tr>
                             <td></td>
                             <td colspan="4">Доставка по России</td>
-                            <td class="text-right">{{ order.deliveryToClient }}</td>
+                            <td class="text-right">{{ order.deliveryToClient }} руб.</td>
+                            <td></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
@@ -149,6 +152,7 @@
                         <th></th>
                         <th colspan="4">Итого товары + доставка</th>
                         <th class="text-right">{{ order.rate and order.totalRub ? order.totalRub ~ ' руб.' : '–'}}</th>
+                        <th></th>
                         {% if is_granted('ORDER_MANAGE', order) %}<th></th>{% endif %}
                     </tr>
                 {% endif %}
