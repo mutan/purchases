@@ -25,7 +25,7 @@
 
         </div>
         <div class="col-12 col-md-4 text-right">
-            <button type="button" data-id="{{ order.id }}" class="btn btn-sm btn-primary order-manager-edit">
+            <button type="button" data-id="{{ order.id }}" class="btn btn-sm btn-warning order-manager-edit">
                 <i class="fa fa-edit"></i> <span class="d-none d-sm-inline pl-1">Редактировать</span>
             </button>
         </div>
@@ -84,7 +84,7 @@
                         </td>
                         <td class="text-right">
                             <nobr>
-                                <button type="button" class="btn btn-sm btn-primary mr-2 product-manager-edit" data-id="{{ product.id }}">
+                                <button type="button" class="btn btn-sm btn-warning mr-1 product-manager-edit" data-id="{{ product.id }}">
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 {{ include('product/_delete_form.html.twig') }}
@@ -120,7 +120,13 @@
                     {% if order.deliveryToRussia %}
                         <tr>
                             <td></td>
-                            <td colspan="3">Доставка в Россию</td>
+                            <td colspan="3">
+                                Доставка в Россию
+                                <i class="far fa-question-circle pointer"
+                                   data-toggle="tooltip"
+                                   title="{{ order.productsWeightTotal }}г (вес всех товаров) / 1000 (г в кг) * {{ order.deliveryToRussiaPerKg }}$ (стоимость доставки за 1кг)"
+                                ></i>
+                            </td>
                             <td class="text-right">{{ order.deliveryToRussia }} $</td>
                             <td class="text-right">{{ (order.rate and order.deliveryToRussiaRub) ? order.deliveryToRussiaRub ~ ' руб.' : '–' }}</td>
                             <td></td>
