@@ -40,15 +40,16 @@
 
     <div class="row">
         <div class="col-12">
-            <table class="table table-sm table-hover table-responsive-sm">
+            <table class="table table-sm table-hover table-bordered table-responsive-sm">
                 <thead>
                 <tr>
                     <th style="width: 1%">#</th>
                     <th style="width: 20%">Название</th>
-                    <th style="width: 1%"><nobr>Кол-во</nobr></th>
-                    <th style="width: 1%"><nobr>Цена $</nobr></th>
-                    <th style="width: 1%"><nobr>Сумма $</nobr></th>
-                    <th style="width: 1%"><nobr>Сумма р.</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Кол-во, шт.</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Цена, $</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Сумма, $</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Сумма, р.</nobr></th>
+                    <th class="text-right" style="width: 1%"><nobr>Вес, г</nobr></th>
                     <th style="width: 1%">Действия</th>
                 </tr>
                 </thead>
@@ -62,10 +63,25 @@
                             {% if product.article %}{{ product.article }}{% endif %}
                             {% if product.comment %}<br>{{ product.comment }}{% endif %}
                         </td>
-                        <td>{{ product.amount }}</td>
-                        <td>{{ product.userPrice }}</td>
-                        <td>{{ product.total }}</td>
-                        <td>{% if order.rate %}{{ product.totalRub }}{%- else -%}{%- endif -%}</td>
+                        <td class="text-right">{{ product.amount }}</td>
+                        <td class="text-right">
+                            {% if product.userPrice %}
+                                <span class="{% if product.price and (product.price != product.userPrice) %}striked{%- endif -%}">{{ product.userPrice }}</span>
+                            {%- else -%}
+                                –
+                            {%- endif -%}
+                            {% if product.price and (product.price != product.userPrice) %}<br>{{ product.price }}{%- endif -%}
+                        </td>
+                        <td class="text-right">{{ product.total }}</td>
+                        <td class="text-right">{% if order.rate %}{{ product.totalRub }}{%- else -%}–{%- endif -%}</td>
+                        <td class="text-right">
+                            {% if product.expectedWeight %}
+                                <span class="{% if product.weight and (product.weight != product.expectedWeight) %}striked{%- endif -%}">{{ product.expectedWeight }} г</span>
+                            {%- else -%}
+                                –
+                            {%- endif -%}
+                            {% if product.weight and (product.weight != product.expectedWeight) %}<br>{{ product.weight }} г{%- endif -%}
+                        </td>
                         <td>
                             <nobr>
                                 <button type="button" class="btn btn-sm btn-primary mr-2 product-manager-edit" data-id="{{ product.id }}">
@@ -84,18 +100,19 @@
                     <tr>
                         <th></th>
                         <th>Итого товары</th>
-                        <th>{{ order.productsAmount }}</th>
+                        <th class="text-right">{{ order.productsAmount }}</th>
                         <th></th>
-                        <th>{{ order.productsSum }}</th>
-                        <th>{% if order.rate %}{{ order.productsSumRub }}{%- else -%}–{%- endif -%}</th>
+                        <th class="text-right">{{ order.productsSum }}</th>
+                        <th class="text-right">{% if order.rate %}{{ order.productsSumRub }}{%- else -%}–{%- endif -%}</th>
+                        <th class="text-right">{{ order.productsWeightTotal }} г</th>
                         {% if is_granted('ORDER_MANAGE', order) %}<th></th>{% endif %}
                     </tr>
                     {% if order.deliveryToStock %}
                         <tr>
                             <td></td>
                             <td colspan="3">Доставка по США</td>
-                            <td>{{ order.deliveryToStock }}</td>
-                            <td>{{ (order.rate and order.deliveryToStockRub) ? order.deliveryToStockRub : '–' }}</td>
+                            <td class="text-right">{{ order.deliveryToStock }}</td>
+                            <td class="text-right">{{ (order.rate and order.deliveryToStockRub) ? order.deliveryToStockRub : '–' }}</td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
@@ -103,8 +120,8 @@
                         <tr>
                             <td></td>
                             <td colspan="3">Доставка в Россию</td>
-                            <td>{{ order.deliveryToRussia }}</td>
-                            <td>{{ (order.rate and order.deliveryToRussiaRub) ? order.deliveryToRussiaRub : '–' }}</td>
+                            <td class="text-right">{{ order.deliveryToRussia }}</td>
+                            <td class="text-right">{{ (order.rate and order.deliveryToRussiaRub) ? order.deliveryToRussiaRub : '–' }}</td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
@@ -112,7 +129,7 @@
                         <tr>
                             <td></td>
                             <td colspan="4">Доставка по России</td>
-                            <td>{{ order.deliveryToClient }}</td>
+                            <td class="text-right">{{ order.deliveryToClient }}</td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
                     {% endif %}
@@ -122,7 +139,7 @@
                             <td colspan="2">
                                 Дополнительные затраты <i class="far fa-comment" data-toggle="tooltip" title="{{ order.additionalCostComment }}"></i>
                             </td>
-                            <td>{{ order.additionalCost }}</td>
+                            <td class="text-right">{{ order.additionalCost }}</td>
                             <td colspan="2"></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
@@ -130,7 +147,7 @@
                     <tr>
                         <th></th>
                         <th colspan="4">Итого товары + доставка</th>
-                        <th>{{ order.rate and order.totalRub ? order.totalRub : '–'}}</th>
+                        <th class="text-right">{{ order.rate and order.totalRub ? order.totalRub : '–'}}</th>
                         {% if is_granted('ORDER_MANAGE', order) %}<th></th>{% endif %}
                     </tr>
                 {% endif %}
