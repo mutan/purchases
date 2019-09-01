@@ -347,6 +347,11 @@ class Order implements PrefixableEntityInterface
         return $this->getStatus() == self::STATUS_NEW;
     }
 
+    public function isApproved()
+    {
+        return $this->getStatus() == self::STATUS_APPROVED;
+    }
+
     public function isRedeemed()
     {
         return $this->getStatus() == self::STATUS_REDEEMED;

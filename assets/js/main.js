@@ -95,6 +95,21 @@ let Modal = {
     }
 };
 
+$('#order_approve').on('click', (e)=> {
+    let orderId = $(e.currentTarget).attr('data-id');
+    if (confirm("Действительно утвердить?")) {
+        e.preventDefault();
+        $.ajax({
+            url: `/order/${orderId}/approve`,
+            type: 'POST',
+            beforeSend: ()=> {$(e.currentTarget).find('i').toggleClass('fa-spinner fa-spin');},
+            complete: ()=> {$(e.currentTarget).find('i').toggleClass('fa-spinner fa-spin');},
+        });
+    }
+});
+
+
+
 $('.order-manager-edit').on('click', (e)=> {
     let orderId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {

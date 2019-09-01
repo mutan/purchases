@@ -135,6 +135,27 @@ class OrderController extends BaseController
     }
 
     /**
+     * Утвердить заказ (ajax)
+     * @Route("/{id}/approve", name="user_order_approve", methods={"POST"})
+     * @param Request $request
+     * @param Order $order
+     * @return Response
+     */
+    public function approve(Request $request, Order $order): Response
+    {
+        $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
+
+        $order->setStatus(Order::STATUS_APPROVED);
+        $this->getEm()->persist($order);
+        $this->getEm()->flush();
+        $this->addFlash('success',"Заказ {$order->getIdWithPrefix()} утвержден.");
+
+        return $this->redirectToRoute('user_order_index');
+    }
+
+
+
+    /**
      * Удаление заказа
      * @Route("/{id}/delete", name="user_order_delete", methods={"DELETE"})
      * @param Request $request
