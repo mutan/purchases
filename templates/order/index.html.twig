@@ -23,6 +23,7 @@
             <th rowspan="2">Магазин</th>
             <th rowspan="2">Сумма</th>
             <th colspan="3" class="text-center">Доставка</th>
+            <th rowspan="2">Доп. затраты</th>
             <th rowspan="2">Итого</th>
         </tr>
         <tr>
@@ -59,12 +60,16 @@
                     <br>{{ order.deliveryToClient ? order.deliveryToClient ~ ' руб.' : '–'}}
                 </td>
                 <td>
+                    {{ order.additionalCost ? order.additionalCost ~ '$': '–' }}
+                    <br>{{ order.additionalCostRub ? order.additionalCostRub ~ ' руб.' : '–' }}
+                </td>
+                <td>
                     <br>{{ order.rate and order.totalRub ? order.totalRub ~ ' руб.' : '–'}}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">Записей не найдено.</td>
+                <td colspan="8">Записей не найдено.</td>
             </tr>
         {% endfor %}
         </tbody>
