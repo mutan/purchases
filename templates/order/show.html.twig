@@ -15,7 +15,8 @@
     <div class="row">
         <div class="col-12 col-md-4">
             {{ include('layout/bit/_order_status.html.twig') }}
-            {{ include('layout/bit/_order_rate_icon.html.twig') }}
+            {{ include('layout/bit/_order_rate.html.twig') }}
+            {{ include('layout/bit/_order_delivery_to_russia.html.twig') }}
             <a href="{{ order.shop }}" target="_blank">{{ order.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
             <br>
             <strong>Менеджер:</strong> {{ order.manager }}
@@ -50,19 +51,23 @@
 
     <div class="row">
         <div class="col-12">
-            <table class="table table-sm table-bordered table-responsive-sm">
+            <table class="table table-sm table-hover table-responsive-sm">
                 <thead>
                 <tr>
-                    <th style="width: 1%">#</th>
-                    <th style="width: 20%">Название</th>
-                    <th class="text-right" style="width: 1%"><nobr>Кол-во</nobr></th>
-                    <th class="text-right" style="width: 1%"><nobr>Цена $</nobr></th>
-                    <th class="text-right" style="width: 1%"><nobr>Сумма $</nobr></th>
-                    <th class="text-right" style="width: 1%"><nobr>Сумма р.</nobr></th>
-                    <th class="text-right" style="width: 1%"><nobr>Вес г</nobr></th>
+                    <th rowspan="2" style="width: 1%">#</th>
+                    <th rowspan="2" style="width: 20%">Название</th>
+                    <th rowspan="2" class="text-right" style="width: 1%"><nobr>Кол-во, шт.</nobr></th>
+                    <th rowspan="2" class="text-right" style="width: 1%"><nobr>Цена, $</nobr></th>
+                    <th rowspan="2" class="text-right" style="width: 1%"><nobr>Сумма, $</nobr></th>
+                    <th rowspan="2" class="text-right" style="width: 1%"><nobr>Сумма, р.</nobr></th>
+                    <th colspan="2" class="text-center" style="width: 1%"><nobr>Вес, г</nobr></th>
                     {% if is_granted('ORDER_EDIT', order) %}
-                        <th class="text-right" style="width: 1%">Действия</th>
+                        <th rowspan="2" class="text-right" style="width: 1%">Действия</th>
                     {% endif %}
+                </tr>
+                <tr>
+                    <th>ожидаемый</th>
+                    <th>итоговый</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,18 +80,15 @@
                             {% if product.article %}{{ product.article }}{% endif %}
                             {% if product.comment %}<br>{{ product.comment }}{% endif %}
                         </td>
-                        <td class="text-right">{{ product.amount }} шт.</td>
-                        <td class="text-right">{{ product.userPrice }} $</td>
-                        <td class="text-right">{{ product.sum }} $</td>
-                        <td class="text-right">{% if order.rate %}{{ product.sumRub }} руб.{%- else -%}–{%- endif -%}</td>
+                        <td class="text-right">{{ product.amount }}</td>
+                        <td class="text-right">{{ product.price ? product.price : product.userPrice }}</td>
+                        <td class="text-right">{{ product.total }}</td>
+                        <td class="text-right">{% if order.rate %}{{ product.totalRub }}{%- else -%}–{%- endif -%}</td>
                         <td class="text-right">
-                            {% if product.weight %}
-                                {{ product.weight }} г
-                            {%- elseif product.expectedWeight -%}
-                                <span class="dashed pointer" data-toggle="tooltip" title="Ожидаемый вес. Окончательный вес будет проставлен после того, как мы сами взвесим товар, или получим вес от форвардера.">{{ product.expectedWeight }} г</span>
-                            {%- else -%}
-                                –
-                            {%- endif -%}
+                            {% if product.expectedWeight %}{{ product.expectedWeight }} г{%- else -%}–{%- endif -%}
+                        </td>
+                        <td class="text-right">
+                            {% if product.weight %}{{ product.weight }} г{%- else -%}–{%- endif -%}
                         </td>
                         {% if is_granted('ORDER_EDIT', order) %}
                             <td class="text-right">
@@ -112,7 +114,7 @@
                         <th></th>
                         <th class="text-right">{{ order.productsSum }} $</th>
                         <th class="text-right">{% if order.rate %}{{ order.productsSumRub }} руб.{%- else -%}–{%- endif -%}</th>
-                        <th class="text-right">{{ order.productsWeightSum }} г</th>
+                        <th class="text-right">{{ order.productsWeightTotal }} г</th>
                         {% if is_granted('ORDER_EDIT', order) %}<th></th>{% endif %}
                     </tr>
                     {% if order.deliveryToStock %}
@@ -132,7 +134,7 @@
                                 Доставка в Россию
                                 <i class="far fa-question-circle pointer"
                                    data-toggle="tooltip"
-                                   title="{{ order.productsWeightSum }}г (вес всех товаров) / 1000 (г в кг) * {{ order.deliveryToRussiaPerKg }}$ (стоимость доставки за 1кг)"
+                                   title="{{ order.productsWeightTotal }}г (вес всех товаров) / 1000 (г в кг) * {{ order.deliveryToRussiaPerKg }}$ (стоимость доставки за 1кг)"
                                 ></i>
                             </td>
                             <td class="text-right">{{ order.deliveryToRussia }} $</td>
@@ -156,7 +158,7 @@
                             <td colspan="3">
                                 Дополнительные затраты
                                 {% if order.additionalCostComment %}
-                                    <i class="far fa-comment pointer" data-toggle="tooltip" title="{{ order.additionalCostComment }}"></i>
+                                    <i class="far fa-question-circle pointer" data-toggle="tooltip" title="{{ order.additionalCostComment }}"></i>
                                 {% endif %}
                             </td>
                             <td class="text-right">{{ order.additionalCost }} $</td>

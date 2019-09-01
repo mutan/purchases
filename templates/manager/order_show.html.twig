@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-12 col-md-4">
             {{ include('layout/bit/_order_status.html.twig') }}
-            {{ include('layout/bit/_order_rate_icon.html.twig') }}
+            {{ include('layout/bit/_order_rate.html.twig') }}
             <a href="{{ order.shop }}" class="ml-1" target="_blank">{{ order.shop }} <i class="fa fa-xs fa-external-link-alt"></i></a>
             <br>
             <strong>Комментарий клиента:</strong> {% if order.userComment %}{{ order.userComment }}{% else %}–{% endif %}

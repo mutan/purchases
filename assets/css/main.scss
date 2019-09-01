@@ -47,6 +47,12 @@ ol, ul {
     width: 400px;
 }
 
+.attention {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: red;
+}
+
 .pointer {
   cursor: pointer;
 }

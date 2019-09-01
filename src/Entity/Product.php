@@ -319,13 +319,19 @@ class Product implements PrefixableEntityInterface
         return $this->getStatus() == self::STATUS_DELETED;
     }
 
-    public function getSum()
+    /**
+     * Итоговая стоимость одного товара в $ = кол-во товара * цену товара
+     */
+    public function getTotal()
     {
         $price = $this->getPrice() ?: $this->getUserPrice();
         return $this->getAmount() * $price;
     }
 
-    public function getSumRub()
+    /**
+     * Итоговая стоимость одного товара в руб. = кол-во товара * цену товара * курс $
+     */
+    public function getTotalRub()
     {
         $price = $this->getPrice() ?: $this->getUserPrice();
         return ceil($this->getAmount() * $price * $this->getOrder()->getRate());

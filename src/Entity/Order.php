@@ -380,30 +380,28 @@ class Order implements PrefixableEntityInterface
     {
         $sum = 0;
         foreach ($this->getProducts() as $product) {
-            $sum += $product->getSum();
+            $sum += $product->getTotal();
         }
         return $sum;
     }
+
 
     public function getProductsSumRub()
     {
         $sum = 0;
         foreach ($this->getProducts() as $product) {
-            $sum += $product->getSumRub();
+            $sum += $product->getTotalRub();
         }
         return $sum;
     }
 
-    public function getProductsWeightSum()
+    /**
+     * Суммарный вес всех товаров в заказе
+     */
+    public function getProductsWeightTotal()
     {
         $sum = 0;
         foreach ($this->getProducts() as $product) {
-//            if ($product->getWeight()) {
-//                $sum += $product->getWeight();
-//            } else {
-//                $sum += $product->getExpectedWeight();
-//            }
-
             $sum += ($product->getWeight() ? $product->getWeight() : $product->getExpectedWeight());
         }
         return $sum;
@@ -414,11 +412,17 @@ class Order implements PrefixableEntityInterface
         return ceil($this->getDeliveryToStock() * $this->getRate());
     }
 
+    /**
+     * Итоговая доставка в Россию $ = вес всех товаров в заказе в кг * доставка в Россию за кг
+     */
     public function getDeliveryToRussia()
     {
-        return $this->getProductsWeightSum() / 1000 * $this->getDeliveryToRussiaPerKg();
+        return round($this->getProductsWeightTotal() / 1000 * $this->getDeliveryToRussiaPerKg(), 2);
     }
 
+    /**
+     * Итоговая доставка в Россию руб. = Итоговая доставка в Россию $ * курс $
+     */
     public function getDeliveryToRussiaRub()
     {
         return ceil($this->getDeliveryToRussia() * $this->getRate());

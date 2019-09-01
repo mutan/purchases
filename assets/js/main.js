@@ -95,12 +95,6 @@ let Modal = {
     }
 };
 
-
-
-
-
-
-
 $('.order-manager-edit').on('click', (e)=> {
     let orderId = $(e.currentTarget).attr('data-id');
     Modal.handleMainModal(e, {

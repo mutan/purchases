@@ -1,0 +1,8 @@
+{% if order.deliveryToRussiaPerKg %}
+    <span class="badge badge-primary">Доставка за кг: {{ order.deliveryToRussiaPerKg }} <i class="fa fa-dollar-sign"></i></span>
+{% else %}
+    <span class="badge badge-danger pointer"
+          data-toggle="tooltip"
+          title="Менеджер еще не проставил стоимость доставки за кг"
+    >Доставка за кг: –</span>
+{%- endif -%}
