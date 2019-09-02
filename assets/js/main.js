@@ -95,20 +95,32 @@ let Modal = {
     }
 };
 
+let Ajax = {
+     send: function(e, url, confirmText, buttonText) {
+         if (confirm(confirmText)) {
+             e.preventDefault();
+             $.ajax({
+                 url: url,
+                 type: 'POST',
+                 beforeSend: ()=> {
+                     $(e.currentTarget).prop('disabled', true).html(`<i class='fa fa-spinner fa-spin pr-1'></i> ${buttonText}`);
+                 },
+             }).then(function () {
+                 location.reload();
+             });
+         }
+     },
+};
+
 $('#order_approve').on('click', (e)=> {
     let orderId = $(e.currentTarget).attr('data-id');
-    if (confirm("Действительно утвердить?")) {
-        e.preventDefault();
-        $.ajax({
-            url: `/order/${orderId}/approve`,
-            type: 'POST',
-            beforeSend: ()=> {$(e.currentTarget).find('i').toggleClass('fa-spinner fa-spin');},
-            complete: ()=> {$(e.currentTarget).find('i').toggleClass('fa-spinner fa-spin');},
-        });
-    }
+    Ajax.send(e, `/order/${orderId}/approve`, "Действительно утвердить?", "Утверждаем");
 });
 
-
+$('#order_return_to_new').on('click', (e)=> {
+    let orderId = $(e.currentTarget).attr('data-id');
+    Ajax.send(e, `/order/${orderId}/return_to_new`, "Действительно вернуть в статус Новый?", "Возвращаем");
+});
 
 $('.order-manager-edit').on('click', (e)=> {
     let orderId = $(e.currentTarget).attr('data-id');

@@ -139,9 +139,9 @@ class OrderController extends BaseController
      * @Route("/{id}/approve", name="user_order_approve", methods={"POST"})
      * @param Request $request
      * @param Order $order
-     * @return Response
+     * @return JsonResponse
      */
-    public function approve(Request $request, Order $order): Response
+    public function approve(Request $request, Order $order): JsonResponse
     {
         $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
 
@@ -150,10 +150,27 @@ class OrderController extends BaseController
         $this->getEm()->flush();
         $this->addFlash('success',"Заказ {$order->getIdWithPrefix()} утвержден.");
 
-        return $this->redirectToRoute('user_order_index');
+        return new JsonResponse(['message' => 'Success',], 200);
     }
 
+    /**
+     * Утвердить заказ (ajax)
+     * @Route("/{id}/return_to_new", name="user_order_return_to_new", methods={"POST"})
+     * @param Request $request
+     * @param Order $order
+     * @return JsonResponse
+     */
+    public function returnToNew(Request $request, Order $order): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('ORDER_RETURN_TO_NEW', $order);
 
+        $order->setStatus(Order::STATUS_NEW);
+        $this->getEm()->persist($order);
+        $this->getEm()->flush();
+        $this->addFlash('success',"Заказ {$order->getIdWithPrefix()} возвращен в статус Новый.");
+
+        return new JsonResponse(['message' => 'Success',], 200);
+    }
 
     /**
      * Удаление заказа
@@ -187,10 +204,10 @@ class OrderController extends BaseController
      * @Route("/{order_id}/product/new", name="user_order_product_new", methods={"POST"})
      * @param Request $request
      * @param OrderRepository $orderRepository
-     * @return Response
+     * @return JsonResponse
      * @throws NonUniqueResultException
      */
-    public function newProduct(Request $request, OrderRepository $orderRepository): Response
+    public function newProduct(Request $request, OrderRepository $orderRepository): JsonResponse
     {
         $product = new Product();
         $productForm = $this->createForm(ProductUserType::class, $product);
@@ -221,9 +238,9 @@ class OrderController extends BaseController
      * @Route("/product/{id}/edit", name="user_order_product_edit", methods={"POST"})
      * @param Request $request
      * @param ProductRepository $productRepository
-     * @return Response
+     * @return JsonResponse
      */
-    public function editProduct(Request $request, ProductRepository $productRepository): Response
+    public function editProduct(Request $request, ProductRepository $productRepository): JsonResponse
     {
         $product = $productRepository->find($request->get('id'));
         $this->denyAccessUnlessGranted('PRODUCT_EDIT_DELETE', $product);
