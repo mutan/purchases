@@ -9,6 +9,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class InfoController extends AbstractController
 {
     /**
+     * @Route("/", name="app_homepage")
+     * @return Response
+     */
+    public function index() : Response
+    {
+        return $this->render('info/index.html.twig', []);
+    }
+
+    /**
      * @Route("/info/privacy_policy", name="info_privacy_policy", methods={"GET"})
      */
     public function privacyPolicy(): Response
@@ -19,7 +28,7 @@ class InfoController extends AbstractController
     /**
      * @Route("/info/what_and_where", name="info_what_and_where", methods={"GET"})
      */
-    public function index(): Response
+    public function whatAndWhere(): Response
     {
         return $this->render('info/what_and_where.html.twig');
     }
