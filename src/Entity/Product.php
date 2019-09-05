@@ -320,11 +320,35 @@ class Product implements PrefixableEntityInterface
     }
 
     /**
+     * Если есть price - возвращает price, иначе возвращает userPrice
+     */
+    public function getFinalPrice()
+    {
+        return $this->getPrice() ?: $this->getUserPrice();
+    }
+
+    /**
+     * Если есть purchasePrice - возвращает purchasePrice, иначе возвращает finalPrice
+     */
+    public function getFinalPurchasePrice()
+    {
+        return $this->getPurchasePrice() ?: $this->getFinalPrice();
+    }
+
+    /**
      * Итоговая стоимость одного товара в $ = кол-во товара * цену товара
      */
     public function getTotal()
     {
         return $this->getAmount() * $this->getFinalPrice();
+    }
+
+    /**
+     * Итоговая выкупная стоимость одного товара в $
+     */
+    public function getPurchaseTotal()
+    {
+        return $this->getAmount() * $this->getFinalPurchasePrice();
     }
 
     /**
@@ -336,10 +360,10 @@ class Product implements PrefixableEntityInterface
     }
 
     /**
-     * Если есть price - возвращает price, иначе возвращает userPrice
+     * Итоговая выкупная стоимость одного товара в руб.
      */
-    public function getFinalPrice()
+    public function getPurchaseTotalRub()
     {
-        return $this->getPrice() ?: $this->getUserPrice();
+        return $this->getAmount() * $this->getFinalPurchasePrice() * $this->getOrder()->getRate();
     }
 }
