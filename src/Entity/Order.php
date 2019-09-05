@@ -390,12 +390,29 @@ class Order implements PrefixableEntityInterface
         return $sum;
     }
 
+    public function getProductsPurchaseSum()
+    {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+            $sum += $product->getPurchaseTotal();
+        }
+        return $sum;
+    }
 
     public function getProductsSumRub()
     {
         $sum = 0;
         foreach ($this->getProducts() as $product) {
             $sum += $product->getTotalRub();
+        }
+        return $sum;
+    }
+
+    public function getProductsPurchaseSumRub()
+    {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+            $sum += $product->getPurchaseTotalRub();
         }
         return $sum;
     }
