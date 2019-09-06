@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Services\Entity\OrderHelper;
+use App\Resources\OrderHelper;
 use DateTimeInterface;
 use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;

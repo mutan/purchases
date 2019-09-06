@@ -6,7 +6,7 @@ use App\Entity\Order;
 use App\Entity\Product;
 use App\Form\OrderType;
 use App\Form\ProductUserType;
-use App\Services\ShopHelper;
+use App\Resources\ShopHelper;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\NonUniqueResultException;

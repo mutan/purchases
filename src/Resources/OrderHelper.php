@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Entity;
+namespace App\Resources;
 
 use App\Entity\Order;
 
