@@ -4,7 +4,7 @@ namespace App\Resources;
 
 class ItemCode
 {
-    const TYPE_ORDER = 'O';
+    const TYPE_ORDER = 'OR';
     const TYPE_PACKAGE = 'P';
     const TYPE_PRODUCT = 'G';
     const TYPE_USER = 'U';

@@ -1,18 +1,16 @@
-{% extends 'admin/layout/base_admin.html.twig' %}
+{% extends 'layout/base.html.twig' %}
 
-{% block title %}Заказы участников СП{{ parent() }}{% endblock %}
+{% block title %}Админка{{ parent() }}{% endblock %}
 
 {% block body %}
 
-    <div class="content-heading">
-        <div>Page title
-            <small>Subtitle</small>
-        </div>
+<div class="row">
+    <div class="col-md-12 col-lg-8 order-12 order-lg-1">
+        <p>A row with content</p>
     </div>
-    <div class="row">
-        <div class="col-xl-12">
-            <p>A row with content</p>
-        </div>
+    <div class="col-md-12 col-lg-4 order-1 order-lg-12">
+        {{ include('admin/_search_form.html.twig') }}
     </div>
+</div>
 
 {% endblock %}

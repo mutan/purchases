@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\Package;
 use App\Entity\Product;
+use App\Repository\UserRepository;
 use App\Resources\ItemCode;
 use App\Services\ItemCodeParser;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Repository\UserRepository;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin")
@@ -29,8 +30,15 @@ class AdminController extends BaseController
         return $this->render('admin/index.html.twig', []);
     }
 
-    public function searchAction(Request $request, ItemCodeParser $itemCodeParser, $searchString)
+    /**
+     * @Route("/search", name="admin_search", methods="GET|POST")
+     * @param Request $request
+     * @param ItemCodeParser $itemCodeParser
+     * @return Response
+     */
+    public function search(Request $request, ItemCodeParser $itemCodeParser): Response
     {
+        $searchString = $request->request->get('search_item');
         try {
             $code = $itemCodeParser->parseString($searchString);
         } catch (Exception $e) {
@@ -40,7 +48,7 @@ class AdminController extends BaseController
         if ($code) {
             switch ($code->getType()) {
                 case ItemCode::TYPE_ORDER:
-                    return $this->renderOrder($code);
+                    return $this->renderOrder($code, $searchString);
                     break;
                 case ItemCode::TYPE_PACKAGE:
                     return $this->renderPackage($code);
@@ -72,15 +80,23 @@ class AdminController extends BaseController
 
         }
 
+        return $this->render('admin/user_list.html.twig', ['searchString' => $searchString]);
+    }
 
+    public function renderOrder(ItemCode $code, string $searchString)
+    {
+        $order = $this->getEm()->getRepository(Order::class)->find($code->getNumber());
 
-        return $this->render('@Cargo/Dashboard/Info/notFound.html.twig', ['searchString' => $searchString]);
+        return $this->render('admin/order.html.twig', [
+            'search_string' => $searchString,
+            'code' => $code,
+            'order' => $order,
+        ]);
     }
 
 
-
     /**
-     * @Route("/users", name="user_list", methods="GET")
+     * @Route("/users", name="admin_user_list", methods="GET")
      * @param UserRepository $userRepository
      * @param Request $request
      * @return Response
@@ -91,8 +107,7 @@ class AdminController extends BaseController
         $users  = $userRepository->findAllWithSearch($search);
 
         return $this->render('admin/user_list.html.twig', [
-            'users'      => $users,
+            'users' => $users,
         ]);
     }
-
 }
