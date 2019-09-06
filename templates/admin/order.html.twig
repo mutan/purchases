@@ -1,16 +1,8 @@
-{% extends 'layout/base.html.twig' %}
+{% extends 'admin/index.html.twig' %}
 
-{% block title %}Заказ {{ parent() }}{% endblock %}
+{% block serch_result %}
 
-{% block body %}
-    <div class="row">
-        <div class="col-md-12 col-lg-8 order-12 order-lg-1">
-            <h1>Заказ {{ code.code }}</h1>
+    <h1>Заказ {{ code.code }}</h1>
+    <p>123</p>
 
-
-        </div>
-        <div class="col-md-12 col-lg-4 order-1 order-lg-12 align-self-center mb-3 mb-lg-0">
-            {{ include('admin/_search_form.html.twig') }}
-        </div>
-    </div>
 {% endblock %}

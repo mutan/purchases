@@ -31,7 +31,7 @@ class AdminController extends BaseController
     }
 
     /**
-     * @Route("/search", name="admin_search", methods="GET|POST")
+     * @Route("/", name="admin_search", methods="POST")
      * @param Request $request
      * @param ItemCodeParser $itemCodeParser
      * @return Response
@@ -45,10 +45,18 @@ class AdminController extends BaseController
             $code = null;
         }
 
+        $template = 'admin/index.html.twig';
+        $params = [
+            'search_string' => $searchString,
+            'code' => $code,
+        ];
+
         if ($code) {
             switch ($code->getType()) {
                 case ItemCode::TYPE_ORDER:
-                    return $this->renderOrder($code, $searchString);
+                    $order = $this->getEm()->getRepository(Order::class)->find($code->getNumber());
+                    $params['order'] = $order;
+                    $template = 'admin/order.html.twig';
                     break;
                 case ItemCode::TYPE_PACKAGE:
                     return $this->renderPackage($code);
@@ -80,20 +88,8 @@ class AdminController extends BaseController
 
         }
 
-        return $this->render('admin/user_list.html.twig', ['searchString' => $searchString]);
+        return $this->render($template, $params);
     }
-
-    public function renderOrder(ItemCode $code, string $searchString)
-    {
-        $order = $this->getEm()->getRepository(Order::class)->find($code->getNumber());
-
-        return $this->render('admin/order.html.twig', [
-            'search_string' => $searchString,
-            'code' => $code,
-            'order' => $order,
-        ]);
-    }
-
 
     /**
      * @Route("/users", name="admin_user_list", methods="GET")
