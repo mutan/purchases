@@ -97,7 +97,7 @@
                             {{ product.purchaseTotal }}
                             {% if product.total > product.purchaseTotal %}
                                 <span class="text-success">(+{{ product.total - product.purchaseTotal }})</span>
-                            {% else %}
+                            {% elseif product.total < product.purchaseTotal %}
                                 <span class="text-danger">({{ product.total - product.purchaseTotal }})</span>
                             {% endif %}
                         </td>
@@ -105,9 +105,9 @@
                             {% if order.rate %}
                                 {{ product.purchaseTotalRub }}
                                 {% if product.totalRub > product.purchaseTotalRub %}
-                                    <span class="text-success">(+{{ product.totalRub - product.purchaseTotalRub }})</span>
-                                {% else %}
-                                    <span class="text-danger">({{ product.totalRub - product.purchaseTotalRub }})</span>
+                                    <span class="text-success">(+{{ (product.totalRub - product.purchaseTotalRub)|round(2) }})</span>
+                                {% elseif product.totalRub < product.purchaseTotalRub %}
+                                    <span class="text-danger">({{ (product.totalRub - product.purchaseTotalRub)|round(2) }})</span>
                                 {% endif %}
                             {%- else -%}
                                 –
@@ -148,7 +148,7 @@
                             {{ order.productsPurchaseSum }} $
                             {% if order.productsSum > order.productsPurchaseSum %}
                                 <span class="text-success">(+{{ order.productsSum - order.productsPurchaseSum }})</span>
-                            {% else %}
+                            {% elseif order.productsSum < order.productsPurchaseSum %}
                                 <span class="text-danger">({{ order.productsSum - order.productsPurchaseSum }})</span>
                             {% endif %}
                         </th>
@@ -156,9 +156,9 @@
                             {% if order.rate %}
                                 {{ order.productsPurchaseSumRub }} руб.
                                 {% if order.productsSumRub > order.productsPurchaseSumRub %}
-                                    <span class="text-success">(+{{ order.productsSumRub - order.productsPurchaseSumRub }})</span>
-                                {% else %}
-                                    <span class="text-danger">({{ order.productsSumRub - order.productsPurchaseSumRub }})</span>
+                                    <span class="text-success">(+{{ (order.productsSumRub - order.productsPurchaseSumRub)|round(2) }})</span>
+                                {% elseif order.productsSumRub < order.productsPurchaseSumRub %}
+                                    <span class="text-danger">({{ (order.productsSumRub - order.productsPurchaseSumRub)|round(2) }})</span>
                                 {% endif %}
                             {%- else -%}
                                 –
