@@ -211,8 +211,12 @@
                             <td class="text-right">{{ order.deliveryToRussia }} $</td>
                             <td class="text-right">{{ (order.rate and order.deliveryToRussiaRub) ? order.deliveryToRussiaRub ~ ' руб.' : '–' }}</td>
                             <td class="text-right table-primary"></td>
-                            <td class="text-right table-primary"></td>
-                            <td class="text-right table-primary"></td>
+                            <td class="text-right table-primary">
+                                TODO
+                            </td>
+                            <td class="text-right table-primary">
+                                TODO
+                            </td>
                             <td></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
@@ -223,8 +227,12 @@
                             <td colspan="4">Доставка по России</td>
                             <td class="text-right">{{ order.deliveryToClient }} руб.</td>
                             <td class="text-right table-primary"></td>
-                            <td class="text-right table-primary"></td>
-                            <td class="text-right table-primary"></td>
+                            <td class="text-right table-primary">
+                                TODO
+                            </td>
+                            <td class="text-right table-primary">
+                                TODO
+                            </td>
                             <td></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
@@ -238,8 +246,12 @@
                             <td class="text-right">{{ order.additionalCost }} $</td>
                             <td class="text-right">{% if order.rate %}{{ order.additionalCostRub }} руб.{%- else -%}–{%- endif -%}</td>
                             <td class="text-right table-primary"></td>
-                            <td class="text-right table-primary"></td>
-                            <td class="text-right table-primary"></td>
+                            <td class="text-right table-primary">
+                                TODO
+                            </td>
+                            <td class="text-right table-primary">
+                                TODO
+                            </td>
                             <td></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>
@@ -249,8 +261,12 @@
                         <th colspan="4">Итого товары + доставка</th>
                         <th class="text-right">{{ order.rate and order.totalRub ? order.totalRub ~ ' руб.' : '–'}}</th>
                         <th class="text-right table-primary"></th>
-                        <th class="text-right table-primary"></th>
-                        <th class="text-right table-primary"></th>
+                        <th class="text-right table-primary">
+                            TODO
+                        </th>
+                        <th class="text-right table-primary">
+                            TODO
+                        </th>
                         <th></th>
                         {% if is_granted('ORDER_MANAGE', order) %}<th></th>{% endif %}
                     </tr>
