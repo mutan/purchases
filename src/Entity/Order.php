@@ -516,11 +516,27 @@ class Order implements PrefixableEntityInterface
     }
 
     /**
+     * Реальная итоговая доставка в Россию $
+     */
+    public function getDeliveryToRussiaReal()
+    {
+        return round($this->getProductsWeightTotal() / 1000 * $this->getDeliveryToRussiaPerKgReal(), 2);
+    }
+
+    /**
      * Итоговая доставка в Россию руб. = Итоговая доставка в Россию $ * курс $
      */
     public function getDeliveryToRussiaRub()
     {
         return ceil($this->getDeliveryToRussia() * $this->getRate());
+    }
+
+    /**
+     * Реальная итоговая доставка в Россию руб.
+     */
+    public function getDeliveryToRussiaRealRub()
+    {
+        return ceil($this->getDeliveryToRussiaReal() * $this->getRate());
     }
 
     public function getAdditionalCostRub()

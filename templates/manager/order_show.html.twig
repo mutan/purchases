@@ -212,10 +212,24 @@
                             <td class="text-right">{{ (order.rate and order.deliveryToRussiaRub) ? order.deliveryToRussiaRub ~ ' руб.' : '–' }}</td>
                             <td class="text-right table-primary"></td>
                             <td class="text-right table-primary">
-                                TODO
+                                {% if order.deliveryToRussiaReal %}
+                                    {{ order.deliveryToRussiaReal }} $
+                                    {% if order.deliveryToRussia > order.deliveryToRussiaReal %}
+                                        <span class="text-success">(+{{ order.deliveryToRussia - order.deliveryToRussiaReal }})</span>
+                                    {% elseif order.deliveryToRussia < order.deliveryToRussiaReal %}
+                                        <span class="text-danger">({{ order.deliveryToRussia - order.deliveryToRussiaReal }})</span>
+                                    {% endif %}
+                                {% endif %}
                             </td>
                             <td class="text-right table-primary">
-                                TODO
+                                {% if order.rate and order.deliveryToRussiaPerKgReal %}
+                                    {{ order.deliveryToRussiaRealRub }} руб.
+                                    {% if order.deliveryToRussiaRub > order.deliveryToRussiaRealRub %}
+                                        <span class="text-success">(+{{ (order.deliveryToRussiaRub - order.deliveryToRussiaRealRub)|round(2) }})</span>
+                                    {% elseif order.deliveryToRussiaRub < order.deliveryToRussiaRealRub %}
+                                        <span class="text-danger">({{ (order.deliveryToRussiaRub - order.deliveryToRussiaRealRub)|round(2) }})</span>
+                                    {% endif %}
+                                {%- endif -%}
                             </td>
                             <td></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
