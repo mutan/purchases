@@ -12,28 +12,11 @@
     {{ form_errors(orderForm) }}
 <!--Body-->
 <div class="modal-body ui-front">{# без класса ui-front список autocomplite'a будет показан не рядом с полем поиска #}
-    <div class="form-row">
-        <div class="form-group col-12 col-sm-4">
-            {{ form_label(orderForm.deliveryToStock, 'Доставка по США, $') }}
-            {{ form_widget(orderForm.deliveryToStock, {'attr': {'class': 'form-control-sm'}}) }}
-        </div>
-        <div class="form-group col-12 col-sm-4">
-            {{ form_label(orderForm.deliveryToRussiaPerKg, 'Доставка в Россию за кг, $') }}
-            {{ form_widget(orderForm.deliveryToRussiaPerKg, {'attr': {'class': 'form-control-sm'}}) }}
-        </div>
-        <div class="form-group col-12 col-sm-4">
-            {{ form_label(orderForm.deliveryToClient, 'Доставка по России, руб.') }}
-            {{ form_widget(orderForm.deliveryToClient, {'attr': {'class': 'form-control-sm'}}) }}
-        </div>
-    </div>
+
 
     <div class="form-row">
-        <div class="form-group col-12 col-sm-4">
-            {{ form_label(orderForm.additionalCost, 'Доп. затраты') }}
-            {{ form_widget(orderForm.additionalCost, {'attr': {'class': 'form-control-sm'}}) }}
-        </div>
 
-        <div class="form-group col-12 col-sm-8">
+        <div class="form-group col-12 col-lg-4">
             <label for="{{ orderForm.rate.vars.id }}">
                 Курс $
                 {% if (orderForm.rate.vars.errors) %}
@@ -56,6 +39,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="form-group col-12 col-lg-4">
+            {{ form_label(orderForm.additionalCost, 'Доп. затраты, $    ') }}
+            {{ form_widget(orderForm.additionalCost, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+
+        <div class="form-group col-12 col-lg-4">
+            {{ form_label(orderForm.tracking, 'Трекинг по США') }}
+            {{ form_widget(orderForm.tracking, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
     </div>
 
     <div class="form-row">
@@ -63,9 +56,43 @@
             {{ form_label(orderForm.additionalCostComment, 'Комментарий к дополнительным затратам') }}
             {{ form_widget(orderForm.additionalCostComment, {'attr': {'class': 'form-control-sm'}}) }}
         </div>
-        <div class="form-group col-12">
-            {{ form_label(orderForm.tracking, 'Трекинг по США') }}
-            {{ form_widget(orderForm.tracking, {'attr': {'class': 'form-control-sm'}}) }}
+
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-12 col-sm-4">
+            {{ form_label(orderForm.deliveryToStock, 'Доставка по США, $') }}
+            {{ form_widget(orderForm.deliveryToStock, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+        <div class="form-group col-12 col-sm-4">
+            {{ form_label(orderForm.deliveryToRussiaPerKg, 'Доставка в Россию за кг, $') }}
+            {{ form_widget(orderForm.deliveryToRussiaPerKg, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+        <div class="form-group col-12 col-sm-4">
+            {{ form_label(orderForm.deliveryToClient, 'Доставка по России, руб.') }}
+            {{ form_widget(orderForm.deliveryToClient, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+    </div>
+
+    <hr class="border-danger mb-0">
+    <p class="text-center  alert-danger">Поля ниже не видны клиенту</p>
+
+    <div class="form-row">
+        <div class="form-group col-12 col-md-6">
+            {{ form_label(orderForm.deliveryToStockReal, 'Реальная доставка по США, $') }}
+            {{ form_widget(orderForm.deliveryToStockReal, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+        <div class="form-group col-12 col-md-6">
+            {{ form_label(orderForm.deliveryToRussiaPerKgReal, 'Реальная доставка в Россию за кг, $') }}
+            {{ form_widget(orderForm.deliveryToRussiaPerKgReal, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+        <div class="form-group col-12 col-md-6">
+            {{ form_label(orderForm.deliveryToClientReal, 'Реальная доставка по России, руб.') }}
+            {{ form_widget(orderForm.deliveryToClientReal, {'attr': {'class': 'form-control-sm'}}) }}
+        </div>
+        <div class="form-group col-12 col-md-6">
+            {{ form_label(orderForm.additionalCostReal, 'Реальные доп. затраты, $') }}
+            {{ form_widget(orderForm.additionalCostReal, {'attr': {'class': 'form-control-sm'}}) }}
         </div>
     </div>
 

@@ -80,10 +80,22 @@ class Order implements PrefixableEntityInterface
     private $deliveryToStock;
 
     /**
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Реальная доставка по США, $"})
+     * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
+     */
+    private $deliveryToStockReal;
+
+    /**
      * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Доставка в Россию за кг, $"})
      * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $deliveryToRussiaPerKg;
+
+    /**
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Реальная доставка в Россию за кг, $"})
+     * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
+     */
+    private $deliveryToRussiaPerKgReal;
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Доставка по России, руб"})
@@ -92,10 +104,22 @@ class Order implements PrefixableEntityInterface
     private $deliveryToClient;
 
     /**
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Реальная доставка по России, руб"})
+     * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
+     */
+    private $deliveryToClientReal;
+
+    /**
      * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Доп. платежи"})
      * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
      */
     private $additionalCost;
+
+    /**
+     * @ORM\Column(type="decimal", precision=7, scale=2, nullable=true, options={"comment":"Реальные доп. платежи"})
+     * @Assert\GreaterThanOrEqual(value=0, groups={"edit_by_manager"})
+     */
+    private $additionalCostReal;
 
     /**
      * @ORM\Column(type="text", nullable=true, options={"comment":"Комментарий к доп. платежам"})
@@ -245,6 +269,50 @@ class Order implements PrefixableEntityInterface
     public function setDeliveryToClient(?float $deliveryToClient): self
     {
         $this->deliveryToClient = $deliveryToClient;
+        return $this;
+    }
+
+    public function getDeliveryToStockReal(): ?float
+    {
+        return $this->deliveryToStockReal;
+    }
+
+    public function setDeliveryToStockReal($deliveryToStockReal): self
+    {
+        $this->deliveryToStockReal = $deliveryToStockReal;
+        return $this;
+    }
+
+    public function getDeliveryToRussiaPerKgReal(): ?float
+    {
+        return $this->deliveryToRussiaPerKgReal;
+    }
+
+    public function setDeliveryToRussiaPerKgReal($deliveryToRussiaPerKgReal): self
+    {
+        $this->deliveryToRussiaPerKgReal = $deliveryToRussiaPerKgReal;
+        return $this;
+    }
+
+    public function getDeliveryToClientReal(): ?float
+    {
+        return $this->deliveryToClientReal;
+    }
+
+    public function setDeliveryToClientReal($deliveryToClientReal): self
+    {
+        $this->deliveryToClientReal = $deliveryToClientReal;
+        return $this;
+    }
+
+    public function getAdditionalCostReal(): ?float
+    {
+        return $this->additionalCostReal;
+    }
+
+    public function setAdditionalCostReal($additionalCostReal): self
+    {
+        $this->additionalCostReal = $additionalCostReal;
         return $this;
     }
 
