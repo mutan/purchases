@@ -55,8 +55,7 @@ class AdminController extends BaseController
             switch ($code->getType()) {
                 case ItemCode::TYPE_ORDER:
                     $order = $this->getEm()->getRepository(Order::class)->find($code->getNumber());
-                    $params['order'] = $order;
-                    $template = 'admin/order.html.twig';
+                    return $this->redirectToRoute('manager_order_show', ['order_id' => $order->getId()]);
                     break;
                 case ItemCode::TYPE_PACKAGE:
                     return $this->renderPackage($code);
