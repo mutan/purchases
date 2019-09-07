@@ -172,10 +172,28 @@
                             <td></td>
                             <td colspan="3">Доставка по США</td>
                             <td class="text-right">{{ order.deliveryToStock }} $</td>
-                            <td class="text-right">{{ (order.rate and order.deliveryToStockRub) ? order.deliveryToStockRub ~ ' руб.' : '–' }}</td>
+                            <td class="text-right">{{ (order.rate and order.deliveryToStock) ? order.deliveryToStockRub ~ ' руб.' : '–' }}</td>
                             <td class="text-right table-primary"></td>
-                            <td class="text-right table-primary"></td>
-                            <td class="text-right table-primary"></td>
+                            <td class="text-right table-primary">
+                                {% if order.deliveryToStockReal %}
+                                    {{ order.deliveryToStockReal }} $
+                                    {% if order.deliveryToStock > order.deliveryToStockReal %}
+                                        <span class="text-success">(+{{ order.deliveryToStock - order.deliveryToStockReal }})</span>
+                                    {% elseif order.deliveryToStock < order.deliveryToStockReal %}
+                                        <span class="text-danger">({{ order.deliveryToStock - order.deliveryToStockReal }})</span>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td class="text-right table-primary">
+                                {% if order.rate and order.deliveryToStockReal %}
+                                    {{ order.deliveryToStockRealRub }} руб.
+                                    {% if order.deliveryToStockRub > order.deliveryToStockRealRub %}
+                                        <span class="text-success">(+{{ (order.deliveryToStockRub - order.deliveryToStockRealRub)|round(2) }})</span>
+                                    {% elseif order.deliveryToStockRub < order.deliveryToStockRealRub %}
+                                        <span class="text-danger">({{ (order.deliveryToStockRub - order.deliveryToStockRealRub)|round(2) }})</span>
+                                    {% endif %}
+                                {%- endif -%}
+                            </td>
                             <td></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
                         </tr>

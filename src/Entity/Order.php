@@ -502,6 +502,11 @@ class Order implements PrefixableEntityInterface
         return ceil($this->getDeliveryToStock() * $this->getRate());
     }
 
+    public function getDeliveryToStockRealRub()
+    {
+        return ceil($this->getDeliveryToStockReal() * $this->getRate());
+    }
+
     /**
      * Итоговая доставка в Россию $ = вес всех товаров в заказе в кг * доставка в Россию за кг
      */
