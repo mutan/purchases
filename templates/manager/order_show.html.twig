@@ -86,29 +86,17 @@
                         <td class="text-right table-primary">
                             {% if product.purchasePrice %}
                                 {{ product.purchasePrice }}
-                                {% if product.finalPrice > product.purchasePrice %}
-                                    <span class="text-success">(+{{ product.finalPrice - product.purchasePrice }})</span>
-                                {% else %}
-                                    <span class="text-danger">({{ product.finalPrice - product.purchasePrice }})</span>
-                                {% endif %}
-                            {% endif %}
-                        </td>
+                                {{ include('manager/_difference.html.twig', {'f': product.finalPrice, 's': product.purchasePrice}) }}
+                             {% endif %}
+                        </td>`
                         <td class="text-right table-primary">
                             {{ product.purchaseTotal }}
-                            {% if product.total > product.purchaseTotal %}
-                                <span class="text-success">(+{{ product.total - product.purchaseTotal }})</span>
-                            {% elseif product.total < product.purchaseTotal %}
-                                <span class="text-danger">({{ product.total - product.purchaseTotal }})</span>
-                            {% endif %}
+                            {{ include('manager/_difference.html.twig', {'f': product.total, 's': product.purchaseTotal}) }}
                         </td>
                         <td class="text-right table-primary">
                             {% if order.rate %}
                                 {{ product.purchaseTotalRub }}
-                                {% if product.totalRub > product.purchaseTotalRub %}
-                                    <span class="text-success">(+{{ (product.totalRub - product.purchaseTotalRub)|round(2) }})</span>
-                                {% elseif product.totalRub < product.purchaseTotalRub %}
-                                    <span class="text-danger">({{ (product.totalRub - product.purchaseTotalRub)|round(2) }})</span>
-                                {% endif %}
+                                {{ include('manager/_difference.html.twig', {'f': product.totalRub, 's': product.purchaseTotalRub}) }}
                             {%- else -%}
                                 –
                             {%- endif -%}
@@ -146,20 +134,12 @@
                         <th class="text-right table-primary"></th>
                         <th class="text-right table-primary">
                             {{ order.productsPurchaseSum }} $
-                            {% if order.productsSum > order.productsPurchaseSum %}
-                                <span class="text-success">(+{{ order.productsSum - order.productsPurchaseSum }})</span>
-                            {% elseif order.productsSum < order.productsPurchaseSum %}
-                                <span class="text-danger">({{ order.productsSum - order.productsPurchaseSum }})</span>
-                            {% endif %}
+                            {{ include('manager/_difference.html.twig', {'f': order.productsSum, 's': order.productsPurchaseSum}) }}
                         </th>
                         <th class="text-right table-primary">
                             {% if order.rate %}
                                 {{ order.productsPurchaseSumRub }} руб.
-                                {% if order.productsSumRub > order.productsPurchaseSumRub %}
-                                    <span class="text-success">(+{{ (order.productsSumRub - order.productsPurchaseSumRub)|round(2) }})</span>
-                                {% elseif order.productsSumRub < order.productsPurchaseSumRub %}
-                                    <span class="text-danger">({{ (order.productsSumRub - order.productsPurchaseSumRub)|round(2) }})</span>
-                                {% endif %}
+                                {{ include('manager/_difference.html.twig', {'f': order.productsSumRub, 's': order.productsPurchaseSumRub}) }}
                             {%- else -%}
                                 –
                             {%- endif -%}
@@ -177,21 +157,13 @@
                             <td class="text-right table-primary">
                                 {% if order.deliveryToStockReal %}
                                     {{ order.deliveryToStockReal }} $
-                                    {% if order.deliveryToStock > order.deliveryToStockReal %}
-                                        <span class="text-success">(+{{ order.deliveryToStock - order.deliveryToStockReal }})</span>
-                                    {% elseif order.deliveryToStock < order.deliveryToStockReal %}
-                                        <span class="text-danger">({{ order.deliveryToStock - order.deliveryToStockReal }})</span>
-                                    {% endif %}
+                                    {{ include('manager/_difference.html.twig', {'f': order.deliveryToStock, 's': order.deliveryToStockReal}) }}
                                 {% endif %}
                             </td>
                             <td class="text-right table-primary">
                                 {% if order.rate and order.deliveryToStockReal %}
                                     {{ order.deliveryToStockRealRub }} руб.
-                                    {% if order.deliveryToStockRub > order.deliveryToStockRealRub %}
-                                        <span class="text-success">(+{{ (order.deliveryToStockRub - order.deliveryToStockRealRub)|round(2) }})</span>
-                                    {% elseif order.deliveryToStockRub < order.deliveryToStockRealRub %}
-                                        <span class="text-danger">({{ (order.deliveryToStockRub - order.deliveryToStockRealRub)|round(2) }})</span>
-                                    {% endif %}
+                                    {{ include('manager/_difference.html.twig', {'f': order.deliveryToStockRub, 's': order.deliveryToStockRealRub}) }}
                                 {%- endif -%}
                             </td>
                             <td></td>
@@ -214,21 +186,13 @@
                             <td class="text-right table-primary">
                                 {% if order.deliveryToRussiaReal %}
                                     {{ order.deliveryToRussiaReal }} $
-                                    {% if order.deliveryToRussia > order.deliveryToRussiaReal %}
-                                        <span class="text-success">(+{{ order.deliveryToRussia - order.deliveryToRussiaReal }})</span>
-                                    {% elseif order.deliveryToRussia < order.deliveryToRussiaReal %}
-                                        <span class="text-danger">({{ order.deliveryToRussia - order.deliveryToRussiaReal }})</span>
-                                    {% endif %}
+                                    {{ include('manager/_difference.html.twig', {'f': order.deliveryToRussia, 's': order.deliveryToRussiaReal}) }}
                                 {% endif %}
                             </td>
                             <td class="text-right table-primary">
                                 {% if order.rate and order.deliveryToRussiaPerKgReal %}
                                     {{ order.deliveryToRussiaRealRub }} руб.
-                                    {% if order.deliveryToRussiaRub > order.deliveryToRussiaRealRub %}
-                                        <span class="text-success">(+{{ (order.deliveryToRussiaRub - order.deliveryToRussiaRealRub)|round(2) }})</span>
-                                    {% elseif order.deliveryToRussiaRub < order.deliveryToRussiaRealRub %}
-                                        <span class="text-danger">({{ (order.deliveryToRussiaRub - order.deliveryToRussiaRealRub)|round(2) }})</span>
-                                    {% endif %}
+                                    {{ include('manager/_difference.html.twig', {'f': order.deliveryToRussiaRub, 's': order.deliveryToRussiaRealRub}) }}
                                 {%- endif -%}
                             </td>
                             <td></td>
@@ -245,11 +209,7 @@
                             <td class="text-right table-primary">
                                 {% if order.deliveryToClientReal %}
                                     {{ order.deliveryToClientReal }} руб.
-                                    {% if order.deliveryToClient > order.deliveryToClientReal %}
-                                        <span class="text-success">(+{{ order.deliveryToClient - order.deliveryToClientReal }})</span>
-                                    {% elseif order.deliveryToClient < order.deliveryToClientReal %}
-                                        <span class="text-danger">({{ order.deliveryToClient - order.deliveryToClientReal }})</span>
-                                    {% endif %}
+                                    {{ include('manager/_difference.html.twig', {'f': order.deliveryToClient, 's': order.deliveryToClientReal}) }}
                                 {% endif %}
                             </td>
                             <td></td>
@@ -274,11 +234,7 @@
                             <td class="text-right table-primary">
                                 {% if order.rate and order.additionalCostReal %}
                                     {{ order.additionalCostRealRub }} руб.
-                                    {% if order.additionalCostRub > order.additionalCostRealRub %}
-                                        <span class="text-success">(+{{ (order.additionalCostRub - order.additionalCostRealRub)|round(2) }})</span>
-                                    {% elseif order.additionalCostRub < order.additionalCostRealRub %}
-                                        <span class="text-danger">({{ (order.additionalCostRub - order.additionalCostRealRub)|round(2) }})</span>
-                                    {% endif %}
+                                    {{ include('manager/_difference.html.twig', {'f': order.additionalCostRub, 's': order.additionalCostRealRub}) }}
                                 {%- endif -%}
                             </td>
                             <td></td>
