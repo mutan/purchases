@@ -241,11 +241,16 @@
                             <td colspan="4">Доставка по России</td>
                             <td class="text-right">{{ order.deliveryToClient }} руб.</td>
                             <td class="text-right table-primary"></td>
+                            <td class="text-right table-primary"></td>
                             <td class="text-right table-primary">
-                                TODO
-                            </td>
-                            <td class="text-right table-primary">
-                                TODO
+                                {% if order.deliveryToClientReal %}
+                                    {{ order.deliveryToClientReal }} руб.
+                                    {% if order.deliveryToClient > order.deliveryToClientReal %}
+                                        <span class="text-success">(+{{ order.deliveryToClient - order.deliveryToClientReal }})</span>
+                                    {% elseif order.deliveryToClient < order.deliveryToClientReal %}
+                                        <span class="text-danger">({{ order.deliveryToClient - order.deliveryToClientReal }})</span>
+                                    {% endif %}
+                                {% endif %}
                             </td>
                             <td></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}
@@ -261,10 +266,20 @@
                             <td class="text-right">{% if order.rate %}{{ order.additionalCostRub }} руб.{%- else -%}–{%- endif -%}</td>
                             <td class="text-right table-primary"></td>
                             <td class="text-right table-primary">
-                                TODO
+                                {% if order.additionalCostReal %}
+                                    {{ order.additionalCostReal }} $
+                                    {{ include('manager/_difference.html.twig', {'f': order.additionalCost, 's': order.additionalCostReal}) }}
+                                {% endif %}
                             </td>
                             <td class="text-right table-primary">
-                                TODO
+                                {% if order.rate and order.additionalCostReal %}
+                                    {{ order.additionalCostRealRub }} руб.
+                                    {% if order.additionalCostRub > order.additionalCostRealRub %}
+                                        <span class="text-success">(+{{ (order.additionalCostRub - order.additionalCostRealRub)|round(2) }})</span>
+                                    {% elseif order.additionalCostRub < order.additionalCostRealRub %}
+                                        <span class="text-danger">({{ (order.additionalCostRub - order.additionalCostRealRub)|round(2) }})</span>
+                                    {% endif %}
+                                {%- endif -%}
                             </td>
                             <td></td>
                             {% if is_granted('ORDER_MANAGE', order) %}<td></td>{% endif %}

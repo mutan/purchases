@@ -544,6 +544,11 @@ class Order implements PrefixableEntityInterface
         return ceil($this->getAdditionalCost() * $this->getRate());
     }
 
+    public function getAdditionalCostRealRub()
+    {
+        return ceil($this->getAdditionalCostReal() * $this->getRate());
+    }
+
     public function getTotalRub()
     {
         return $this->getProductsSumRub()

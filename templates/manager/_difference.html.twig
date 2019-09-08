@@ -1,0 +1,5 @@
+{% if f > s %}
+    <span class="text-success">(+{{ f - s }})</span>
+{% elseif f < s %}
+    <span class="text-danger">({{ f - s }})</span>
+{% endif %}
