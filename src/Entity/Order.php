@@ -440,6 +440,9 @@ class Order implements PrefixableEntityInterface
         return $this->getStatus() == self::STATUS_DELETED;
     }
 
+    /**
+     * Количество всех товаров в заказе
+     */
     public function getProductsAmount()
     {
         $amount = 0;
@@ -447,42 +450,6 @@ class Order implements PrefixableEntityInterface
             $amount += $product->getAmount();
         }
         return $amount;
-    }
-
-    public function getProductsSum()
-    {
-        $sum = 0;
-        foreach ($this->getProducts() as $product) {
-            $sum += $product->getTotal();
-        }
-        return $sum;
-    }
-
-    public function getProductsPurchaseSum()
-    {
-        $sum = 0;
-        foreach ($this->getProducts() as $product) {
-            $sum += $product->getPurchaseTotal();
-        }
-        return $sum;
-    }
-
-    public function getProductsSumRub()
-    {
-        $sum = 0;
-        foreach ($this->getProducts() as $product) {
-            $sum += $product->getTotalRub();
-        }
-        return $sum;
-    }
-
-    public function getProductsPurchaseSumRub()
-    {
-        $sum = 0;
-        foreach ($this->getProducts() as $product) {
-            $sum += $product->getPurchaseTotalRub();
-        }
-        return $sum;
     }
 
     /**
@@ -495,6 +462,64 @@ class Order implements PrefixableEntityInterface
             $sum += ($product->getWeight() ? $product->getWeight() : $product->getExpectedWeight());
         }
         return $sum;
+    }
+
+    /**
+     * Сумма итоговых цен всех товаров в заказе $
+     */
+    public function getProductsSum()
+    {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+            $sum += $product->getTotal();
+        }
+        return $sum;
+    }
+
+    /**
+     * Сумма итоговых цен всех товаров в заказе руб.
+     */
+    public function getProductsSumRub()
+    {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+            $sum += $product->getTotalRub();
+        }
+        return $sum;
+    }
+
+    /**
+     * Сумма выкупных цен всех товаров в заказе $
+     */
+    public function getProductsPurchaseSum()
+    {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+            $sum += $product->getPurchaseTotal();
+        }
+        return $sum;
+    }
+
+    /**
+     * Сумма выкупных цен всех товаров в заказе руб.
+     */
+    public function getProductsPurchaseSumRub()
+    {
+        $sum = 0;
+        foreach ($this->getProducts() as $product) {
+            $sum += $product->getPurchaseTotalRub();
+        }
+        return $sum;
+    }
+
+    public function getProductsSumDifference()
+    {
+        return $this->getProductsSum() - $this->getProductsPurchaseSum();
+    }
+
+    public function getProductsSumRubDifference()
+    {
+        return $this->getProductsSumRub() - $this->getProductsPurchaseSumRub();
     }
 
     public function getDeliveryToStockRub()

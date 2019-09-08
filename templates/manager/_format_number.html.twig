@@ -1,0 +1,5 @@
+{% if num > 0 %}
+    <span class="text-success">(+{{ num }})</span>
+{% elseif num < 0 %}
+    <span class="text-danger">({{ num }})</span>
+{% endif %}

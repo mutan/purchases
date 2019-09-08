@@ -356,6 +356,9 @@ class Product implements PrefixableEntityInterface
      */
     public function getTotalRub()
     {
+        if (!$this->getOrder()->getRate()) {
+            return 0;
+        }
         return ceil($this->getAmount() * $this->getFinalPrice() * $this->getOrder()->getRate());
     }
 
@@ -364,6 +367,9 @@ class Product implements PrefixableEntityInterface
      */
     public function getPurchaseTotalRub()
     {
+        if (!$this->getOrder()->getRate()) {
+            return 0;
+        }
         return $this->getAmount() * $this->getFinalPurchasePrice() * $this->getOrder()->getRate();
     }
 }

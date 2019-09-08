@@ -88,7 +88,7 @@
                                 {{ product.purchasePrice }}
                                 {{ include('manager/_difference.html.twig', {'f': product.finalPrice, 's': product.purchasePrice}) }}
                              {% endif %}
-                        </td>`
+                        </td>
                         <td class="text-right table-primary">
                             {{ product.purchaseTotal }}
                             {{ include('manager/_difference.html.twig', {'f': product.total, 's': product.purchaseTotal}) }}
@@ -134,12 +134,12 @@
                         <th class="text-right table-primary"></th>
                         <th class="text-right table-primary">
                             {{ order.productsPurchaseSum }} $
-                            {{ include('manager/_difference.html.twig', {'f': order.productsSum, 's': order.productsPurchaseSum}) }}
+                            {{ include('manager/_format_number.html.twig', {'num': order.productsSumDifference}) }}
                         </th>
                         <th class="text-right table-primary">
                             {% if order.rate %}
                                 {{ order.productsPurchaseSumRub }} руб.
-                                {{ include('manager/_difference.html.twig', {'f': order.productsSumRub, 's': order.productsPurchaseSumRub}) }}
+                                {{ include('manager/_format_number.html.twig', {'num': order.productsSumRubDifference}) }}
                             {%- else -%}
                                 –
                             {%- endif -%}
@@ -247,7 +247,7 @@
                         <th class="text-right">{{ order.rate and order.totalRub ? order.totalRub ~ ' руб.' : '–'}}</th>
                         <th class="text-right table-primary"></th>
                         <th class="text-right table-primary">
-                            TODO
+                            Итого товары + Доставка по США + Доставка в Россию + Доставка по России + Дополнительные затраты
                         </th>
                         <th class="text-right table-primary">
                             TODO
