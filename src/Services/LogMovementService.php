@@ -4,7 +4,11 @@ namespace App\Services;
 
 use App\Entity\LogMovement;
 use App\Entity\Order;
+use App\Entity\Package;
+use App\Entity\Product;
 use App\Entity\User;
+use App\Entity\UserAddress;
+use App\Entity\UserPassport;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -55,6 +59,90 @@ class LogMovementService
             $event = new LogMovement();
         }
         $event->setOrder($order);
+        $this->addEvent($type, $user, $event, $customMessage);
+    }
+
+    /**
+     * @param $type
+     * @param Product $product
+     * @param User|null $user
+     * @param null $customMessage
+     * @param LogMovement|null $event
+     * @throws Exception
+     */
+    public function addEventForProduct($type, Product $product, User $user = null, $customMessage = null, LogMovement $event = null): void
+    {
+        if (!$event) {
+            $event = new LogMovement();
+        }
+        $event->setProduct($product);
+        $this->addEvent($type, $user, $event, $customMessage);
+    }
+
+    /**
+     * @param $type
+     * @param Package $package
+     * @param User|null $user
+     * @param null $customMessage
+     * @param LogMovement|null $event
+     * @throws Exception
+     */
+    public function addEventForPackage($type, Package $package, User $user = null, $customMessage = null, LogMovement $event = null): void
+    {
+        if (!$event) {
+            $event = new LogMovement();
+        }
+        $event->setPackage($package);
+        $this->addEvent($type, $user, $event, $customMessage);
+    }
+
+    /**
+     * @param $type
+     * @param User $user
+     * @param null $customMessage
+     * @param LogMovement|null $event
+     * @throws Exception
+     */
+    public function addEventForUser($type, User $user, $customMessage = null, LogMovement $event = null): void
+    {
+        if (!$event) {
+            $event = new LogMovement();
+        }
+        $event->setUser($user);
+        $this->addEvent($type, null, $event, $customMessage);
+    }
+
+    /**
+     * @param $type
+     * @param UserAddress $userAddress
+     * @param User|null $user
+     * @param null $customMessage
+     * @param LogMovement|null $event
+     * @throws Exception
+     */
+    public function addEventForUserAddress($type, UserAddress $userAddress, User $user = null, $customMessage = null, LogMovement $event = null): void
+    {
+        if (!$event) {
+            $event = new LogMovement();
+        }
+        $event->setUserAddress($userAddress);
+        $this->addEvent($type, $user, $event, $customMessage);
+    }
+
+    /**
+     * @param $type
+     * @param UserPassport $userPassport
+     * @param User|null $user
+     * @param null $customMessage
+     * @param LogMovement|null $event
+     * @throws Exception
+     */
+    public function addEventForUserPassport($type, UserPassport $userPassport, User $user = null, $customMessage = null, LogMovement $event = null): void
+    {
+        if (!$event) {
+            $event = new LogMovement();
+        }
+        $event->setUserPassport($userPassport);
         $this->addEvent($type, $user, $event, $customMessage);
     }
 }

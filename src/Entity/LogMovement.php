@@ -59,11 +59,6 @@ class LogMovement
     private $message;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     */
-    private $user;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Order")
      */
     private $order;
@@ -72,6 +67,26 @@ class LogMovement
      * @ORM\ManyToOne(targetEntity="App\Entity\Product")
      */
     private $product;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Package")
+     */
+    private $package;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserAddress")
+     */
+    private $userAddress;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserPassport")
+     */
+    private $userPassport;
 
     public function getId(): ?int
     {
@@ -86,7 +101,6 @@ class LogMovement
     public function setCreateDate(DateTimeInterface $createDate): self
     {
         $this->createDate = $createDate;
-
         return $this;
     }
 
@@ -98,7 +112,6 @@ class LogMovement
     public function setType(int $type): self
     {
         $this->type = $type;
-
         return $this;
     }
 
@@ -110,19 +123,6 @@ class LogMovement
     public function setMessage(string $message): self
     {
         $this->message = $message;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
         return $this;
     }
 
@@ -145,6 +145,50 @@ class LogMovement
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+        return $this;
+    }
+
+    public function getPackage(): ?Package
+    {
+        return $this->package;
+    }
+
+    public function setPackage(?Package $package): self
+    {
+        $this->package = $package;
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    public function getUserAddress(): ?UserAddress
+    {
+        return $this->userAddress;
+    }
+
+    public function setUserAddress(?UserAddress $userAddress): self
+    {
+        $this->userAddress = $userAddress;
+        return $this;
+    }
+
+    public function getUserPassport(): ?UserPassport
+    {
+        return $this->userPassport;
+    }
+
+    public function setUserPassport(?UserPassport $userPassport): self
+    {
+        $this->userPassport = $userPassport;
         return $this;
     }
 }
