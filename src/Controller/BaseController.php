@@ -32,8 +32,10 @@ abstract class BaseController extends AbstractController
         return $this->getDoctrine()->getManager();
     }
 
-    protected function getLogMovementService(): LogMovementService
+    public static function getSubscribedServices()
     {
-        return $this->logMovementService;
+        return array_merge(parent::getSubscribedServices(), [
+            LogMovementService::class => LogMovementService::class,
+        ]);
     }
 }

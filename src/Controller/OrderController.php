@@ -75,7 +75,7 @@ class OrderController extends BaseController
             $order->setUser($this->getUser());
             $this->getEm()->persist($order);
             $this->getEm()->flush();
-            $this->getLogMovementService()->addEventForOrder(LogMovement::ORDER_CREATE, $order, $this->getUser());
+            $this->container->get(LogMovementService::class)->addEventForOrder(LogMovement::ORDER_CREATE, $order, $this->getUser());
             $this->addFlash('success', "Заказ {$order->getIdWithPrefix()} создан. Теперь добавьте в него товары!");
             $reload = true;
         }
