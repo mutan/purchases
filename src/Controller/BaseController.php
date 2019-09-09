@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Services\LogMovementService;
 use App\Services\MailService;
 use Psr\Log\LoggerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -17,15 +18,22 @@ abstract class BaseController extends AbstractController
 {
     protected $logger;
     protected $mailer;
+    protected $logMovementService;
 
-    public function __construct(LoggerInterface $logger, MailService $mailer)
+    public function __construct(LoggerInterface $logger, MailService $mailer, LogMovementService $logMovementService)
     {
         $this->logger = $logger;
         $this->mailer = $mailer;
+        $this->logMovementService = $logMovementService;
     }
 
     protected function getEm(): ObjectManager
     {
         return $this->getDoctrine()->getManager();
+    }
+
+    protected function getLogMovementService(): LogMovementService
+    {
+        return $this->logMovementService;
     }
 }

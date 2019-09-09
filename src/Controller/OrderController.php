@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\LogMovement;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Form\OrderType;
@@ -9,7 +10,9 @@ use App\Form\ProductUserType;
 use App\Resources\ShopHelper;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use App\Services\LogMovementService;
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,6 +63,7 @@ class OrderController extends BaseController
      * @Route("/new", name="user_order_new", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
+     * @throws Exception
      */
     public function new(Request $request): JsonResponse
     {
@@ -71,6 +75,7 @@ class OrderController extends BaseController
             $order->setUser($this->getUser());
             $this->getEm()->persist($order);
             $this->getEm()->flush();
+            $this->getLogMovementService()->addEventForOrder(LogMovement::ORDER_CREATE, $order, $this->getUser());
             $this->addFlash('success', "Заказ {$order->getIdWithPrefix()} создан. Теперь добавьте в него товары!");
             $reload = true;
         }
