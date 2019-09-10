@@ -11,8 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 //TODO
 // LogMovement - загрузка логов на нужных страницах
-// Формулы на order_show, в т.ч. итого
-// Запрет на редактирование менеджером New (не approved) заказов
 
 /**
  * Строка ниже нужна для автодополнения PhpShtorm'a,

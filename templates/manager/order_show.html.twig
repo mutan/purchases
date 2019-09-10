@@ -160,13 +160,13 @@
                             <td class="text-right">{{ (order.rate and order.deliveryToStock) ? order.deliveryToStockRub ~ ' руб.' : '–' }}</td>
                             <td class="text-right table-primary"></td>
                             <td class="text-right table-primary">
-                                {% if order.deliveryToStockReal %}
+                                {% if order.deliveryToStockReal is defined %}
                                     {{ order.deliveryToStockReal }} $
                                     {{ include('manager/_difference.html.twig', {'f': order.deliveryToStock, 's': order.deliveryToStockReal}) }}
                                 {% endif %}
                             </td>
                             <td class="text-right table-primary">
-                                {% if order.rate and order.deliveryToStockReal %}
+                                {% if order.rate and order.deliveryToStockReal is defined %}
                                     {{ order.deliveryToStockRealRub }} руб.
                                     {{ include('manager/_difference.html.twig', {'f': order.deliveryToStockRub, 's': order.deliveryToStockRealRub}) }}
                                 {%- endif -%}
@@ -189,13 +189,13 @@
                             <td class="text-right">{{ (order.rate and order.deliveryToRussiaRub) ? order.deliveryToRussiaRub ~ ' руб.' : '–' }}</td>
                             <td class="text-right table-primary"></td>
                             <td class="text-right table-primary">
-                                {% if order.deliveryToRussiaReal %}
+                                {% if order.deliveryToRussiaReal is defined %}
                                     {{ order.deliveryToRussiaReal }} $
                                     {{ include('manager/_difference.html.twig', {'f': order.deliveryToRussia, 's': order.deliveryToRussiaReal}) }}
                                 {% endif %}
                             </td>
                             <td class="text-right table-primary">
-                                {% if order.rate and order.deliveryToRussiaPerKgReal %}
+                                {% if order.rate and order.deliveryToRussiaPerKgReal is defined %}
                                     {{ order.deliveryToRussiaRealRub }} руб.
                                     {{ include('manager/_difference.html.twig', {'f': order.deliveryToRussiaRub, 's': order.deliveryToRussiaRealRub}) }}
                                 {%- endif -%}
@@ -212,7 +212,7 @@
                             <td class="text-right table-primary"></td>
                             <td class="text-right table-primary"></td>
                             <td class="text-right table-primary">
-                                {% if order.deliveryToClientReal %}
+                                {% if order.deliveryToClientReal is defined %}
                                     {{ order.deliveryToClientReal }} руб.
                                     {{ include('manager/_difference.html.twig', {'f': order.deliveryToClient, 's': order.deliveryToClientReal}) }}
                                 {% endif %}
@@ -231,13 +231,13 @@
                             <td class="text-right">{% if order.rate %}{{ order.additionalCostRub }} руб.{%- else -%}–{%- endif -%}</td>
                             <td class="text-right table-primary"></td>
                             <td class="text-right table-primary">
-                                {% if order.additionalCostReal %}
+                                {% if order.additionalCostReal is defined %}
                                     {{ order.additionalCostReal }} $
                                     {{ include('manager/_difference.html.twig', {'f': order.additionalCost, 's': order.additionalCostReal}) }}
                                 {% endif %}
                             </td>
                             <td class="text-right table-primary">
-                                {% if order.rate and order.additionalCostReal %}
+                                {% if order.rate and order.additionalCostReal is defined %}
                                     {{ order.additionalCostRealRub }} руб.
                                     {{ include('manager/_difference.html.twig', {'f': order.additionalCostRub, 's': order.additionalCostRealRub}) }}
                                 {%- endif -%}
