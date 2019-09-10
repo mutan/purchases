@@ -160,7 +160,7 @@ class OrderController extends BaseController
     }
 
     /**
-     * Утвердить заказ (ajax)
+     * Вернуть заказ в статус Новый (ajax)
      * @Route("/{id}/return_to_new", name="user_order_return_to_new", methods={"POST"})
      * @param Request $request
      * @param Order $order
@@ -174,6 +174,25 @@ class OrderController extends BaseController
         $this->getEm()->persist($order);
         $this->getEm()->flush();
         $this->addFlash('success',"Заказ {$order->getIdWithPrefix()} возвращен в статус Новый.");
+
+        return new JsonResponse(['message' => 'Success',], 200);
+    }
+
+    /**
+     * Установить заказ в статус Выкупается (ajax)
+     * @Route("/{id}/set_redeemed", name="user_order_set_redeemed", methods={"POST"})
+     * @param Request $request
+     * @param Order $order
+     * @return JsonResponse
+     */
+    public function setRedeemed(Request $request, Order $order): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('ORDER_SET_REDEEMED', $order);
+
+        $order->setStatus(Order::STATUS_REDEEMED);
+        $this->getEm()->persist($order);
+        $this->getEm()->flush();
+        $this->addFlash('success',"Заказ {$order->getIdWithPrefix()} переведен в статус Выкупается.");
 
         return new JsonResponse(['message' => 'Success',], 200);
     }

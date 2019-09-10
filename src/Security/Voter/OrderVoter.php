@@ -26,6 +26,7 @@ class OrderVoter extends Voter
                 'ORDER_APPROVE', // by user
                 'ORDER_RETURN_TO_NEW', // by user
                 'ORDER_DELETE', // by user
+                'ORDER_SET_REDEEMED', // by manager
                 'ORDER_MANAGE', // by manager
             ])
             && $subject instanceof Order;
@@ -65,6 +66,11 @@ class OrderVoter extends Voter
                 break;
             case 'ORDER_DELETE':
                 if ($subject->getUser() == $user && $subject->isNew() && !$subject->hasProducts()) {
+                    return true;
+                }
+                break;
+            case 'ORDER_SET_REDEEMED':
+                if ($subject->getManager() == $user && $subject->isApproved()) {
                     return true;
                 }
                 break;

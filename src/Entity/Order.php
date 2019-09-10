@@ -583,6 +583,15 @@ class Order implements PrefixableEntityInterface
              + $this->getAdditionalCostRub();
     }
 
+    public function getTotalRealRub()
+    {
+        return $this->getProductsPurchaseSumRub()
+            + $this->getDeliveryToStockRealRub()
+            + $this->getDeliveryToRussiaRealRub()
+            + $this->getDeliveryToClientReal()
+            + $this->getAdditionalCostRealRub();
+    }
+
     public function hasProducts() {
         return !$this->getProducts()->isEmpty();
     }

@@ -112,11 +112,14 @@ let Ajax = {
      },
 };
 
+$('#order_set_redeemed').on('click', (e)=> {
+    let orderId = $(e.currentTarget).attr('data-id');
+    Ajax.send(e, `/order/${orderId}/set_redeemed`, "Действительно начать выкуп?", "Меняем статус");
+});
 $('#order_approve').on('click', (e)=> {
     let orderId = $(e.currentTarget).attr('data-id');
     Ajax.send(e, `/order/${orderId}/approve`, "Действительно утвердить?", "Утверждаем");
 });
-
 $('#order_return_to_new').on('click', (e)=> {
     let orderId = $(e.currentTarget).attr('data-id');
     Ajax.send(e, `/order/${orderId}/return_to_new`, "Действительно вернуть в статус Новый?", "Возвращаем");
