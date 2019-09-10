@@ -14,6 +14,7 @@ use App\Services\LogMovementService;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -148,7 +149,7 @@ class OrderController extends BaseController
      */
     public function approve(Request $request, Order $order): JsonResponse
     {
-        $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
+        $this->denyAccessUnlessGranted('ORDER_APPROVE', $order);
 
         $order->setStatus(Order::STATUS_APPROVED);
         $this->getEm()->persist($order);

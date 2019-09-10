@@ -23,8 +23,10 @@ class OrderVoter extends Voter
         // Only vote on Order objects inside this voter
         return in_array($attribute, [
                 'ORDER_EDIT', // by user
+                'ORDER_APPROVE', // by user
                 'ORDER_RETURN_TO_NEW', // by user
                 'ORDER_DELETE', // by user
+                'ORDER_SET_REDEEMED', // by manager
                 'ORDER_MANAGE', // by manager
             ])
             && $subject instanceof Order;
@@ -38,7 +40,10 @@ class OrderVoter extends Voter
             return false;
         }
 
-
+        // ROLE_ADMIN can do anything
+        /*if ($this->security->isGranted('ROLE_ADMIN')) {
+            return true;
+        }*/
 
         // You know $subject is a Order object, thanks to supports
         // Check conditions and return true to grant permission
@@ -46,6 +51,11 @@ class OrderVoter extends Voter
         switch ($attribute) {
             case 'ORDER_EDIT':
                 if ($subject->getUser() == $user && $subject->isNew()) {
+                    return true;
+                }
+                break;
+            case 'ORDER_APPROVE':
+                if ($subject->getUser() == $user && $subject->isNew() && $subject->hasProducts()) {
                     return true;
                 }
                 break;
@@ -59,8 +69,13 @@ class OrderVoter extends Voter
                     return true;
                 }
                 break;
+            case 'ORDER_SET_REDEEMED':
+                if ($subject->getManager() == $user && $subject->isApproved()) {
+                    return true;
+                }
+                break;
             case 'ORDER_MANAGE':
-                if ($subject->getManager() == $user) { //TODO какое-то еще условие должно быть по статусам
+                if ($subject->getManager() == $user && !$subject->isNew() && !$subject->isApproved()) {
                     return true;
                 }
                 break;

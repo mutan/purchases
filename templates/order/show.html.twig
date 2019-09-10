@@ -25,7 +25,7 @@
             <strong>Комментарий:</strong> {% if order.userComment %}{{ order.userComment }}{% else %}–{% endif %}
         </div>
         <div class="col-12 col-md-4 text-right">
-            {% if is_granted('ORDER_EDIT', order) %}
+            {% if is_granted('ORDER_APPROVE', order) %}
                 <button type="button" id="order_approve" data-id="{{ order.id }}" class="btn btn-sm btn-primary mr-1">
                     <i class="fas fa-stamp"></i> <span class="pl-1">Утвердить</span>
                 </button>
