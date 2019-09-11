@@ -15,7 +15,6 @@ class LogMovement
     const ORDER_STATUS_CHANGED = 103;
 
     const PRODUCT_CREATED = 201;
-    const PRODUCT_DELETED = 202;
 
     const PACKAGE_CREATED = 301;
 
@@ -31,7 +30,6 @@ class LogMovement
         self::ORDER_STATUS_CHANGED => 'Статус заказа изменен',
 
         self::PRODUCT_CREATED => 'Товар создан',
-        self::PRODUCT_DELETED => 'Товар удален',
 
         self::PACKAGE_CREATED => 'Посылка создана',
 
@@ -70,7 +68,8 @@ class LogMovement
     private $order;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="logMovements")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="logMovements", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     private $product;
 

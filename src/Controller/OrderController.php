@@ -330,7 +330,6 @@ class OrderController extends BaseController
             $id = $product->getIdWithPrefix();
             $this->getEm()->remove($product);
             $this->getEm()->flush();
-            $this->container->get(LogMovementService::class)->addEventForProduct(LogMovement::PRODUCT_DELETED, $product, $this->getUser());
             $this->addFlash('success',"Товар {$id} удален.");
         }
 

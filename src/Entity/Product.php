@@ -128,6 +128,7 @@ class Product implements PrefixableEntityInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\LogMovement", mappedBy="product")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     private $logMovements;
 
