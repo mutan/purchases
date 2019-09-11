@@ -328,12 +328,10 @@ class OrderController extends BaseController
 
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
             $id = $product->getIdWithPrefix();
-            $this->getEm()->beginTransaction();
             $this->getEm()->remove($product);
             $this->getEm()->flush();
             $this->container->get(LogMovementService::class)->addEventForProduct(LogMovement::PRODUCT_DELETED, $product, $this->getUser());
             $this->addFlash('success',"Товар {$id} удален.");
-            $this->getEm()->commit();
         }
 
         return $this->redirectToRoute('user_order_show', ['order_id' => $product->getOrder()->getId()]);
