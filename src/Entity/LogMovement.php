@@ -70,7 +70,7 @@ class LogMovement
     private $order;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="logMovements")
      */
     private $product;
 

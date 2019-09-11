@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\TimestampableEntityTrait;
@@ -123,6 +125,47 @@ class Product implements PrefixableEntityInterface
      * @ORM\Column(type="string", length=255, options={"default" = Product::STATUS_ACTIVE})
      */
     private $status = self::STATUS_ACTIVE;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\LogMovement", mappedBy="product")
+     */
+    private $logMovements;
+
+    public function __construct()
+    {
+        $this->logMovements = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|LogMovement[]
+     */
+    public function getLogMovements(): Collection
+    {
+        return $this->logMovements;
+    }
+
+    public function addLogMovement(LogMovement $logMovement): self
+    {
+        if (!$this->logMovements->contains($logMovement)) {
+            $this->logMovements[] = $logMovement;
+            $logMovement->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLogMovement(LogMovement $logMovement): self
+    {
+        if ($this->logMovements->contains($logMovement)) {
+            $this->logMovements->removeElement($logMovement);
+            // set the owning side to null (unless already changed)
+            if ($logMovement->getProduct() === $this) {
+                $logMovement->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
