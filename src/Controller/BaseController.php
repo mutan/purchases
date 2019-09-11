@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Services\LogMovementService;
 use App\Services\MailService;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 //TODO
@@ -19,20 +19,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 abstract class BaseController extends AbstractController
 {
+    protected $em;
     protected $logger;
     protected $mailer;
     protected $logMovementService;
 
-    public function __construct(LoggerInterface $logger, MailService $mailer, LogMovementService $logMovementService)
+    public function __construct(
+        EntityManagerInterface $em,
+        LoggerInterface $logger,
+        MailService $mailer,
+        LogMovementService $logMovementService)
     {
+        $this->em = $em;
         $this->logger = $logger;
         $this->mailer = $mailer;
         $this->logMovementService = $logMovementService;
     }
 
-    protected function getEm(): ObjectManager
+    protected function getEm(): EntityManagerInterface
     {
-        return $this->getDoctrine()->getManager();
+        return $this->em;
     }
 
     public static function getSubscribedServices()

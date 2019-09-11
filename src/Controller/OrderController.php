@@ -14,7 +14,6 @@ use App\Services\LogMovementService;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -76,7 +75,7 @@ class OrderController extends BaseController
             $order->setUser($this->getUser());
             $this->getEm()->persist($order);
             $this->getEm()->flush();
-            $this->container->get(LogMovementService::class)->addEventForOrder(LogMovement::ORDER_CREATE, $order, $this->getUser());
+            $this->container->get(LogMovementService::class)->addEventForOrder(LogMovement::ORDER_CREATED, $order, $this->getUser());
             $this->addFlash('success', "Заказ {$order->getIdWithPrefix()} создан. Теперь добавьте в него товары!");
             $reload = true;
         }
@@ -146,6 +145,7 @@ class OrderController extends BaseController
      * @param Request $request
      * @param Order $order
      * @return JsonResponse
+     * @throws Exception
      */
     public function approve(Request $request, Order $order): JsonResponse
     {
@@ -154,6 +154,12 @@ class OrderController extends BaseController
         $order->setStatus(Order::STATUS_APPROVED);
         $this->getEm()->persist($order);
         $this->getEm()->flush();
+        $this->container->get(LogMovementService::class)->addEventForOrder(
+            LogMovement::ORDER_STATUS_CHANGED,
+            $order,
+            $this->getUser(),
+            LogMovement::TYPES_MAP[LogMovement::ORDER_STATUS_CHANGED] . ': ' . Order::STATUS_APPROVED
+        );
         $this->addFlash('success',"Заказ {$order->getIdWithPrefix()} утвержден.");
 
         return new JsonResponse(['message' => 'Success',], 200);
@@ -165,6 +171,7 @@ class OrderController extends BaseController
      * @param Request $request
      * @param Order $order
      * @return JsonResponse
+     * @throws Exception
      */
     public function returnToNew(Request $request, Order $order): JsonResponse
     {
@@ -173,6 +180,12 @@ class OrderController extends BaseController
         $order->setStatus(Order::STATUS_NEW);
         $this->getEm()->persist($order);
         $this->getEm()->flush();
+        $this->container->get(LogMovementService::class)->addEventForOrder(
+            LogMovement::ORDER_STATUS_CHANGED,
+            $order,
+            $this->getUser(),
+            LogMovement::TYPES_MAP[LogMovement::ORDER_STATUS_CHANGED] . ': ' . Order::STATUS_NEW
+        );
         $this->addFlash('success',"Заказ {$order->getIdWithPrefix()} возвращен в статус Новый.");
 
         return new JsonResponse(['message' => 'Success',], 200);
@@ -184,6 +197,7 @@ class OrderController extends BaseController
      * @param Request $request
      * @param Order $order
      * @return JsonResponse
+     * @throws Exception
      */
     public function setRedeemed(Request $request, Order $order): JsonResponse
     {
@@ -192,6 +206,12 @@ class OrderController extends BaseController
         $order->setStatus(Order::STATUS_REDEEMED);
         $this->getEm()->persist($order);
         $this->getEm()->flush();
+        $this->container->get(LogMovementService::class)->addEventForOrder(
+            LogMovement::ORDER_STATUS_CHANGED,
+            $order,
+            $this->getUser(),
+            LogMovement::TYPES_MAP[LogMovement::ORDER_STATUS_CHANGED] . ': ' . Order::STATUS_REDEEMED
+        );
         $this->addFlash('success',"Заказ {$order->getIdWithPrefix()} переведен в статус Выкупается.");
 
         return new JsonResponse(['message' => 'Success',], 200);
@@ -203,6 +223,7 @@ class OrderController extends BaseController
      * @param Request $request
      * @param Order $order
      * @return Response
+     * @throws Exception
      */
     public function delete(Request $request, Order $order): Response
     {
@@ -218,6 +239,7 @@ class OrderController extends BaseController
             $id = $order->getIdWithPrefix();
             $this->getEm()->persist($order);
             $this->getEm()->flush();
+            $this->container->get(LogMovementService::class)->addEventForOrder(LogMovement::ORDER_DELETED, $order, $this->getUser());
             $this->addFlash('success',"Заказ {$id} удален.");
         }
 
@@ -231,6 +253,7 @@ class OrderController extends BaseController
      * @param OrderRepository $orderRepository
      * @return JsonResponse
      * @throws NonUniqueResultException
+     * @throws Exception
      */
     public function newProduct(Request $request, OrderRepository $orderRepository): JsonResponse
     {
@@ -244,6 +267,7 @@ class OrderController extends BaseController
             $product->setOrder($order);
             $this->getEm()->persist($product);
             $this->getEm()->flush();
+            $this->container->get(LogMovementService::class)->addEventForProduct(LogMovement::PRODUCT_CREATED, $product, $this->getUser());
             $this->addFlash('success', "Товар {$product->getIdWithPrefix()} добавлен.");
             $reload = true;
         }
@@ -296,6 +320,7 @@ class OrderController extends BaseController
      * @param Request $request
      * @param Product $product
      * @return Response
+     * @throws Exception
      */
     public function deleteProduct(Request $request, Product $product): Response
     {
@@ -303,9 +328,12 @@ class OrderController extends BaseController
 
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
             $id = $product->getIdWithPrefix();
+            $this->getEm()->beginTransaction();
             $this->getEm()->remove($product);
             $this->getEm()->flush();
+            $this->container->get(LogMovementService::class)->addEventForProduct(LogMovement::PRODUCT_DELETED, $product, $this->getUser());
             $this->addFlash('success',"Товар {$id} удален.");
+            $this->getEm()->commit();
         }
 
         return $this->redirectToRoute('user_order_show', ['order_id' => $product->getOrder()->getId()]);

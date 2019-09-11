@@ -10,30 +10,36 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LogMovement
 {
-    const ORDER_CREATE = 101;
+    const ORDER_CREATED = 101;
+    const ORDER_DELETED = 102;
+    const ORDER_STATUS_CHANGED = 103;
 
-    const PRODUCT_CREATE = 201;
+    const PRODUCT_CREATED = 201;
+    const PRODUCT_DELETED = 202;
 
-    const PACKAGE_CREATE = 301;
+    const PACKAGE_CREATED = 301;
 
-    const USER_CREATE = 401;
+    const USER_CREATED = 401;
 
-    const USER_ADDRESS_CREATE = 501;
+    const USER_ADDRESS_CREATED = 501;
 
-    const USER_PASSPORT_CREATE = 601;
+    const USER_PASSPORT_CREATED = 601;
 
     const TYPES_MAP = [
-        self::ORDER_CREATE => 'Заказ содан',
+        self::ORDER_CREATED => 'Заказ содан',
+        self::ORDER_DELETED => 'Заказ удален',
+        self::ORDER_STATUS_CHANGED => 'Статус заказа изменен',
 
-        self::PRODUCT_CREATE => 'Товар создан',
+        self::PRODUCT_CREATED => 'Товар создан',
+        self::PRODUCT_DELETED => 'Товар удален',
 
-        self::PACKAGE_CREATE => 'Посылка создана',
+        self::PACKAGE_CREATED => 'Посылка создана',
 
-        self::USER_CREATE => 'Пользователь создан',
+        self::USER_CREATED => 'Пользователь создан',
 
-        self::USER_ADDRESS_CREATE => 'Адрес пользователя создан',
+        self::USER_ADDRESS_CREATED => 'Адрес пользователя создан',
 
-        self::USER_PASSPORT_CREATE => 'Пасспорт пользователя создан',
+        self::USER_PASSPORT_CREATED => 'Пасспорт пользователя создан',
     ];
 
     /**
